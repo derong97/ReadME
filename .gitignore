@@ -1,0 +1,16 @@
+# VSCode settings
+.vscode
+
+# Environments
+.pyenv
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.env
+
+# Specific files
+automation/mongo/meta_Kindle_Store.json
+automation/sql/kindle_reviews.csv
