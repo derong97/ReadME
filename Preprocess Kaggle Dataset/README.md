@@ -2,6 +2,10 @@
 
 
 
+Last Updated 11 Oct 2020
+
+
+
 **Download the necessary files** (See below for more information on the transformation applied)
 
 ```bash
@@ -105,3 +109,4 @@ An example value of the `'helpful'` column is `'[2,3]'`. This breaks 1NF of our 
 - Assigned the name `'reviewID'` to `'Unnamed: 0'`.
 - Changed separation from `,` to `\t`. File is actually tab-delimited now.
 
+- Incremented all `reviewID` by 1 to avoid conflicts with `AUTO-INCREMENT` resequencing.
