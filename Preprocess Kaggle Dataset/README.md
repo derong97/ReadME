@@ -7,14 +7,14 @@
 ```bash
 sudo apt install python3-pip
 pip3 install gdown
-gdown https://drive.google.com/uc?id=1XJfUjcgmlvybIpCcWDtl9EPxoTDdx7bm
+gdown https://drive.google.com/uc?id=1lgrBw_XDaKjlN5fFfF47P8l9Dhm8IRME
 ```
 
 This downloads the pre-processed file `'kaggle_processed.csv'` into your system.
 
 
 
-**Enter into mysql, then enter (use) a database (create one if you have not)**.
+**Enter into MySQL, then enter (use) a database (create one if you have not)**.
 
 ```mysql
 USE readmeproj;
@@ -28,23 +28,24 @@ Calling the table `Kindle`
 
 ```mysql
 CREATE TABLE `Kindle` (
-  `reviewID` int(11) NOT NULL primary key,
+  `reviewID` int(11) NOT NULL AUTO_INCREMENT,
   `asin` tinytext NOT NULL,
-  `overall` int(1) DEFAULT NULL,
-  `reviewText` text DEFAULT NULL,
-  `reviewTime` date DEFAULT NULL,
-  `reviewerID` tinytext DEFAULT NULL,
-  `reviewerName` tinytext DEFAULT NULL,
-  `summary` text DEFAULT NULL,
-  `unixReviewTime` int(11) DEFAULT NULL,
-  `likes` int(5) DEFAULT NULL,
-  `dislikes` int(5) DEFAULT NULL
+  `overall` int(1) NOT NULL,
+  `reviewText` text NOT NULL,
+  `reviewTime` date NOT NULL,
+  `reviewerID` tinytext NOT NULL,
+  `reviewerName` tinytext NOT NULL,
+  `summary` text NOT NULL,
+  `unixReviewTime` int(11) NOT NULL,
+  `likes` int(5) NOT NULL DEFAULT '0',
+  `dislikes` int(5) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`reviewID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ```
 
 
 
-**Loading of preprocessed data `kaggle_processed.csv**
+**Loading of pre-processed data `kaggle_processed.csv`**
 
 ```mysql
 LOAD DATA LOCAL INFILE 'kaggle_processed.csv' 
@@ -54,6 +55,41 @@ LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (reviewID, asin, overall, reviewText, @reviewTime, reviewerID, reviewerName, summary, unixReviewTime, likes, dislikes) SET reviewTime = STR_TO_DATE(@reviewTime, '%m %d, %Y');
 ```
+
+
+
+
+
+# Additional Stuff
+
+
+
+## Inserting Data
+
+
+
+```mysql
+INSERT INTO Kindle(asin, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime) 
+values ("test_asin", 5, "test_reviewText", curdate(), "test_reviewerID", "test_reviewerName", "test_summary", UNIX_TIMESTAMP());
+```
+
+As we `AUTO_INCREMENT` the attribute `reviewID`, there's no need to assign it a value in our `INSERT` operation. It will take the value of the biggest existing `reviewID` and plus `1`.
+
+
+
+## Inspecting your Insertion
+
+
+
+To inspect the new entry you added earlier (which is at the bottom of `Kindle`):
+
+```mysql
+SELECT * FROM Kindle
+ORDER BY reviewID DESC
+LIMIT 10;
+```
+
+
 
 
 
