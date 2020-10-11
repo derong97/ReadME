@@ -23,21 +23,23 @@ This downloads the following files into your system:
 
 
 
-**Inside Database "readme", create a table and load the data into MySQL**
+**Inside Database "readme" (modify if necessary), create a table and load the data into MySQL**
 
 ```bash
 mysql -u root readme < ini_Kindle.sql
 ```
 
-Change `readme` to whatever database that you wish to create the table in. 
+Create a database first, e.g. `readme`.
+
+If you have another database that you wish to create the table in, change `readme` to that name in the command above.
 
 *Caution: The table `Kindle` inside your database will be dropped and overwritten with new data.*
+
+You should not get any errors at all.
 
 
 
 <br>
-
-
 
 
 
@@ -72,7 +74,7 @@ LIMIT 10;
 
 
 
-
+<br>
 
 
 
