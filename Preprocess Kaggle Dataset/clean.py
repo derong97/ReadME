@@ -12,5 +12,9 @@ for i in range(len(df)):
     df.at[i, 'likes'] = split[0]
     df.at[i, 'dislikes'] = split[1]
 
+# Increment reviewID by 1
+df['reviewID'] = df['reviewID'] + 1
+
 df.drop('helpful', axis=1).to_csv('kaggle_processed.csv', sep='\t', index=False)
 print("Done")
+print(df.iloc[0:2])
