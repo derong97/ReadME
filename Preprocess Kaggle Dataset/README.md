@@ -32,7 +32,7 @@ CREATE TABLE `Kindle` (
   `asin` tinytext NOT NULL,
   `overall` int(1) DEFAULT NULL,
   `reviewText` text DEFAULT NULL,
-  `reviewTime` varchar(25) DEFAULT NULL,
+  `reviewTime` date DEFAULT NULL,
   `reviewerID` tinytext DEFAULT NULL,
   `reviewerName` tinytext DEFAULT NULL,
   `summary` text DEFAULT NULL,
@@ -51,7 +51,8 @@ LOAD DATA LOCAL INFILE 'kaggle_processed.csv'
 INTO TABLE Kindle
 FIELDS TERMINATED BY '\t' ENCLOSED BY '"' ESCAPED BY ''
 LINES TERMINATED BY '\n' 
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(reviewID, asin, overall, reviewText, @reviewTime, reviewerID, reviewerName, summary, unixReviewTime, likes, dislikes) SET reviewTime = STR_TO_DATE(@reviewTime, '%m %d, %Y');
 ```
 
 
