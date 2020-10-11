@@ -2,59 +2,36 @@
 
 
 
-**Download the pre-processed data** (See below for more information on the transformation applied)
+**Download the necessary files** (See below for more information on the transformation applied)
 
 ```bash
 sudo apt install python3-pip
 pip3 install gdown
 gdown https://drive.google.com/uc?id=1lgrBw_XDaKjlN5fFfF47P8l9Dhm8IRME
+gdown https://drive.google.com/uc?id=18zKSytgjy56nNRP8z2IsxTVga1jGSiqZ
 ```
 
-This downloads the pre-processed file `'kaggle_processed.csv'` into your system.
+This downloads the following files into your system:
+
+- `'kaggle_processed.csv'`, pre-processed Kindle reviews.
+
+- `'ini_Kindle.csv'`, an SQL batch file for the creation of table and loading in `'kaggle_processed.csv'`.
 
 
 
-**Enter into MySQL, then enter (use) a database (create one if you have not)**.
+**Inside Database "readme", create a table and load the data into MySQL**
 
-```mysql
-USE readmeproj;
+```bash
+mysql -u root readme < ini_Kindle.sql
 ```
 
+Change `readme` to whatever database that you wish to create the table in. 
 
-
-**Table Creation**
-
-Calling the table `Kindle`
-
-```mysql
-CREATE TABLE `Kindle` (
-  `reviewID` int(11) NOT NULL AUTO_INCREMENT,
-  `asin` tinytext NOT NULL,
-  `overall` int(1) NOT NULL,
-  `reviewText` text NOT NULL,
-  `reviewTime` date NOT NULL,
-  `reviewerID` tinytext NOT NULL,
-  `reviewerName` tinytext NOT NULL,
-  `summary` text NOT NULL,
-  `unixReviewTime` int(11) NOT NULL,
-  `likes` int(5) NOT NULL DEFAULT '0',
-  `dislikes` int(5) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`reviewID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-```
+*Caution: The table `Kindle` inside your database will be dropped and overwritten with new data.*
 
 
 
-**Loading of pre-processed data `kaggle_processed.csv`**
-
-```mysql
-LOAD DATA LOCAL INFILE 'kaggle_processed.csv' 
-INTO TABLE Kindle
-FIELDS TERMINATED BY '\t' ENCLOSED BY '"' ESCAPED BY ''
-LINES TERMINATED BY '\n' 
-IGNORE 1 ROWS
-(reviewID, asin, overall, reviewText, @reviewTime, reviewerID, reviewerName, summary, unixReviewTime, likes, dislikes) SET reviewTime = STR_TO_DATE(@reviewTime, '%m %d, %Y');
-```
+<br>
 
 
 
