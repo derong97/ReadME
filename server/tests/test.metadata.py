@@ -10,9 +10,8 @@ db = client[MONGO_DB]
 collection = db[METADATA_DB]
 
 try:
-    # for _ in range(1000):
-    #     collection.delete_one({})
-    print("ok")
+    user = collection.find_one({})
+    print(user)
 except Exception as e:
     print(e)
 
