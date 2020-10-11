@@ -1,8 +1,68 @@
-# Instructions for Preprocessing
+# Instruction for loading data into MySQL
 
 
 
-Obtain the kaggle dataset from here: https://istd50043.s3-ap-southeast-1.amazonaws.com/kindle-reviews.zip
+**Download the pre-processed data** (See below for more information on the transformation applied)
+
+```bash
+sudo apt install python3-pip
+pip3 install gdown
+gdown https://drive.google.com/uc?id=1XJfUjcgmlvybIpCcWDtl9EPxoTDdx7bm
+```
+
+This downloads the pre-processed file `'kaggle_processed.csv'` into your system.
+
+
+
+**Enter into mysql, then enter (use) a database (create one if you have not)**.
+
+```mysql
+USE readmeproj;
+```
+
+
+
+**Table Creation**
+
+Calling the table `Kindle`
+
+```mysql
+CREATE TABLE `Kindle` (
+  `reviewID` int(11) NOT NULL primary key,
+  `asin` tinytext NOT NULL,
+  `overall` int(1) DEFAULT NULL,
+  `reviewText` text DEFAULT NULL,
+  `reviewTime` varchar(25) DEFAULT NULL,
+  `reviewerID` tinytext DEFAULT NULL,
+  `reviewerName` tinytext DEFAULT NULL,
+  `summary` text DEFAULT NULL,
+  `unixReviewTime` int(11) DEFAULT NULL,
+  `likes` int(5) DEFAULT NULL,
+  `dislikes` int(5) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+```
+
+
+
+**Loading of preprocessed data `kaggle_processed.csv**
+
+```mysql
+LOAD DATA LOCAL INFILE 'kaggle_processed.csv' 
+INTO TABLE Kindle
+FIELDS TERMINATED BY '\t' ENCLOSED BY '"' ESCAPED BY ''
+LINES TERMINATED BY '\n' 
+IGNORE 1 ROWS;
+```
+
+
+
+
+
+# Information on Preprocessing
+
+
+
+Original kaggle dataset from here: https://istd50043.s3-ap-southeast-1.amazonaws.com/kindle-reviews.zip
 
 
 
@@ -26,53 +86,8 @@ Split the `'helpful'` column into `'likes'` and `'dislikes'`, both of which stor
 
 An example value of the `'helpful'` column is `'[2,3]'`. This breaks 1NF of our table, as presence of tuple values is a violation. 
 
-Also assigned the name `'reviewID'` to `'Unnamed: 0'`.
+**Additional Changes**
 
-
-
-# Instruction for loading data into MySQL
-
-
-
-**First, enter a database (create one if you have not)**
-
-```mysql
-USE readmeproj;
-```
-
-
-
-**Table creation**
-
-```mysql
-CREATE TABLE `kindle` (
-  `reviewID` int(11) NOT NULL,
-  `asin` varchar(255) NOT NULL,
-  `overall` int(11) DEFAULT NULL,
-  `reviewText` varchar(25000) DEFAULT NULL,
-  `reviewTime` varchar(25) DEFAULT NULL,
-  `reviewerID` varchar(45) DEFAULT NULL,
-  `reviewerName` varchar(255) DEFAULT NULL,
-  `summary` varchar(500) DEFAULT NULL,
-  `unixReviewTime` int(11) DEFAULT NULL,
-  `likes` int(11) DEFAULT NULL,
-  `dislikes` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-```
-
-
-
-**Loading of preprocessed data `kaggle_processed.csv**
-
-```mysql
-LOAD DATA LOCAL INFILE 'kaggle_processed.csv' 
-INTO TABLE kindle
-FIELDS TERMINATED BY '\t' ENCLOSED BY '"' ESCAPED BY ''
-LINES TERMINATED BY '\n' 
-IGNORE 1 ROWS;
-```
-
-
-
-
+- Assigned the name `'reviewID'` to `'Unnamed: 0'`.
+- Changed separation from `,` to `\t`. File is actually tab-delimited now.
 
