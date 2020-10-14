@@ -14,8 +14,3 @@ venv.bak/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-
-# Specific files
-automation/mongo/meta_Kindle_Store.json
-automation/sql/kindle_reviews.csv
-Preprocess Kaggle Dataset/kaggle_processed.csv

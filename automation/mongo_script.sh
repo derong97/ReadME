@@ -17,7 +17,12 @@ sudo apt-get install -y mongodb-org
 # Install package
 sudo apt-install mongo-tools
 
-# TODO: Set up admin user and create db and collection?
+# Create db and collection
+mongo
+use readme_mongo;
+db.createCollection("kindle_metadata")
+db.createCollection("users")
+exit()
 
 # Load metadata to localhost MongoDB
 mongoimport -d readme_mongo -c kindle_metadata --file meta_Kindle_Store.json --legacy
