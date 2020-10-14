@@ -6,9 +6,22 @@
 2. Activate your virtual environment: `source venv/bin/activate`
 3. Install all packages: `pip install -r requirements.txt`
 4. Start the Server: `./run` or `python3 app.py`
-5. Set up MongoDB. Refer to `automation/mongo/mongo_script.sh` (documentation not complete)
-   - The `kindle_metadata` collection contains all the books' metadata
-   - The `users` collection contains all the registered users
+
+## Set up MongoDB
+
+1. Depending on your OS, install the appropriate MongoDB Community Edition from https://docs.mongodb.com/manual/administration/install-community/
+2. Use Compasss to set up localhost MongoDB, set up `readme_mongo` database with the following 2 collections:
+   - The `kindle_metadata` (contains all the books' metadata)
+   - The `users` (contains all the registered users)
+3. Run the following commands
+   ```
+   wget -c https://istd50043.s3-ap-southeast-1.amazonaws.com/meta_kindle_store.zip -O meta_kindle_store.zip
+   sudo apt-get install unzip
+   unzip meta_kindle_store.zip
+   rm -rf *.zip
+   ```
+4. Install packages: `sudo apt-install mongo-tools`
+5. Import data into `kindle_metadata` collection: `mongoimport -d readme_mongo -c kindle_metadata --file meta_Kindle_Store.json --legacy`
 
 ## Tests
 
