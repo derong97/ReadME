@@ -3,19 +3,22 @@
 ## Start Flask Server with React Frontend
 
 ### Download Prerequisites
-Note: skip these steps if you have already done this before
+Note: skip to this section if you have already done this before
 1. Download venv package: `sudo apt-get install python3 venv`
-2. Install all packages: `pip install -r requirements.txt`
-3. Create an isolated python environment: `python3 -m venv venv`
+2. Create an isolated python environment: `python3 -m venv venv`
+
+### Download packages to your virtual environment
+Note: skip step 4 if this if you already installed the packages to your virtual environment before.
+3. Activate your virtual environment: `source venv/bin/activate`. Make sure your virtual environment is activated before proceeding onto the next steps.
+4. Install all packages: `pip install -r requirements.txt`. 
 
 ### Building React App 
-1. Navigate to the React app directory: `cd frontend`
-2. Build the app to the Flask template using `npm run build` to build the latest version of your app
+6. Navigate to the React app directory: `cd frontend`
+7. Build the app to the Flask template using `npm run build` to build the latest version of your app
 
 ### Start Flask Server
-1. Navigate to the server directory: `cd server`
-2. Activate your virtual environment: `source venv/bin/activate`
-3. Start the Server: `./run` or `python3 app.py`
+8. Navigate to the server directory: `cd server`
+9. Start the Server: `./run` or `python3 app.py`
 
 
 ## Set up MongoDB
