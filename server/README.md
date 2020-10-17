@@ -6,6 +6,7 @@
 Note: skip these steps if you have already done this before
 1. Download venv package: `sudo apt-get install python3 venv`
 2. Install all packages: `pip install -r requirements.txt`
+3. Create an isolated python environment: `python3 -m venv venv`
 
 ### Building React App 
 1. Navigate to the React app directory: `cd frontend`
@@ -13,9 +14,8 @@ Note: skip these steps if you have already done this before
 
 ### Start Flask Server
 1. Navigate to the server directory: `cd server`
-2. Create an isolated python environment: `python3 -m venv venv`
-3. Activate your virtual environment: `source venv/bin/activate`
-4. Start the Server: `./run` or `python3 app.py`
+2. Activate your virtual environment: `source venv/bin/activate`
+3. Start the Server: `./run` or `python3 app.py`
 
 
 ## Set up MongoDB
