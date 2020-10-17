@@ -2,15 +2,15 @@
 
 ## Start Flask Server with React Frontend
 
-## Download Prerequisites
+### Download Prerequisites
 1. Download venv package: `sudo apt-get install python3 venv`
 2. Install all packages: `pip install -r requirements.txt`
 
-## Building React App 
+### Building React App 
 1. Navigate to the React app directory: `cd frontend`
 2. Build the app to the Flask template using `npm run build` to build the latest version of your app
 
-## Start Flask Server
+### Start Flask Server
 1. Navigate to the server directory: `cd server`
 2. Create an isolated python environment: `python3 -m venv venv`
 3. Activate your virtual environment: `source venv/bin/activate`
