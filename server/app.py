@@ -9,7 +9,7 @@ from routers import api_router
 # Test Routes (will eventually delete)
 @app.route('/')
 def home():
-    return Flask.render_template("index.html",token = "hi Swee Khim")
+    return '<h1>Helloo Amigos!</h1>'
 
 if __name__ == '__main__':
     app.run(debug=True)
