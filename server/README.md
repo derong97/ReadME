@@ -6,6 +6,9 @@
 Note: skip to this section if you have already done this before
 1. Download venv package: `sudo apt-get install python3 venv`
 2. Create an isolated python environment: `python3 -m venv venv`
+3. Download [node.js](https://nodejs.org/en/download/)
+4. Install yarn by running `sudo apt update` and `sudo apt install yarn`
+5. Install Babel by running `yarn add @babel/plugin-transform-react-jsx`
 
 ### Download packages to your virtual environment
 Note: skip step 4 if this if you already installed the packages to your virtual environment before.
