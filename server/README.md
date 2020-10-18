@@ -8,6 +8,7 @@ Note: skip to this section if you have already done this before
 2. Create an isolated python environment: `python3 -m venv venv`
 3. Download [node.js](https://nodejs.org/en/download/)
 4. Install yarn by running `sudo apt update` and `sudo apt install yarn`
+If you face an error installing yarn in Ubuntu, head to https://classic.yarnpkg.com/en/docs/install/#debian-stable and follow the instructions there
 5. Install Babel by running `yarn add @babel/plugin-transform-react-jsx`
 
 ### Download packages to your virtual environment
@@ -17,7 +18,8 @@ Note: skip step 4 if this if you already installed the packages to your virtual 
 
 ### Building React App 
 6. Navigate to the React app directory: `cd frontend`
-7. Build the app to the Flask template using `npm run build` to build the latest version of your app
+7. Install the packages from npm: `npm install`
+8. Build the app to the Flask template using `npm run build` to build the latest version of your app
 
 ### Start Flask Server
 8. Navigate to the server directory: `cd server`
