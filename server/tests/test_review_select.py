@@ -5,7 +5,7 @@ con = mdb.connect('127.0.0.1', 'root', '', 'dbproj') # change this to your own h
 with con:
 
     cur = con.cursor()
-    cur.execute("SELECT reviewID, reviewTime, summary FROM kindle;")
+    cur.execute("SELECT reviewID, reviewTime, summary FROM kindle LIMIT 5;")
 
     rows = cur.fetchall()
 
