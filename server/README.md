@@ -14,6 +14,7 @@ If you face an error installing yarn in Ubuntu, head to https://classic.yarnpkg.
 5. Install and create an isolated python environment: `python3 -m venv venv`
 6. Activate your virtual environment: `source venv/bin/activate`. Make sure your virtual environment is activated before proceeding onto the next steps.
 7. Install all packages: `pip install -r requirements.txt`
+8. Install MySQL client with `sudo apt-get install python3.6-dev libmysqlclient-dev` and `pip3 install mysqlclient`
 
 ### Building React App 
 6. Navigate to the React app directory: `cd frontend`
@@ -43,6 +44,15 @@ If you face an error installing yarn in Ubuntu, head to https://classic.yarnpkg.
 5. Import data into `kindle_metadata` collection: `mongoimport -d readme_mongo -c kindle_metadata --file meta_Kindle_Store.json --legacy`
    - Remove the `--legacy` option if the above command does not work for you
 
+## Set up MySQL (locally)
+
+1. Download and install MySQL Workbench from https://dev.mysql.com/downloads/workbench/
+2. In MySQL Workbench, setup a new connection and create a new schema `dbproj`.
+3. Download the processed Kaggle data and SQL script from the following links
+   - https://drive.google.com/uc?id=1lgrBw_XDaKjlN5fFfF47P8l9Dhm8IRME
+   - https://drive.google.com/uc?id=18zKSytgjy56nNRP8z2IsxTVga1jGSiqZ
+4. Run the SQL script in MySQL Workbench. If `LOAD DATA LOCAL INFILE` is throwing error, run the line `set global local_infile=true;`. If the error persists, remove the `LOCAL` keyword from the script, run the line `SHOW VARIABLES LIKE "secure_file_priv"` and move the processed Kaggle data file into the output path. Update the SQL script with the current filepath.
+
 ## Tests
 
 In the `/tests` folder, you can run tests to ensure that your endpoints are working as expected.
@@ -52,3 +62,4 @@ In the `/tests` folder, you can run tests to ensure that your endpoints are work
    - For logging in: if the user's email does not exist in the database or if the entered password is wrong, a `401` response will be returned due to invalid credentials. Else, a `200` ok response will be returned along with his entered credentials.
 2. `python3 test_metadata.py` will retrieve the first metadata from the `kindle_metadata` collection.
    - Currently standalone, need to integrate with flask endpoints.
+3. Edit `test_review_select.py` and `test_review_insert.py` with your own credentials. Running `python3 test_review_select.py` returns 5 reviewID, reviewTime, and summary from the table while `python3 test_review_insert.py` inserts a test review into the table. You can check whether the review is actually inserted via MySQL Workbench.
