@@ -1,7 +1,9 @@
 from flask import Flask, render_template
 
 # App
-app = Flask(__name__)
+app = Flask(__name__,
+    static_folder="../frontend/static",
+    template_folder="../frontend/static/templates")
 
 # API Routes
 # from routers import api_router

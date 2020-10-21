@@ -11,3 +11,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+/* Initialise fonts */
+@font-face {
+  font-family: 'Gotham-Medium';
+  src: url(./Fonts/Gotham-Medium.otf) format('opentype');
+}
+
+
+@font-face {
+  font-family: 'Gotham-Black';
+  src: url(./Fonts/Gotham-Black.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'Gotham-Ultra';
+  src: url(./Fonts/Gotham-Ultra.otf) format('opentype');
+}
+
