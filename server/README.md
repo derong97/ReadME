@@ -2,22 +2,24 @@
 
 ## Start Flask Server with React Frontend
 
-### Download Prerequisites
-Note: skip to this section if you have already done this before
-1. Download venv package: `sudo apt-get install python3 venv`
-2. Create an isolated python environment: `python3 -m venv venv`
-3. Download [node.js](https://nodejs.org/en/download/)
-4. Install yarn by running `sudo apt update` and `sudo apt install yarn`
-5. Install Babel by running `yarn add @babel/plugin-transform-react-jsx`
+### Download prerequisites
+Note: skip this section if you already have all the prerequisites
+1. Download/ update python3 `sudo apt install python3`
+2. Download [node.js](https://nodejs.org/en/download/)
+3. Install yarn by running `sudo apt update` and `sudo apt install yarn`
+If you face an error installing yarn in Ubuntu, head to https://classic.yarnpkg.com/en/docs/install/#debian-stable and follow the instructions there
+4. Install Babel by running `yarn add @babel/plugin-transform-react-jsx`
 
 ### Download packages to your virtual environment
-Note: skip step 4 if this if you already installed the packages to your virtual environment before.
-3. Activate your virtual environment: `source venv/bin/activate`. Make sure your virtual environment is activated before proceeding onto the next steps.
-4. Install all packages: `pip install -r requirements.txt`. 
+5. Install and create an isolated python environment: `python3 -m venv venv`
+6. Activate your virtual environment: `source venv/bin/activate`. Make sure your virtual environment is activated before proceeding onto the next steps.
+7. Install all packages: `pip install -r requirements.txt`
+8. Install MySQL client with `sudo apt-get install python3.6-dev libmysqlclient-dev` and `pip3 install mysqlclient`
 
 ### Building React App 
 6. Navigate to the React app directory: `cd frontend`
-7. Build the app to the Flask template using `npm run build` to build the latest version of your app
+7. Install the packages from npm: `npm install`
+8. Build the app to the Flask template using `npm run build` to build the latest version of your app
 
 ### Start Flask Server
 8. Navigate to the server directory: `cd server`
@@ -42,6 +44,15 @@ Note: skip step 4 if this if you already installed the packages to your virtual 
 5. Import data into `kindle_metadata` collection: `mongoimport -d readme_mongo -c kindle_metadata --file meta_Kindle_Store.json --legacy`
    - Remove the `--legacy` option if the above command does not work for you
 
+## Set up MySQL (locally)
+
+1. Download and install MySQL Workbench from https://dev.mysql.com/downloads/workbench/
+2. In MySQL Workbench, setup a new connection and create a new schema `dbproj`.
+3. Download the processed Kaggle data and SQL script from the following links
+   - https://drive.google.com/uc?id=1lgrBw_XDaKjlN5fFfF47P8l9Dhm8IRME
+   - https://drive.google.com/uc?id=18zKSytgjy56nNRP8z2IsxTVga1jGSiqZ
+4. Run the SQL script in MySQL Workbench. If `LOAD DATA LOCAL INFILE` is throwing error, run the line `set global local_infile=true;`. If the error persists, remove the `LOCAL` keyword from the script, run the line `SHOW VARIABLES LIKE "secure_file_priv"` and move the processed Kaggle data file into the output path. Update the SQL script with the current filepath.
+
 ## Tests
 
 In the `/tests` folder, you can run tests to ensure that your endpoints are working as expected.
@@ -51,3 +62,4 @@ In the `/tests` folder, you can run tests to ensure that your endpoints are work
    - For logging in: if the user's email does not exist in the database or if the entered password is wrong, a `401` response will be returned due to invalid credentials. Else, a `200` ok response will be returned along with his entered credentials.
 2. `python3 test_metadata.py` will retrieve the first metadata from the `kindle_metadata` collection.
    - Currently standalone, need to integrate with flask endpoints.
+3. Edit `test_review_select.py` and `test_review_insert.py` with your own credentials. Running `python3 test_review_select.py` returns 5 reviewID, reviewTime, and summary from the table while `python3 test_review_insert.py` inserts a test review into the table. You can check whether the review is actually inserted via MySQL Workbench.
