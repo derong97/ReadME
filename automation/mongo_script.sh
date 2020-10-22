@@ -17,12 +17,24 @@ sudo apt-get install -y mongodb-org
 # Install package
 sudo apt-install mongo-tools
 
+# Start MongoDB
+sudo systemctl start mongod
+
 # Create db and collection
 mongo
 use readme_mongo;
-db.createCollection("kindle_metadata")
-db.createCollection("users")
-exit()
+db.createUser({ user: "admin", pwd: "password", roles: [{ role: 'readWrite', db:'readme_mongo'}] });
+db.createCollection("kindle_metadata");
+db.createCollection("users");
+exit
+
+# Enable security and restart MongoDB
+sudo sed -i "s,\\(^[[:blank:]]*bindIp:\\) .*,\\1 0.0.0.0," /etc/mongod.conf
+sudo sh -c 'echo "security:\n  authorization : enabled" >> /etc/mongod.conf'
+sudo service mongod restart
 
 # Load metadata to localhost MongoDB
 mongoimport -d readme_mongo -c kindle_metadata --file meta_Kindle_Store.json --legacy
+
+# Need to enable TCP port 27017 accessible from 0.0.0.0 as well
+# TODO: not sure why cannot connect

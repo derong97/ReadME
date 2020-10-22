@@ -3,30 +3,31 @@
 ## Start Flask Server with React Frontend
 
 ### Download prerequisites
+
 Note: skip this section if you already have all the prerequisites
-1. Download/ update python3 `sudo apt install python3`
+
+1. Install python3 `sudo apt install python3`
 2. Download [node.js](https://nodejs.org/en/download/)
-3. Install yarn by running `sudo apt update` and `sudo apt install yarn`
-If you face an error installing yarn in Ubuntu, head to https://classic.yarnpkg.com/en/docs/install/#debian-stable and follow the instructions there
-4. Install Babel by running `yarn add @babel/plugin-transform-react-jsx`
+3. Install MySQL client with `sudo apt-get install python3.6-dev libmysqlclient-dev`
 
 ### Download packages to your virtual environment
-5. Install and create an isolated python environment: `python3 -m venv venv`
-6. Activate your virtual environment: `source venv/bin/activate`. Make sure your virtual environment is activated before proceeding onto the next steps.
-7. Install all packages: `pip install -r requirements.txt`
-8. Install MySQL client with `sudo apt-get install python3.6-dev libmysqlclient-dev` and `pip3 install mysqlclient`
 
-### Building React App 
-6. Navigate to the React app directory: `cd frontend`
-7. Install the packages from npm: `npm install`
-8. Build the app to the Flask template using `npm run build` to build the latest version of your app
+4. Install and create an isolated python environment: `python3 -m venv venv`
+5. Activate your virtual environment: `source venv/bin/activate`. Make sure your virtual environment is activated before proceeding onto the next steps.
+6. Install all packages: `pip install -r requirements.txt`
+
+### Building React App
+
+7. Navigate to the React app directory: `cd frontend`
+8. Install the packages from npm: `npm install`
+9. Build the app to the Flask template using `npm run build` to build the latest version of your app
 
 ### Start Flask Server
+
 8. Navigate to the server directory: `cd server`
 9. Start the Server: `./run` or `python3 app.py`
 
-
-## Set up MongoDB
+## Set up MongoDB (locally)
 
 1. Depending on your OS, install the appropriate MongoDB Community Edition from https://docs.mongodb.com/manual/administration/install-community/
    - Note that MongoDB does not support the Windows Subsystem for Linux (WSL).
@@ -47,7 +48,7 @@ If you face an error installing yarn in Ubuntu, head to https://classic.yarnpkg.
 ## Set up MySQL (locally)
 
 1. Download and install MySQL Workbench from https://dev.mysql.com/downloads/workbench/
-2. In MySQL Workbench, setup a new connection and create a new schema `dbproj`.
+2. In MySQL Workbench, setup a new connection and create a new schema `readme_sql`.
 3. Download the processed Kaggle data and SQL script from the following links
    - https://drive.google.com/uc?id=1lgrBw_XDaKjlN5fFfF47P8l9Dhm8IRME
    - https://drive.google.com/uc?id=18zKSytgjy56nNRP8z2IsxTVga1jGSiqZ

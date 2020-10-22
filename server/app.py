@@ -6,7 +6,7 @@ app = Flask(__name__,
     template_folder="../frontend/static/templates")
 
 # API Routes
-# from routers import api_router
+from routers import api_router
 
 # Test Routes (will eventually delete)
 @app.route('/')

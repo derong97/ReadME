@@ -3,6 +3,8 @@ from pymongo import MongoClient
 #TODO: not sure why I cannot import common module?
 #TODO: change to unit testing
 
+# HOST = "mongodb://admin:password@3.86.84.1/readme_mongo"
+
 client = MongoClient(host="localhost")
 db = client["readme_mongo"]
 collection = db["kindle_metadata"]

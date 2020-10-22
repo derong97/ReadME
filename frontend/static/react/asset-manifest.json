@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/react/css/main.120ff602.chunk.css",
-    "main.js": "/static/react/js/main.a87e7e2e.chunk.js",
-    "main.js.map": "/static/react/js/main.a87e7e2e.chunk.js.map",
+    "main.js": "/static/react/js/main.7048c25b.chunk.js",
+    "main.js.map": "/static/react/js/main.7048c25b.chunk.js.map",
     "runtime-main.js": "/static/react/js/runtime-main.ec4874d9.js",
     "runtime-main.js.map": "/static/react/js/runtime-main.ec4874d9.js.map",
     "css/2.2a86faee.chunk.css": "/static/react/css/2.2a86faee.chunk.css",
@@ -15,7 +15,7 @@
     "media/index.css": "/static/react/media/Gotham-Ultra.f6e21da3.otf",
     "media/style_HomePage.css": "/static/react/media/home_bg.2c0791b8.png",
     "media/logo_white.png": "/static/react/media/logo_white.55bb7fac.png",
-    "precache-manifest.30883772ff576f11a88ce3ac490fe015.js": "/static/react/precache-manifest.30883772ff576f11a88ce3ac490fe015.js",
+    "precache-manifest.5ab8701fc6cba877fdd5838d32d403ce.js": "/static/react/precache-manifest.5ab8701fc6cba877fdd5838d32d403ce.js",
     "service-worker.js": "/static/react/service-worker.js"
   },
   "entrypoints": [
@@ -23,6 +23,6 @@
     "css/2.2a86faee.chunk.css",
     "js/2.78c97ebb.chunk.js",
     "css/main.120ff602.chunk.css",
-    "js/main.a87e7e2e.chunk.js"
+    "js/main.7048c25b.chunk.js"
   ]
 }
