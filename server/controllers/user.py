@@ -19,14 +19,14 @@ class User:
 
         # Check for existing email address
         if mongo_users.find_one({"email" : user['email']}):
-            return jsonify({"error": "Email address already in use"}), 400
+            return jsonify({"message": "Email address already in use"}), 400
 
         # Insert user record into db
         elif mongo_users.insert_one(user):
             response = dumps(user)
-            return f"{user['name']} successfully signed up", 200
+            return {"message" : f"{user['name']} successfully signed up"}, 200
 
-        return jsonify({"error": "Signup failed"}), 400
+        return {"message": "Signup failed"}, 400
 
     def signout(self):
         return redirect('/')
@@ -39,6 +39,6 @@ class User:
         # Checks if the user exists and whether the hashed unencrypted password matches the stored encrypted password
         if user and pbkdf2_sha256.verify(request.form.get('password'), user['password']):
             response = dumps(user)
-            return f"{user['name']} successfully logged in", 200
+            return {"message" : f"{user['name']} successfully logged in"}, 200
         
-        return jsonify({"error": "Invalid login credentials"}), 401
+        return {"message": "Invalid login credentials"}, 401
