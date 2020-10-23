@@ -53,15 +53,15 @@ Note: skip this section if you already have all the prerequisites
 3. Download the processed Kaggle data and SQL script from the following links
    - https://drive.google.com/uc?id=1lgrBw_XDaKjlN5fFfF47P8l9Dhm8IRME
    - https://drive.google.com/uc?id=18zKSytgjy56nNRP8z2IsxTVga1jGSiqZ
-4. Run the SQL script in MySQL Workbench. If `LOAD DATA LOCAL INFILE` is throwing error, run the line `set global local_infile=true;`. If the error persists, remove the `LOCAL` keyword from the script, run the line `SHOW VARIABLES LIKE "secure_file_priv"` and move the processed Kaggle data file into the output path. Update the SQL script with the current filepath.
+4. Run the SQL script in MySQL Workbench. Use the wizard import tool to load the `kaggle_processed.csv`
 
-## Tests
+## Endpoint Tests
 
-In the `/tests` folder, you can run tests to ensure that your endpoints are working as expected.
+From the `/server` folder, you can run tests to ensure that the endpoints are working as expected.
 
-1. `python3 test_user.py` will simulate user signup and login on the website through a `POST` request, which queries the `users` collection. Email is used as the unique key for checking records.
-   - For signing up: if the user's email already exists in the database, a `400` error response will be returned. Else, the user's record will be successfully inserted, and a `200` ok response will be returned along with his entered credentials.
-   - For logging in: if the user's email does not exist in the database or if the entered password is wrong, a `401` response will be returned due to invalid credentials. Else, a `200` ok response will be returned along with his entered credentials.
-2. `python3 test_metadata.py` will retrieve the first metadata from the `kindle_metadata` collection.
-   - Currently standalone, need to integrate with flask endpoints.
-3. Edit `test_review_select.py` and `test_review_insert.py` with your own credentials. Running `python3 test_review_select.py` returns 5 reviewID, reviewTime, and summary from the table while `python3 test_review_insert.py` inserts a test review into the table. You can check whether the review is actually inserted via MySQL Workbench.
+1. `python3 -m tests.test_user.py` simulates a test user signup and login on the website through a `POST` request, which queries the `users` collection. Email is used as the unique key for checking records.
+   - For signing up: If the user's email already exists in the database, a `400` error response will be returned. If the user's record will be successfully inserted, a `200` ok response will be returned.
+   - For logging in: If the user's email does not exist in the database or if the entered password is incorrect, a `401` response will be returned due to invalid credentials. If successful, a `200` ok response will be returned.
+2. `python3 -m tests.test_metadata.py` retrieves the first metadata from the `kindle_metadata` collection.
+3. `python3 -m tests.test_review_select.py` returns 5 reviewID, reviewTime, and summary from the table.
+4. `python3 -m tests.test_review_select.py` inserts a test review into the table.

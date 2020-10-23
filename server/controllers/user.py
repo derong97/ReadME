@@ -1,6 +1,8 @@
+import json
+from bson.json_util import dumps
 from flask import Flask, jsonify, request, redirect
 from passlib.hash import pbkdf2_sha256
-from common.databases import mongo_users
+from common.mongo import mongo_users
 
 class User:
 
@@ -16,12 +18,13 @@ class User:
         user['password'] = pbkdf2_sha256.encrypt(user['password'])
 
         # Check for existing email address
-        if mongo_users.find_one({"email" : user["email"]}):
+        if mongo_users.find_one({"email" : user['email']}):
             return jsonify({"error": "Email address already in use"}), 400
 
         # Insert user record into db
         elif mongo_users.insert_one(user):
-            return jsonify(user), 200
+            response = dumps(user)
+            return f"{user['name']} successfully signed up", 200
 
         return jsonify({"error": "Signup failed"}), 400
 
@@ -35,6 +38,7 @@ class User:
 
         # Checks if the user exists and whether the hashed unencrypted password matches the stored encrypted password
         if user and pbkdf2_sha256.verify(request.form.get('password'), user['password']):
-            return jsonify(user), 200
+            response = dumps(user)
+            return f"{user['name']} successfully logged in", 200
         
         return jsonify({"error": "Invalid login credentials"}), 401

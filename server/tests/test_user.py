@@ -1,7 +1,5 @@
 import requests
-from common.databases import mongo_users
-
-#TODO: not sure why I cannot import the common module?
+from common.mongo import mongo_users
 
 test_user = {
     "name": "Test User",
@@ -52,5 +50,5 @@ result = requests.post(login_url, data = unauthenticated_user)
 print(result.text)
 
 # Clean Up
-#result = mongo_users.delete_one(test_user)
-#print(result)
+result = mongo_users.delete_one({"email": "test@gmail.com"})
+print(f"{result.deleted_count} document deleted")
