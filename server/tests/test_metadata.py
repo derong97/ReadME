@@ -1,7 +1,6 @@
 from pymongo import MongoClient
 #from common.databases import mongo_metadata
 #TODO: not sure why I cannot import common module?
-#TODO: change to unit testing
 
 # HOST = "mongodb://admin:password@3.86.84.1/readme_mongo"
 

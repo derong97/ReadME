@@ -1,7 +1,7 @@
 import requests
-#from common.databases import mongo_users
+from common.databases import mongo_users
+
 #TODO: not sure why I cannot import the common module?
-#TODO: change to unit testing
 
 test_user = {
     "name": "Test User",
@@ -52,5 +52,5 @@ result = requests.post(login_url, data = unauthenticated_user)
 print(result.text)
 
 # Clean Up
-# result = mongo_users.delete_one(test_user)
-# print(result)
+#result = mongo_users.delete_one(test_user)
+#print(result)

@@ -1,11 +1,11 @@
 import MySQLdb as mdb
 
-con = mdb.connect('127.0.0.1', 'root', 'password', 'readme') # change this to your own hostname, user, password and schema
+con = mdb.connect('50.17.91.7', 'root', '', 'readme_sql') # change this to your own hostname, user, password and schema
 
 with con:
 
     cur = con.cursor()
-    cur.execute("SELECT reviewID, reviewTime, summary FROM kindle LIMIT 5;")
+    cur.execute("SELECT reviewID, reviewTime, summary FROM Kindle LIMIT 5;")
 
     rows = cur.fetchall()
 

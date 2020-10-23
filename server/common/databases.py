@@ -1,7 +1,8 @@
-# MongoDB
+import os
 from pymongo import MongoClient
 
-mongo_client = MongoClient('localhost')
-mongo_db = mongo_client["readme_mongo"]
-mongo_users = mongo_db["users"]
-mongo_metadata = mongo_db["kindle_metadata"]
+# MongoDB
+mongo_client = MongoClient(os.getenv('MONGO_HOST'))
+mongo_db = mongo_client[os.getenv('MONGO_DB')]
+mongo_users = mongo_db[os.getenv('MONGO_USERS')]
+mongo_metadata = mongo_db[os.getenv('MONGO_METADATA')]

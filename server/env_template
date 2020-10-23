@@ -1,0 +1,8 @@
+MONGO_HOST=localhost
+MONGO_DB=readme_mongo
+MONGO_USERS=users
+MONGO_METADATA=kindle_metadata
+
+SQL_HOST=50.17.91.7
+SQL_DB=readme_sql
+SQL_KINDLE=Kindle

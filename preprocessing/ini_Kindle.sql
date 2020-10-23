@@ -1,5 +1,3 @@
-CREATE DATABASE IF NOT EXISTS readme_sql;
-
 DROP TABLE IF EXISTS `Kindle`;
 
 CREATE TABLE `Kindle` (
