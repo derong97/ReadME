@@ -18,9 +18,4 @@ pip3 install gdown
 gdown https://drive.google.com/uc?id=1lgrBw_XDaKjlN5fFfF47P8l9Dhm8IRME
 gdown https://drive.google.com/uc?id=15yGajHZKapMv3W_lNruOY0TwC4WLWslg
 
-
-mysql -u root
-create database if not exists readme_sql;
-quit
-
-mysql -u root readme_sql < ini_Kindle.sql
+mysql -u root < ini_Kindle.sql
