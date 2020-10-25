@@ -12,13 +12,16 @@ code {
     monospace;
 }
 
-
 /* Initialise fonts */
+@font-face {
+  font-family: 'Gotham-Thin';
+  src: url(./Fonts/Gotham-Thin.otf) format('opentype');
+}
+
 @font-face {
   font-family: 'Gotham-Medium';
   src: url(./Fonts/Gotham-Medium.otf) format('opentype');
 }
-
 
 @font-face {
   font-family: 'Gotham-Black';
