@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# 1. Launch the EC2 instance from the course provided AMI, 
+# IMPORTANT: FOLLOW THESE INSTRUCTIONS FIRST.
+# 1. Launch a distinct EC2 instance from the course provided AMI. Note that you have 2 instances, one for MySQL, and the other for MongoDB
 # 2. Allow global IP inbound connection on port 27017 through EC2 dashboard (wizard)
-# 3. SSH in and run the following lines:
+# 3. SSH in (ssh ubuntu@<ip-address> -i <path-to-key>)and run the following lines:
 
 # Get metadata
 wget -c https://istd50043.s3-ap-southeast-1.amazonaws.com/meta_kindle_store.zip -O meta_kindle_store.zip
@@ -24,7 +25,7 @@ sudo systemctl enable mongod
 # Debug: uncomment the following line. Expected result: Successful connection.
 # mongo --eval 'db.runCommand({ connectionStatus: 1 })'
 
-# Enter mongo, and create the administrative user of this MongoDB cluster.
+# Enter mongo, and create the administrative user of this MongoDB cluster. Remember the username and password.
 mongo
 use admin
 db.createUser({	user: "admin",
