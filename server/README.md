@@ -24,7 +24,7 @@ Note: skip this section if you already have all the prerequisites
 - Navigate to the React app directory: `cd ../frontend`
 - Install the packages from npm: `npm install`
 - Build the app to the Flask template using `npm run build` to build the latest version of your app
-* Shortcut to build the app to the Flask template and start the Flask server: `npm run start-flask` *
+- Shortcut to build the app to the Flask template and start the Flask server: `npm run start-flask`
 
 ### Start Flask Server
 
