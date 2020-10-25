@@ -1,11 +1,10 @@
 #book-body {
   margin-top: 50px;
-  margin-left: 100px;
 }
 
 #book-img {
   width: 180px;
-  margin-left: 15px;
+  margin-left: 50px;
 }
 
 #book-info {
@@ -48,7 +47,9 @@
 }
 
 #review {
-  margin-top: 40px;
+  margin-top: 50px;
+  margin-bottom: 70px;
+  margin-left: 35px;
 }
 
 #review-header {

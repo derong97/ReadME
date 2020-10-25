@@ -4,6 +4,7 @@ import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Footer from "../Components/Footer.js";
 import Logo from "../Image/logo_white.png";
+import Homebg from "../Image/home_bg.png";
 
 class HomePage extends React.Component {
   render() {
@@ -21,7 +22,8 @@ class HomePage extends React.Component {
           </Nav>
         </Navbar>
 
-        <div id="home-bg">
+        <div>
+          <img id="home-bg" alt="Background" src={Homebg}></img>
           <Link exact to="/signup">
             <button id="nextpage-bttn">let's explore</button>
           </Link>

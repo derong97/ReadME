@@ -1,15 +1,10 @@
 #home-bg {
-  background-image: url("../Image/home_bg.png");
-  position: absolute;
-  min-width: 100%;
-  min-height: 130%;
-  background-size: cover;
-  background-position: center;
+  width: 100%;
 }
 
 #nextpage-bttn {
   position: absolute;
-  top: 75%;
+  top: 120%;
   left: 40%;
   width: 20%;
   background-color: rgba(232, 128, 138, 0.75);

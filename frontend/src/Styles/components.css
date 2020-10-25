@@ -94,7 +94,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 50px;
-  margin-left: 100px;
+  margin-right: 100px;
 }
 
 .book {
@@ -133,8 +133,8 @@
 
 /* Footer */
 footer {
-  position: absolute;
-  top: 140%;
+  position: relative;
+  bottom: 0;
   width: 100%;
   background-color: rgb(13, 21, 56);
   padding: 15px;
