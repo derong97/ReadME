@@ -1,3 +1,6 @@
+CREATE database IF NOT EXISTS readme_sql;
+USE readme_sql;
+
 DROP TABLE IF EXISTS `Kindle`;
 
 CREATE TABLE `Kindle` (
@@ -13,7 +16,7 @@ CREATE TABLE `Kindle` (
   `likes` int(5) NOT NULL DEFAULT '0',
   `dislikes` int(5) NOT NULL DEFAULT '0',
   PRIMARY KEY (`reviewID`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOAD DATA LOCAL INFILE 'kaggle_processed.csv' 
 INTO TABLE Kindle

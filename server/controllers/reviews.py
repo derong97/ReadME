@@ -31,7 +31,7 @@ class Reviews:
     # get average rating of one book
     def get_rating(self, asin):
         con, cur = connect()
-        
+
         try:
             cur.execute("SELECT AVG(overall) as 'Average Rating' FROM {} WHERE asin = '{}';".format(SQL_KINDLE, asin))
             r = cur.fetchone()[0]
@@ -53,6 +53,7 @@ class Reviews:
                 cur.execute(f"SELECT asin, AVG(overall) as 'Average Rating' FROM {SQL_KINDLE} GROUP BY asin ORDER BY AVG(overall) DESC;")
             else:
                 cur.execute(f"SELECT asin, AVG(overall) as 'Average Rating' FROM {SQL_KINDLE} GROUP BY asin ORDER BY AVG(overall) ASC;")
+            
             r = fetch_dicts(cur)
             return {"rating": r, "message": "Successfully sorted books"}, 200
 

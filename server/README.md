@@ -25,7 +25,7 @@ Note: skip this section if you already have all the prerequisites
 ### Start Flask Server
 
 10. Navigate to the server directory: `cd server`
-11. Create your own `.env` file. You can refer to the given template `env_template`.
+11. Create your own environment file: `touch .env`. Copy and paste the keys from the template `env_template`. Modify the values accordingly.
 12. Start the Server: `flask run`
 
 ## Set up MongoDB (locally)
