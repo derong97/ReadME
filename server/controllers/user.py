@@ -23,7 +23,6 @@ class User:
 
         # Insert user record into db
         elif mongo_users.insert_one(user):
-            response = dumps(user)
             return {"reviewerID": f"{user['_id']}", "message" : f"{user['name']} successfully signed up"}, 200
 
         return {"message": "Signup failed"}, 400
@@ -38,7 +37,6 @@ class User:
 
         # Checks if the user exists and whether the hashed unencrypted password matches the stored encrypted password
         if user and pbkdf2_sha256.verify(request.form.get('password'), user['password']):
-            response = dumps(user)
             return {"reviewerID": f"{user['_id']}", "message" : f"{user['name']} successfully logged in"}, 200
         
         return {"message": "Invalid login credentials"}, 401

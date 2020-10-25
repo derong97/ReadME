@@ -8,9 +8,9 @@ test_user = {
 }
 
 invalid_user = {
-        "name": "Unregistered Dude",
-        "email": "doesnotexist@asdf.com",
-        "password": "password"
+    "name": "Unregistered Dude",
+    "email": "doesnotexist@asdf.com",
+    "password": "password"
 }
 
 unauthenticated_user = {
