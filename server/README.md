@@ -40,7 +40,7 @@ Note: skip this section if you already have all the prerequisites
 # Update when Pulling new Commits
 
 - `cd` into `ReadMe/server`, then activate your virtual environment: `source venv/bin/activate`. 
-- Install the packages from npm: `npm install`
+- `cd ../frontend`, to install (any new) packages using npm: `npm install`
 - Build the app to the Flask template using `npm run build` to build the latest version of your app
 - Navigate back to the server directory: `cd ../server`
 - Install any (newly committed) packages: `pip install -r requirements.txt`
