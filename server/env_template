@@ -1,9 +1,11 @@
-MONGO_HOST=localhost
+MONGO_IP=100.27.12.250
+MONGO_HOST=100.27.12.250
 MONGO_DB=readme_mongo
-MONGO_USERS=users
+MONGO_USERS=admin
+MONGO_PW=password
 MONGO_METADATA=kindle_metadata
 
-SQL_HOST=50.17.91.7
+SQL_HOST=3.80.198.220
 SQL_USER=root
 SQL_PW=
 SQL_DB=readme_sql

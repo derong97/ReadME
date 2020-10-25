@@ -31,6 +31,7 @@ Note: skip this section if you already have all the prerequisites
 ## Set up MongoDB (locally)
 
 1. Depending on your OS, install the appropriate MongoDB Community Edition from https://docs.mongodb.com/manual/administration/install-community/
+   
    - Note that MongoDB does not support the Windows Subsystem for Linux (WSL).
 2. Use Compasss to set up localhost MongoDB, set up `readme_mongo` database with the following 2 collections:
    - `kindle_metadata` (contains all the books' metadata)
@@ -44,6 +45,7 @@ Note: skip this section if you already have all the prerequisites
    ```
 4. Install packages: `sudo apt-install mongo-tools`
 5. Import data into `kindle_metadata` collection: `mongoimport -d readme_mongo -c kindle_metadata --file meta_Kindle_Store.json --legacy`
+   
    - Remove the `--legacy` option if the above command does not work for you
 
 ## Set up MySQL (locally)
@@ -64,4 +66,4 @@ From the `/server` folder, you can run tests to ensure that the endpoints are wo
    - For logging in: If the user's email does not exist in the database or if the entered password is incorrect, a `401` response will be returned due to invalid credentials. If successful, a `200` ok response will be returned.
 2. `python3 -m tests.test_metadata.py` retrieves the first metadata from the `kindle_metadata` collection.
 3. `python3 -m tests.test_review_select.py` returns 5 reviewID, reviewTime, and summary from the table.
-4. `python3 -m tests.test_review_select.py` inserts a test review into the table.
+4. `python3 -m tests.test_review_insert.py` inserts a test review into the table.
