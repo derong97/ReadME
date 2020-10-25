@@ -1,8 +1,8 @@
 MONGO_IP=100.27.12.250
-MONGO_HOST=100.27.12.250
-MONGO_DB=readme_mongo
-MONGO_USERS=admin
+MONGO_USER=admin
 MONGO_PW=password
+MONGO_DB=readme_mongo
+MONGO_USERS_COL=userbase
 MONGO_METADATA=kindle_metadata
 
 SQL_HOST=3.80.198.220
