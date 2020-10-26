@@ -4,7 +4,11 @@ ssh ubuntu@<ip-address> -i <path-to-key>
 
 sudo apt install mysql-server -y
 
+# Set up localhost root account (only accessible through SSH in).
 sudo mysql -e 'update mysql.user set plugin = "mysql_native_password" where user="root"'
+sudo mysql -e 'grant all privileges on *.* to "root"@"localhost" with grant option'
+
+# Set up remote connection admin account. Username is admin. Password is password. 
 sudo mysql -e "CREATE USER 'admin'@'%' IDENTIFIED BY 'password'"
 sudo mysql -e 'update mysql.user set plugin = "mysql_native_password" where user="admin"'
 sudo mysql -e 'grant all privileges on *.* to "admin"@"%" with grant option'
