@@ -64,7 +64,6 @@ class Review:
         else:
             return {"message": "Invalid user"}, 401
 
-    #TODO: edit the book review record
     def edit_review(self, asin):
         reviewerID = request.form.get('reviewerID')
         reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
@@ -115,10 +114,8 @@ class Review:
         con, cur = connect()
 
         try:
-            cur.execute("SELECT AVG(overall) as 'Average Rating' FROM {} WHERE asin = '{}';".format(SQL_KINDLE, asin))
+            cur.execute(f"SELECT AVG(overall) as 'Average Rating' FROM {SQL_KINDLE} WHERE asin = '{asin}';")
             r = cur.fetchone()[0]
-
-            print(r)
             return {"rating": r, "message": "Successfully retrieved rating"}, 200
 
         except Exception as e:
@@ -145,3 +142,24 @@ class Review:
         
         finally:
             con.close()
+
+
+    def get_user_reviews(self):
+        reviewerID = request.form.get('reviewerID')
+        reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
+
+        if reviewer_info != None:
+            con, cur = connect()
+            try:
+                cur.execute(f"SELECT * FROM {SQL_KINDLE} WHERE reviewerID = '{reviewerID}';")
+                r = fetch_dicts(cur)
+                return {"reviews": r, "message": "Successfully retrieved reviews"}, 200
+
+            except Exception as e:
+                return {"message": "Retrieval of reviews failed"}, 400
+
+            finally:
+                con.close()
+
+        else:
+            return {"message": "Invalid user"}, 401
