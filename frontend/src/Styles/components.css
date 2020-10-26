@@ -1,0 +1,145 @@
+/* Navigation Bar */
+.navbar-bg {
+  background-color: rgb(13, 21, 56);
+  font-family: FontAwesome, "Gotham-Medium";
+}
+
+.navbrand {
+  display: flex;
+  justify-content: center;
+  margin-left: 2%;
+  font-family: "Gotham-Black";
+  font-size: 35px;
+}
+
+.navbrand-img {
+  width: 45px;
+}
+
+.nav-main {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: white;
+  font-size: 10px;
+}
+
+.nav-sub {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
+}
+
+.nav-sub:hover {
+  color: white;
+}
+
+#navdropdown::after {
+  display: none;
+}
+
+.item:active {
+  background-color: rgb(240, 240, 240);
+  color: black;
+}
+
+.searchbar {
+  width: 500px !important;
+}
+
+/* .searchbar:placeholder-shown {
+      font-style: italic;
+  } */
+
+.login-bttn {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  outline: 0;
+  font-family: "Gotham-Medium";
+  font-size: 15px;
+  color: white;
+}
+
+.login-bttn:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.user-bttn {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  outline: 0;
+  font-family: "Gotham-Medium";
+  font-size: 15px;
+  color: white;
+}
+
+.user-bttn:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.user-text {
+  padding-left: 10px;
+}
+
+/* Book */
+.book-content {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  margin-right: 100px;
+}
+
+.book {
+  width: 120px;
+}
+
+/* Related Book */
+.relatedbooks-img {
+  width: 80px;
+}
+
+.relatedbooks-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+/* Review */
+.user {
+  width: 50px;
+  height: 50px;
+}
+
+.review-section {
+  margin-left: 20px;
+  width: 550px;
+}
+
+.review-section-title {
+  font-family: "Gotham-Black";
+}
+
+.review-section-text {
+  font-size: 12px;
+}
+
+/* Footer */
+footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(13, 21, 56);
+  padding: 15px;
+}
+
+.navlink {
+  color: white;
+}

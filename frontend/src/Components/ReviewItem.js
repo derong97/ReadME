@@ -1,0 +1,22 @@
+import React from "react";
+import UserLogo from "../Image/user.png";
+
+const ReviewItem = ({ review }) => {
+  return (
+    <div class="container">
+      <div class="row">
+        <img className="user" alt="user" src={UserLogo}></img>
+        <div className="review-section">
+          <h6 className="review-section-title">"{review.title}"</h6>
+          <text className="review-section-text">
+            <i>by {review.user}</i>
+          </text>
+          <p>{review.review}</p>
+        </div>
+      </div>
+      <hr></hr>
+    </div>
+  );
+};
+
+export default ReviewItem;

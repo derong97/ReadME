@@ -1,0 +1,82 @@
+#book-body {
+  margin-top: 50px;
+}
+
+#book-img {
+  width: 180px;
+  margin-left: 50px;
+}
+
+#book-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+}
+
+#book-title {
+  font-family: "Gotham-Black";
+}
+
+#book-price {
+  margin-top: 10px;
+}
+
+#book-details {
+  cursor: pointer;
+}
+
+#book-details:hover {
+  text-decoration: underline;
+}
+
+#book-details:after {
+  text-decoration: none;
+}
+
+#details {
+  font-size: 12px;
+}
+
+#relatedbooks {
+  position: absolute;
+  left: 950px;
+}
+
+#relatedbooks-title {
+  font-family: "Gotham-Black";
+}
+
+#review {
+  margin-top: 50px;
+  margin-bottom: 70px;
+  margin-left: 35px;
+}
+
+#review-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-family: "Gotham-Black";
+}
+
+#review-bttn {
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 158, 139);
+  border: none;
+  border-radius: 5px;
+  margin-left: 425px;
+  padding: 10px 15px;
+  outline: 0;
+  font-size: 12px;
+  color: white;
+}
+
+#review-info {
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  width: 650px;
+  overflow: auto;
+  margin-top: 30px;
+}

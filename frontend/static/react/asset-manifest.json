@@ -1,28 +1,52 @@
 {
   "files": {
-    "main.css": "/static/react/css/main.350165e2.chunk.css",
-    "main.js": "/static/react/js/main.db2c5578.chunk.js",
-    "main.js.map": "/static/react/js/main.db2c5578.chunk.js.map",
+<<<<<<< Updated upstream
+    "main.css": "/static/react/css/main.75d4adae.chunk.css",
+    "main.js": "/static/react/js/main.4d596c0a.chunk.js",
+    "main.js.map": "/static/react/js/main.4d596c0a.chunk.js.map",
+=======
+    "main.css": "/static/react/css/main.32248bf4.chunk.css",
+    "main.js": "/static/react/js/main.fc7af45b.chunk.js",
+    "main.js.map": "/static/react/js/main.fc7af45b.chunk.js.map",
+>>>>>>> Stashed changes
     "runtime-main.js": "/static/react/js/runtime-main.ec4874d9.js",
     "runtime-main.js.map": "/static/react/js/runtime-main.ec4874d9.js.map",
-    "css/2.2a86faee.chunk.css": "/static/react/css/2.2a86faee.chunk.css",
-    "js/2.e8bee718.chunk.js": "/static/react/js/2.e8bee718.chunk.js",
-    "js/2.e8bee718.chunk.js.map": "/static/react/js/2.e8bee718.chunk.js.map",
+    "css/2.7f692ebf.chunk.css": "/static/react/css/2.7f692ebf.chunk.css",
+    "js/2.df3ff4c7.chunk.js": "/static/react/js/2.df3ff4c7.chunk.js",
+    "js/2.df3ff4c7.chunk.js.map": "/static/react/js/2.df3ff4c7.chunk.js.map",
     "../templates/index.html": "/static/react/../templates/index.html",
-    "css/2.2a86faee.chunk.css.map": "/static/react/css/2.2a86faee.chunk.css.map",
-    "css/main.350165e2.chunk.css.map": "/static/react/css/main.350165e2.chunk.css.map",
-    "js/2.e8bee718.chunk.js.LICENSE.txt": "/static/react/js/2.e8bee718.chunk.js.LICENSE.txt",
+    "css/2.7f692ebf.chunk.css.map": "/static/react/css/2.7f692ebf.chunk.css.map",
+<<<<<<< Updated upstream
+    "css/main.75d4adae.chunk.css.map": "/static/react/css/main.75d4adae.chunk.css.map",
+    "js/2.f058bd75.chunk.js.LICENSE.txt": "/static/react/js/2.f058bd75.chunk.js.LICENSE.txt",
+=======
+    "css/main.32248bf4.chunk.css.map": "/static/react/css/main.32248bf4.chunk.css.map",
+    "js/2.df3ff4c7.chunk.js.LICENSE.txt": "/static/react/js/2.df3ff4c7.chunk.js.LICENSE.txt",
+>>>>>>> Stashed changes
     "media/index.css": "/static/react/media/Gotham-Ultra.f6e21da3.otf",
-    "media/style_HomePage.css": "/static/react/media/home_bg.2c0791b8.png",
+    "media/font-awesome.min.css": "/static/react/media/fontawesome-webfont.fee66e71.woff",
+    "media/home_bg.png": "/static/react/media/home_bg.0b3f65f7.png",
+    "media/login.css": "/static/react/media/login_bg.2ffedc92.png",
     "media/logo_white.png": "/static/react/media/logo_white.55bb7fac.png",
-    "precache-manifest.def42aa2b8529082d3576549c482633a.js": "/static/react/precache-manifest.def42aa2b8529082d3576549c482633a.js",
+    "media/user.png": "/static/react/media/user.d6342280.png",
+<<<<<<< Updated upstream
+    "precache-manifest.c94abd601ce85175000246d433b36baa.js": "/static/react/precache-manifest.c94abd601ce85175000246d433b36baa.js",
+=======
+    "precache-manifest.95dbb096fd7a6f32d9887fbf2d972d82.js": "/static/react/precache-manifest.95dbb096fd7a6f32d9887fbf2d972d82.js",
+>>>>>>> Stashed changes
     "service-worker.js": "/static/react/service-worker.js"
   },
   "entrypoints": [
     "js/runtime-main.ec4874d9.js",
-    "css/2.2a86faee.chunk.css",
-    "js/2.e8bee718.chunk.js",
-    "css/main.350165e2.chunk.css",
-    "js/main.db2c5578.chunk.js"
+    "css/2.7f692ebf.chunk.css",
+<<<<<<< Updated upstream
+    "js/2.f058bd75.chunk.js",
+    "css/main.75d4adae.chunk.css",
+    "js/main.4d596c0a.chunk.js"
+=======
+    "js/2.df3ff4c7.chunk.js",
+    "css/main.32248bf4.chunk.css",
+    "js/main.fc7af45b.chunk.js"
+>>>>>>> Stashed changes
   ]
 }
