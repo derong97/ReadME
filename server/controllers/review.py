@@ -66,12 +66,49 @@ class Review:
 
     #TODO: edit the book review record
     def edit_review(self, asin):
-        # TODO
-        return None
-    
-    #TODO: delete the book review record
+        reviewerID = request.form.get('reviewerID')
+        reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
+
+        if reviewer_info != None:
+            overall = request.form.get('overall')
+            reviewText = request.form.get('reviewText')
+            summary = request.form.get('summary')
+
+            values = f"overall = {overall}, reviewText = '{reviewText}', reviewTime = curdate(), summary = '{summary}', unixReviewTime = UNIX_TIMESTAMP()"
+
+            con, cur = connect()
+            try:
+                cur.execute(
+                    f"UPDATE {SQL_KINDLE} SET {values} WHERE asin={asin} and reviewerID={reviewerID};")
+                con.commit()
+                return {"message": "Successfully edited review"}, 200
+
+            except Exception as e:
+                return {"message": "Failed to edit review"}, 400
+
+            finally:
+                con.close()
+
+        else:
+            return {"message": "Invalid user"}, 401
+
     def delete_review(self, asin):
-        return None
+        reviewerID = request.form.get('reviewerID')
+        reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
+        if reviewer_info != None:
+            con, cur = connect()
+            try:
+                cur.execute(f"DELETE FROM {SQL_KINDLE} WHERE asin={asin} and reviewerID={reviewerID};")
+                con.commit()
+                return {"message": "Successfully deleted review"}, 200
+
+            except Exception as e:
+                return {"message": "Deletion of review failed"}, 400
+
+            finally:
+                con.close()
+        else:
+            return {"message": "Invalid user"}, 401
     
     # get average rating of one book
     def get_rating(self, asin):
