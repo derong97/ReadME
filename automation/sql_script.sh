@@ -5,8 +5,9 @@ ssh ubuntu@<ip-address> -i <path-to-key>
 sudo apt install mysql-server -y
 
 sudo mysql -e 'update mysql.user set plugin = "mysql_native_password" where user="root"'
-sudo mysql -e 'create user "root"@"%" identified by ""'
-sudo mysql -e 'grant all privileges on *.* to "root"@"%" with grant option'
+sudo mysql -e "CREATE USER 'admin'@'%' IDENTIFIED BY 'password'"
+sudo mysql -e 'update mysql.user set plugin = "mysql_native_password" where user="admin"'
+sudo mysql -e 'grant all privileges on *.* to "admin"@"%" with grant option'
 sudo mysql -e 'flush privileges'
 
 sudo sh -c 'echo "[mysqld]\nbind-address = 0.0.0.0" >> /etc/mysql/my.cnf'

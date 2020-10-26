@@ -14,10 +14,11 @@ An example value of the `'helpful'` column is `'[2,3]'`. This breaks 1NF of our 
 
 **After**
 
-`['reviewID', 'asin', 'overall', 'reviewText', 'reviewTime', 'reviewerID', 'reviewerName', 'summary', 'unixReviewTime', 'likes', 'dislikes']`
+`['asin', 'overall', 'reviewText', 'reviewTime', 'reviewerID', 'reviewerName', 'summary', 'unixReviewTime', 'likes', 'dislikes']`
 
 **Additional Changes**
 
-- Assigned the name `'reviewID'` to `'Unnamed: 0'`.
+- Deleted `'Unnamed: 0'`, which is `'reviewID'`. We have no use for it because:
+- Primary key of `Kindle` table in MySQL is composite of `'asin'` and `'reviewerID'`.
 - Changed separation from `,` to `\t`. File is actually tab-delimited now.
 - Incremented all `reviewID` by 1 to avoid conflicts with `AUTO-INCREMENT` resequencing.
