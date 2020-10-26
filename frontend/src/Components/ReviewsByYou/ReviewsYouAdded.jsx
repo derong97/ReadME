@@ -1,15 +1,11 @@
 import React, { Component } from "react";
-import ReviewYouAdded from "./ReviewYouAdded";
-import '../../Styles/reviewsyouadded.css'
-
+import ReviewYouAdded from "./ReviewYouAdded.jsx";
+import "../../Styles/reviewsyouadded.css";
 
 class ReviewsYouAdded extends Component {
-
-
   render() {
     return (
       <div>
-        
         {this.props.ReviewsYouAdded.map((reviewYouAdded) => (
           <ReviewYouAdded
             key={reviewYouAdded.reviewID} //used internally
@@ -22,4 +18,4 @@ class ReviewsYouAdded extends Component {
   }
 }
 
-export default ReviewYouAdded;
+export default ReviewsYouAdded;

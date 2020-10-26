@@ -59,22 +59,27 @@ p {
   width: 100
 } */
 
+tr.border_bottom td {
+  border-bottom: 1px solid black;
+}
+
 .column-bookImage{
   width: 150px;
 }
 
 .column-author {
-  width: 150px;
+  width: 300px;
   text-align:  left;
 }
 
 .column-ratings {
-  width: 200px;
+  width: 300px;
   text-align:  left;
+  vertical-align: middle;
 }
 
 .column-date {
-  width: 150px;
+  width: 300px;
   text-align:  left;
 
 }

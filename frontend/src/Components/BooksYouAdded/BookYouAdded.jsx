@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faPenSquare } from "@fortawesome/free-solid-svg-icons";
 import "../../Styles/booksyouadded.css";
 
-
 class BookYouAdded extends Component {
   state = {
     // to call the data of the book here?
@@ -33,7 +32,7 @@ class BookYouAdded extends Component {
         <h4> {this.state.title}</h4>
         <table id="book">
           <tbody>
-            <tr key={this.state.title}>
+            <tr className= "border_botton" key={this.state.title}>
               {/* <th>Cover</th>
               <th>Title</th>
               <th>Author</th>
@@ -69,7 +68,7 @@ class BookYouAdded extends Component {
               </td>
 
               <td className="column-ratings">
-                <h6>Average Rating: </h6>
+                <p>Average Rating:</p>
                 <StarRatings
                   name="rating"
                   rating={this.state.avg_rating}

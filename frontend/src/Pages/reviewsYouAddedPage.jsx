@@ -1,17 +1,19 @@
 import React, { Component } from "react";
 // import "././style_HomePage.css";
-import ReviewsYouAdded from "../Components/ReviewsByYou/ReviewsYouAdded";
+import ReviewsYouAdded from "../Components/ReviewsByYou/ReviewsYouAdded.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEdit,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../Components/Footer.js";
 import NavBar from "../Components/NavBar.js";
 import "../Styles/reviewsyouadded.css";
 
 class ReviewsYouAddedPage extends Component {
   state = {
-    ReviewsYouAdded: [{ reviewID: "0001" }, { reviewID: "0002" }, { reviewID: "0003" }],
+    ReviewsYouAdded: [
+      { reviewID: "0001" },
+      { reviewID: "0002" },
+      { reviewID: "0003" },
+    ],
     username: "GlendiBear",
   };
 
@@ -31,8 +33,10 @@ class ReviewsYouAddedPage extends Component {
           <h5>
             Here lies the reviews you have contributed to the ReadME community.
           </h5>
+          <br></br>
+          <br></br>
           <button className="add-book-bttn" id="add-book-bttn">
-            <FontAwesomeIcon icon={faEdit} size="2x" /> 
+            <FontAwesomeIcon icon={faEdit} size="2x" />
             <div className="add-book-bttn-text">add review</div>
           </button>
         </div>
@@ -43,7 +47,16 @@ class ReviewsYouAddedPage extends Component {
             onDelete={this.handleDelete}
           />
         </div>
+
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+
         <h5>Thank you for your support!</h5>
+
+        <br></br>
+        <br></br>
 
         <Footer></Footer>
       </React.Fragment>
