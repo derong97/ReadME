@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import Logo from "../../Image/logo_white.png";
 import StarRatings from "react-star-ratings";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt, faPenSquare } from "@fortawesome/free-solid-svg-icons";
+import "../../Styles/booksyouadded.css";
+
 
 class BookYouAdded extends Component {
   state = {
@@ -49,8 +52,8 @@ class BookYouAdded extends Component {
                 <h4> {this.state.title}</h4>
               </td> */}
               <td className="column-author">
-                <h6>by {this.state.author}</h6>
-              </td>              
+                <p>by {this.state.author}</p>
+              </td>
 
               <td className="column-date">
                 {/* <p style={this.styles.reviewText}>
@@ -61,12 +64,12 @@ class BookYouAdded extends Component {
                   though!"
                 </p> */}
                 <p style={this.styles.reviewText}>
-                  <i>{this.state.review_time}</i>
+                  <i> added {this.state.review_time}</i>
                 </p>
               </td>
 
               <td className="column-ratings">
-                <h6>Average Rating: {this.state.avg_rating}</h6>
+                <h6>Average Rating: </h6>
                 <StarRatings
                   name="rating"
                   rating={this.state.avg_rating}
@@ -77,14 +80,23 @@ class BookYouAdded extends Component {
                 />
               </td>
 
-              <td className= "column-delete">
+              <td className="column-delete">
                 <button
                   onClick={() =>
                     this.props.onDelete(this.props.BookYouAdded.asin)
                   } //raise event to Counters
                   className="btn btn-danger btn-sm m-2"
                 >
-                  Delete Book
+                  <FontAwesomeIcon icon={faTrashAlt} size="1x" />
+                </button>
+
+                <button
+                  onClick={() =>
+                    this.props.onDelete(this.props.BookYouAdded.asin)
+                  } //raise event to Counters
+                  className="btn btn-primary btn-sm m-2"
+                >
+                  <FontAwesomeIcon icon={faPenSquare} size="1x" />
                 </button>
               </td>
             </tr>

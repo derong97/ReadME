@@ -1,22 +1,23 @@
 import React, { Component } from "react";
-import BooksYouAdded from "../Components/BooksYouAdded/BooksYouAdded";
+// import "././style_HomePage.css";
+import ReviewsYouAdded from "../Components/ReviewsByYou/ReviewsYouAdded";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEdit,
 } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../Components/Footer.js";
 import NavBar from "../Components/NavBar.js";
-import "../Styles/booksyouadded.css";
+import "../Styles/reviewsyouadded.css";
 
-class BooksYouAddedPage extends Component {
+class ReviewsYouAddedPage extends Component {
   state = {
-    BooksYouAdded: [{ asin: "0001" }, { asin: "0002" }, { asin: "0003" }],
+    ReviewsYouAdded: [{ reviewID: "0001" }, { reviewID: "0002" }, { reviewID: "0003" }],
     username: "GlendiBear",
   };
 
-  handleDelete = (asin) => {
+  handleDelete = (reviewID) => {
     //create new array without given counter
-    console.log("delete called", asin);
+    console.log("delete called", reviewID);
     // const counters = this.state.counters.filter((c) => c.id !== counterId);
     // this.setState({ counters });
   };
@@ -25,7 +26,7 @@ class BooksYouAddedPage extends Component {
     return (
       <React.Fragment>
         <NavBar event={this} username={this.state.username}></NavBar>
-        <h2>Books You Added</h2>
+        <h2>Reviews You Added</h2>
         <div className="row">
           <h5>
             Here lies the reviews you have contributed to the ReadME community.
@@ -37,8 +38,8 @@ class BooksYouAddedPage extends Component {
         </div>
 
         <div className="container">
-          <BooksYouAdded
-            BooksYouAdded={this.state.BooksYouAdded}
+          <ReviewsYouAdded
+            ReviewsYouAdded={this.state.ReviewsYouAdded}
             onDelete={this.handleDelete}
           />
         </div>
@@ -50,4 +51,4 @@ class BooksYouAddedPage extends Component {
   }
 }
 
-export default BooksYouAddedPage;
+export default ReviewsYouAddedPage;

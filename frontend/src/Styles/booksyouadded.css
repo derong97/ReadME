@@ -21,6 +21,7 @@
   src: "../Image/addBookIcon_White.png";
 }
 
+
 .add-book-bttn-text {
   font-family: "Gotham-Medium";
   display: table-cell;
@@ -37,10 +38,17 @@ h5 {
   font-family: "Gotham-Book";
 }
 
+p {
+  font-family: "Gotham-Book";
+  vertical-align: middle;
+}
+
 #book {
   text-align: left;
-  border-collapse: collapse;
   width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 15px; 
+
 }
 
 #book tr:nth-child(even){background-color: #f2f2f2;}

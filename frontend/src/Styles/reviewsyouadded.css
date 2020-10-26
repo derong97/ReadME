@@ -1,0 +1,50 @@
+.review-small {
+    font-family: "Gotham-Book";
+    font-size: 14px;
+
+}
+
+.review-rating-heading {
+    font-family: "Gotham-Medium";
+    font-size: 16px;
+}
+
+
+
+.column-review {
+    width: 500px;
+    text-align:  left;
+    vertical-align: top;
+  }
+
+  #review {
+    text-align: left;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 15px; 
+  
+  }
+  
+  #review tr:nth-child(even){background-color: #f2f2f2;}
+  
+  /* #review tr:hover {background-color: #ddd;} */
+
+  p {
+    font-family: "Gotham-Book";
+    vertical-align: middle;
+  }
+
+  .column-action {
+    width: 200px;
+    text-align:right;
+    vertical-align: top;
+  }
+
+  h6 {
+    font-family: "Gotham-Medium";
+    font-size: 20px;
+  }
+
+  h4 {
+    font-family: "Gotham-Medium";
+  }

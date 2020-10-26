@@ -42,7 +42,7 @@ const NavBar = ({ event, username }) => {
         >
           <NavDropdown.Item className="item" onClick={() => event.props.history.push("/books-you-added")}>Books You Added</NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item className="item">Reviews By You</NavDropdown.Item>
+          <NavDropdown.Item className="item" onClick={() => event.props.history.push("/reviews-you-added")}>Reviews By You</NavDropdown.Item>
         </NavDropdown>
         <Form inline className="ml-auto">
           <FormControl
