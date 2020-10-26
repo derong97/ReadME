@@ -9,7 +9,15 @@ import {
   Button,
 } from "react-bootstrap";
 import Logo from "../Image/logo_white.png";
+import AddBookIcon from "../Image/addBookIcon_Green.png";
 import BooksYouAdded from "../Components/BooksYouAdded/BooksYouAdded";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHome,
+  faBookMedical,
+  faUserCircle,
+  faPlusCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import Footer from "../Components/Footer.js";
 import NavBar from "../Components/NavBar.js";
 import "../Styles/booksyouadded.css";
@@ -36,7 +44,10 @@ class BooksYouAddedPage extends Component {
           <h5>
             Here lies the books you have contributed to the ReadME community.
           </h5>
-          <button className="add-book-bttn">add book</button>
+          <button className="add-book-bttn" id="add-book-bttn">
+            <FontAwesomeIcon icon={faBookMedical} size="2x" /> 
+            <div className="add-book-bttn-text">add book</div>
+          </button>
         </div>
 
         <div className="container">

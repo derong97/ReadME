@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Logo from "../../Image/logo_white.png";
+import StarRatings from "react-star-ratings";
 
 class BookYouAdded extends Component {
   state = {
@@ -7,45 +8,88 @@ class BookYouAdded extends Component {
     imageUrl: "http://ecx.images-amazon.com/images/I/51fAmVkTbyL._SY300_.jpg",
     title: "Girls Ballet Tutu Zebra Hot Pink",
     author: "Riley Sager",
-    avg_rating: 4.9,
+    avg_rating: 4.5,
     review_time: "09 13, 2009",
   };
 
   styles = {
     //if you wanted to have a standard style to call
     bookCoverImage: {
-        width: 85,
-        height: 128,
+      width: 85,
+      height: 128,
     },
 
     reviewText: {
-        fontFamily: "Gotham-Book"
-    }
+      fontFamily: "Gotham-Book",
+    },
   };
 
   render() {
     return (
-      <div className= "container">
-        {this.props.children}
-        <img src={this.state.imageUrl} alt="" style={this.styles.bookCoverImage} />
+      <div className="container">
         <h4> {this.state.title}</h4>
-        <h6>by {this.state.author}</h6>
-        <h6>Average Rating: {this.state.avg_rating}</h6>
-        <p style = {this.styles.reviewText}> 
-          "I bought this for my husband who plays the piano. He is having a
-          wonderful time playing these old hymns. The music is at times hard to
-          read because we think the book was published for singing from more
-          than playing from. Great purchase though!"
-        </p>
-        <p style = {this.styles.reviewText}>
-          <i>{this.state.review_time}</i>
-        </p>
-        <button
-          onClick={() => this.props.onDelete(this.props.BookYouAdded.asin)} //raise event to Counters
-          className="btn btn-danger btn-sm m-2"
-        >
-          Delete Book
-        </button>
+        <table id="book">
+          <tbody>
+            <tr key={this.state.title}>
+              {/* <th>Cover</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Review</th>
+              <th>Rating</th> */}
+
+              {this.props.children}
+              <td className="column-bookImage">
+                <img
+                  src={this.state.imageUrl}
+                  alt=""
+                  style={this.styles.bookCoverImage}
+                />
+              </td>
+              {/* <td className="column-title">
+                <h4> {this.state.title}</h4>
+              </td> */}
+              <td className="column-author">
+                <h6>by {this.state.author}</h6>
+              </td>              
+
+              <td className="column-date">
+                {/* <p style={this.styles.reviewText}>
+                  "I bought this for my husband who plays the piano. He is
+                  having a wonderful time playing these old hymns. The music is
+                  at times hard to read because we think the book was published
+                  for singing from more than playing from. Great purchase
+                  though!"
+                </p> */}
+                <p style={this.styles.reviewText}>
+                  <i>{this.state.review_time}</i>
+                </p>
+              </td>
+
+              <td className="column-ratings">
+                <h6>Average Rating: {this.state.avg_rating}</h6>
+                <StarRatings
+                  name="rating"
+                  rating={this.state.avg_rating}
+                  starRatedColor="orange"
+                  starDimension="20px"
+                  starSpacing="2.5px"
+                  numberOfStars={5}
+                />
+              </td>
+
+              <td className= "column-delete">
+                <button
+                  onClick={() =>
+                    this.props.onDelete(this.props.BookYouAdded.asin)
+                  } //raise event to Counters
+                  className="btn btn-danger btn-sm m-2"
+                >
+                  Delete Book
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     );
   }
