@@ -1,0 +1,28 @@
+.add-book-bttn {
+  background-color: white;
+  border: 3px solid rgba(0, 158, 139, 1);
+  border-radius: 20px;
+  font-family: "Gotham-Medium";
+  color: rgba(0, 158, 139, 1);
+  font-size: 15px;
+  outline: 0 !important;
+  position: absolute;
+  margin-left: 90% ;
+}
+
+.add-book-bttn:hover {
+  background-color: rgba(0, 158, 139, 1);
+  color: white;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+h2 {
+  padding-left: 110px;
+  padding-top: 60px;
+}
+
+h5 {
+  padding-left: 125px;
+  font-family: "Gotham-Book";
+}
