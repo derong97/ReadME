@@ -17,7 +17,7 @@ CREATE TABLE `Kindle` (
   PRIMARY KEY (`asin`, `reviewerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-LOAD DATA LOCAL INFILE 'kaggle_processed2.csv' 
+LOAD DATA LOCAL INFILE 'kaggle_processed.csv' 
 INTO TABLE Kindle
 FIELDS TERMINATED BY '\t' ENCLOSED BY '"' ESCAPED BY ''
 LINES TERMINATED BY '\n' 

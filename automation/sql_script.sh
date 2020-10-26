@@ -20,8 +20,8 @@ sudo service mysql restart
 sudo apt-get update
 sudo apt install python3-pip -y
 pip3 install gdown
-# Note you may encounter erros in gdown. If so try 'sudo reboot'.
-gdown https://drive.google.com/uc?id=1lgrBw_XDaKjlN5fFfF47P8l9Dhm8IRME
+# Note you may encounter erros in gdown. If so try 'sudo reboot'. Then wait 2-3 minutes.
+gdown https://drive.google.com/uc?id=1DKvMbHbUNJLE0rak2sQWafPeCtxsmwsp
 gdown https://drive.google.com/uc?id=15yGajHZKapMv3W_lNruOY0TwC4WLWslg
 
 mysql -u root < ini_Kindle.sql
