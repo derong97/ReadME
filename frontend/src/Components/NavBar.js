@@ -40,7 +40,7 @@ const NavBar = ({ event, username }) => {
             </container>
           }
         >
-          <NavDropdown.Item className="item">Books You Added</NavDropdown.Item>
+          <NavDropdown.Item className="item" onClick={() => event.props.history.push("/books-you-added")}>Books You Added</NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item className="item">Reviews By You</NavDropdown.Item>
         </NavDropdown>

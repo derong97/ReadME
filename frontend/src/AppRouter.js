@@ -6,6 +6,7 @@ import LoginPage from './Pages/loginPage'
 import SignupPage from './Pages/signupPage'
 import MainPage from './Pages/mainPage'
 import BookPage from './Pages/bookPage'
+import BooksYouAddedPage from "./Pages/booksYouAddedPage"
 
 const AppRouter = () => {
     return (
@@ -16,6 +17,7 @@ const AppRouter = () => {
                 <Route exact path="/signup" component={SignupPage}/>
                 <Route exact path="/main" component={MainPage}/>
                 <Route exact path="/book" component={BookPage}/>
+                <Route exact path="/books-you-added" component={BooksYouAddedPage}/>
             </Switch>
         </Router>
     );

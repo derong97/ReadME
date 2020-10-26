@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import BookYouAdded from "./BookYouAdded";
-import '../style_BooksYouAddedPage.css'
+import '../../Styles/booksyouadded.css'
 
 
 class BooksYouAdded extends Component {
