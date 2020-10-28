@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { Button, ButtonToolbar } from "react-bootstrap";
 import BooksYouAdded from "../Components/BooksYouAdded/BooksYouAdded.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookMedical } from "@fortawesome/free-solid-svg-icons";
-import Footer from "../Components/Footer.js";
-import NavBar from "../Components/NavBar.js";
+import Footer from "../Components/Footer.jsx";
+import NavBar from "../Components/NavBar.jsx";
 import AddBookModal from "../Components/AddModals/AddBookModal.jsx";
 import "../Styles/booksyouadded.css";
 
@@ -72,8 +71,6 @@ class BooksYouAddedPage extends Component {
           />
         </div>
 
-        <br></br>
-        <br></br>
         <br></br>
         <br></br>
 

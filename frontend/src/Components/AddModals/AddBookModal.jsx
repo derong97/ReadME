@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Modal, Button, Row, Col, Form } from "react-bootstrap";
-import booksYouAddedPage from "../../Pages/booksYouAddedPage";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import "../../Styles/modal.css";
@@ -94,7 +93,7 @@ class AddBookModal extends Component {
   };
 
   handleSubmit = (event) => {
-    console.log("LATEST STATES");
+    console.log("LATEST STATES for Add Book");
     console.log("title change", this.state.title);
     console.log("author: ", this.state.author);
     console.log("imageURL: ", this.state.imageURL);

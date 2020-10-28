@@ -2,7 +2,7 @@ import React from "react";
 import "../Styles/home.css";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Footer from "../Components/Footer.js";
+import Footer from "../Components/Footer.jsx";
 import Logo from "../Image/logo_white.png";
 import Homebg from "../Image/home_bg.png";
 

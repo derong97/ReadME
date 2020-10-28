@@ -3,8 +3,8 @@ import React, { Component } from "react";
 import ReviewsYouAdded from "../Components/ReviewsByYou/ReviewsYouAdded.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import Footer from "../Components/Footer.js";
-import NavBar from "../Components/NavBar.js";
+import Footer from "../Components/Footer.jsx";
+import NavBar from "../Components/NavBar.jsx";
 import "../Styles/reviewsyouadded.css";
 import AddReviewModal from "../Components/AddModals/AddReviewModal.jsx";
 

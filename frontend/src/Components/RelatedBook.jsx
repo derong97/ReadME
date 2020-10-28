@@ -3,7 +3,7 @@ import StarRatings from "react-star-ratings";
 
 const RelatedBook = ({ event, link, book, rating }) => {
   return (
-    <div class="row" onClick={() => event.props.history.push("/main")}>
+    <div className="row" onClick={() => event.props.history.push("/main")}>
       <img className="relatedbooks-img" alt="Related Books" src={link}></img>
       <div className="relatedbooks-info">
         <text>{book}</text>

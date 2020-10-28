@@ -3,17 +3,17 @@ import "../Styles/book.css";
 import "font-awesome/css/font-awesome.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import NavBar from "../Components/NavBar.js";
+import NavBar from "../Components/NavBar.jsx";
 import ReviewItem from "../Components/ReviewItem";
 import RelatedBook from "../Components/RelatedBook";
-import Footer from "../Components/Footer.js";
+import Footer from "../Components/Footer.jsx";
 import StarRatings from "react-star-ratings";
 import Expand from "react-expand-animated";
 import BookImg from "../Image/login_bg.png";
 
 class BookPage extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       username: "GlendiBear",
       genres: "Genres",

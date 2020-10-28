@@ -2,9 +2,9 @@ import React from "react";
 import "../Styles/main.css";
 import "font-awesome/css/font-awesome.min.css";
 import { Form, Dropdown, DropdownButton } from "react-bootstrap";
-import NavBar from "../Components/NavBar.js";
-import Book from "../Components/BookItem.js";
-import Footer from "../Components/Footer.js";
+import NavBar from "../Components/NavBar.jsx";
+import Book from "../Components/BookItem.jsx";
+import Footer from "../Components/Footer.jsx";
 import BookImg from "../Image/login_bg.png";
 
 class MainPage extends React.Component {
