@@ -6,6 +6,7 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../Components/Footer.js";
 import NavBar from "../Components/NavBar.js";
 import "../Styles/reviewsyouadded.css";
+import AddReviewModal from "../Components/AddModals/AddReviewModal.jsx";
 
 class ReviewsYouAddedPage extends Component {
   state = {
@@ -15,6 +16,8 @@ class ReviewsYouAddedPage extends Component {
       { reviewID: "0003" },
     ],
     username: "GlendiBear",
+    addReviewModalShow: false,
+
   };
 
   handleDelete = (reviewID) => {
@@ -22,6 +25,12 @@ class ReviewsYouAddedPage extends Component {
     console.log("delete called", reviewID);
     // const counters = this.state.counters.filter((c) => c.id !== counterId);
     // this.setState({ counters });
+  };
+
+  addModalClose = () => this.setState({ addReviewModalShow: false });
+  addModalOpen = () => {
+    this.setState({ addReviewModalShow: true });
+    console.log("add book show?", this.state.addReviewModalShow);
   };
 
   render() {
@@ -35,10 +44,23 @@ class ReviewsYouAddedPage extends Component {
           </h5>
           <br></br>
           <br></br>
-          <button className="add-book-bttn" id="add-book-bttn">
+          <button
+            className="add-review-bttn"
+            id="add-review-bttn"
+            onClick={this.addModalOpen}
+            data-toggle="modal"
+            data-target="#exampleModalCenter"
+          >
             <FontAwesomeIcon icon={faEdit} size="2x" />
             <div className="add-book-bttn-text">add review</div>
           </button>
+        </div>
+
+        <div>
+          <AddReviewModal
+            show={this.state.addReviewModalShow}
+            onHide={this.addModalClose}
+          />
         </div>
 
         <div className="container">
