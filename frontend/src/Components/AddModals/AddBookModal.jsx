@@ -5,9 +5,9 @@ import makeAnimated from "react-select/animated";
 import "../../Styles/modal.css";
 
 class AddBookModal extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   state = {
     title: "",
@@ -72,7 +72,7 @@ class AddBookModal extends Component {
     var genreList = "";
     var i;
     for (i = 0; i < genre.length; i++){
-      if (i == 0){
+      if (i === 0){
         genreList += genre[i].value;
       }
 
