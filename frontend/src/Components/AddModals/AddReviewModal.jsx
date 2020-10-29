@@ -33,10 +33,9 @@ class AddReviewModal extends Component {
   };
 
   handleSubmit = (event) => {
-    console.log("LATEST STATES for Add Review");
-    console.log("reviewTitle", this.state.reviewTitle);
-    console.log("rating: ", this.state.rating);
-    console.log("reviewText: ", this.state.reviewText);
+
+    console.log("submitted");
+
   };
 
   render() {
@@ -124,7 +123,7 @@ class AddReviewModal extends Component {
             <Button variant="danger" onClick={this.props.onHide}>
               Close
             </Button>
-            <Button variant="success" onClick={this.handleSubmit}>
+            <Button variant="success" type = "submit" onClick={this.handleSubmit}>
               Add Review
             </Button>
           </Modal.Footer>
