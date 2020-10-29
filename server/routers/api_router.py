@@ -42,5 +42,5 @@ def reviewsAPI():
 
 # Ex: /reviews/user/A1F6404F1VG29J
 @app.route('reviews/user/<reviewerID>', methods=['GET'])
-def reviewsUserAPI():
-    return Review().get_user_reviews()
+def reviewsUserAPI(reviewerID):
+    return Review().get_user_reviews(reviewerID)

@@ -36,15 +36,15 @@ class Review:
     
     # insert one book review record
     def insert_review(self, asin):
-        reviewerID = request.form.get('reviewerID')
+        reviewerID = request.json.get('reviewerID')
         reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
 
         if reviewer_info != None:
             reviewerName = reviewer_info['name']
 
-            overall = request.form.get('overall')
-            reviewText = request.form.get('reviewText')
-            summary = request.form.get('summary')
+            overall = request.json.get('overall')
+            reviewText = request.json.get('reviewText')
+            summary = request.json.get('summary')
 
             values = f"('{asin}', {overall}, '{reviewText}', curdate(), '{reviewerID}', '{reviewerName}', '{summary}', UNIX_TIMESTAMP())"
 
@@ -65,13 +65,13 @@ class Review:
             return {"message": "Invalid user"}, 401
 
     def edit_review(self, asin):
-        reviewerID = request.form.get('reviewerID')
+        reviewerID = request.json.get('reviewerID')
         reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
 
         if reviewer_info != None:
-            overall = request.form.get('overall')
-            reviewText = request.form.get('reviewText')
-            summary = request.form.get('summary')
+            overall = request.json.get('overall')
+            reviewText = request.json.get('reviewText')
+            summary = request.json.get('summary')
 
             values = f"overall = {overall}, reviewText = '{reviewText}', reviewTime = curdate(), summary = '{summary}', unixReviewTime = UNIX_TIMESTAMP()"
 
@@ -92,7 +92,7 @@ class Review:
             return {"message": "Invalid user"}, 401
 
     def delete_review(self, asin):
-        reviewerID = request.form.get('reviewerID')
+        reviewerID = request.json.get('reviewerID')
         reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
         if reviewer_info != None:
             con, cur = connect()
@@ -144,8 +144,7 @@ class Review:
             con.close()
 
 
-    def get_user_reviews(self):
-        reviewerID = request.form.get('reviewerID')
+    def get_user_reviews(self, reviewerID):
         reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
 
         if reviewer_info != None:
