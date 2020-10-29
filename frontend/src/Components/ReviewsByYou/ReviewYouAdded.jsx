@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import StarRatings from "react-star-ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faPenSquare } from "@fortawesome/free-solid-svg-icons";
+import ReadMoreReact from "read-more-react";
 import "../../Styles/reviewsyouadded.css";
 
 class ReviewYouAdded extends Component {
@@ -14,6 +15,8 @@ class ReviewYouAdded extends Component {
     your_rating: 3,
     review_title: "Amazing Read",
     review_time: "09 13, 2009",
+    reviewText:
+      "I bought this for my husband who plays the piano. He is having a wonderful time playing these old hymns. The music is at times hard to read because we think the book was published for singing from more than playing from. Great purchase though!",
   };
 
   styles = {
@@ -55,14 +58,15 @@ class ReviewYouAdded extends Component {
                 <p className="review-small">
                   <i> added {this.state.review_time}</i>
                 </p>
-                <p style={this.styles.reviewText}>
-                  "I bought this for my husband who plays the piano. He is
-                  having a wonderful time playing these old hymns. The music is
-                  at times hard to read because we think the book was published
-                  for singing from more than playing from. Great purchase
-                  though!"
-                </p>
-                <p className = "review-rating-heading">Your Rating: </p>
+                <ReadMoreReact className = "review-rating-heading"
+                  text= {this.state.reviewText}
+                  min={120}
+                  ideal={150}
+                  max={200}
+                  readMoreText=" ...read more"
+                />
+                <br></br>
+                <p className="review-rating-heading">Your Rating: </p>
                 <StarRatings
                   name="rating"
                   rating={this.state.your_rating}
