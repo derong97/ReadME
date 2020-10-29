@@ -1,52 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-<<<<<<< HEAD:frontend/static/react/precache-manifest.2a6fd45d158b26798d9a2175d7e9faa7.js
-    "revision": "892778b71504fa68ab4ffb5d8f60d272",
+    "revision": "1925fc80828e631e8653ffb3646d64a7",
     "url": "/static/react/../templates/index.html"
   },
   {
-    "revision": "d448e7973f2a9263592a",
+    "revision": "2d0cd37714b2ca68d18e",
     "url": "/static/react/css/2.000d1216.chunk.css"
   },
   {
-    "revision": "d775f8e899f2d1f5bf3d",
-    "url": "/static/react/css/main.a8ffe449.chunk.css"
+    "revision": "3d1aa0ab9d225ec8eeba",
+    "url": "/static/react/css/main.6c9724f2.chunk.css"
   },
   {
-    "revision": "d448e7973f2a9263592a",
-    "url": "/static/react/js/2.88db0016.chunk.js"
+    "revision": "2d0cd37714b2ca68d18e",
+    "url": "/static/react/js/2.ea5281f0.chunk.js"
   },
   {
     "revision": "330ac196b4522a8e9f539f0f743d16c8",
-    "url": "/static/react/js/2.88db0016.chunk.js.LICENSE.txt"
+    "url": "/static/react/js/2.ea5281f0.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "d775f8e899f2d1f5bf3d",
-    "url": "/static/react/js/main.dee3d593.chunk.js"
-=======
-    "revision": "2c35f5af11da9ae283593a15a7080eab",
-    "url": "/static/react/../templates/index.html"
-  },
-  {
-    "revision": "4588f6a15e7909b10985",
-    "url": "/static/react/css/2.7f692ebf.chunk.css"
-  },
-  {
-    "revision": "e9fc7e12901aa1822aa2",
-    "url": "/static/react/css/main.38548d2b.chunk.css"
-  },
-  {
-    "revision": "4588f6a15e7909b10985",
-    "url": "/static/react/js/2.ecc2ee32.chunk.js"
-  },
-  {
-    "revision": "434eeea35bf11e3d22931f972c8fbb4c",
-    "url": "/static/react/js/2.ecc2ee32.chunk.js.LICENSE.txt"
-  },
-  {
-    "revision": "e9fc7e12901aa1822aa2",
-    "url": "/static/react/js/main.bd12ca82.chunk.js"
->>>>>>> 68622ff483336fa7672da1effc230b6316d64dc0:frontend/static/react/precache-manifest.9ddc92df2d3792ad4e51753796da48e3.js
+    "revision": "3d1aa0ab9d225ec8eeba",
+    "url": "/static/react/js/main.fa2ce636.chunk.js"
   },
   {
     "revision": "4bf013c3470600c06d0c",

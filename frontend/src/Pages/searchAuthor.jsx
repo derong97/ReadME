@@ -8,11 +8,12 @@ import Footer from "../Components/Footer.jsx";
 import BookImg from "../Image/login_bg.png";
 
 class SearchAuthor extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       username: "GlendiBear",
-      author: "GlendiBear",
+      title: "GlendiBear",
+      // books: JSON.parse(this.props.location.state.books),
       books: [
         {
           link: BookImg,
@@ -40,35 +41,35 @@ class SearchAuthor extends React.Component {
           rating: 2,
         },
         {
-            link: BookImg,
-            book: "Book 1 Title",
-            rating: 2,
-          },
-          {
-            link: BookImg,
-            book: "Book 1 Title",
-            rating: 2,
-          },
-          {
-            link: BookImg,
-            book: "Book 1 Title",
-            rating: 2,
-          },
-          {
-            link: BookImg,
-            book: "Book 1 Title",
-            rating: 2,
-          },
-          {
-            link: BookImg,
-            book: "Book 1 Title",
-            rating: 2,
-          },
-          {
-            link: BookImg,
-            book: "Book 1 Title",
-            rating: 2,
-          }
+          link: BookImg,
+          book: "Book 1 Title",
+          rating: 2,
+        },
+        {
+          link: BookImg,
+          book: "Book 1 Title",
+          rating: 2,
+        },
+        {
+          link: BookImg,
+          book: "Book 1 Title",
+          rating: 2,
+        },
+        {
+          link: BookImg,
+          book: "Book 1 Title",
+          rating: 2,
+        },
+        {
+          link: BookImg,
+          book: "Book 1 Title",
+          rating: 2,
+        },
+        {
+          link: BookImg,
+          book: "Book 1 Title",
+          rating: 2,
+        },
       ],
     };
   }
@@ -76,13 +77,18 @@ class SearchAuthor extends React.Component {
   render() {
     return (
       <body id="body">
-        <NavBar event={this} username={this.state.username}></NavBar>
+        <NavBar
+          event={this}
+          username={this.state.username}
+          home="nav-main"
+          byme="nav-sub"
+        ></NavBar>
 
         <div class="container">
           <div id="header-n-filter" class="row">
             <div id="header-n-books" class="col">
               <div id="body-header" class="row">
-                <h4>Search for {this.state.author} ... ...</h4>
+                <h4>Search for {this.state.title} ... ...</h4>
               </div>
               <div id="book-container">
                 <GridList cols={5}>

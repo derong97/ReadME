@@ -25,7 +25,7 @@ class LoginPage extends React.Component {
     });
   };
 
-  checklogin = (evt) => {
+  checkLogin = (evt) => {
     const url = "http://localhost:5000/user/login";
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
@@ -43,13 +43,16 @@ class LoginPage extends React.Component {
       .post(url, body)
       .then((res) => {
         console.log(res);
-        if (res.status == 200) {
+        if (res.status === 200) {
           this.props.history.push({
             pathname: "/main",
           });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err.response);
+        console.log(err.request);
+      });
   };
 
   render() {
@@ -58,7 +61,7 @@ class LoginPage extends React.Component {
         <div id="image-bg"></div>
         <div id="form-bg">
           <h3 id="form-header">Welcome back!</h3>
-          <Form id="form" onSubmit={this.checklogin}>
+          <Form id="form" onSubmit={this.checkLogin}>
             <Form.Group as={Row}>
               <Form.Label column sm="2">
                 Email

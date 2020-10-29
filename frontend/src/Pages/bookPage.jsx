@@ -15,50 +15,61 @@ class BookPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "GlendiBear",
-      genres: "Genres",
-      bookImg: BookImg,
-      bookImg1: BookImg,
-      bookImg2: BookImg,
-      bookImg3: BookImg,
-      booktitle1: "Book 1 Title",
-      booktitle2: "Book 2 Title",
-      booktitle3: "Book 3 Title",
-      rating: 5,
-      rating1: 2,
-      rating2: 2,
-      rating3: 2,
+      // bookDeets: JSON.parse(this.props.location.state.bookDeets),
+      bookDeets: {
+        username: "GlendiBear",
+        genres: "Genres",
+        bookImg: BookImg,
+        rating: 5,
+        relatedbooks: [
+          {
+            bookImg: BookImg,
+            booktitle: "Book 1 Title",
+            rating: 2,
+          },
+          {
+            bookImg: BookImg,
+            booktitle: "Book 1 Title",
+            rating: 2,
+          },
+          {
+            bookImg: BookImg,
+            booktitle: "Book 1 Title",
+            rating: 2,
+          },
+        ],
+        asin: "asin",
+        brand: "brand",
+        salesRank: "sales rank",
+        reviews: [
+          {
+            title: "Top Read",
+            user: "megan_trainor",
+            review: "A brilliant thriller.",
+          },
+          {
+            title: "Top Read",
+            user: "megan_trainor",
+            review: "A brilliant thriller.",
+          },
+          {
+            title: "Top Read",
+            user: "megan_trainor",
+            review: "A brilliant thriller.",
+          },
+          {
+            title: "Top Read",
+            user: "megan_trainor",
+            review: "A brilliant thriller.",
+          },
+          {
+            title: "Top Read",
+            user: "megan_trainor",
+            review: "A brilliant thriller.",
+          },
+        ],
+      },
       open: false,
-      asin: "asin",
-      brand: "brand",
-      salesRank: "sales rank",
-      reviews: [
-        {
-          title: "Top Read",
-          user: "megan_trainor",
-          review: "A brilliant thriller.",
-        },
-        {
-          title: "Top Read",
-          user: "megan_trainor",
-          review: "A brilliant thriller.",
-        },
-        {
-          title: "Top Read",
-          user: "megan_trainor",
-          review: "A brilliant thriller.",
-        },
-        {
-          title: "Top Read",
-          user: "megan_trainor",
-          review: "A brilliant thriller.",
-        },
-        {
-          title: "Top Read",
-          user: "megan_trainor",
-          review: "A brilliant thriller.",
-        },
-      ],
     };
   }
 
@@ -69,19 +80,28 @@ class BookPage extends React.Component {
   render() {
     return (
       <body>
-        <NavBar event={this} username={this.state.username}></NavBar>
+        <NavBar
+          event={this}
+          username={this.state.bookDeets.username}
+          home="nav-main"
+          byme="nav-sub"
+        ></NavBar>
 
         <div id="book-body" class="container">
           <div id="book-n-relatedbooks" class="row">
             <div id="book-n-review" class="col">
               <div id="book-content" class="row">
-                <img id="book-img" alt="book" src={this.state.bookImg}></img>
+                <img
+                  id="book-img"
+                  alt="book"
+                  src={this.state.bookDeets.bookImg}
+                ></img>
                 <div id="book-info">
                   <h4 id="book-title">Book Title</h4>
-                  <text>{this.state.genres}</text>
+                  <text>{this.state.bookDeets.genres}</text>
                   <StarRatings
                     name="rating"
-                    rating={this.state.rating}
+                    rating={this.state.bookDeets.rating}
                     starRatedColor="orange"
                     starDimension="20px"
                     starSpacing="2.5px"
@@ -93,27 +113,27 @@ class BookPage extends React.Component {
                   </text>
                   <Expand open={this.state.open}>
                     <div id="details" className="col">
-                      Asin: {this.state.asin}
+                      Asin: {this.state.bookDeets.asin}
                     </div>
                     <div id="details" className="col">
-                      Brand: {this.state.brand}
+                      Brand: {this.state.bookDeets.brand}
                     </div>
                     <div id="details" className="col">
-                      Sales Rank: {this.state.salesRank}
+                      Sales Rank: {this.state.bookDeets.salesRank}
                     </div>
                   </Expand>
                 </div>
               </div>
               <div id="review">
                 <div id="review-header">
-                  <h4>REVIEW</h4>
+                  <h4 id="review-title">REVIEW</h4>
                   <button id="review-bttn">
                     <FontAwesomeIcon icon={faEdit} size="2x" />
                     add review
                   </button>
                 </div>
                 <div id="review-info">
-                  {this.state.reviews.map((review) => (
+                  {this.state.bookDeets.reviews.map((review) => (
                     <ReviewItem review={review} />
                   ))}
                 </div>
@@ -123,26 +143,12 @@ class BookPage extends React.Component {
               <div class="row">
                 <h4 id="relatedbooks-title">RELATED BOOKS</h4>
               </div>
-              <RelatedBook
-                event={this}
-                link={this.state.bookImg1}
-                book={this.state.booktitle1}
-                rating={this.state.rating1}
-              ></RelatedBook>
-              <hr className="divider"></hr>
-              <RelatedBook
-                event={this}
-                link={this.state.bookImg2}
-                book={this.state.booktitle2}
-                rating={this.state.rating2}
-              ></RelatedBook>
-              <hr className="divider"></hr>
-              <RelatedBook
-                event={this}
-                link={this.state.bookImg3}
-                book={this.state.booktitle3}
-                rating={this.state.rating3}
-              ></RelatedBook>
+              {this.state.bookDeets.relatedbooks.map((book) => (
+                <div>
+                  <RelatedBook event={this} book={book} />
+                  <hr className="divider"></hr>
+                </div>
+              ))}
             </div>
           </div>
         </div>

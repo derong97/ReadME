@@ -16,7 +16,55 @@ import {
 } from "react-bootstrap";
 import Logo from "../Image/logo_white.png";
 
-const NavBar = ({ event, username }) => {
+const NavBar = ({ event, username, home, byme }) => {
+  const filtered = "";
+
+  // const handleChange = (evt) => {
+  //   // pass the list of book titles
+  //   let currentList = ["dog", "cat"];
+  //   let newList = [];
+
+  //   if (event.target.value !== "") {
+  //     currentList = this.props.items;
+  //     newList = currentList.filter((item) => {
+  //       const lc = item.toLowerCase();
+  //       const filter = event.target.value.toLowerCase();
+  //       return lc.includes(filter);
+  //     });
+  //   } else {
+  //     newList = this.props.items;
+  //   }
+  //   this.setState({
+  //     filtered: newList,
+  //   });
+  // };
+
+  // const handleOnSubmit = (evt, title) => {
+  //   const url = "";
+  //   const body = {
+  //     params: { title: title },
+  //   };
+  //   console.log(body);
+  //   evt.preventDefault();
+  //   axios
+  //     .get(url, body)
+  //     .then((res) => {
+  //       console.log(res);
+  //       // retrieve top 30 books
+  //       const books = JSON.stringify(res.data);
+  //       if (res.status === 200) {
+  //         event.props.history.push({
+  //           pathname: "/book",
+  //           state: { books: { books } },
+  //         });
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.response);
+  //       console.log(err.request);
+  //     });
+  // };
+
   return (
     <Navbar className="navbar-bg" variant="dark" expand="lg">
       <Navbar.Brand className="navbrand">
@@ -26,15 +74,23 @@ const NavBar = ({ event, username }) => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav.Link onClick={() => event.props.history.push("/main")}>
-          <container className="nav-main">
+          <container className={home}>
             <FontAwesomeIcon icon={faHome} size="3x" />
             home
           </container>
         </Nav.Link>
-        <NavDropdown
+        <Nav.Link
+          onClick={() => event.props.history.push("/reviews-you-added")}
+        >
+          <container className={byme}>
+            <FontAwesomeIcon icon={faUser} size="3x" />
+            by me
+          </container>
+        </Nav.Link>
+        {/* <NavDropdown
           id="navdropdown"
           title={
-            <container className="nav-sub">
+            <container className={byme}>
               <FontAwesomeIcon icon={faUser} size="3x" />
               by me
             </container>
@@ -53,16 +109,23 @@ const NavBar = ({ event, username }) => {
           >
             Reviews By You
           </NavDropdown.Item>
-        </NavDropdown>
-        <Form inline className="ml-auto">
+        </NavDropdown> */}
+        <Form
+          inline
+          className="ml-auto"
+          // onSubmit={handleOnSubmit()}
+        >
           <FormControl
             className="searchbar mr-sm-2"
             type="text"
+            // onChange={this.handleChange}
+            value={filtered}
             placeholder="&#xf002; search by author or title..."
           />
           <Button
             variant="outline-info"
             onClick={() => event.props.history.push("/search")}
+            // onClick={() => handleOnSubmit(filtered)}
           >
             search
           </Button>
