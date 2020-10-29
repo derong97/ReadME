@@ -41,6 +41,6 @@ def reviewsAPI():
     return Review().sort_on_ratings(desc) # TODO: (error) Object of type 'Decimal' is not JSON serializable
 
 # Ex: /reviews/user/A1F6404F1VG29J
-@app.route('reviews/user/<reviewerID>', methods=['GET'])
+@app.route('/reviews/user/<reviewerID>', methods=['GET'])
 def reviewsUserAPI(reviewerID):
     return Review().get_user_reviews(reviewerID)
