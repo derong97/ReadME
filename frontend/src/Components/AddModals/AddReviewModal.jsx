@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Modal, Button, Row, Col, Form } from "react-bootstrap";
+import Ratings from "react-ratings-declarative";
+import ReactStars from "react-rating-stars-component";
 
 class AddReviewModal extends Component {
   // constructor(props) {
@@ -8,7 +10,7 @@ class AddReviewModal extends Component {
 
   state = {
     reviewTitle: "",
-    rating: 0,
+    rating: 3.7,
     reviewText: "",
   };
 
@@ -18,9 +20,9 @@ class AddReviewModal extends Component {
     });
   };
 
-  handleRatingChange = (event) => {
+  handleRatingChange = (newRating) => {
     this.setState({
-      rating: event.target.value,
+      rating: newRating,
     });
   };
 
@@ -33,7 +35,7 @@ class AddReviewModal extends Component {
   handleSubmit = (event) => {
     console.log("LATEST STATES for Add Review");
     console.log("reviewTitle", this.state.reviewTitle);
-    console.log("rating: ", this.state.review);
+    console.log("rating: ", this.state.rating);
     console.log("reviewText: ", this.state.reviewText);
   };
 
@@ -70,16 +72,51 @@ class AddReviewModal extends Component {
               </Col>
             </Form.Group>
 
+            <Form.Group as={Row} controlId="formRatings">
+              <Form.Label column sm={2}>
+                Rating
+              </Form.Label>
+              {/* <Ratings
+                rating={this.state.rating}
+                widgetRatedColors="orange"
+                changeRating={this.handleRatingChange}
+              >
+                <Ratings.Widget widgetHoverColor="yellow" widgetDimension="40px"/>
+                <Ratings.Widget widgetHoverColor="yellow" widgetDimension="40px"/>
+                <Ratings.Widget widgetHoverColor="yellow" widgetDimension="40px"/>
+                <Ratings.Widget widgetHoverColor="yellow" widgetDimension="40px"/>
+                <Ratings.Widget widgetHoverColor="yellow" widgetDimension="40px"/>
+              </Ratings> */}
+              <ReactStars
+                count={5}
+                onChange={this.handleRatingChange}
+                size={24}
+                isHalf={true}
+                emptyIcon={<i className="far fa-star"></i>}
+                halfIcon={<i className="fa fa-star-half-alt"></i>}
+                fullIcon={<i className="fa fa-star"></i>}
+                activeColor="orange"
+              />
+            </Form.Group>
+
             <Form.Group controlId="formReviewText">
               <Form.Label>Review</Form.Label>
-              <Form.Control
+              {/* <Form.Control
                 required
-                type="input"
-                placeholder="Enter review title."
-                onChange={this.handleReviewTitleChange}
-              />
+                type="textarea"
+                placeholder="Pen your thoughts here..."
+                onChange={this.handleReviewTextChange}
+              /> */}
+
+              <textarea
+                className="form-control"
+                id="formReviewTextArea"
+                rows={8}
+                onChange={this.handleReviewTextChange}
+              ></textarea>
+
               <Form.Text className="text-muted">
-                Feel free to get creative!
+                Tell everyone your opinion about this book!
               </Form.Text>
             </Form.Group>
           </Modal.Body>

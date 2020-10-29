@@ -92,13 +92,13 @@ class BookPage extends React.Component {
                     + Additional Details
                   </text>
                   <Expand open={this.state.open}>
-                    <div id="details" class="col">
+                    <div id="details" className="col">
                       Asin: {this.state.asin}
                     </div>
-                    <div id="details" class="col">
+                    <div id="details" className="col">
                       Brand: {this.state.brand}
                     </div>
-                    <div id="details" class="col">
+                    <div id="details" className="col">
                       Sales Rank: {this.state.salesRank}
                     </div>
                   </Expand>
