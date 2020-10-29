@@ -1,0 +1,98 @@
+.add-review-bttn {
+  background-color: white;
+  border: 3px solid rgba(0, 158, 139, 1);
+  border-radius: 20px;
+  font-family: "Gotham-Medium";
+  vertical-align: middle;
+  text-align: center;
+  color: rgba(0, 158, 139, 1);
+  font-size: 15px;
+  outline: 0 !important;
+  position: absolute;
+  margin-left: 90%;
+  padding: 10px;
+}
+
+.add-review-bttn:hover {
+  background-color: rgba(0, 158, 139, 1);
+  color: white;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  src: "../Image/addBookIcon_White.png";
+}
+
+
+.add-review-bttn-text {
+  font-family: "Gotham-Medium";
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.review-small {
+    font-family: "Gotham-Book";
+    font-size: 14px;
+
+}
+
+.review-rating-heading {
+    font-family: "Gotham-Medium";
+    font-size: 16px;
+}
+
+
+
+.column-review {
+    width: 500px;
+    text-align:  left;
+    vertical-align: top;
+  }
+
+  #review {
+    text-align: left;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 15px; 
+  
+  }
+  
+  #review tr:nth-child(even){background-color: #f2f2f2;}
+  
+  /* #review tr:hover {background-color: #ddd;} */
+
+  p {
+    font-family: "Gotham-Book";
+    vertical-align: middle;
+  }
+
+  .column-action {
+    width: 200px;
+    text-align:right;
+    vertical-align: top;
+  }
+
+  h6 {
+    font-family: "Gotham-Medium";
+    font-size: 20px;
+  }
+
+  h4 {
+    font-family: "Gotham-Medium";
+  }
+
+  .read-more-button {
+    display: inline-block;
+    margin-left: 3px;
+    color: #286DA8;
+    cursor: pointer;
+    font-family: "Gotham-Light";
+    font-size: "8px";
+  }
+
+  .read-more-button:hover {
+    color: #4591d3;
+  }
+
+  body {
+
+    font-family: "Gotham-Book";
+  }

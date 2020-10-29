@@ -25,7 +25,7 @@ const NavBar = ({ event, username }) => {
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav.Link>
+        <Nav.Link onClick={() => event.props.history.push("/main")}>
           <container className="nav-main">
             <FontAwesomeIcon icon={faHome} size="3x" />
             home
@@ -40,9 +40,19 @@ const NavBar = ({ event, username }) => {
             </container>
           }
         >
-          <NavDropdown.Item className="item">Books You Added</NavDropdown.Item>
+          <NavDropdown.Item
+            className="item"
+            onClick={() => event.props.history.push("/books-you-added")}
+          >
+            Books You Added
+          </NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item className="item">Reviews By You</NavDropdown.Item>
+          <NavDropdown.Item
+            className="item"
+            onClick={() => event.props.history.push("/reviews-you-added")}
+          >
+            Reviews By You
+          </NavDropdown.Item>
         </NavDropdown>
         <Form inline className="ml-auto">
           <FormControl
@@ -50,7 +60,12 @@ const NavBar = ({ event, username }) => {
             type="text"
             placeholder="&#xf002; search by author or title..."
           />
-          <Button variant="outline-info">search</Button>
+          <Button
+            variant="outline-info"
+            onClick={() => event.props.history.push("/search")}
+          >
+            search
+          </Button>
         </Form>
         <NavDropdown
           id="navdropdown"

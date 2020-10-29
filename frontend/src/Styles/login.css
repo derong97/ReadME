@@ -35,7 +35,7 @@
 #form-bttn {
   display: flex;
   flex-direction: column;
-  text-align: center;
+  align-items: center;
   font-size: 18px;
 }
 
@@ -62,7 +62,7 @@
 }
 
 #alt-bttn {
-  width: 50%;
+  width: 100%;
   background-color: rgb(13, 21, 56);
   border: 2px solid rgba(0, 158, 139);
   border-radius: 30px;

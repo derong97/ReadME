@@ -14,11 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-<<<<<<< Updated upstream
-  "/static/react/precache-manifest.c94abd601ce85175000246d433b36baa.js"
-=======
-  "/static/react/precache-manifest.95dbb096fd7a6f32d9887fbf2d972d82.js"
->>>>>>> Stashed changes
+  "/static/react/precache-manifest.160789098ac577c08d08242628b30ede.js"
 );
 
 self.addEventListener('message', (event) => {

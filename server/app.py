@@ -1,10 +1,12 @@
 from flask import Flask, render_template
+from flask_cors import CORS
 import os
 
 # App
 app = Flask(__name__,
     static_folder="../frontend/static",
     template_folder="../frontend/static/templates")
+CORS(app)
 
 # API Routes
 from routers import api_router

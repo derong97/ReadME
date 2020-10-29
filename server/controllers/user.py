@@ -9,17 +9,18 @@ class User:
     def signup(self):
         # Create the user object with the form data
         user = {
-            "name": request.form.get('name'),
-            "email": request.form.get('email'),
-            "password": request.form.get('password')
+            "name": request.json.get('name'),
+            "email": request.json.get('email'),
+            "password": request.json.get('password')
         }
+        print(user)
 
         # Encrypt the password
         user['password'] = pbkdf2_sha256.encrypt(user['password'])
 
         # Check for existing email address
         if mongo_users.find_one({"email" : user['email']}):
-            return jsonify({"message": "Email address already in use"}), 400
+            return {"message": "Email address already in use"}, 400
 
         # Insert user record into db
         elif mongo_users.insert_one(user):
@@ -32,11 +33,11 @@ class User:
 
     def login(self):
         user = mongo_users.find_one({
-            "email": request.form.get("email")
+            "email": request.json.get("email")
         })
 
         # Checks if the user exists and whether the hashed unencrypted password matches the stored encrypted password
-        if user and pbkdf2_sha256.verify(request.form.get('password'), user['password']):
+        if user and pbkdf2_sha256.verify(request.json.get('password'), user['password']):
             return {"reviewerID": f"{user['_id']}", "message" : f"{user['name']} successfully logged in"}, 200
         
         return {"message": "Invalid login credentials"}, 401

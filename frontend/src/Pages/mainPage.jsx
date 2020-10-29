@@ -2,9 +2,10 @@ import React from "react";
 import "../Styles/main.css";
 import "font-awesome/css/font-awesome.min.css";
 import { Form, Dropdown, DropdownButton } from "react-bootstrap";
-import NavBar from "../Components/NavBar.js";
-import Book from "../Components/BookItem.js";
-import Footer from "../Components/Footer.js";
+import GridList from "@material-ui/core/GridList";
+import NavBar from "../Components/NavBar.jsx";
+import Book from "../Components/BookItem.jsx";
+import Footer from "../Components/Footer.jsx";
 import BookImg from "../Image/login_bg.png";
 
 class MainPage extends React.Component {
@@ -13,31 +14,33 @@ class MainPage extends React.Component {
     this.state = {
       username: "GlendiBear",
       dropDownValue: "sort by ...",
-      bookImg: BookImg,
-      bookImg1: BookImg,
-      bookImg2: BookImg,
-      bookImg3: BookImg,
-      bookImg4: BookImg,
-      bookImg5: BookImg,
-      bookImg6: BookImg,
-      bookImg7: BookImg,
-      bookImg8: BookImg,
-      book1: "Book 1 Title",
-      book2: "Book 2 Title",
-      book3: "Book 3 Title",
-      book4: "Book 4 Title",
-      book5: "Book 5 Title",
-      book6: "Book 6 Title",
-      book7: "Book 7 Title",
-      book8: "Book 8 Title",
-      rating1: 2,
-      rating2: 2,
-      rating3: 2,
-      rating4: 2,
-      rating5: 2,
-      rating6: 2,
-      rating7: 2,
-      rating8: 2,
+      books: [
+        {
+          link: BookImg,
+          book: "Book 1 Title",
+          rating: 2,
+        },
+        {
+          link: BookImg,
+          book: "Book 1 Title",
+          rating: 2,
+        },
+        {
+          link: BookImg,
+          book: "Book 1 Title",
+          rating: 2,
+        },
+        {
+          link: BookImg,
+          book: "Book 1 Title",
+          rating: 2,
+        },
+        {
+          link: BookImg,
+          book: "Book 1 Title",
+          rating: 2,
+        },
+      ],
       fantasy: false,
       youngadult: false,
       horror: false,
@@ -81,27 +84,13 @@ class MainPage extends React.Component {
           <div id="header-n-filter" class="row">
             <div id="header-n-books" class="col">
               <div id="body-header" class="row">
-                <h4>RECOMMENDATION</h4>
+                <h4>EXPLORE</h4>
                 <div id="sortby">
                   <text>SORT BY</text>
                   <DropdownButton
                     id="sortby-dropdown"
                     title={this.state.dropDownValue}
                   >
-                    <Dropdown.Item
-                      id="sortby-item"
-                      as="button"
-                      onClick={(e) => this.changeValue(e.target.textContent)}
-                    >
-                      Lowest Price
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      id="sortby-item"
-                      as="button"
-                      onClick={(e) => this.changeValue(e.target.textContent)}
-                    >
-                      Highest Price
-                    </Dropdown.Item>
                     <Dropdown.Item
                       id="sortby-item"
                       as="button"
@@ -120,59 +109,11 @@ class MainPage extends React.Component {
                 </div>
               </div>
               <div id="book-container">
-                <div class="row">
-                  <Book
-                    event={this}
-                    link={this.state.bookImg1}
-                    book={this.state.book1}
-                    rating={this.state.rating1}
-                  ></Book>
-                  <Book
-                    event={this}
-                    link={this.state.bookImg2}
-                    book={this.state.book2}
-                    rating={this.state.rating2}
-                  ></Book>
-                  <Book
-                    event={this}
-                    link={this.state.bookImg3}
-                    book={this.state.book3}
-                    rating={this.state.rating3}
-                  ></Book>
-                  <Book
-                    event={this}
-                    link={this.state.bookImg4}
-                    book={this.state.book4}
-                    rating={this.state.rating4}
-                  ></Book>
-                </div>
-
-                <div class="row">
-                  <Book
-                    event={this}
-                    link={this.state.bookImg5}
-                    book={this.state.book5}
-                    rating={this.state.rating5}
-                  ></Book>
-                  <Book
-                    event={this}
-                    link={this.state.bookImg6}
-                    book={this.state.book6}
-                    rating={this.state.rating6}
-                  ></Book>
-                  <Book
-                    event={this}
-                    link={this.state.bookImg7}
-                    book={this.state.book7}
-                    rating={this.state.rating7}
-                  ></Book>
-                  <Book
-                    event={this}
-                    link={this.state.bookImg8}
-                    book={this.state.book8}
-                    rating={this.state.rating8}
-                  ></Book>
-                </div>
+                <GridList cols={4}>
+                  {this.state.books.map((book) => (
+                    <Book event={this} data={book} />
+                  ))}
+                </GridList>
               </div>
             </div>
             <div id="filter">

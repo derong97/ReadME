@@ -4,7 +4,7 @@ import UserLogo from "../Image/user.png";
 const ReviewItem = ({ review }) => {
   return (
     <div class="container">
-      <div class="row">
+      <div className="row">
         <img className="user" alt="user" src={UserLogo}></img>
         <div className="review-section">
           <h6 className="review-section-title">"{review.title}"</h6>
