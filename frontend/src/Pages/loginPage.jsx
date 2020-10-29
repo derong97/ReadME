@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import "../Styles/login.css";
 import { Form, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -24,11 +25,31 @@ class LoginPage extends React.Component {
     });
   };
 
-  checklogin = () => {
+  checklogin = (evt) => {
+    const url = "http://localhost:5000/user/login";
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
     console.log(email);
     console.log(password);
+
+    const body = {
+      email: email,
+      password: password,
+    };
+    console.log(body);
+
+    evt.preventDefault();
+    axios
+      .post(url, body)
+      .then((res) => {
+        console.log(res);
+        if (res.status == 200) {
+          this.props.history.push({
+            pathname: "/main",
+          });
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   render() {
@@ -70,11 +91,9 @@ class LoginPage extends React.Component {
             </Form.Group>
 
             <div id="form-bttn">
-              <Link exact to="/main">
-                <button type="submit" id="confirm-bttn">
-                  Login
-                </button>
-              </Link>
+              <button type="submit" id="confirm-bttn">
+                Login
+              </button>
               <text id="forgotpw-bttn">
                 <u>forgot password?</u>
               </text>

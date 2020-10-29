@@ -32,8 +32,8 @@ class SignupPage extends React.Component {
     });
   };
 
-  checklogin = () => {
-    const url = "/user/signup";
+  checklogin = (evt) => {
+    const url = "http://localhost:5000/user/signup";
     var username = document.getElementById("username").value;
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
@@ -44,15 +44,26 @@ class SignupPage extends React.Component {
 
     const body = {
       name: username,
+      email: email,
       password: password,
     };
+    console.log(body);
+
+    evt.preventDefault();
     axios
       .post(url, body)
       .then((res) => {
         console.log(res);
-        console.log(res.data);
+        if (res.status === 200) {
+          this.props.history.push({
+            pathname: "/main",
+          });
+        }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err.response);
+        console.log(err.request);
+      });
   };
 
   render() {
@@ -109,11 +120,9 @@ class SignupPage extends React.Component {
             </Form.Group>
 
             <div id="form-bttn">
-              <Link exact to="/main">
-                <button type="submit" id="confirm-bttn">
-                  Sign up
-                </button>
-              </Link>
+              <button type="submit" id="confirm-bttn">
+                Sign up
+              </button>
               <div id="alt-bg">
                 <Link exact to="/login">
                   <button id="alt-bttn">
