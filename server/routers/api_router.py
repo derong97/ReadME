@@ -2,6 +2,7 @@ from flask import Flask, request
 from app import app
 from controllers.user import User
 from controllers.review import Review
+from controllers.avgRating import AvgRating
 
 ####################### USER ROUTES #######################
 @app.route('/user/signup', methods=['POST'])
@@ -39,3 +40,8 @@ def reviewsAPI():
     # genre = request.args.get('genre', default = None, type = str) # TODO: sort by genre in the same function?
 
     return Review().sort_on_ratings(desc) # TODO: (error) Object of type 'Decimal' is not JSON serializable
+
+
+@app.route('/avgRating/getAvgRating', methods=['POST'])
+def getAvgRating():
+    return AvgRating().get_avg_rating()
