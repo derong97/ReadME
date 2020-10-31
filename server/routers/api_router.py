@@ -41,7 +41,7 @@ def reviewsAPI():
 
     return Review().sort_on_ratings(desc) # TODO: (error) Object of type 'Decimal' is not JSON serializable
 
-
+###################### AVG RATING ROUTES ######################
 @app.route('/avgRating/getAvgRating', methods=['POST'])
 def getAvgRating():
     return AvgRating().get_avg_rating()
