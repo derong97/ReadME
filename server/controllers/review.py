@@ -24,12 +24,12 @@ class Review:
             cur.execute(f"SELECT * FROM {SQL_KINDLE} WHERE asin='{asin}';")
             r = fetch_dicts(cur)
             if r == []:
-                return {"message":"No reviews found"}, 200
+                return {"message": f"No reviews found for asin {asin}"}, 200
 
-            return {"reviews": r, "message":"Successfully retrieved reviews"}, 200
+            return {"reviews": r, "message": f"Successfully retrieved reviews for asin {asin}"}, 200
 
         except Exception as e:
-            return {"message": "Retrieval of reviews failed"}, 400
+            return {"message": f"Retrieval of reviews failed for asin {asin}"}, 400
 
         finally:
             con.close()
@@ -53,16 +53,16 @@ class Review:
             try:
                 cur.execute(f"INSERT INTO {SQL_KINDLE} (asin, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime) VALUES {values}")
                 con.commit()
-                return {"message": "Successfully inserted review"}, 200
+                return {"message": f"Successfully inserted review for asin {asin}"}, 200
             
             except Exception as e:
-                return {"message": "Insertion of review failed"}, 400
+                return {"message": f"Insertion of review failed for asin {asin}"}, 400
             
             finally:
                 con.close()
 
         else:
-            return {"message": "Invalid user"}, 401
+            return {"message": f"User id {reviewerID} does not exist"}, 401
 
     def edit_review(self, asin):
         reviewerID = request.json.get('reviewerID')
@@ -80,16 +80,16 @@ class Review:
                 cur.execute(
                     f"UPDATE {SQL_KINDLE} SET {values} WHERE asin={asin} and reviewerID={reviewerID};")
                 con.commit()
-                return {"message": "Successfully edited review"}, 200
+                return {"message": f"Successfully edited review for asin {asin}"}, 200
 
             except Exception as e:
-                return {"message": "Failed to edit review"}, 400
+                return {"message": f"Failed to edit review for asin {asin}"}, 400
 
             finally:
                 con.close()
 
         else:
-            return {"message": "Invalid user"}, 401
+            return {"message": f"User id {reviewerID} does not exist"}, 401
 
     def delete_review(self, asin):
         reviewerID = request.json.get('reviewerID')
@@ -99,15 +99,15 @@ class Review:
             try:
                 cur.execute(f"DELETE FROM {SQL_KINDLE} WHERE asin={asin} and reviewerID={reviewerID};")
                 con.commit()
-                return {"message": "Successfully deleted review"}, 200
+                return {"message": f"Successfully deleted review for asin {asin}"}, 200
 
             except Exception as e:
-                return {"message": "Deletion of review failed"}, 400
+                return {"message": f"Deletion of review failed for asin {asin}"}, 400
 
             finally:
                 con.close()
         else:
-            return {"message": "Invalid user"}, 401
+            return {"message": f"User id {reviewerID} does not exist"}, 401
     
     # get average rating of one book
     def get_rating(self, asin):
@@ -116,10 +116,10 @@ class Review:
         try:
             cur.execute(f"SELECT AVG(overall) as 'Average Rating' FROM {SQL_KINDLE} WHERE asin = '{asin}';")
             r = cur.fetchone()[0]
-            return {"rating": r, "message": "Successfully retrieved rating"}, 200
+            return {"rating": r, "message": f"Successfully retrieved rating for asin {asin}"}, 200
 
         except Exception as e:
-            return {"message": "Retrieval of rating failed"}, 400
+            return {"message": f"Retrieval of rating failed for asin {asin}"}, 400
         
         finally:
             con.close()
@@ -152,13 +152,16 @@ class Review:
             try:
                 cur.execute(f"SELECT * FROM {SQL_KINDLE} WHERE reviewerID = '{reviewerID}';")
                 r = fetch_dicts(cur)
-                return {"reviews": r, "message": "Successfully retrieved reviews"}, 200
+                if r == []:
+                    return {"message": f"No reviews found for user id {reviewerID}"}, 200
+
+                return {"reviews": r, "message": f"Successfully retrieved reviews for user id {reviewerID}"}, 200
 
             except Exception as e:
-                return {"message": "Retrieval of reviews failed"}, 400
+                return {"message": f"Retrieval of reviews failed for user id {reviewerID}"}, 400
 
             finally:
                 con.close()
 
         else:
-            return {"message": "Invalid user"}, 401
+            return {"message": f"User id {reviewerID} does not exist"}, 401

@@ -2,6 +2,7 @@ from flask import Flask, request
 from app import app
 from controllers.user import User
 from controllers.review import Review
+from controllers.metadata import Metadata
 
 ####################### USER ROUTES #######################
 @app.route('/user/signup', methods=['POST'])
@@ -16,12 +17,27 @@ def signout():
 def login():
     return User().login()
 
-###################### REVIEW ROUTES ######################
-# Ex: /review/B000F83SZQ
-@app.route('/review/<asin>', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def reviewAPI(asin):
-    if request.method == 'GET':
-        return Review().get_reviews(asin)
+####################### BOOK ROUTES #######################
+
+@app.route('/book/add', methods=['POST'])
+def add_new_book():
+    return Metadata().add_new_book()
+
+# Ex: /book/B000F83SZQ
+@app.route('/book/<asin>', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def bookAPI(asin):
+    if request.method == 'GET':       
+        book_metadata = Metadata().get_metadata(asin)
+
+        if book_metadata[1] == 200:
+            book_reviews = Review().get_reviews(asin)
+            message = book_metadata[0]["message"] + " & " + book_metadata[0]["message"]
+            combined_response = {**book_metadata[0], **book_reviews[0], **{"message": message}} # later keys will override
+
+            return combined_response, book_reviews[1]
+
+        else:
+            return book_metadata
 
     elif request.method == 'POST':
         return Review().insert_review(asin)
@@ -32,15 +48,14 @@ def reviewAPI(asin):
     elif request.method == 'DELETE':
         return Review().delete_review(asin)
 
-# Ex: /reviews?desc=True
-@app.route('/reviews', methods=['GET'])
-def reviewsAPI():
-    desc = request.args.get('desc', default = True, type = bool)
-    # genre = request.args.get('genre', default = None, type = str) # TODO: sort by genre in the same function?
-
-    return Review().sort_on_ratings(desc) # TODO: (error) Object of type 'Decimal' is not JSON serializable
-
 # Ex: /reviews/user/A1F6404F1VG29J
 @app.route('/reviews/user/<reviewerID>', methods=['GET'])
-def reviewsUserAPI(reviewerID):
+def get_user_reviews(reviewerID):
     return Review().get_user_reviews(reviewerID)
+
+# # Ex: /books?categories=<genre>&title=<title>&page=<pageNum>
+# @app.route('/books', methods=['GET'])
+# def booksAPI():
+#     # genre = request.args.get('genre', default = None, type = str) # TODO: check how to accept a list
+
+#     return Review().sort_on_ratings(desc) # TODO: (error) Object of type 'Decimal' is not JSON serializable

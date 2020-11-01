@@ -7,13 +7,12 @@ from common.mongo import mongo_users
 class User:
 
     def signup(self):
-        # Create the user object with the form data
+        # Create the user object with the json data
         user = {
             "name": request.json.get('name'),
             "email": request.json.get('email'),
             "password": request.json.get('password')
         }
-        print(user)
 
         # Encrypt the password
         user['password'] = pbkdf2_sha256.encrypt(user['password'])
