@@ -14,5 +14,6 @@ The provided `meta_kindle_store.json` file does not come with titles for many bo
    pip3 install requests
    ```
 3. Upload `amazon_webscraping.py` and `asin?.txt` to the corresponding VM. For each VM, `sudo nano amazon_webscraping.py` and edit the input filename to match the correct `asin?.txt`.
-4. Run the script: `amazon_webscraping.py`
-5. Download the `output.csv` and combine the results into a single file.
+4. Make the script an executable: `chmod +x amazon_webscraping.py`
+5. Run the script in the background: `nohup ./amazon_webscraping.py &`
+6. Download the `output.csv` and combine the results into a single file.
