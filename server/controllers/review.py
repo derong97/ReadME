@@ -33,13 +33,13 @@ class Review:
 
         finally:
             con.close()
-    
+
     # insert one book review record
-    def insert_review(self, asin):
-        reviewerID = request.json.get('reviewerID')
+    def insert_review(self, reviewerID, asin):
         reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
 
         if reviewer_info != None:
+
             reviewerName = reviewer_info['name']
 
             overall = request.json.get('overall')
@@ -64,8 +64,7 @@ class Review:
         else:
             return {"message": f"User id {reviewerID} does not exist"}, 401
 
-    def edit_review(self, asin):
-        reviewerID = request.json.get('reviewerID')
+    def edit_review(self, reviewerID, asin):
         reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
 
         if reviewer_info != None:
@@ -78,7 +77,7 @@ class Review:
             con, cur = connect()
             try:
                 cur.execute(
-                    f"UPDATE {SQL_KINDLE} SET {values} WHERE asin={asin} and reviewerID={reviewerID};")
+                    f"UPDATE {SQL_KINDLE} SET {values} WHERE asin='{asin}' and reviewerID='{reviewerID}';")
                 con.commit()
                 return {"message": f"Successfully edited review for asin {asin}"}, 200
 
@@ -91,13 +90,12 @@ class Review:
         else:
             return {"message": f"User id {reviewerID} does not exist"}, 401
 
-    def delete_review(self, asin):
-        reviewerID = request.json.get('reviewerID')
+    def delete_review(self, reviewerID, asin):
         reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
         if reviewer_info != None:
             con, cur = connect()
             try:
-                cur.execute(f"DELETE FROM {SQL_KINDLE} WHERE asin={asin} and reviewerID={reviewerID};")
+                cur.execute(f"DELETE FROM {SQL_KINDLE} WHERE asin='{asin}' and reviewerID='{reviewerID}';")
                 con.commit()
                 return {"message": f"Successfully deleted review for asin {asin}"}, 200
 

@@ -3,6 +3,7 @@ from app import app
 from controllers.user import User
 from controllers.review import Review
 from controllers.metadata import Metadata
+from common.token import token_required
 
 ####################### USER ROUTES #######################
 @app.route('/user/signup', methods=['POST'])
@@ -25,7 +26,8 @@ def add_new_book():
 
 # Ex: /book/B000F83SZQ
 @app.route('/book/<asin>', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def bookAPI(asin):
+@token_required
+def bookAPI(reviewerID, asin):
     if request.method == 'GET':       
         book_metadata = Metadata().get_metadata(asin)
 
@@ -40,13 +42,13 @@ def bookAPI(asin):
             return book_metadata
 
     elif request.method == 'POST':
-        return Review().insert_review(asin)
+        return Review().insert_review(reviewerID, asin)
     
     elif request.method == 'PUT':
-        return Review().edit_reviews(asin)
+        return Review().edit_review(reviewerID, asin)
     
     elif request.method == 'DELETE':
-        return Review().delete_review(asin)
+        return Review().delete_review(reviewerID, asin)
 
 # Ex: /reviews/user/A1F6404F1VG29J
 @app.route('/reviews/user/<reviewerID>', methods=['GET'])
