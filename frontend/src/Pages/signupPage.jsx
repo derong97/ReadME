@@ -73,11 +73,11 @@ class SignupPage extends React.Component {
         <div id="form-bg">
           <h3 id="form-header">Sign up for free!</h3>
           <Form id="form" onSubmit={this.checklogin}>
-            <Form.Group as={Row}>
+            <Form.Group as={Row} id="form-group">
               <Form.Label column sm="2">
                 Username
               </Form.Label>
-              <Col sm="9">
+              <Col sm="6">
                 <Form.Control
                   id="username"
                   type="text"
@@ -88,11 +88,11 @@ class SignupPage extends React.Component {
                 />
               </Col>
             </Form.Group>
-            <Form.Group as={Row}>
+            <Form.Group as={Row} id="form-group">
               <Form.Label column sm="2">
                 Email
               </Form.Label>
-              <Col sm="9">
+              <Col sm="6">
                 <Form.Control
                   id="email"
                   type="email"
@@ -103,11 +103,11 @@ class SignupPage extends React.Component {
                 />
               </Col>
             </Form.Group>
-            <Form.Group as={Row}>
+            <Form.Group as={Row} id="form-group">
               <Form.Label column sm="2">
                 Password
               </Form.Label>
-              <Col sm="9">
+              <Col sm="6">
                 <Form.Control
                   id="password"
                   type="password"

@@ -139,7 +139,7 @@ class BookPage extends React.Component {
                 </div>
               </div>
             </div>
-            <div id="relatedbooks">
+            <div id="relatedbooks" class="col">
               <div class="row">
                 <h4 id="relatedbooks-title">RELATED BOOKS</h4>
               </div>

@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_cors import CORS
 import os
-from apscheduler.schedulers.background import BackgroundScheduler
+# from apscheduler.schedulers.background import BackgroundScheduler
 from controllers.avgRating import AvgRating
 
 # App

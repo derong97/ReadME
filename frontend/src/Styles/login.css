@@ -16,20 +16,22 @@
   width: 60%;
   background-color: rgb(13, 21, 56);
   color: white;
+  overflow: hidden;
 }
 
 #form-header {
   margin-top: 80px;
-  text-align: center;
   font-family: "Gotham-Black";
   font-size: 40px;
+  text-align: center;
 }
 
 #form {
-  position: absolute;
-  top: 30%;
-  left: 48%;
-  width: 45%;
+  margin-top: 40px;
+}
+
+#form-group {
+  justify-content: center;
 }
 
 #form-bttn {
@@ -58,11 +60,11 @@
 #alt-bg {
   display: flex;
   flex-direction: column;
+  text-align: center;
   margin-top: 40px;
 }
 
 #alt-bttn {
-  width: 100%;
   background-color: rgb(13, 21, 56);
   border: 2px solid rgba(0, 158, 139);
   border-radius: 30px;

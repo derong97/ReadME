@@ -62,11 +62,11 @@ class LoginPage extends React.Component {
         <div id="form-bg">
           <h3 id="form-header">Welcome back!</h3>
           <Form id="form" onSubmit={this.checkLogin}>
-            <Form.Group as={Row}>
+            <Form.Group as={Row} id="form-group">
               <Form.Label column sm="2">
                 Email
               </Form.Label>
-              <Col sm="9">
+              <Col sm="6">
                 <Form.Control
                   id="email"
                   type="email"
@@ -77,11 +77,11 @@ class LoginPage extends React.Component {
                 />
               </Col>
             </Form.Group>
-            <Form.Group as={Row}>
+            <Form.Group as={Row} id="form-group">
               <Form.Label column sm="2">
                 Password
               </Form.Label>
-              <Col sm="9">
+              <Col sm="6">
                 <Form.Control
                   id="password"
                   type="password"

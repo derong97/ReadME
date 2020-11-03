@@ -112,7 +112,7 @@ const NavBar = ({ event, username, home, byme }) => {
         </NavDropdown> */}
         <Form
           inline
-          className="ml-auto"
+          className="align-items-center"
           // onSubmit={handleOnSubmit()}
         >
           <FormControl
