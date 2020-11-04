@@ -16,11 +16,11 @@
   width: 60%;
   background-color: rgb(13, 21, 56);
   color: white;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 #form-header {
-  margin-top: 80px;
+  margin-top: 50px;
   font-family: "Gotham-Black";
   font-size: 40px;
   text-align: center;
@@ -28,11 +28,27 @@
 
 #form {
   margin-top: 40px;
+  text-align: center;
 }
 
 #form-group {
   justify-content: center;
 }
+
+#error {
+  margin-bottom: 20px;
+  font-family: "Gotham-Thin";
+  font-size: 15px;
+  color: red;
+}
+
+#signup-error {
+  margin-bottom: 5px;
+  font-family: "Gotham-Thin";
+  font-size: 15px;
+  color: red;
+}
+
 
 #form-bttn {
   display: flex;

@@ -50,9 +50,15 @@ class LoginPage extends React.Component {
         }
       })
       .catch((err) => {
+        this.validate();
         console.log(err.response);
         console.log(err.request);
       });
+  };
+
+  validate = () => {
+    let error = "* Invalid email or password";
+    this.setState({ error });
   };
 
   render() {
@@ -62,6 +68,7 @@ class LoginPage extends React.Component {
         <div id="form-bg">
           <h3 id="form-header">Welcome back!</h3>
           <Form id="form" onSubmit={this.checkLogin}>
+            <div id="error">{this.state.error}</div>
             <Form.Group as={Row} id="form-group">
               <Form.Label column sm="2">
                 Email

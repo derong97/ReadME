@@ -19,7 +19,7 @@
 .nav-main {
   display: flex;
   flex-direction: column;
-  text-align: center;
+  align-items: center;
   color: white;
   font-size: 10px;
   width: 35px;
@@ -28,7 +28,7 @@
 .nav-sub {
   display: flex;
   flex-direction: column;
-  text-align: center;
+  align-items: center;
   color: rgba(255, 255, 255, 0.5);
   font-size: 10px;
   width: 35px;

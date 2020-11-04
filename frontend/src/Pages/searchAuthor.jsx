@@ -90,7 +90,7 @@ class SearchAuthor extends React.Component {
               <div id="body-header" class="row">
                 <h4>Search for {this.state.title} ... ...</h4>
               </div>
-              <div id="book-container">
+              <div id="body-content">
                 <GridList cols={5}>
                   {this.state.books.map((book) => (
                     <Book event={this} data={book} />

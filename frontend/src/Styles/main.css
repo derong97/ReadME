@@ -1,3 +1,15 @@
+#load {
+  margin-top: 100px;
+  text-align: center;
+  font-family: "Gotham-Black";
+}
+
+#load-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 #body {
   font-family: "Gotham-Medium";
   overflow: hidden;

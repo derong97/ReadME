@@ -33,37 +33,58 @@ class SignupPage extends React.Component {
   };
 
   checklogin = (evt) => {
-    const url = "http://localhost:5000/user/signup";
-    var username = document.getElementById("username").value;
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
+    const isValid = this.validate();
+    if (isValid) {
+      const url = "http://localhost:5000/user/signup";
+      var username = document.getElementById("username").value;
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
 
-    console.log(username);
-    console.log(password);
-    console.log(email);
+      console.log(username);
+      console.log(password);
+      console.log(email);
 
-    const body = {
-      name: username,
-      email: email,
-      password: password,
-    };
-    console.log(body);
+      const body = {
+        name: username,
+        email: email,
+        password: password,
+      };
+      console.log(body);
 
-    evt.preventDefault();
-    axios
-      .post(url, body)
-      .then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          this.props.history.push({
-            pathname: "/main",
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err.response);
-        console.log(err.request);
-      });
+      evt.preventDefault();
+      axios
+        .post(url, body)
+        .then((res) => {
+          console.log(res);
+          if (res.status === 200) {
+            this.props.history.push({
+              pathname: "/main",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err.response);
+          console.log(err.request);
+        });
+    } else {
+      evt.preventDefault();
+    }
+  };
+
+  validate = () => {
+    let userError = "";
+    let emailError = "";
+    let passwordError = "";
+
+    if (!this.state.username) userError = "* Username cannot be empty";
+    if (!this.state.email) emailError = "* Email cannot be empty";
+    if (!this.state.password) passwordError = "* Password cannot be empty";
+
+    if (userError || emailError || passwordError) {
+      this.setState({ userError, emailError, passwordError });
+      return false;
+    }
+    return true;
   };
 
   render() {
@@ -73,6 +94,7 @@ class SignupPage extends React.Component {
         <div id="form-bg">
           <h3 id="form-header">Sign up for free!</h3>
           <Form id="form" onSubmit={this.checklogin}>
+            <div id="signup-error">{this.state.userError}</div>
             <Form.Group as={Row} id="form-group">
               <Form.Label column sm="2">
                 Username
@@ -88,6 +110,7 @@ class SignupPage extends React.Component {
                 />
               </Col>
             </Form.Group>
+            <div id="signup-error">{this.state.emailError}</div>
             <Form.Group as={Row} id="form-group">
               <Form.Label column sm="2">
                 Email
@@ -103,6 +126,7 @@ class SignupPage extends React.Component {
                 />
               </Col>
             </Form.Group>
+            <div id="signup-error">{this.state.passwordError}</div>
             <Form.Group as={Row} id="form-group">
               <Form.Label column sm="2">
                 Password
