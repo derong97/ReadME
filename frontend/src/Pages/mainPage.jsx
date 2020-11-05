@@ -7,6 +7,7 @@ import GridList from "@material-ui/core/GridList";
 import NavBar from "../Components/NavBar.jsx";
 import Book from "../Components/BookItem.jsx";
 import Footer from "../Components/Footer.jsx";
+import Pagination from "react-js-pagination";
 import BookImg from "../Image/login_bg.png";
 import Logo from "../Image/logo_black.png";
 import FadeIn from "react-fade-in";
@@ -78,6 +79,7 @@ class MainPage extends React.Component {
         travel: false,
         crime: false,
       },
+      activePage: 1,
     };
   }
 
@@ -169,6 +171,12 @@ class MainPage extends React.Component {
   //     });
   // };
 
+  handlePageChange(pageNumber) {
+    //reload screen with new set of books
+    console.log(`active page is ${pageNumber}`);
+    this.setState({ activePage: pageNumber });
+  }
+
   render() {
     return (
       <div>
@@ -236,6 +244,15 @@ class MainPage extends React.Component {
                           <Book event={this} data={book} />
                         ))}
                       </GridList>
+                      <Pagination
+                        itemClass="page-item"
+                        linkClass="page-link"
+                        activePage={this.state.activePage}
+                        itemsCountPerPage={1} // helps you to calculate how many pages you need depending on your items
+                        totalItemsCount={3}
+                        pageRangeDisplayed={5}
+                        onChange={this.handlePageChange.bind(this)}
+                      />
                     </div>
                     <div id="filter">
                       <text id="filterby-header">FILTER BY</text>
