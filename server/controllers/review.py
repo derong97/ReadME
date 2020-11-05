@@ -24,27 +24,27 @@ class Review:
             cur.execute(f"SELECT * FROM {SQL_KINDLE} WHERE asin='{asin}';")
             r = fetch_dicts(cur)
             if r == []:
-                return {"message":"No reviews found"}, 200
+                return {"message": f"No reviews found for asin {asin}"}, 200
 
-            return {"reviews": r, "message":"Successfully retrieved reviews"}, 200
+            return {"reviews": r, "message": f"Successfully retrieved reviews for asin {asin}"}, 200
 
         except Exception as e:
-            return {"message": "Retrieval of reviews failed"}, 400
+            return {"message": f"Retrieval of reviews failed for asin {asin}"}, 400
 
         finally:
             con.close()
-    
+
     # insert one book review record
-    def insert_review(self, asin):
-        reviewerID = request.form.get('reviewerID')
+    def insert_review(self, reviewerID, asin):
         reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
 
         if reviewer_info != None:
+
             reviewerName = reviewer_info['name']
 
-            overall = request.form.get('overall')
-            reviewText = request.form.get('reviewText')
-            summary = request.form.get('summary')
+            overall = request.json.get('overall')
+            reviewText = request.json.get('reviewText')
+            summary = request.json.get('summary')
 
             values = f"('{asin}', {overall}, '{reviewText}', curdate(), '{reviewerID}', '{reviewerName}', '{summary}', UNIX_TIMESTAMP())"
 
@@ -53,39 +53,71 @@ class Review:
             try:
                 cur.execute(f"INSERT INTO {SQL_KINDLE} (asin, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime) VALUES {values}")
                 con.commit()
-                return {"message": "Successfully inserted review"}, 200
+                return {"message": f"Successfully inserted review for asin {asin}"}, 200
             
             except Exception as e:
-                return {"message": "Insertion of review failed"}, 400
+                return {"message": f"Insertion of review failed for asin {asin}"}, 400
             
             finally:
                 con.close()
 
         else:
-            return {"message": "Invalid user"}, 401
+            return {"message": f"User id {reviewerID} does not exist"}, 401
 
-    #TODO: edit the book review record
-    def edit_review(self, asin):
-        # TODO
-        return None
-    
-    #TODO: delete the book review record
-    def delete_review(self, asin):
-        return None
+    def edit_review(self, reviewerID, asin):
+        reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
+
+        if reviewer_info != None:
+            overall = request.json.get('overall')
+            reviewText = request.json.get('reviewText')
+            summary = request.json.get('summary')
+
+            values = f"overall = {overall}, reviewText = '{reviewText}', reviewTime = curdate(), summary = '{summary}', unixReviewTime = UNIX_TIMESTAMP()"
+
+            con, cur = connect()
+            try:
+                cur.execute(
+                    f"UPDATE {SQL_KINDLE} SET {values} WHERE asin='{asin}' and reviewerID='{reviewerID}';")
+                con.commit()
+                return {"message": f"Successfully edited review for asin {asin}"}, 200
+
+            except Exception as e:
+                return {"message": f"Failed to edit review for asin {asin}"}, 400
+
+            finally:
+                con.close()
+
+        else:
+            return {"message": f"User id {reviewerID} does not exist"}, 401
+
+    def delete_review(self, reviewerID, asin):
+        reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
+        if reviewer_info != None:
+            con, cur = connect()
+            try:
+                cur.execute(f"DELETE FROM {SQL_KINDLE} WHERE asin='{asin}' and reviewerID='{reviewerID}';")
+                con.commit()
+                return {"message": f"Successfully deleted review for asin {asin}"}, 200
+
+            except Exception as e:
+                return {"message": f"Deletion of review failed for asin {asin}"}, 400
+
+            finally:
+                con.close()
+        else:
+            return {"message": f"User id {reviewerID} does not exist"}, 401
     
     # get average rating of one book
     def get_rating(self, asin):
         con, cur = connect()
 
         try:
-            cur.execute("SELECT AVG(overall) as 'Average Rating' FROM {} WHERE asin = '{}';".format(SQL_KINDLE, asin))
+            cur.execute(f"SELECT AVG(overall) as 'Average Rating' FROM {SQL_KINDLE} WHERE asin = '{asin}';")
             r = cur.fetchone()[0]
-
-            print(r)
-            return {"rating": r, "message": "Successfully retrieved rating"}, 200
+            return {"rating": r, "message": f"Successfully retrieved rating for asin {asin}"}, 200
 
         except Exception as e:
-            return {"message": "Retrieval of rating failed"}, 400
+            return {"message": f"Retrieval of rating failed for asin {asin}"}, 400
         
         finally:
             con.close()
@@ -108,3 +140,26 @@ class Review:
         
         finally:
             con.close()
+
+
+    def get_user_reviews(self, reviewerID):
+        reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
+
+        if reviewer_info != None:
+            con, cur = connect()
+            try:
+                cur.execute(f"SELECT * FROM {SQL_KINDLE} WHERE reviewerID = '{reviewerID}';")
+                r = fetch_dicts(cur)
+                if r == []:
+                    return {"message": f"No reviews found for user id {reviewerID}"}, 200
+
+                return {"reviews": r, "message": f"Successfully retrieved reviews for user id {reviewerID}"}, 200
+
+            except Exception as e:
+                return {"message": f"Retrieval of reviews failed for user id {reviewerID}"}, 400
+
+            finally:
+                con.close()
+
+        else:
+            return {"message": f"User id {reviewerID} does not exist"}, 401

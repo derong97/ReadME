@@ -3,17 +3,19 @@ from bson.json_util import dumps
 from flask import Flask, jsonify, request, redirect
 from passlib.hash import pbkdf2_sha256
 from common.mongo import mongo_users
+from common.token import SECRET_KEY
+import datetime
+import jwt
 
 class User:
 
     def signup(self):
-        # Create the user object with the form data
+        # Create the user object with the json data
         user = {
             "name": request.json.get('name'),
             "email": request.json.get('email'),
             "password": request.json.get('password')
         }
-        print(user)
 
         # Encrypt the password
         user['password'] = pbkdf2_sha256.encrypt(user['password'])
@@ -38,6 +40,8 @@ class User:
 
         # Checks if the user exists and whether the hashed unencrypted password matches the stored encrypted password
         if user and pbkdf2_sha256.verify(request.json.get('password'), user['password']):
-            return {"reviewerID": f"{user['_id']}", "message" : f"{user['name']} successfully logged in"}, 200
+            # token expires after 30 min
+            token = jwt.encode({"reviewerID": f"{user['_id']}", 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, SECRET_KEY)
+            return {"token": token.decode('UTF-8'), "reviewerID": f"{user['_id']}", "message" : f"{user['name']} successfully logged in"}, 200
         
         return {"message": "Invalid login credentials"}, 401
