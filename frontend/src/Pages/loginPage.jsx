@@ -3,11 +3,13 @@ import axios from "axios";
 import "../Styles/login.css";
 import { Form, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import LoadingOverlay from "react-loading-overlay";
 
 class LoginPage extends React.Component {
   constructor() {
     super();
     this.state = {
+      loading: false,
       email: "",
       password: "",
     };
@@ -26,6 +28,7 @@ class LoginPage extends React.Component {
   };
 
   checkLogin = (evt) => {
+    this.setState({ loading: true });
     const url = "http://localhost:5000/user/login";
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
@@ -44,12 +47,14 @@ class LoginPage extends React.Component {
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
+          this.setState({ loading: false });
           this.props.history.push({
             pathname: "/main",
           });
         }
       })
       .catch((err) => {
+        this.setState({ loading: false });
         this.validate();
         console.log(err.response);
         console.log(err.request);
@@ -63,60 +68,62 @@ class LoginPage extends React.Component {
 
   render() {
     return (
-      <body id="body-bg">
-        <div id="image-bg"></div>
-        <div id="form-bg">
-          <h3 id="form-header">Welcome back!</h3>
-          <Form id="form" onSubmit={this.checkLogin}>
-            <div id="error">{this.state.error}</div>
-            <Form.Group as={Row} id="form-group">
-              <Form.Label column sm="2">
-                Email
-              </Form.Label>
-              <Col sm="6">
-                <Form.Control
-                  id="email"
-                  type="email"
-                  autoComplete="email"
-                  value={this.state.email}
-                  onChange={this.handleEmailChange}
-                  placeholder="Enter your email"
-                />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} id="form-group">
-              <Form.Label column sm="2">
-                Password
-              </Form.Label>
-              <Col sm="6">
-                <Form.Control
-                  id="password"
-                  type="password"
-                  autoComplete="current-password"
-                  value={this.state.password}
-                  onChange={this.handlePasswordChange}
-                  placeholder="Enter your password"
-                />
-              </Col>
-            </Form.Group>
+      <LoadingOverlay active={this.state.loading} spinner text="signing in ...">
+        <body id="body-bg">
+          <div id="image-bg"></div>
+          <div id="form-bg">
+            <h3 id="form-header">Welcome back!</h3>
+            <Form id="form" onSubmit={this.checkLogin}>
+              <div id="error">{this.state.error}</div>
+              <Form.Group as={Row} id="form-group">
+                <Form.Label column sm="2">
+                  Email
+                </Form.Label>
+                <Col sm="6">
+                  <Form.Control
+                    id="email"
+                    type="email"
+                    autoComplete="email"
+                    value={this.state.email}
+                    onChange={this.handleEmailChange}
+                    placeholder="Enter your email"
+                  />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} id="form-group">
+                <Form.Label column sm="2">
+                  Password
+                </Form.Label>
+                <Col sm="6">
+                  <Form.Control
+                    id="password"
+                    type="password"
+                    autoComplete="current-password"
+                    value={this.state.password}
+                    onChange={this.handlePasswordChange}
+                    placeholder="Enter your password"
+                  />
+                </Col>
+              </Form.Group>
 
-            <div id="form-bttn">
-              <button type="submit" id="confirm-bttn">
-                Login
-              </button>
-              <text id="forgotpw-bttn">
-                <u>forgot password?</u>
-              </text>
-              <div id="alt-bg">
-                <text>Don't have an account?</text>
-                <Link exact to="/signup">
-                  <button id="alt-bttn">Create new account</button>
-                </Link>
+              <div id="form-bttn">
+                <button type="submit" id="confirm-bttn">
+                  Login
+                </button>
+                <text id="forgotpw-bttn">
+                  <u>forgot password?</u>
+                </text>
+                <div id="alt-bg">
+                  <text>Don't have an account?</text>
+                  <Link exact to="/signup">
+                    <button id="alt-bttn">Create new account</button>
+                  </Link>
+                </div>
               </div>
-            </div>
-          </Form>
-        </div>
-      </body>
+            </Form>
+          </div>
+        </body>
+      </LoadingOverlay>
     );
   }
 }

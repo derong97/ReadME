@@ -82,6 +82,7 @@ class MainPage extends React.Component {
   }
 
   componentDidMount() {
+    // time taken to retrieve value from the backend for the top 30 books
     setTimeout(() => {
       this.setState({ loading: false });
       setTimeout(() => {
