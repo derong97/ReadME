@@ -1,13 +1,13 @@
-MONGO_IP=100.27.12.250
-MONGO_USER=admin
-MONGO_PW=password
+MONGO_IP=204.236.223.217
+MONGO_USER=historicriptide
+MONGO_PW=futuresparkles
 MONGO_DB=readme_mongo
 MONGO_USERS_COL=userbase
 MONGO_METADATA_COL=kindle_metadata
 
-SQL_IP=100.26.109.67
-SQL_USER=admin
-SQL_PW=password
+SQL_IP=52.73.249.157
+SQL_USER=historicriptide
+SQL_PW=futuresparkles
 SQL_DB=readme_sql
 SQL_KINDLE=Kindle
 
