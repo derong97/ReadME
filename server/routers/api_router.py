@@ -55,9 +55,11 @@ def bookAPI(reviewerID, asin):
 def get_user_reviews(reviewerID):
     return Review().get_user_reviews(reviewerID)
 
-# # Ex: /books?categories=<genre>&title=<title>&page=<pageNum>
-# @app.route('/books', methods=['GET'])
-# def booksAPI():
-#     # genre = request.args.get('genre', default = None, type = str) # TODO: check how to accept a list
+# Ex: /books?categories=<genre>&title=<title>&pageNum=<pageNum>
+@app.route('/books', methods=['GET'])
+def search():
+    # genre = request.args.get('genre', default=None, type=str) # TODO: check how to accept a list
+    title = request.args.get('title', default=None, type=str)
+    pageNum = request.args.get('pageNum', default=1, type=int)
 
-#     return Review().sort_on_ratings(desc) # TODO: (error) Object of type 'Decimal' is not JSON serializable
+    return Metadata().search_by_title(title, pageNum)
