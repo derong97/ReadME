@@ -2,8 +2,9 @@ from flask import request
 from common.sql import SQL_KINDLE, connect
 from common.mongo import mongo_metadata
 
-class AvgRating:
+# TODO: Should be in the preprocessing step - remove this class and associated endpoint eventually
 
+class AvgRating:
     # get average rating of all books
     def get_avg_rating(self):
         con, cur = connect()

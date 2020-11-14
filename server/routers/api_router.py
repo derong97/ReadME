@@ -55,12 +55,12 @@ def bookAPI(reviewerID, asin):
 def get_user_reviews(reviewerID):
     return Review().get_user_reviews(reviewerID)
 
-# Ex 1: /books?categories=Catholicism
+# Ex 1: /books?categories=Public Health&categories=Vascular
 # Ex 2: /books?title=flowers&pageNum=2
 # Ex 3: /books?categories=Preventive Medicine&title=public health
 @app.route('/books', methods=['GET'])
 def search():
-    categories = request.args.get('categories', default=None, type=str)
+    categories = request.args.getlist("categories")
     title = request.args.get('title', default=None, type=str)
     pageNum = request.args.get('pageNum', default=1, type=int)
 

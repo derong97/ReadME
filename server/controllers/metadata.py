@@ -54,7 +54,7 @@ class Metadata:
             filter_dict = {}
 
             if categories != None:
-                filter_dict.update({"categories": {"$elemMatch": {"$elemMatch": {"$in": [categories] }}}})
+                filter_dict.update({"categories": {"$elemMatch": {"$elemMatch": {"$in": categories}}}})
 
             if title != None:
                 # same as searching on Compass: {title: /<title/i}
