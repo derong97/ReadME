@@ -17,7 +17,6 @@ class ReviewsYouAddedPage extends Component {
     ],
     username: "GlendiBear",
     addReviewModalShow: false,
-
   };
 
   handleDelete = (reviewID) => {
@@ -36,7 +35,12 @@ class ReviewsYouAddedPage extends Component {
   render() {
     return (
       <React.Fragment>
-        <NavBar event={this} username={this.state.username}></NavBar>
+        <NavBar
+          event={this}
+          username={this.state.username}
+          home="nav-sub"
+          byme="nav-main"
+        ></NavBar>
         <h2>Reviews You Added</h2>
         <div className="row">
           <h5>

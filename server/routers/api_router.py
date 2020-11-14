@@ -2,6 +2,7 @@ from flask import Flask, request
 from app import app
 from controllers.user import User
 from controllers.review import Review
+from controllers.avgRating import AvgRating
 from controllers.metadata import Metadata
 from common.token import token_required
 
@@ -64,3 +65,8 @@ def search():
     pageNum = request.args.get('pageNum', default=1, type=int)
 
     return Metadata().search(categories, title, pageNum)
+
+###################### AVG RATING ROUTES ######################
+@app.route('/avgRating/getAvgRating', methods=['POST'])
+def getAvgRating():
+    return AvgRating().get_avg_rating()

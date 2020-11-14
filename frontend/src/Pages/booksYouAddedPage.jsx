@@ -35,7 +35,12 @@ class BooksYouAddedPage extends Component {
   render() {
     return (
       <React.Fragment>
-        <NavBar event={this} username={this.state.username}></NavBar>
+        <NavBar
+          event={this}
+          username={this.state.username}
+          home="nav-sub"
+          byme="nav-main"
+        ></NavBar>
         <h2>Books You Added</h2>
         <div className="row">
           <h5>

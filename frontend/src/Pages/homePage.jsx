@@ -10,20 +10,22 @@ class HomePage extends React.Component {
   render() {
     return (
       <body>
-        <Navbar className="navbar-bg" variant="dark">
+        <Navbar className="navbar-bg" expand="lg" variant="dark">
           <Navbar.Brand className="navbrand">
             <img className="navbrand-img" alt="ReadME Logo" src={Logo} />
             ReadME
           </Navbar.Brand>
-          <Nav className="ml-auto">
-            <Link exact to="/login">
-              <button className="login-bttn">Log in/ Sign up</button>
-            </Link>
-          </Nav>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ml-auto">
+              <Link exact to="/login">
+                <button className="login-bttn">Log in/ Sign up</button>
+              </Link>
+            </Nav>
+          </Navbar.Collapse>
         </Navbar>
 
-        <div>
-          <img id="home-bg" alt="Background" src={Homebg}></img>
+        <div id="home-bg">
           <Link exact to="/signup">
             <button id="nextpage-bttn">let's explore</button>
           </Link>

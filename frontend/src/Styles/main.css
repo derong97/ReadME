@@ -1,13 +1,31 @@
+#load {
+  margin-top: 100px;
+  text-align: center;
+  font-family: "Gotham-Black";
+}
+
+#load-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 #body {
   font-family: "Gotham-Medium";
+  overflow: hidden;
+}
+
+#header-n-books {
+  margin-left: 20px;
 }
 
 #body-header {
   display: flex;
   flex-direction: row;
-  position: absolute;
-  top: 50px;
-  left: 40px;
+  margin-top: 50px;
+}
+
+#header {
   font-family: "Gotham-Black";
 }
 
@@ -15,13 +33,13 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: 460px;
+
   font-family: "Gotham-Medium";
 }
 
 #sortby-dropdown {
   width: 120px;
-  margin-left: 20px;
+  margin-left: 15px;
   background-color: transparent;
   font-size: 12px;
   color: black;
@@ -31,19 +49,36 @@
   font-size: 12px;
 }
 
-#book-container {
-  margin-top: 80px;
-  margin-left: 25px;
+#body-content {
+  margin-top: 35px;
   padding-bottom: 100px;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.page-item.active > .page-link {
+  background-color: rgb(13, 21, 56);
+  border-color: rgb(13, 21, 56);
+}
+
+.page-link {
+  color: rgb(13, 21, 56);
+}
+
+.page-link:hover {
+  color: rgb(13, 21, 56);
+  background-color: rgb(0, 0, 0, 0.2);
 }
 
 #filter {
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: 200px;
-  left: 1000px;
-  width: 200px;
+  margin-top: 32px;
+  width: 210px;
 }
 
 #filterby-header {
@@ -71,6 +106,10 @@
   margin-right: 10px;
   font-family: "Gotham-Thin";
   font-size: 12px;
+}
+
+#genres-submit {
+  text-align: center;
 }
 
 #genres-bttn {

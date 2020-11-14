@@ -2,9 +2,13 @@
   margin-top: 50px;
 }
 
+#book-n-review {
+  padding-right: 100px;
+  margin-left: 50px;
+}
+
 #book-img {
   width: 180px;
-  margin-left: 50px;
 }
 
 #book-info {
@@ -38,8 +42,7 @@
 }
 
 #relatedbooks {
-  position: absolute;
-  left: 950px;
+  margin-left: 50px;
 }
 
 #relatedbooks-title {
@@ -49,13 +52,15 @@
 #review {
   margin-top: 50px;
   margin-bottom: 70px;
-  margin-left: 35px;
 }
 
 #review-header {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+#review-title {
   font-family: "Gotham-Black";
 }
 
@@ -65,7 +70,7 @@
   background-color: rgba(0, 158, 139);
   border: none;
   border-radius: 5px;
-  margin-left: 425px;
+  margin-left: 430px;
   padding: 10px 15px;
   outline: 0;
   font-size: 12px;
