@@ -37,7 +37,6 @@ def bookAPI(reviewerID, asin):
             combined_response = {**book_metadata[0], **book_reviews[0], **{"message": message}} # later keys will override
 
             return combined_response, book_reviews[1]
-
         else:
             return book_metadata
 
@@ -55,11 +54,13 @@ def bookAPI(reviewerID, asin):
 def get_user_reviews(reviewerID):
     return Review().get_user_reviews(reviewerID)
 
-# Ex: /books?categories=<genre>&title=<title>&pageNum=<pageNum>
+# Ex 1: /books?categories=Catholicism
+# Ex 2: /books?title=flowers&pageNum=2
+# Ex 3: /books?categories=Preventive Medicine&title=public health
 @app.route('/books', methods=['GET'])
 def search():
-    # genre = request.args.get('genre', default=None, type=str) # TODO: check how to accept a list
+    categories = request.args.get('categories', default=None, type=str)
     title = request.args.get('title', default=None, type=str)
     pageNum = request.args.get('pageNum', default=1, type=int)
 
-    return Metadata().search_by_title(title, pageNum)
+    return Metadata().search(categories, title, pageNum)

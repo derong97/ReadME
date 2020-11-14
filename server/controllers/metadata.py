@@ -48,39 +48,49 @@ class Metadata:
 
         return {"message": "Failed to add new book"}, 400
 
-    # search corresponding metadata with title matching provided title substring
-    def search_by_title(self, title, pageNum=1):
+    # search by title and filter by categories if supplied
+    def search(self, categories, title, pageNum):
         try:
-            # same as searching on Compass: {title: /<title/i}
-            pat = re.compile(title, re.I)
-            matching_counts = mongo_metadata.find({"title": {'$regex': pat}}).count()
+            filter_dict = {}
 
-            if matching_counts == 0:
-                return {"message": f"No metadata found with title containing {title}"}, 200
+            if categories != None:
+                filter_dict.update({"categories": {"$elemMatch": {"$elemMatch": {"$in": [categories] }}}})
+
+            if title != None:
+                # same as searching on Compass: {title: /<title/i}
+                pattern = re.compile(title, re.I) # not case sensitive
+                filter_dict.update({"title": {'$regex': pattern}})
             
-            max_counts_till_prev_page = (pageNum - 1) * MAX_BOOKS_PER_PAGE
-            max_counts_till_curr_page = pageNum * MAX_BOOKS_PER_PAGE
+            # all_metadata = self.sort_by_avg_rating(filter_dict) # TODO: not all records have average rating now
+            all_metadata = mongo_metadata.find(filter_dict)
 
-            isLastPage = matching_counts > max_counts_till_prev_page and matching_counts <= max_counts_till_curr_page
-
-            list_of_metadata = mongo_metadata.find({"title": {'$regex': pat}})
-
-            if isLastPage:
-                list_of_metadata = list_of_metadata[max_counts_till_prev_page : ]
-            else:
-                list_of_metadata = list_of_metadata[max_counts_till_prev_page : max_counts_till_curr_page]
-
-            list_of_metadata = json.loads(json_util.dumps(list_of_metadata))
-
-            return {"metadata": list_of_metadata, # returns max 10 records only
-                    "total counts": matching_counts, # so the frontend knows how many pages to expect
-                    "message": f"Successfully retrieved metadata with title containing {title}" 
+            if all_metadata.count() == 0:
+                return {"message": f"No metadata found with title as {title} and categories as {categories}"}, 200
+            
+            return {"metadata": self.get_page_metadata(all_metadata, pageNum), # returns max 10 records only
+                    "total counts": all_metadata.count(), # so the frontend knows how many pages to expect
+                    "message": f"Successfully retrieved metadata with title as {title} and categories as {categories}"
                     }, 200
 
         except Exception as e:
-            return {"message": f"Retrieval of metadata failed when searching for title containing {title}"}, 400
+            return {"message": f"Retrieval of metadata failed when searching"}, 400
         
-        return {{"message": f"Failed to search by title"}}, 400
+        return {"message": f"Retrieval of metadata failed when searching"}, 400
     
-    def sort_by_avg_rating(self, averageRating):
-        return
+    # returns only the relevant page metadata
+    def get_page_metadata(self, all_metadata, pageNum=1):
+        max_counts_till_prev_page = (pageNum - 1) * MAX_BOOKS_PER_PAGE
+        max_counts_till_curr_page = pageNum * MAX_BOOKS_PER_PAGE
+
+        isLastPage = all_metadata.count() > max_counts_till_prev_page and all_metadata.count() <= max_counts_till_curr_page
+
+        if isLastPage:
+            page_metadata = all_metadata[max_counts_till_prev_page : ]
+        else:
+            page_metadata = all_metadata[max_counts_till_prev_page : max_counts_till_curr_page]
+
+        return json.loads(json_util.dumps(page_metadata))
+
+    # filtered result is sorted by averageRating in descending order
+    def sort_by_avg_rating(self, filter_dict={}):
+        return mongo_metadata.find(filter_dict).sort( {"averageRating": -1})
