@@ -92,6 +92,7 @@ class Review:
 
     def delete_review(self, reviewerID, asin):
         reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
+
         if reviewer_info != None:
             con, cur = connect()
             try:

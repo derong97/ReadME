@@ -21,7 +21,7 @@ headers = {
     'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
 }
 
-# Input: "https://www.amazon.com/s?k=1603420304&ref=nb_sb_noss"
+# Ex: https://www.goodreads.com/search?utf8=%E2%9C%93&q=B000WEE1YU&search_type=books
 def get_title(url):
     
     try:

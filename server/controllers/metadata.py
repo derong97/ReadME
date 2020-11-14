@@ -53,7 +53,7 @@ class Metadata:
         try:
             filter_dict = {}
 
-            if categories != None:
+            if categories != []:
                 filter_dict.update({"categories": {"$elemMatch": {"$elemMatch": {"$in": categories}}}})
 
             if title != None:

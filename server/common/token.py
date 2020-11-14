@@ -21,4 +21,5 @@ def token_required(f):
          return jsonify({'message': 'token is invalid'})
 
       return f(reviewerID, *args, **kwargs)
+   decorator.__name__ = f.__name__
    return decorator

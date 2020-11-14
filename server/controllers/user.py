@@ -26,7 +26,9 @@ class User:
 
         # Insert user record into db
         elif mongo_users.insert_one(user):
-            return {"reviewerID": f"{user['_id']}", "message" : f"{user['name']} successfully signed up"}, 200
+            # token expires after 30 min
+            token = jwt.encode({"reviewerID": f"{user['_id']}", 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, SECRET_KEY)
+            return {"token": token.decode('UTF-8'), "message" : f"{user['name']} successfully signed up"}, 200
 
         return {"message": "Signup failed"}, 400
 
@@ -42,6 +44,6 @@ class User:
         if user and pbkdf2_sha256.verify(request.json.get('password'), user['password']):
             # token expires after 30 min
             token = jwt.encode({"reviewerID": f"{user['_id']}", 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, SECRET_KEY)
-            return {"token": token.decode('UTF-8'), "reviewerID": f"{user['_id']}", "message" : f"{user['name']} successfully logged in"}, 200
+            return {"token": token.decode('UTF-8'), "message" : f"{user['name']} successfully logged in"}, 200
         
         return {"message": "Invalid login credentials"}, 401
