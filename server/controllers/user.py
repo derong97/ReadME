@@ -22,7 +22,7 @@ class User:
 
         # Check for existing email address
         if mongo_users.find_one({"email" : user['email']}):
-            return {"message": "Email address already in use"}, 400
+            return {"message": f"Email address '{user['email']}' already in use"}, 400
 
         # Insert user record into db
         elif mongo_users.insert_one(user):
