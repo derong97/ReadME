@@ -19,7 +19,7 @@ from common.mongo import mongolog
 #                                 port=27017
 #                             )
 
-logger = logging.basicConfig(filename='demo.log')
+logger = logging.basicConfig()
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
