@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import StarRatings from "react-star-ratings";
+import { TextareaAutosize } from "@material-ui/core";
 
 const Book = ({ event, data }) => {
   // const bookDeets = (evt, title) => {
@@ -29,17 +30,22 @@ const Book = ({ event, data }) => {
   //     });
   // };
 
+  const checkNull = () => {
+    if (data.avg_rating === null) return true;
+    return false;
+  };
+
   return (
     <div
       className="book-content"
       // onClick={() => bookDeets(data.book)}
       onClick={() => event.props.history.push("/book")}
     >
-      <img className="book" alt="book" src={data.link}></img>
-      <text className="book">{data.book}</text>
+      <img className="book" alt="book" src={data.imUrl}></img>
+      <text className="book">{data.title}</text>
       <StarRatings
         name="rating"
-        rating={data.rating}
+        rating={checkNull ? 0 : data.avg_rating}
         starRatedColor="orange"
         starDimension="20px"
         starSpacing="2.5px"

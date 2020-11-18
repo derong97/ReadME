@@ -4,6 +4,7 @@ MONGO_PW=futuresparkles
 MONGO_DB=readme_mongo
 MONGO_USERS_COL=userbase
 MONGO_METADATA_COL=kindle_metadata
+MONGO_LOG_COL=log
 
 SQL_IP=52.73.249.157
 SQL_USER=historicriptide

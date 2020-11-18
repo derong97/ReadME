@@ -11,67 +11,73 @@ class SearchAuthor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "GlendiBear",
-      title: "GlendiBear",
-      // books: JSON.parse(this.props.location.state.books),
-      books: [
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-      ],
+      username: props.location.state.username,
+      title: props.location.state.title,
+      books: props.location.state.books,
+      // books: [
+      //   {
+      //     link: BookImg,
+      //     book: "Book 1 Title",
+      //     rating: 2,
+      //   },
+      //   {
+      //     link: BookImg,
+      //     book: "Book 1 Title",
+      //     rating: 2,
+      //   },
+      //   {
+      //     link: BookImg,
+      //     book: "Book 1 Title",
+      //     rating: 2,
+      //   },
+      //   {
+      //     link: BookImg,
+      //     book: "Book 1 Title",
+      //     rating: 2,
+      //   },
+      //   {
+      //     link: BookImg,
+      //     book: "Book 1 Title",
+      //     rating: 2,
+      //   },
+      //   {
+      //     link: BookImg,
+      //     book: "Book 1 Title",
+      //     rating: 2,
+      //   },
+      //   {
+      //     link: BookImg,
+      //     book: "Book 1 Title",
+      //     rating: 2,
+      //   },
+      //   {
+      //     link: BookImg,
+      //     book: "Book 1 Title",
+      //     rating: 2,
+      //   },
+      //   {
+      //     link: BookImg,
+      //     book: "Book 1 Title",
+      //     rating: 2,
+      //   },
+      //   {
+      //     link: BookImg,
+      //     book: "Book 1 Title",
+      //     rating: 2,
+      //   },
+      //   {
+      //     link: BookImg,
+      //     book: "Book 1 Title",
+      //     rating: 2,
+      //   },
+      // ],
     };
+  }
+
+  componentDidMount() {
+    console.log(this.state.books);
+    const books = this.state.books;
+    console.log(books[0].imUrl);
   }
 
   render() {

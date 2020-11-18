@@ -199,6 +199,7 @@ class MainPage extends React.Component {
           <body id="body">
             <NavBar
               event={this}
+              token={this.state.token}
               username={this.state.username}
               home="nav-main"
               byme="nav-sub"
