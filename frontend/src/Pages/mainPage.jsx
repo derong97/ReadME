@@ -35,12 +35,13 @@ const defaultOptions2 = {
 };
 
 class MainPage extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      token: props.location.state.token,
       loading: true,
       done: false,
-      username: "GlendiBear",
+      username: props.location.state.username,
       dropDownValue: "Popularity",
       books: [
         {
