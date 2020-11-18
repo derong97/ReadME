@@ -17,21 +17,17 @@ import {
 import Logo from "../Image/logo_white.png";
 import AddBookModal from "../Components/AddModals/AddBookModal.jsx";
 import AddReviewModal from "../Components/AddModals/AddReviewModal.jsx";
-import '../../Styles/components.css'
+import '../Styles/components.css'
 
 
 class NavBar extends Component {
   static filtered = "";
 
-  constructor(props, event, username, home, byme) {
+  constructor(props) {
     super(props);
     this.state = {
       addBookModalShow: false,
       addReviewModalShow: false,
-      username: username,
-      home: home,
-      byme: byme,
-      event: event,
     }
   }
 
@@ -56,16 +52,16 @@ class NavBar extends Component {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav.Link onClick={() => this.props.history.push("/main")}>
-              <container className={this.state.home}>
+            <Nav.Link onClick={() => this.props.event.props.history.push("/main")}>
+              <container className={this.props.home}>
                 <FontAwesomeIcon icon={faHome} size="3x" />
                 home
               </container>
             </Nav.Link>
             <Nav.Link
-              onClick={() => this.props.history.push("/reviews-you-added")}
+              onClick={() => this.props.event.props.history.push("/reviews-you-added")}
             >
-              <container className={this.state.byme}>
+              <container className={this.props.byme}>
                 <FontAwesomeIcon icon={faUser} size="3x" />
                 by me
               </container>
@@ -107,7 +103,7 @@ class NavBar extends Component {
               />
               <Button
                 variant="outline-info"
-                onClick={() => this.props.history.push("/search")}
+                onClick={() => this.props.event.props.history.push("/search")}
                 // onClick={() => handleOnSubmit(filtered)}
               >
                 search
@@ -132,7 +128,7 @@ class NavBar extends Component {
               title={
                 <button className="user-bttn">
                   <FontAwesomeIcon icon={faUserCircle} size="2x" />
-                  <text className="user-text">{this.state.username}</text>
+                  <text className="user-text">{this.props.username}</text>
                 </button>
               }
             >
@@ -140,7 +136,7 @@ class NavBar extends Component {
               <NavDropdown.Divider />
               <NavDropdown.Item
                 className="item"
-                onClick={() => this.props.history.push("/")}
+                onClick={() => this.props.event.props.history.pusha("/")}
               >
                 Log Out
               </NavDropdown.Item>
