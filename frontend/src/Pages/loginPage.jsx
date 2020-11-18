@@ -27,7 +27,7 @@ class LoginPage extends React.Component {
     });
   };
 
-  checkLogin = (evt) => {
+  checkLogin = async (evt) => {
     this.setState({ loading: true });
     const url = "http://localhost:5000/user/login";
     var email = document.getElementById("email").value;
@@ -40,6 +40,14 @@ class LoginPage extends React.Component {
       password: password,
     };
     console.log(body);
+
+    // const response = await this.props.mutate({
+    //   variables: this.state,
+    // });
+    
+    // const { token, refreshToken } = response.data.login;
+    localStorage.setItem('token', "hello");
+    localStorage.setItem('refreshToken', "hello");
 
     evt.preventDefault();
     axios

@@ -75,17 +75,6 @@ class AddReviewModal extends Component {
               <Form.Label column sm={2}>
                 Rating
               </Form.Label>
-              {/* <Ratings
-                rating={this.state.rating}
-                widgetRatedColors="orange"
-                changeRating={this.handleRatingChange}
-              >
-                <Ratings.Widget widgetHoverColor="yellow" widgetDimension="40px"/>
-                <Ratings.Widget widgetHoverColor="yellow" widgetDimension="40px"/>
-                <Ratings.Widget widgetHoverColor="yellow" widgetDimension="40px"/>
-                <Ratings.Widget widgetHoverColor="yellow" widgetDimension="40px"/>
-                <Ratings.Widget widgetHoverColor="yellow" widgetDimension="40px"/>
-              </Ratings> */}
               <ReactStars
                 count={5}
                 onChange={this.handleRatingChange}
