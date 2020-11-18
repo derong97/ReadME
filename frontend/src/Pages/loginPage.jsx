@@ -46,10 +46,16 @@ class LoginPage extends React.Component {
       .post(url, body)
       .then((res) => {
         console.log(res);
+        const token = res.data.token;
+        const username = res.data.username;
         if (res.status === 200) {
           this.setState({ loading: false });
           this.props.history.push({
             pathname: "/main",
+            state: {
+              token: token,
+              username: username,
+            },
           });
         }
       })

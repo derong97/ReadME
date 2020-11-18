@@ -59,15 +59,23 @@ class SignupPage extends React.Component {
         .post(url, body)
         .then((res) => {
           console.log(res);
+          const token = res.data.token;
+          const username = res.data.username;
           if (res.status === 200) {
             this.setState({ loading: false });
             this.props.history.push({
               pathname: "/main",
+              state: {
+                token: token,
+                username: username,
+              },
             });
           }
         })
         .catch((err) => {
-          this.setState({ loading: false });
+          let userError = "";
+          userError = err.response.data.message;
+          this.setState({ loading: false, userError });
           console.log(err.response);
           console.log(err.request);
         });
