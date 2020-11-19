@@ -9,15 +9,23 @@ import "../Styles/reviewsyouadded.css";
 import AddReviewModal from "../Components/AddModals/AddReviewModal.jsx";
 
 class ReviewsYouAddedPage extends Component {
-  state = {
-    ReviewsYouAdded: [
-      { reviewID: "0001" },
-      { reviewID: "0002" },
-      { reviewID: "0003" },
-    ],
-    username: "GlendiBear",
-    addReviewModalShow: false,
-  };
+
+  constructor(props){
+    super(props);
+    this.state = {
+      ReviewsYouAdded: [
+        { reviewID: "0001" },
+        { reviewID: "0002" },
+        { reviewID: "0003" },
+      ],
+      addReviewModalShow: false,
+      token: this.props.token,
+      username: this.props.username,
+      // id: this.props
+      // username: props.location.state.username,
+    }
+  }
+  
 
   handleDelete = (reviewID) => {
     //create new array without given counter

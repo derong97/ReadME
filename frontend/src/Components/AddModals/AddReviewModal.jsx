@@ -5,17 +5,20 @@ import ReactStars from "react-rating-stars-component";
 import axios from "axios";
 
 class AddReviewModal extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+  constructor(props) {
+    super(props);
 
-  state = {
-    loading: false,
-    asin: 0,
-    reviewTitle: "",
-    rating: 3.7,
-    reviewText: "",
-  };
+    this.state = {
+      loading: false,
+      asin: 0,
+      reviewTitle: "",
+      rating: 3.7,
+      reviewText: "",
+      token: this.props.token,
+      // id: props.location.state.id,
+      // username: props.location.state.username, //dont need this! 
+    };
+  }
 
   handleASINChange = (event) => {
     this.setState({
@@ -41,41 +44,85 @@ class AddReviewModal extends Component {
     });
   };
 
-  getUnixTimestamp = () => {
-    const dateTime = Date.now();
-    const timestamp = Math.floor(dateTime / 1000);
+  // getUnixTimestamp = () => {
+  //   const dateTime = Date.now();
+  //   const timestamp = Math.floor(dateTime / 1000);
 
-    return timestamp;
-  };
+  //   return timestamp;
+  // };
 
-  getCurDate = () => {
-    var dateTime = new Date(),
-      date =
-        dateTime.getFullYear() +
-        "," +
-        (dateTime.getMonth() + 1) +
-        "," +
-        dateTime.getDate();
+  // getCurDate = () => {
+  //   var dateTime = new Date(),
+  //     date =
+  //       dateTime.getFullYear() +
+  //       "," +
+  //       (dateTime.getMonth() + 1) +
+  //       "," +
+  //       dateTime.getDate();
 
-    return date;
-  };
+  //   return date;
+  // };
 
   handleSubmit = (event) => {
     this.setState({ loading: true });
-    // const url = {"http://localhost:5000/book/" + this.state.asin};
+    const url = `http://localhost:5000/book/${this.state.asin}`;
     var asin = this.state.asin;
     var overall = this.state.rating;
     var reviewText = this.state.reviewText;
     var reviewTime = this.getCurDate();
-    var reviewerID = this.props.username; //HELP
-    var reviewerName = this.props.name;
+    var reviewerID = this.props.id; //HELP
+    var reviewerName = this.props.username;
     var summary = this.state.reviewTitle;
     var unixReviewTime = this.getUnixTimestamp();
 
     // SQL post
-    const review_body = {};
+    const review_body = {
+      headers: { "x-access-tokens": this.props.token },
+      params: {asin: asin},
+      overall: overall,
+      reviewText: reviewText,
+      // reviewTime: reviewTime,
+      // reviewerID: reviewerID,
+      summary: summary,
+      // unixReviewTime: unixReviewTime
+    }
+    // `INSERT INTO Kindle (asin, overall, reviewText, reviewTime, reviewerID, reviewerName, 
+    //     summary, unixReviewTime) VALUES (${asin}, ${overall}, ${reviewText}, ${reviewTime}, 
+    //     ${reviewerID}, ${reviewerName}, ${summary}, ${unixReviewTime};`;
 
-    console.log("submitted");
+    console.log(review_body);
+
+    const config = {
+      headers: { Authorization: `Bearer ${this.props.token}` },
+    };
+
+    event.preventDefault();
+    axios
+      .post(url, review_body)
+      .then((res) => {
+        console.log(res);
+        const token = res.data.token;
+        const username = res.data.username;
+        const id = res.data.reviewerID;
+        if (res.status == 200) {
+          this.setState({ loading: false });
+          this.props.history.push({
+            pathname: "/reviews-you-added",
+            state: {
+              token: this.props.token,
+              id: id,
+              username: username,
+            },
+          });
+        }
+      })
+      .catch((err) => {
+        let userError = "";
+        userError = err.response.data.message;
+        this.setState({ loading: false, userError });
+        console.log(err.response);
+        console.log(err.request);
+      });
   };
 
   render() {

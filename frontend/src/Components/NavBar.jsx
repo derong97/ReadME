@@ -112,7 +112,13 @@ class NavBar extends Component {
             </Nav.Link>
             <Nav.Link
               onClick={() =>
-                this.props.event.props.history.push("/reviews-you-added")
+                this.props.event.props.history.push({
+                  pathname: "/reviews-you-added",
+                  state: {
+                    token: this.props.token,
+                    username: this.props.username
+                  },
+                })
               }
             >
               <container className={this.props.byme}>
@@ -190,6 +196,7 @@ class NavBar extends Component {
 
         <div>
           <AddReviewModal
+            token={this.props.token}
             show={this.state.addReviewModalShow}
             onHide={this.addReviewModalClose}
           />

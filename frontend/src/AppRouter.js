@@ -52,7 +52,7 @@ const AppRouter = () => {
                 <Route exact path="/" component={HomePage} />
                 <Route exact path="/login" component={LoginPage}/>
                 <Route exact path="/signup" component={SignupPage}/>
-                <AuthRoute exact path="/main" component={MainPage}/>
+                <Route exact path="/main" component={MainPage}/>
                 <Route exact path="/search" component={SearchPage}/>
                 <Route exact path="/book" component={BookPage}/>
                 {/* <AuthRoute exact path="/books-you-added" component={BooksYouAddedPage}/> */}

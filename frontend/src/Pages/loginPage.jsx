@@ -41,14 +41,6 @@ class LoginPage extends React.Component {
     };
     console.log(body);
 
-    // const response = await this.props.mutate({
-    //   variables: this.state,
-    // });
-
-    // const { token, refreshToken } = response.data.login;
-    localStorage.setItem("token", "hello");
-    localStorage.setItem("refreshToken", "hello");
-
     evt.preventDefault();
     axios
       .post(url, body)
