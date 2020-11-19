@@ -108,7 +108,13 @@
 }
 
 .book {
-  width: 200px;
+  width: 120px;
+}
+
+.book-title {
+  width: 120px;
+  margin-top: 3px;
+  font-size: 12px;
 }
 
 /* Related Book */

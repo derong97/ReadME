@@ -27,6 +27,7 @@ class NavBar extends Component {
     super(props);
     this.state = {
       search: "",
+      searching: this.props.searching,
       addBookModalShow: false,
       addReviewModalShow: false,
     };
@@ -39,6 +40,7 @@ class NavBar extends Component {
   };
 
   handleOnSubmit = (evt) => {
+    this.setState({ searching: true });
     const url = "http://localhost:5000/books";
     const search = this.state.search;
     const body = {
@@ -54,9 +56,11 @@ class NavBar extends Component {
         const metadata = res.data.metadata;
         console.log(metadata);
         if (res.status === 200) {
+          this.setState({ searching: false });
           this.props.event.props.history.push({
             pathname: "/search",
             state: {
+              token: this.props.token,
               username: this.props.username,
               title: search,
               books: metadata,
@@ -91,7 +95,15 @@ class NavBar extends Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav.Link
-              onClick={() => this.props.event.props.history.push("/main")}
+              onClick={() =>
+                this.props.event.props.history.push({
+                  pathname: "/main",
+                  state: {
+                    token: this.props.token,
+                    username: this.props.username,
+                  },
+                })
+              }
             >
               <container className={this.props.home}>
                 <FontAwesomeIcon icon={faHome} size="3x" />
@@ -120,11 +132,7 @@ class NavBar extends Component {
                 onChange={this.handleChange}
                 placeholder="&#xf002; search by author or title..."
               />
-              <Button
-                type="submit"
-                variant="outline-info"
-                // onClick={() => this.props.event.props.history.push("/search")}
-              >
+              <Button type="submit" variant="outline-info">
                 search
               </Button>
             </Form>

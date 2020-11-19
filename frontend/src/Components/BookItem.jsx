@@ -42,7 +42,7 @@ const Book = ({ event, data }) => {
       onClick={() => event.props.history.push("/book")}
     >
       <img className="book" alt="book" src={data.imUrl}></img>
-      <text className="book">{data.title}</text>
+      <text className="book-title">{data.title}</text>
       <StarRatings
         name="rating"
         rating={checkNull ? 0 : data.avg_rating}
