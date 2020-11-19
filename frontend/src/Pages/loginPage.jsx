@@ -44,10 +44,10 @@ class LoginPage extends React.Component {
     // const response = await this.props.mutate({
     //   variables: this.state,
     // });
-    
+
     // const { token, refreshToken } = response.data.login;
-    localStorage.setItem('token', "hello");
-    localStorage.setItem('refreshToken', "hello");
+    localStorage.setItem("token", "hello");
+    localStorage.setItem("refreshToken", "hello");
 
     evt.preventDefault();
     axios
@@ -56,12 +56,14 @@ class LoginPage extends React.Component {
         console.log(res);
         const token = res.data.token;
         const username = res.data.username;
+        const id = res.data.reviewerID;
         if (res.status === 200) {
           this.setState({ loading: false });
           this.props.history.push({
             pathname: "/main",
             state: {
               token: token,
+              id: id,
               username: username,
             },
           });

@@ -43,6 +43,7 @@ class MainPage extends React.Component {
       loading: true,
       done: false,
       searching: false,
+      id: props.location.state.id,
       username: props.location.state.username,
       dropDownValue: "Popularity",
       books: [
