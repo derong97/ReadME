@@ -2,16 +2,26 @@ import React, { Component } from "react";
 import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 import Ratings from "react-ratings-declarative";
 import ReactStars from "react-rating-stars-component";
+import axios from "axios";
 
 class AddReviewModal extends Component {
   // constructor(props) {
   //   super(props);
   // }
 
+
   state = {
+    loading: false,
+    asin: 0,
     reviewTitle: "",
     rating: 3.7,
     reviewText: "",
+  };
+
+  handleASINChange = (event) => {
+    this.setState({
+      asin: event.target.value,
+    });
   };
 
   handleReviewTitleChange = (event) => {
@@ -32,7 +42,36 @@ class AddReviewModal extends Component {
     });
   };
 
+  getUnixTimestamp = () => {
+    const dateTime = Date.now();
+    const timestamp = Math.floor(dateTime / 1000);
+
+    return timestamp;
+  }
+
+  getCurDate = () => {
+    var dateTime = new Date(),
+    date = dateTime.getFullYear() + ',' + (dateTime.getMonth() + 1) + ',' + dateTime.getDate();
+
+    return date;
+  };
+
   handleSubmit = (event) => {
+
+    this.setState({loading:true})
+    const url = {"http://localhost:5000/book/" + this.state.asin};
+    var asin = this.state.asin;
+    var overall = this.state.rating;
+    var reviewText = this.state.reviewText;
+    var reviewTime = this.getCurDate();
+    var reviewerID = this.props.username; //HELP
+    var reviewerName = this.props.name;
+    var summary = this.state.reviewTitle;
+    var unixReviewTime = this.getUnixTimestamp();
+
+    // SQL post 
+    const review_body = {
+    };
 
     console.log("submitted");
 
@@ -54,6 +93,22 @@ class AddReviewModal extends Component {
         </Modal.Header>
         <Form>
           <Modal.Body>
+          <Form.Group as={Col} md="8" controlId="formASIN">
+          <Form.Label>ASIN</Form.Label>
+          <Form.Control
+            type="input"
+            placeholder="enter the book's asin number "
+            required
+            onChange={this.handleASINChange}
+          />
+          <Form.Text className="text-muted">
+            The ASIN number is the Amazon Standardard Identification
+            Number of your book (i.e. the ISBN).
+          </Form.Text>
+          <Form.Control.Feedback type="invalid">
+            awh hell no this is wrong dont be stupid
+          </Form.Control.Feedback>
+        </Form.Group>
             <Form.Group as={Row} controlId="formReviewTitle">
               <Form.Label column sm={2}>
                 Review Title

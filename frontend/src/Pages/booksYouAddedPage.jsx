@@ -17,7 +17,6 @@ class BooksYouAddedPage extends Component {
     ],
     username: "GlendiBear",
     addBookModalShow: false,
-    addReviewModalShow: false,
   };
 
   handleDelete = (asin) => {
@@ -32,10 +31,6 @@ class BooksYouAddedPage extends Component {
     this.setState({ addBookModalShow: true });
   };
 
-  addReviewModalClose = () => this.setState({ addReviewModalShow: false });
-  addReviewModalOpen = () => {
-    this.setState({ addReviewModalShow: true });
-  };
 
   render() {
     return (
