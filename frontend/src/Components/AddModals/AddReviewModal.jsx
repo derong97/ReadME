@@ -9,7 +9,6 @@ class AddReviewModal extends Component {
   //   super(props);
   // }
 
-
   state = {
     loading: false,
     asin: 0,
@@ -47,19 +46,23 @@ class AddReviewModal extends Component {
     const timestamp = Math.floor(dateTime / 1000);
 
     return timestamp;
-  }
+  };
 
   getCurDate = () => {
     var dateTime = new Date(),
-    date = dateTime.getFullYear() + ',' + (dateTime.getMonth() + 1) + ',' + dateTime.getDate();
+      date =
+        dateTime.getFullYear() +
+        "," +
+        (dateTime.getMonth() + 1) +
+        "," +
+        dateTime.getDate();
 
     return date;
   };
 
   handleSubmit = (event) => {
-
-    this.setState({loading:true})
-    const url = {"http://localhost:5000/book/" + this.state.asin};
+    this.setState({ loading: true });
+    // const url = {"http://localhost:5000/book/" + this.state.asin};
     var asin = this.state.asin;
     var overall = this.state.rating;
     var reviewText = this.state.reviewText;
@@ -69,12 +72,10 @@ class AddReviewModal extends Component {
     var summary = this.state.reviewTitle;
     var unixReviewTime = this.getUnixTimestamp();
 
-    // SQL post 
-    const review_body = {
-    };
+    // SQL post
+    const review_body = {};
 
     console.log("submitted");
-
   };
 
   render() {
@@ -93,22 +94,28 @@ class AddReviewModal extends Component {
         </Modal.Header>
         <Form>
           <Modal.Body>
-          <Form.Group as={Col} md="8" controlId="formASIN">
-          <Form.Label>ASIN</Form.Label>
-          <Form.Control
-            type="input"
-            placeholder="enter the book's asin number "
-            required
-            onChange={this.handleASINChange}
-          />
-          <Form.Text className="text-muted">
-            The ASIN number is the Amazon Standardard Identification
-            Number of your book (i.e. the ISBN).
-          </Form.Text>
-          <Form.Control.Feedback type="invalid">
-            awh hell no this is wrong dont be stupid
-          </Form.Control.Feedback>
-        </Form.Group>
+            <Form.Group as={Row} controlId="formASIN">
+              <Form.Label column sm={2}>
+                ASIN
+              </Form.Label>
+              <Col sm={10}>
+                <Form.Control
+                  required
+                  type="input"
+                  placeholder="enter the book's asin number."
+                  required
+                  onChange={this.handleASINChange}
+                />
+                <Form.Text className="text-muted">
+                  The ASIN number is the Amazon Standardard Identification
+                  Number of your book (i.e. the ISBN).
+                </Form.Text>
+                <Form.Control.Feedback type="invalid">
+                  awh hell no this is wrong dont be stupid
+                </Form.Control.Feedback>
+              </Col>
+            </Form.Group>
+
             <Form.Group as={Row} controlId="formReviewTitle">
               <Form.Label column sm={2}>
                 Review Title
@@ -130,16 +137,18 @@ class AddReviewModal extends Component {
               <Form.Label column sm={2}>
                 Rating
               </Form.Label>
-              <ReactStars
-                count={5}
-                onChange={this.handleRatingChange}
-                size={24}
-                isHalf={true}
-                emptyIcon={<i className="far fa-star"></i>}
-                halfIcon={<i className="fa fa-star-half-alt"></i>}
-                fullIcon={<i className="fa fa-star"></i>}
-                activeColor="orange"
-              />
+              <Col sm={10}>
+                <ReactStars
+                  count={5}
+                  onChange={this.handleRatingChange}
+                  size={24}
+                  isHalf={true}
+                  emptyIcon={<i className="far fa-star"></i>}
+                  halfIcon={<i className="fa fa-star-half-alt"></i>}
+                  fullIcon={<i className="fa fa-star"></i>}
+                  activeColor="orange"
+                />
+              </Col>
             </Form.Group>
 
             <Form.Group controlId="formReviewText">
@@ -167,7 +176,7 @@ class AddReviewModal extends Component {
             <Button variant="danger" onClick={this.props.onHide}>
               Close
             </Button>
-            <Button variant="success" type = "submit" onClick={this.handleSubmit}>
+            <Button variant="success" type="submit" onClick={this.handleSubmit}>
               Add Review
             </Button>
           </Modal.Footer>

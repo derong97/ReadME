@@ -48,19 +48,15 @@ const AppRouter = () => {
     return (
         <Router>
             <Switch>
-<<<<<<< Updated upstream
                 {/* <Route exact path="/" component={HomePage}/> */}
-                <AuthRoute exact path="/" component={HomePage} />
-=======
-                <Route exact path="/" component={ReviewsYouAddedPage}/>
->>>>>>> Stashed changes
+                <Route exact path="/" component={HomePage} />
                 <Route exact path="/login" component={LoginPage}/>
                 <Route exact path="/signup" component={SignupPage}/>
-                <Route exact path="/main" component={MainPage}/>
+                <AuthRoute exact path="/main" component={MainPage}/>
                 <Route exact path="/search" component={SearchPage}/>
                 <Route exact path="/book" component={BookPage}/>
                 {/* <AuthRoute exact path="/books-you-added" component={BooksYouAddedPage}/> */}
-                <AuthRoute exact path="/reviews-you-added" component={ReviewsYouAddedPage}/>
+                <Route exact path="/reviews-you-added" component={ReviewsYouAddedPage}/>
             </Switch>
         </Router>
     );
