@@ -12,6 +12,7 @@ import BookImg from "../Image/login_bg.png";
 import Logo from "../Image/logo_black.png";
 import FadeIn from "react-fade-in";
 import Lottie from "react-lottie";
+import LoadingOverlay from "react-loading-overlay";
 import * as legoData from "../Image/lego_loading";
 import * as doneData from "../Image/done_loading";
 
@@ -41,6 +42,7 @@ class MainPage extends React.Component {
       token: props.location.state.token,
       loading: true,
       done: false,
+      searching: false,
       username: props.location.state.username,
       dropDownValue: "Popularity",
       books: [
@@ -180,175 +182,183 @@ class MainPage extends React.Component {
 
   render() {
     return (
-      <div>
-        {!this.state.done ? (
-          <FadeIn>
-            <div id="load" class="col">
-              {this.state.loading ? (
-                <Lottie options={defaultOptions} height={150} width={150} />
-              ) : (
-                <Lottie options={defaultOptions2} height={150} width={150} />
-              )}
-              <div id="load-header">
-                <img className="navbrand-img" alt="ReadME Logo" src={Logo} />
-                <h1>ReadME</h1>
+      <LoadingOverlay
+        active={this.state.searching}
+        spinner
+        text="searching ..."
+      >
+        <div>
+          {!this.state.done ? (
+            <FadeIn>
+              <div id="load" class="col">
+                {this.state.loading ? (
+                  <Lottie options={defaultOptions} height={150} width={150} />
+                ) : (
+                  <Lottie options={defaultOptions2} height={150} width={150} />
+                )}
+                <div id="load-header">
+                  <img className="navbrand-img" alt="ReadME Logo" src={Logo} />
+                  <h1>ReadME</h1>
+                </div>
               </div>
-            </div>
-          </FadeIn>
-        ) : (
-          <body id="body">
-            <NavBar
-              event={this}
-              username={this.state.username}
-              home="nav-main"
-              byme="nav-sub"
-            ></NavBar>
+            </FadeIn>
+          ) : (
+            <body id="body">
+              <NavBar
+                event={this}
+                token={this.state.token}
+                username={this.state.username}
+                searching={this.state.searching}
+                home="nav-main"
+                byme="nav-sub"
+              ></NavBar>
 
-            <div class="container">
-              <div id="header-n-filter" class="row">
-                <div id="header-n-books" class="col">
-                  <div id="body-header" class="row">
-                    <h4 id="header" class="col">
-                      EXPLORE
-                    </h4>
-                    <div id="sortby" class="col">
-                      <text>SORT BY</text>
-                      <DropdownButton
-                        id="sortby-dropdown"
-                        title={this.state.dropDownValue}
-                      >
-                        <Dropdown.Item
-                          id="sortby-item"
-                          as="button"
-                          onClick={(e) =>
-                            this.changeValue(e.target.textContent)
-                          }
+              <div class="container">
+                <div id="header-n-filter" class="row">
+                  <div id="header-n-books" class="col">
+                    <div id="body-header" class="row">
+                      <h4 id="header" class="col">
+                        EXPLORE
+                      </h4>
+                      <div id="sortby" class="col">
+                        <text>SORT BY</text>
+                        <DropdownButton
+                          id="sortby-dropdown"
+                          title={this.state.dropDownValue}
                         >
-                          Popularity
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          id="sortby-item"
-                          as="button"
-                          onClick={(e) =>
-                            this.changeValue(e.target.textContent)
-                          }
-                        >
-                          Latest Arrival
-                        </Dropdown.Item>
-                      </DropdownButton>
+                          <Dropdown.Item
+                            id="sortby-item"
+                            as="button"
+                            onClick={(e) =>
+                              this.changeValue(e.target.textContent)
+                            }
+                          >
+                            Popularity
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            id="sortby-item"
+                            as="button"
+                            onClick={(e) =>
+                              this.changeValue(e.target.textContent)
+                            }
+                          >
+                            Latest Arrival
+                          </Dropdown.Item>
+                        </DropdownButton>
+                      </div>
                     </div>
-                  </div>
-                  <div id="body-content" class="row">
-                    <div id="book-container" class="col">
-                      <GridList cols={4}>
-                        {this.state.books.map((book) => (
-                          <Book event={this} data={book} />
-                        ))}
-                      </GridList>
-                      <Pagination
-                        itemClass="page-item"
-                        linkClass="page-link"
-                        activePage={this.state.activePage}
-                        itemsCountPerPage={1} // helps you to calculate how many pages you need depending on your items
-                        totalItemsCount={3}
-                        pageRangeDisplayed={5}
-                        onChange={this.handlePageChange.bind(this)}
-                      />
-                    </div>
-                    <div id="filter">
-                      <text id="filterby-header">FILTER BY</text>
-                      <div id="genres">
-                        <text>GENRES</text>
-                        <Form
-                        // onSubmit={this.checkGenres}
-                        >
-                          <Form.Group>
-                            <Form.Label id="genres-header">
-                              <i>Fiction</i>
-                            </Form.Label>
-                            <Form.Check
-                              id="fantasy"
-                              className="genres-item"
-                              label="Fantasy"
-                              onChange={this.handleCheckboxChange}
-                              checked={this.state.genres.fantasy}
-                            />
-                            <Form.Check
-                              id="youngadult"
-                              className="genres-item"
-                              label="Young Adult"
-                              onChange={this.handleCheckboxChange}
-                              checked={this.state.genres.youngadult}
-                            />
-                            <Form.Check
-                              id="horror"
-                              className="genres-item"
-                              label="Horror"
-                              onChange={this.handleCheckboxChange}
-                              checked={this.state.genres.horror}
-                            />
-                            <Form.Check
-                              id="thriller"
-                              className="genres-item"
-                              label="Thriller"
-                              onChange={this.handleCheckboxChange}
-                              checked={this.state.genres.thriller}
-                            />
-                            <Form.Label id="genres-header">
-                              <i>Non-Fiction</i>
-                            </Form.Label>
-                            <Form.Check
-                              id="cooking"
-                              className="genres-item"
-                              label="Cooking"
-                              onChange={this.handleCheckboxChange}
-                              checked={this.state.genres.cooking}
-                            />
-                            <Form.Check
-                              id="inspo"
-                              className="genres-item"
-                              label="Motivational/ Inspirational"
-                              onChange={this.handleCheckboxChange}
-                              checked={this.state.genres.inspo}
-                            />
-                            <Form.Check
-                              id="travel"
-                              className="genres-item"
-                              label="Travel"
-                              onChange={this.handleCheckboxChange}
-                              checked={this.state.genres.travel}
-                            />
-                            <Form.Check
-                              id="crime"
-                              className="genres-item"
-                              label="True Crime"
-                              onChange={this.handleCheckboxChange}
-                              checked={this.state.genres.crime}
-                            />
-                          </Form.Group>
-                          <p id="genres-expand" align="right">
-                            <u>See More</u>
-                          </p>
-                          <div id="genres-submit">
-                            <button id="genres-bttn" onClick={this.clearAll}>
-                              Clear All
-                            </button>
-                            <button type="submit" id="genres-bttn">
-                              Submit
-                            </button>
-                          </div>
-                        </Form>
+                    <div id="body-content" class="row">
+                      <div id="book-container" class="col">
+                        <GridList cols={4}>
+                          {this.state.books.map((book) => (
+                            <Book event={this} data={book} />
+                          ))}
+                        </GridList>
+                        <Pagination
+                          itemClass="page-item"
+                          linkClass="page-link"
+                          activePage={this.state.activePage}
+                          itemsCountPerPage={1} // helps you to calculate how many pages you need depending on your items
+                          totalItemsCount={3}
+                          pageRangeDisplayed={5}
+                          onChange={this.handlePageChange.bind(this)}
+                        />
+                      </div>
+                      <div id="filter">
+                        <text id="filterby-header">FILTER BY</text>
+                        <div id="genres">
+                          <text>GENRES</text>
+                          <Form
+                          // onSubmit={this.checkGenres}
+                          >
+                            <Form.Group>
+                              <Form.Label id="genres-header">
+                                <i>Fiction</i>
+                              </Form.Label>
+                              <Form.Check
+                                id="fantasy"
+                                className="genres-item"
+                                label="Fantasy"
+                                onChange={this.handleCheckboxChange}
+                                checked={this.state.genres.fantasy}
+                              />
+                              <Form.Check
+                                id="youngadult"
+                                className="genres-item"
+                                label="Young Adult"
+                                onChange={this.handleCheckboxChange}
+                                checked={this.state.genres.youngadult}
+                              />
+                              <Form.Check
+                                id="horror"
+                                className="genres-item"
+                                label="Horror"
+                                onChange={this.handleCheckboxChange}
+                                checked={this.state.genres.horror}
+                              />
+                              <Form.Check
+                                id="thriller"
+                                className="genres-item"
+                                label="Thriller"
+                                onChange={this.handleCheckboxChange}
+                                checked={this.state.genres.thriller}
+                              />
+                              <Form.Label id="genres-header">
+                                <i>Non-Fiction</i>
+                              </Form.Label>
+                              <Form.Check
+                                id="cooking"
+                                className="genres-item"
+                                label="Cooking"
+                                onChange={this.handleCheckboxChange}
+                                checked={this.state.genres.cooking}
+                              />
+                              <Form.Check
+                                id="inspo"
+                                className="genres-item"
+                                label="Motivational/ Inspirational"
+                                onChange={this.handleCheckboxChange}
+                                checked={this.state.genres.inspo}
+                              />
+                              <Form.Check
+                                id="travel"
+                                className="genres-item"
+                                label="Travel"
+                                onChange={this.handleCheckboxChange}
+                                checked={this.state.genres.travel}
+                              />
+                              <Form.Check
+                                id="crime"
+                                className="genres-item"
+                                label="True Crime"
+                                onChange={this.handleCheckboxChange}
+                                checked={this.state.genres.crime}
+                              />
+                            </Form.Group>
+                            <p id="genres-expand" align="right">
+                              <u>See More</u>
+                            </p>
+                            <div id="genres-submit">
+                              <button id="genres-bttn" onClick={this.clearAll}>
+                                Clear All
+                              </button>
+                              <button type="submit" id="genres-bttn">
+                                Submit
+                              </button>
+                            </div>
+                          </Form>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <Footer></Footer>
-          </body>
-        )}
-      </div>
+              <Footer></Footer>
+            </body>
+          )}
+        </div>
+      </LoadingOverlay>
     );
   }
 }

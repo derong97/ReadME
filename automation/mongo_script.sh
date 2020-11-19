@@ -43,6 +43,11 @@ gdown https://drive.google.com/uc?id=1xyr4AZWrNcMIkOE6NBgFSrm9cnvzpcRO
 # Load the (project) metadata with titles and average_ratings into our database
 mongoimport --authenticationDatabase admin -u "historicriptide" -p "futuresparkles" -d readme_mongo -c kindle_metadata --file kindle_metadata_with_title_and_avgrating.json --legacy
 
+mongo -u historicriptide -p futuresparkles
+use readme_mongo
+db.createCollection('log', {capped:true, size:100000})
+exit
+
 # Remote Connection (using another shell with mongoshell installed), Use your EC2 public IP address
 # mongo "mongodb://historicriptide@<IP address here>:27017" -p "futuresparkles"
 

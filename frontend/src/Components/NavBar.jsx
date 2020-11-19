@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -26,56 +27,52 @@ class NavBar extends Component {
     super(props);
     this.state = {
       search: "",
+      searching: this.props.searching,
       addBookModalShow: false,
       addReviewModalShow: false,
     };
   }
 
-  // handleChange = (evt) => {
-  //   // pass the list of book titles
-  //   let currentList = ["dog", "cat"];
-  //   let newList = [];
+  handleChange = (evt) => {
+    this.setState({
+      search: evt.target.value,
+    });
+  };
 
-  //   if (event.target.value !== "") {
-  //     currentList = this.props.items;
-  //     newList = currentList.filter((item) => {
-  //       const lc = item.toLowerCase();
-  //       const filter = event.target.value.toLowerCase();
-  //       return lc.includes(filter);
-  //     });
-  //   } else {
-  //     newList = this.props.items;
-  //   }
-  //   this.setState({
-  //     filtered: newList,
-  //   });
-  // };
-
-  // handleOnSubmit = (evt, title) => {
-  //   const url = "";
-  //   const body = {
-  //     params: { title: title },
-  //   };
-  //   console.log(body);
-  //   evt.preventDefault();
-  //   axios
-  //     .get(url, body)
-  //     .then((res) => {
-  //       console.log(res);
-  //       // retrieve top 30 books
-  //       const books = JSON.stringify(res.data);
-  //       if (res.status === 200) {
-  //         event.props.history.push({
-  //           pathname: "/book",
-  //           state: { books: { books } },
-  //         });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.response);
-  //       console.log(err.request);
-  //     });
-  // };
+  handleOnSubmit = (evt) => {
+    this.setState({ searching: true });
+    const url = "http://localhost:5000/books";
+    const search = this.state.search;
+    const body = {
+      headers: { "x-access-tokens": this.props.token },
+      params: { title: search, pageNum: 1 },
+    };
+    console.log(body);
+    evt.preventDefault();
+    axios
+      .get(url, body)
+      .then((res) => {
+        console.log(res);
+        const metadata = res.data.metadata;
+        console.log(metadata);
+        if (res.status === 200) {
+          this.setState({ searching: false });
+          this.props.event.props.history.push({
+            pathname: "/search",
+            state: {
+              token: this.props.token,
+              username: this.props.username,
+              title: search,
+              books: metadata,
+            },
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        console.log(err.request);
+      });
+  };
 
   addBookModalClose = () => this.setState({ addBookModalShow: false });
   addBookModalOpen = () => {
@@ -98,7 +95,15 @@ class NavBar extends Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav.Link
-              onClick={() => this.props.event.props.history.push("/main")}
+              onClick={() =>
+                this.props.event.props.history.push({
+                  pathname: "/main",
+                  state: {
+                    token: this.props.token,
+                    username: this.props.username,
+                  },
+                })
+              }
             >
               <container className={this.props.home}>
                 <FontAwesomeIcon icon={faHome} size="3x" />
@@ -118,20 +123,16 @@ class NavBar extends Component {
             <Form
               inline
               className="align-items-center"
-              // onSubmit={handleOnSubmit()}
+              onSubmit={this.handleOnSubmit}
             >
               <FormControl
                 className="searchbar mr-sm-2"
                 type="text"
-                // onChange={this.handleChange}
-                value={NavBar.filtered}
+                value={this.state.search}
+                onChange={this.handleChange}
                 placeholder="&#xf002; search by author or title..."
               />
-              <Button
-                variant="outline-info"
-                onClick={() => this.props.event.props.history.push("/search")}
-                // onClick={() => handleOnSubmit(filtered)}
-              >
+              <Button type="submit" variant="outline-info">
                 search
               </Button>
             </Form>
