@@ -1,22 +1,16 @@
-# Take note
+# Pre-requisites
 
-1. Use this specific OS image provided `ami-0f82752aa17ff8f5d`
+1. Use a 64-bit Linux machine as the automation heavily relies on bash commands.
+2. Ensure that you have the following information ready before starting the deployment:
+   - Your aws access key
+   - Your aws secret access key
+   - Your aws session token
+   - Your desired public-private keypair name (otherwise set to 'default')
 
+# Deployment Instructions
 
+The deployment makes use of the Cloud Formation template to create a stack. The configurations can be found in `cloud_formation/template.json`.
 
-# Mongo Data
-
-database name: `readme_mongo`
-
-collection name: `kindle_metadata`
-
-- The `mongo_script.sh` in this directory creates a collection by the name of `kindle_metadata` which stores the metadata
-- `kindle_metadata` is obtained from Team Readme's preprocessing (downloaded from Google Drive via `gdown`), NOT from the course.
-- Preprocessing includes the addition of titles, obtained from webscrapping as covered in `ReadMe\preprocessing\affix titles`.
-
-
-
-
-
-
-
+1. `cd automation`
+2. Start the deployment in root mode: `sudo ./main.sh`
+   - Key in the information, when prompted

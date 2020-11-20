@@ -3,7 +3,6 @@ import logging
 from app import app
 from controllers.user import User
 from controllers.review import Review
-from controllers.avgRating import AvgRating
 from controllers.metadata import Metadata
 from common.token import token_required
 from common.mongo import mongolog
@@ -97,9 +96,3 @@ def search(reviewerID):
 
     mongolog(request, reviewerID=reviewerID, action="search")
     return Metadata().search(categories, title, pageNum)
-
-#TODO: Remove this. Should be in preprocessing
-###################### AVG RATING ROUTES ###################### 
-@app.route('/avgRating/getAvgRating', methods=['POST'])
-def getAvgRating():
-    return AvgRating().get_avg_rating()
