@@ -13,8 +13,9 @@ The deployment makes use of the Cloud Formation template to create a stack. The 
 
 1. `cd automation`
 2. Start the deployment in root mode: `sudo ./main.sh`
-   - Key in the information, when prompted.
-   - The important key-value pairs will be stored in `logs.log`.
+   - Key in the information, when prompted
+     - For default region, please enter: `us-east-1`
+   - The important key-value pairs will be stored in `logs.log`
 
 # Tear Down Instructions
 
