@@ -55,7 +55,7 @@ done
   # Public key stored on AWS; private key is stored locally
   aws ec2 create-key-pair --key-name $keyname --query 'KeyMaterial' --output text > $keyname.pem
   chmod 400 $keyname.pem
-  echo "Key pair generated"
+  echo "KeyName=$keyname" >> logs.log
 
   # Change the KeyName: default -> KeyName: $keyname
   cat ./cloud_formation/template.json | sed '/KeyName/ s/\"default"/\"'$keyname'"/' > ./cloud_formation/config.json
@@ -66,13 +66,16 @@ done
 
 ### DEPLOY CLOUD FORMATION ###
 {
+  stackname=ReadMeStack
+  echo "StackName=$stackname" | tee -a logs.log
+
   echo "Deploying Cloud Formation Stack"
-  aws cloudformation create-stack --stack-name ReadMeStack --template-body file://./cloud_formation/config.json
+  aws cloudformation create-stack --stack-name $stackname --template-body file://./cloud_formation/config.json
   
   # Ping status
   while :
   do 
-    aws cloudformation describe-stacks --stack-name ReadMeStack | grep -Po '"StackStatus": *\K"[^"]*"' | grep -q 'CREATE_COMPLETE'
+    aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[][ [ StackName, StackStatus ] ][]" --output text | grep -q 'CREATE_COMPLETE'
     if [ $? == 0 ]; then
       echo "Stack Status is complete!"
       break
@@ -86,9 +89,44 @@ done
   exit
 }
 
-# TODO
-# load the correct into the correct VM
-# get the webserver script
-# get back IP addresses
+### Get IP addresses of EC2 instances
+{
+  echo "Generating IP addresses..."
+  WebServerIP=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='WebServerIP'].OutputValue" --output text)
+  MySQLIP=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='MySQLIP'].OutputValue" --output text)
+  MongoDBIP=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='MongoDBIP'].OutputValue" --output text)
 
-# cleanup - remove private key, delete stack
+  echo "WebServerIP=$WebServerIP" | tee -a logs.log
+  echo "MySQLIP=$MySQLIP" | tee -a logs.log
+  echo "MongoDBIP=$MongoDBIP" | tee -a logs.log
+} || {
+  echo "Error getting IP addresses"
+  exit
+}
+
+### SET UP MYSQL ###
+{
+  echo "Setting up MySQL"
+  ssh -o StrictHostKeyChecking=no ubuntu@$MySQLIP -i ./$keyname.pem 'bash -s' < ./scripts/sql_script.sh
+} || {
+  echo "Error setting up MySQL server"
+  exit
+}
+
+### SET UP MONGODB ###
+{
+  echo "Setting up MongoDB"
+  ssh -o StrictHostKeyChecking=no ubuntu@$MongoDBIP -i ./$keyname.pem 'bash -s' < ./scripts/mongo_script.sh
+} || {
+  echo "Error setting up MongoDB server"
+  exit
+}
+
+### SET UP WEBSERVER ###
+{
+  echo "Setting up WebServer"
+  ssh -o StrictHostKeyChecking=no ubuntu@$WebServerIP -i ./$keyname.pem 'bash -s' < ./scripts/webserver_script.sh
+} || {
+  echo "Error setting up webserver"
+  exit
+}

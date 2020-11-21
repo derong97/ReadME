@@ -48,6 +48,8 @@ use readme_mongo
 db.createCollection('log', {capped:true, size:100000})
 exit
 
+echo "MongoDB SetUp complete"
+
 # Remote Connection (using another shell with mongoshell installed), Use your EC2 public IP address
 # mongo "mongodb://historicriptide@<IP address here>:27017" -p "futuresparkles"
 

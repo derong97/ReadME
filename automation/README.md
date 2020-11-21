@@ -1,7 +1,7 @@
 # Pre-requisites
 
-1. Use a 64-bit Linux machine as the automation heavily relies on bash commands.
-2. Ensure that you have the following information ready before starting the deployment:
+1. Please use a Linux machine (64-bit) as the automation script relies on bash commands.
+2. Before you start the deployment, ensure that you have the following information ready:
    - Your aws access key
    - Your aws secret access key
    - Your aws session token
@@ -13,4 +13,10 @@ The deployment makes use of the Cloud Formation template to create a stack. The 
 
 1. `cd automation`
 2. Start the deployment in root mode: `sudo ./main.sh`
-   - Key in the information, when prompted
+   - Key in the information, when prompted.
+   - The important key-value pairs will be stored in `logs.log`.
+
+# Tear Down Instructions
+
+1. `cd automation`
+2. Start the teardown in root mode: `sudo ./teardown.sh`
