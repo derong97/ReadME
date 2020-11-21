@@ -92,16 +92,16 @@ class AddReviewModal extends Component {
 
     console.log(review_body);
 
-    const config = {
-      headers: { Authorization: `Bearer ${this.props.token}` },
-    };
+    // const config = {
+    //   headers: { Authorization: `Bearer ${this.props.token}` },
+    // };
 
     event.preventDefault();
     axios
       .post(url, review_body)
       .then((res) => {
         console.log(res);
-        const token = res.data.token;
+        // const token = res.data.token;
         const username = res.data.username;
         const id = res.data.reviewerID;
         if (res.status == 200) {

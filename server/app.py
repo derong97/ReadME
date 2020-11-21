@@ -10,6 +10,7 @@ app = Flask(__name__,
     template_folder="../frontend/static/templates")
 CORS(app)
 
+
 # API Routes
 from routers import api_router
 
