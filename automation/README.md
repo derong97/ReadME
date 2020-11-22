@@ -5,7 +5,6 @@
    - Your aws access key
    - Your aws secret access key
    - Your aws session token
-   - Your desired public-private keypair name (otherwise set to 'default')
 
 # Deployment Instructions
 
@@ -15,6 +14,7 @@ The deployment makes use of the Cloud Formation template to create a stack. The 
 2. Start the deployment in root mode: `sudo ./main.sh`
    - Key in the information, when prompted
      - For default region, please enter: `us-east-1`
+     - For public-private keypair name: (up to you)
    - The important key-value pairs will be stored in `logs.log`
 
 # Tear Down Instructions
