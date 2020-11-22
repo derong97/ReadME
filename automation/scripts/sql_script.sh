@@ -1,15 +1,12 @@
 #!/bin/bash
 
-# IMPORTANT: FOLLOW THESE INSTRUCTIONS FIRST.
-# 1. Launch a distinct EC2 instance from the course provided AMI. Note that you have 2 instances, one for MySQL, and the other for MongoDB
-# 2. Allow global IP inbound connection on MySQL port through EC2 dashboard (wizard)
-# 3. SSH in (ssh ubuntu@<ip-address> -i <path-to-key>)and run the following lines:
+# You have to enable inbound rule for remote connection!
 
 sudo apt-get update
-# Simply leave field empty on prompts (purple screen), if they appear.
-sudo apt install mysql-server -y
 
-# Set up localhost root account (only accessible when you SSH in (i.e. non-remote connection).
+export DEBIAN_FRONTEND=noninteractive
+sudo -E apt-get -q -y install mysql-server
+
 sudo mysql -e 'update mysql.user set plugin = "mysql_native_password" where user="root"'
 sudo mysql -e 'grant all privileges on *.* to "root"@"localhost" with grant option'
 
@@ -22,12 +19,10 @@ sudo mysql -e 'flush privileges'
 sudo sh -c 'echo "[mysqld]\nbind-address = 0.0.0.0" >> /etc/mysql/my.cnf'
 sudo service mysql restart
 
-sudo apt install python3-pip -y
-pip3 install gdown
-# Note you may encounter errors in gdown. If so try 'sudo reboot'. Then wait 2-3 minutes.
-gdown https://drive.google.com/uc?id=1DKvMbHbUNJLE0rak2sQWafPeCtxsmwsp
-gdown https://drive.google.com/uc?id=15yGajHZKapMv3W_lNruOY0TwC4WLWslg
+wget https://www.dropbox.com/s/pci2vmsr8f4uew2/ini_Kindle.sql?dl=0 -O ini_Kindle.sql 
+wget https://www.dropbox.com/s/e9xjq9q55oppsvc/kaggle_processed.csv?dl=0 -O kaggle_processed.csv
 
+echo "Loading data into MySQL... This takes roughly a minute!"
 mysql -u root < ini_Kindle.sql
 
 echo "MySQL SetUp complete"
