@@ -1,8 +1,4 @@
-
-
 # README
-
-
 
 `sql_script.sh` and `mongo_script.sh` scripts can be executed on a fresh EC2 instance (one script per instance) with `ami-0f82752aa17ff8f5d` by running the following line:
 
@@ -20,4 +16,3 @@ Note that script does not modify the inbound network security setting. You still
 
 - `3306` for MySQL
 - `27017` for Mongo
-

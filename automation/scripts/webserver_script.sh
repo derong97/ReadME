@@ -1,29 +1,41 @@
 echo "Setting up WebServer"
 
 sudo apt-get update
+
+export LC_ALL="en_US.UTF-8"
+export LANGUAGE="en_US.UTF-8"
+
 sudo apt-get -y install npm
 curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
-sudo apt install python3.7
+sudo apt install software-properties-common 
+sudo add-apt-repository ppa:deadsnakes/ppa 
+sudo apt update
+sudo apt install python3.7 -y
 sudo apt-get install python3.7-venv
+
+echo "mysql-server mysql-server/root_password password password" | sudo debconf-set-selections
+echo "mysql-server mysql-server/root_password_again password password" | sudo debconf-set-selections
+
 sudo apt-get install mysql-server -y
 sudo apt-get install libmysqlclient-dev -y
 sudo apt install python3-pip -y
+sudo apt-get update
+sudo apt-get install python3.7-dev -y
 
-pip3 install gdown
-gdown https://drive.google.com/uc?id=1OmelBxPrCpBIaF4hLDuhNHR66NET43S6
-
+wget -c https://www.dropbox.com/s/hk804tfk5qvtb5g/ReadMe-main.zip?dl=0 -O ReadMe-main.zip
 sudo apt install unzip
-unzip ReadMe.zip
+unzip ReadMe-main.zip
 
-cd ReadMe/server
+cd ReadMe-main/server
 python3.7 -m venv venv
 source venv/bin/activate
+pip3 install wheel
 pip3 install -r requirements.txt
 
 sudo tee .env << EOF
-MONGO_IP=204.236.223.217
+MONGO_IP=$MongoDBIP
 MONGO_USER=historicriptide
 MONGO_PW=futuresparkles
 MONGO_DB=readme_mongo
@@ -31,7 +43,7 @@ MONGO_USERS_COL=userbase
 MONGO_METADATA_COL=kindle_metadata
 MONGO_LOG_COL=log
 
-SQL_IP=52.73.249.157
+SQL_IP=$MySQLIP
 SQL_USER=historicriptide
 SQL_PW=futuresparkles
 SQL_DB=readme_sql
@@ -45,6 +57,8 @@ npm install
 npm run build
 
 cd ../server
-flask run --host=0.0.0.0
 
-echo "WebServer SetUp complete"
+echo "Webserver SetUp complete"
+echo "You can visit your website now at $WebServerIP:5000"
+
+flask run --host=0.0.0.0

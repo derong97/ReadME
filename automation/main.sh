@@ -125,7 +125,7 @@ done
 ### SET UP WEBSERVER ###
 {
   echo "Setting up WebServer"
-  ssh -o StrictHostKeyChecking=no ubuntu@$WebServerIP -i ./$keyname.pem 'bash -s' < ./scripts/webserver_script.sh
+  ssh -o StrictHostKeyChecking=no ubuntu@$WebServerIP -i ./$keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' WebServerIP='$WebServerIP' bash -s" < ./scripts/webserver_script.sh
 } || {
   echo "Error setting up webserver"
   exit
