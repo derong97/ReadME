@@ -10,6 +10,8 @@ import Footer from "../Components/Footer.jsx";
 import Pagination from "react-js-pagination";
 import BookImg from "../Image/login_bg.png";
 import Logo from "../Image/logo_black.png";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 import FadeIn from "react-fade-in";
 import Lottie from "react-lottie";
 import LoadingOverlay from "react-loading-overlay";
@@ -46,6 +48,7 @@ class MainPage extends React.Component {
       id: props.location.state.id,
       username: props.location.state.username,
       dropDownValue: "Popularity",
+      category: "",
       books: [
         {
           link: BookImg,
@@ -131,6 +134,26 @@ class MainPage extends React.Component {
     });
   };
 
+  handleCategoryChange = (cat) => {
+    var catList = "";
+    var i;
+    for (i = 0; i < cat.length; i++) {
+      if (i === 0) {
+        catList += cat[i].value;
+      } else {
+        catList += ", " + cat[i].value;
+      }
+    }
+    this.setState({
+      category: catList,
+    });
+
+    console.log("cat change", cat);
+    console.log(cat.length);
+    console.log(catList);
+    console.log(this.state.category);
+  };
+
   clearAll = (evt) => {
     evt.preventDefault();
     this.setState({
@@ -182,6 +205,20 @@ class MainPage extends React.Component {
   }
 
   render() {
+    const categories = [
+      { value: "Fantasy", label: "Fantasy" },
+      { value: "Science Fiction", label: "Science Fiction" },
+      { value: "Dystopian", label: "Dystopian" },
+      { value: "Adventure", label: "Adventure" },
+      { value: "Historical Fiction", label: "Historical Fiction" },
+      { value: "Young Adult", label: "Young Adult" },
+      { value: "Children's Fiction", label: "Children's Fiction" },
+      { value: "Romance", label: "Romance" },
+      { value: "Detective & Mystery", label: "Detective & Mystery" },
+      { value: "Horror", label: "Horror" },
+      { value: "Thriller", label: "Thriller" },
+    ];
+
     return (
       <LoadingOverlay
         active={this.state.searching}
@@ -252,7 +289,11 @@ class MainPage extends React.Component {
                       <div id="book-container" class="col">
                         <GridList cols={4}>
                           {this.state.books.map((book) => (
-                            <Book event={this} data={book} />
+                            <Book
+                              event={this}
+                              token={this.state.token}
+                              book={book}
+                            />
                           ))}
                         </GridList>
                         <Pagination
@@ -272,77 +313,17 @@ class MainPage extends React.Component {
                           <Form
                           // onSubmit={this.checkGenres}
                           >
-                            <Form.Group>
-                              <Form.Label id="genres-header">
-                                <i>Fiction</i>
-                              </Form.Label>
-                              <Form.Check
-                                id="fantasy"
-                                className="genres-item"
-                                label="Fantasy"
-                                onChange={this.handleCheckboxChange}
-                                checked={this.state.genres.fantasy}
-                              />
-                              <Form.Check
-                                id="youngadult"
-                                className="genres-item"
-                                label="Young Adult"
-                                onChange={this.handleCheckboxChange}
-                                checked={this.state.genres.youngadult}
-                              />
-                              <Form.Check
-                                id="horror"
-                                className="genres-item"
-                                label="Horror"
-                                onChange={this.handleCheckboxChange}
-                                checked={this.state.genres.horror}
-                              />
-                              <Form.Check
-                                id="thriller"
-                                className="genres-item"
-                                label="Thriller"
-                                onChange={this.handleCheckboxChange}
-                                checked={this.state.genres.thriller}
-                              />
-                              <Form.Label id="genres-header">
-                                <i>Non-Fiction</i>
-                              </Form.Label>
-                              <Form.Check
-                                id="cooking"
-                                className="genres-item"
-                                label="Cooking"
-                                onChange={this.handleCheckboxChange}
-                                checked={this.state.genres.cooking}
-                              />
-                              <Form.Check
-                                id="inspo"
-                                className="genres-item"
-                                label="Motivational/ Inspirational"
-                                onChange={this.handleCheckboxChange}
-                                checked={this.state.genres.inspo}
-                              />
-                              <Form.Check
-                                id="travel"
-                                className="genres-item"
-                                label="Travel"
-                                onChange={this.handleCheckboxChange}
-                                checked={this.state.genres.travel}
-                              />
-                              <Form.Check
-                                id="crime"
-                                className="genres-item"
-                                label="True Crime"
-                                onChange={this.handleCheckboxChange}
-                                checked={this.state.genres.crime}
-                              />
-                            </Form.Group>
-                            <p id="genres-expand" align="right">
-                              <u>See More</u>
-                            </p>
+                            <Select
+                              closeMenuOnSelect={false}
+                              components={makeAnimated()}
+                              isMulti
+                              name="Category"
+                              options={categories}
+                              className="basic-multi-select"
+                              classNamePrefix="select"
+                              onChange={this.handleCategoryChange}
+                            />
                             <div id="genres-submit">
-                              <button id="genres-bttn" onClick={this.clearAll}>
-                                Clear All
-                              </button>
                               <button type="submit" id="genres-bttn">
                                 Submit
                               </button>

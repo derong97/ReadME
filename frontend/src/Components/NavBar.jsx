@@ -27,7 +27,6 @@ class NavBar extends Component {
     super(props);
     this.state = {
       search: "",
-      // searching: this.props.searching,
       addBookModalShow: false,
       addReviewModalShow: false,
     };
@@ -54,6 +53,7 @@ class NavBar extends Component {
       .then((res) => {
         console.log(res);
         const metadata = res.data.metadata;
+        const count = res.data.total_counts;
         console.log(metadata);
         if (res.status === 200) {
           this.props.event.setState({ searching: false });
@@ -64,6 +64,8 @@ class NavBar extends Component {
               username: this.props.username,
               title: search,
               books: metadata,
+              count: count,
+              activePage: 1,
             },
           });
         }
@@ -116,7 +118,7 @@ class NavBar extends Component {
                   pathname: "/reviews-you-added",
                   state: {
                     token: this.props.token,
-                    username: this.props.username
+                    username: this.props.username,
                   },
                 })
               }

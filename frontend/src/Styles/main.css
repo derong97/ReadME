@@ -60,6 +60,10 @@
   justify-content: center;
 }
 
+.page-item {
+  margin-bottom: 50px;
+}
+
 .page-item.active > .page-link {
   background-color: rgb(13, 21, 56);
   border-color: rgb(13, 21, 56);

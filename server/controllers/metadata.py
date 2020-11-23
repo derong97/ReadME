@@ -68,7 +68,7 @@ class Metadata:
                 return {"message": f"No metadata found with title as {title} and categories as {categories}"}, 200
             
             return {"metadata": self.get_page_metadata(all_metadata, pageNum), # returns max 10 records only
-                    "total counts": all_metadata.count(), # so the frontend knows how many pages to expect
+                    "total_counts": all_metadata.count(), # so the frontend knows how many pages to expect
                     "message": f"Successfully retrieved metadata with title as {title} and categories as {categories}"
                     }, 200
 
