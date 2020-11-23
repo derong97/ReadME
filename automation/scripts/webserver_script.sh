@@ -37,7 +37,7 @@ pip3 install -r requirements.txt
 
 
 sudo tee .env << EOF
-MONGO_IP=204.236.223.217 
+MONGO_IP=$MongoDBIP
 MONGO_USER=historicriptide
 MONGO_PW=futuresparkles
 MONGO_DB=readme_mongo
@@ -45,7 +45,7 @@ MONGO_USERS_COL=userbase
 MONGO_METADATA_COL=kindle_metadata
 MONGO_LOG_COL=log
 
-SQL_IP=52.73.249.157
+SQL_IP=$MySQLIP
 SQL_USER=historicriptide
 SQL_PW=futuresparkles
 SQL_DB=readme_sql
@@ -59,8 +59,8 @@ npm install
 # npm run build
 
 cd ../../server
-WebServerIP=$(curl ifconfig.co)
-export WebServerIP
+# WebServerIP=$(curl ifconfig.co)
+# export WebServerIP
 echo "Webserver SetUp complete"
 echo "You can visit your website now at $WebServerIP:5000"
 
