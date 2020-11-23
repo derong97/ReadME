@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import LoadingOverlay from "react-loading-overlay";
 
 class LoginPage extends React.Component {
-  constructor() {
-    super();
+  constructor(props){
+    super(props);
     this.state = {
       loading: false,
       email: "",
@@ -29,7 +29,7 @@ class LoginPage extends React.Component {
 
   checkLogin = (evt) => {
     this.setState({ loading: true });
-    const url = "http://localhost:5000/user/login";
+    const url = "/user/login"; // "http://localhost:5000/user/login";
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
     console.log(email);

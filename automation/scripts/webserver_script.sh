@@ -59,7 +59,8 @@ npm install
 npm run build
 
 cd ../server
-
+WebServerIP=$(curl ifconfig.co)
+export WebServerIP
 echo "Webserver SetUp complete"
 echo "You can visit your website now at $WebServerIP:5000"
 

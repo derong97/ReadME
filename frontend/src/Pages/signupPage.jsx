@@ -38,7 +38,7 @@ class SignupPage extends React.Component {
     const isValid = this.validate();
     if (isValid) {
       this.setState({ loading: true });
-      const url = "http://localhost:5000/user/signup";
+      const url = "/user/signup"; //"http://localhost:5000/user/signup";
       var username = document.getElementById("username").value;
       var email = document.getElementById("email").value;
       var password = document.getElementById("password").value;
