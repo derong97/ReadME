@@ -21,6 +21,8 @@ def mongolog(request_body, **kwargs):
         "timestamp": datetime.now(),
         "method": request_body.method
     }
+    if len(request_body.args.to_dict()) != 0:
+        data["request"] = request_body.args.to_dict()
     for key, val in kwargs.items():
         data[key] = val
     monog_log.insert_one(data)
