@@ -1,8 +1,6 @@
 ---VM Configurations---
 • AMI image: ami-0f82752aa17ff8f5d
-• Ubuntu 18.04 LTS
 • t2.xlarge
-• disk space 32GB +
 • they must be in the same region, same subnet
 • port 22 must be open
 • allow all traffic in security group
@@ -10,8 +8,8 @@
 
 ---Compilation of command lines to set up hadoop/sqoop after ssh---
 (assume IP addresses are as follows)
-namenode: 3.230.143.188 (Private: 172.31.70.220)
-datanode1: 3.237.15.53 (Private: 172.31.68.101)
+namenode: 35.170.77.41 (Private: 172.31.72.32)
+datanode1: 34.236.37.240 (Private: 172.31.67.33)
 
 
 (all nodes)
@@ -19,8 +17,8 @@ sudo adduser hadoop
 
 sudo vim /etc/hosts
 (add lines at the top)
-172.31.70.220 namenode
-172.31.68.101 datanode1
+172.31.72.32 namenode
+172.31.67.33 datanode1
 
 sudo sh -c 'echo "hadoop ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/90-hadoop'
 sudo sysctl vm.swappiness=10
@@ -40,12 +38,13 @@ ssh-copy-id hadoop@namenode
 ssh-copy-id hadoop@datanode1
 
 (all nodes)
+sudo su hadoop
 sudo apt-get update
 sudo apt-get install -y openjdk-8-jdk
 
-sudo su hadoop
 
 (on namenode)
+cd
 mkdir download
 cd download
 wget https://apachemirror.sg.wuchna.com/hadoop/common/hadoop-3.3.0/hadoop-3.3.0.tar.gz
