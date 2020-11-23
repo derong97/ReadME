@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import NavBar from "../Components/NavBar.jsx";
 import ReviewItem from "../Components/ReviewItem";
+import RelatedBook from "../Components/RelatedBook";
 import LoadingOverlay from "react-loading-overlay";
 import Footer from "../Components/Footer.jsx";
 import StarRatings from "react-star-ratings";
@@ -26,28 +27,42 @@ class BookPage extends React.Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     console.log(this.state.relatedBooks);
-    const bought = this.state.book.related.also_bought;
-    console.log(bought);
-    const relatedBooks = this.getRelatedBooks(bought);
+    var relatedBooks = [];
+    if (this.state.book.related !== null) {
+      const bought = this.state.book.related.also_bought;
+      console.log(bought);
+      if (typeof bought !== "undefined")
+        relatedBooks = await new Promise((resolve) =>
+          this.getRelatedBooks(bought, resolve)
+        );
+    }
     console.log(relatedBooks);
     this.setState({ relatedBooks: relatedBooks });
     this.setState({ searching: false });
     console.log(this.state.relatedBooks);
   }
 
-  getRelatedBooks = (bought) => {
+  getRelatedBooks = async (bought, resolve) => {
     const relatedBooks = [];
-    for (var i = 0; i < 3; i++) {
+    var length;
+    var i;
+
+    if (bought.length < 3) length = bought.length;
+    else length = 3;
+
+    for (var i = 0; i < length; i++) {
       console.log(bought[i]);
-      relatedBooks.push(this.getBook(bought[i]));
+      relatedBooks.push(
+        await new Promise((resolve) => this.getBook(bought[i], resolve))
+      );
     }
     console.log(relatedBooks);
-    return relatedBooks;
+    return resolve(relatedBooks);
   };
 
-  getBook = (asin) => {
+  getBook = (asin, resolve) => {
     console.log(asin);
     const url = "http://localhost:5000/book/" + asin;
     const body = {
@@ -63,7 +78,10 @@ class BookPage extends React.Component {
         console.log(book);
         console.log(reviews);
         if (res.status === 200) {
-          return { book: book, reviews: reviews == null ? [] : reviews };
+          return resolve({
+            book: book,
+            reviews: reviews == null ? [] : reviews,
+          });
         }
       })
       .catch((err) => {
@@ -155,18 +173,19 @@ class BookPage extends React.Component {
                 <div class="row">
                   <h4 id="relatedbooks-title">RELATED BOOKS</h4>
                 </div>
-                {/* {this.state.relatedBooks.map((book) => (
-                <div>
-                  <RelatedBook
-                    event={this}
-                    token={this.state.token}
-                    username={this.state.username}
-                    book={book.book}
-                    reviews={book.reviews}
-                  />
-                  <hr className="divider"></hr>
-                </div>
-              ))} */}
+                {this.state.relatedBooks.map((book) => (
+                  <div>
+                    <RelatedBook
+                      event={this}
+                      token={this.state.token}
+                      id={this.state.id}
+                      username={this.state.username}
+                      book={book.book}
+                      reviews={book.reviews}
+                    />
+                    <hr className="divider"></hr>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
