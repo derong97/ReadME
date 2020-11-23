@@ -38,7 +38,7 @@ class SignupPage extends React.Component {
     const isValid = this.validate();
     if (isValid) {
       this.setState({ loading: true });
-      const url = "http://localhost:5000/user/signup";
+      const url = "/user/signup";
       var username = document.getElementById("username").value;
       var email = document.getElementById("email").value;
       var password = document.getElementById("password").value;
@@ -70,6 +70,10 @@ class SignupPage extends React.Component {
                 token: token,
                 id: id,
                 username: username,
+                books: [],
+                count: 0,
+                category: ["Kindle eBooks"],
+                activePage: 1,
               },
             });
           }

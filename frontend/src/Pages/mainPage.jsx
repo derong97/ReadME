@@ -47,102 +47,66 @@ class MainPage extends React.Component {
       searching: false,
       id: props.location.state.id,
       username: props.location.state.username,
-      dropDownValue: "Popularity",
-      category: "",
-      books: [
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-      ],
-      genres: {
-        fantasy: false,
-        youngadult: false,
-        horror: false,
-        thriller: false,
-        cooking: false,
-        inspo: false,
-        travel: false,
-        crime: false,
-      },
-      activePage: 1,
+      books: props.location.state.books,
+      category: props.location.state.category,
+      count: props.location.state.count,
+      activePage: props.location.state.activePage,
     };
   }
 
-  componentDidMount() {
-    // time taken to retrieve value from the backend for the top 30 books
-    setTimeout(() => {
-      this.setState({ loading: false });
-      setTimeout(() => {
-        this.setState({ done: true });
-      }, 500);
-    }, 1000);
+  componentDidUpdate(prevProps) {
+    if (prevProps.location.key !== this.props.location.key) {
+      this.setState({
+        books: this.props.location.state.books,
+        count: this.props.location.state.count,
+        category: this.props.location.state.category,
+        activePage: this.props.location.state.activePage,
+      });
+    }
+    console.log(this.state.category);
+    console.log(this.state.books);
+    console.log(this.state.count);
   }
 
-  changeValue = (text) => {
-    this.setState({ dropDownValue: text });
+  componentDidMount() {
+    this.getBooks(this.state.activePage);
+  }
 
-    // const url = "";
-    // var sortby = this.state.dropDownValue;
-    // console.log(sortby);
+  getBooks = () => {
+    console.log(this.state.category);
 
-    // const body = {
-    //   params: { sortby: sortby },
-    // };
-    // console.log(body);
-
-    // evt.preventDefault();
-    // axios
-    //   .get(url, body)
-    //   .then((res) => {
-    //     console.log(res);
-    //     // retrieve top 30 books
-    //     this.setState({ books: res.data });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.response);
-    //     console.log(err.request);
-    //   });
-  };
-
-  handleCheckboxChange = (evt) => {
-    const genres = this.state.genres;
-    genres[evt.target.id] = evt.target.checked;
-    this.setState({
-      genres: genres,
-    });
+    const url = "http://localhost:5000/books";
+    const body = {
+      headers: { "x-access-tokens": this.state.token },
+      params: { category: this.state.category, pageNum: this.state.activePage },
+    };
+    axios
+      .get(url, body)
+      .then((res) => {
+        console.log(res);
+        const metadata = res.data.metadata;
+        const count = res.data.total_counts;
+        console.log(metadata);
+        console.log(count);
+        if (res.status === 200) {
+          this.setState({ books: metadata, count: count });
+          this.setState({ loading: false });
+          setTimeout(() => {
+            this.setState({ done: true });
+          }, 500);
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        console.log(err.request);
+      });
   };
 
   handleCategoryChange = (cat) => {
-    var catList = "";
+    var catList = [];
     var i;
     for (i = 0; i < cat.length; i++) {
-      if (i === 0) {
-        catList += cat[i].value;
-      } else {
-        catList += ", " + cat[i].value;
-      }
+      catList.push(cat[i].value);
     }
     this.setState({
       category: catList,
@@ -154,69 +118,95 @@ class MainPage extends React.Component {
     console.log(this.state.category);
   };
 
-  clearAll = (evt) => {
+  categoryOnSubmit = (evt) => {
+    console.log(this.state.category);
+
+    this.setState({ searching: true });
+    // # Ex 1: /books?category=Public Health&category=Vascular
+    const url = "http://localhost:5000/books";
+    const body = {
+      headers: { "x-access-tokens": this.state.token },
+      params: { category: this.state.category, pageNum: 1 },
+    };
+    console.log(body);
     evt.preventDefault();
-    this.setState({
-      genres: {
-        fantasy: false,
-        youngadult: false,
-        horror: false,
-        thriller: false,
-        cooking: false,
-        inspo: false,
-        travel: false,
-        crime: false,
-      },
-    });
+    axios
+      .get(url, body)
+      .then((res) => {
+        console.log(res);
+        const metadata = res.data.metadata;
+        const count = res.data.total_counts;
+        console.log(metadata);
+        console.log(count);
+        if (res.status === 200) {
+          this.setState({ searching: false });
+          this.props.history.push({
+            pathname: "/main",
+            state: {
+              token: this.state.token,
+              id: this.state.id,
+              username: this.state.username,
+              books: metadata,
+              count: count,
+              category: this.state.category,
+              activePage: 1,
+            },
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        console.log(err.request);
+      });
   };
 
-  // checkGenres = (evt) => {
-  //   const url = "";
-  //   var genres = this.state.genres;
-  //   var selected = [];
-  //   for (var key in genres) {
-  //     if (genres[key]) {
-  //       selected.push(key);
-  //     }
-  //   }
-  //   console.log(selected);
-  //   const body = {
-  //     params: { genres: selected },
-  //   };
-  //   console.log(body);
-  //   evt.preventDefault();
-  //   axios
-  //     .get(url, body)
-  //     .then((res) => {
-  //       console.log(res);
-  //       // retrieve top 30 books
-  //       this.setState({ books: res.data });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.response);
-  //       console.log(err.request);
-  //     });
-  // };
+  handlePageChange(pageNum) {
+    console.log(this.state.category);
 
-  handlePageChange(pageNumber) {
-    //reload screen with new set of books
-    console.log(`active page is ${pageNumber}`);
-    this.setState({ activePage: pageNumber });
+    this.setState({ searching: true });
+    console.log("active page is " + pageNum);
+    this.setState({ activePage: pageNum });
+    console.log(this.state.activePage);
+
+    const url = "http://localhost:5000/books";
+    const body = {
+      headers: { "x-access-tokens": this.state.token },
+      params: { category: this.state.category, pageNum: pageNum },
+    };
+    console.log(body);
+    axios
+      .get(url, body)
+      .then((res) => {
+        console.log(res);
+        const metadata = res.data.metadata;
+        const count = res.data.total_counts;
+        console.log(metadata);
+        if (res.status === 200) {
+          this.setState({ searching: false });
+          this.props.history.push({
+            pathname: "/main",
+            state: {
+              token: this.state.token,
+              id: this.state.id,
+              username: this.state.username,
+              books: metadata,
+              count: count,
+              category: this.state.category,
+              activePage: pageNum,
+            },
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        console.log(err.request);
+      });
   }
 
   render() {
     const categories = [
-      { value: "Fantasy", label: "Fantasy" },
-      { value: "Science Fiction", label: "Science Fiction" },
-      { value: "Dystopian", label: "Dystopian" },
-      { value: "Adventure", label: "Adventure" },
-      { value: "Historical Fiction", label: "Historical Fiction" },
-      { value: "Young Adult", label: "Young Adult" },
-      { value: "Children's Fiction", label: "Children's Fiction" },
-      { value: "Romance", label: "Romance" },
-      { value: "Detective & Mystery", label: "Detective & Mystery" },
-      { value: "Horror", label: "Horror" },
-      { value: "Thriller", label: "Thriller" },
+      { value: "Dance", label: "Dance" },
+      { value: "Dark Fantasy", label: "Dark Fantasy" },
     ];
 
     return (
@@ -258,7 +248,7 @@ class MainPage extends React.Component {
                       <h4 id="header" class="col">
                         EXPLORE
                       </h4>
-                      <div id="sortby" class="col">
+                      {/* <div id="sortby" class="col">
                         <text>SORT BY</text>
                         <DropdownButton
                           id="sortby-dropdown"
@@ -283,7 +273,7 @@ class MainPage extends React.Component {
                             Latest Arrival
                           </Dropdown.Item>
                         </DropdownButton>
-                      </div>
+                      </div> */}
                     </div>
                     <div id="body-content" class="row">
                       <div id="book-container" class="col">
@@ -292,6 +282,7 @@ class MainPage extends React.Component {
                             <Book
                               event={this}
                               token={this.state.token}
+                              username={this.state.username}
                               book={book}
                             />
                           ))}
@@ -300,8 +291,8 @@ class MainPage extends React.Component {
                           itemClass="page-item"
                           linkClass="page-link"
                           activePage={this.state.activePage}
-                          itemsCountPerPage={1} // helps you to calculate how many pages you need depending on your items
-                          totalItemsCount={3}
+                          itemsCountPerPage={10} // helps you to calculate how many pages you need depending on your items
+                          totalItemsCount={this.state.count}
                           pageRangeDisplayed={5}
                           onChange={this.handlePageChange.bind(this)}
                         />
@@ -310,10 +301,9 @@ class MainPage extends React.Component {
                         <text id="filterby-header">FILTER BY</text>
                         <div id="genres">
                           <text>GENRES</text>
-                          <Form
-                          // onSubmit={this.checkGenres}
-                          >
+                          <Form onSubmit={this.categoryOnSubmit}>
                             <Select
+                              id="select"
                               closeMenuOnSelect={false}
                               components={makeAnimated()}
                               isMulti

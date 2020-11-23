@@ -98,10 +98,11 @@ class BookPage extends React.Component {
                     id="book-img"
                     alt="book"
                     src={this.state.book.imUrl}
+                    height="auto"
                   ></img>
                   <div id="book-info">
                     <h4 id="book-title">Book Title</h4>
-                    <text>{this.state.book.categories}</text>
+                    <text>{this.state.book.categories} </text>
                     <StarRatings
                       name="rating"
                       rating={this.state.book.avg_rating}

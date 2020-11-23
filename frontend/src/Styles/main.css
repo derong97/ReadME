@@ -61,6 +61,7 @@
 }
 
 .page-item {
+  margin-top: 30px;
   margin-bottom: 50px;
 }
 
@@ -96,20 +97,9 @@
   border: 1px solid rgb(0, 0, 0, 0.2);
 }
 
-#genres-header {
-  margin-top: 10px;
-  font-family: "Gotham-Thin";
-  color: black;
-}
-
-.genres-item {
-  font-size: 12px;
-}
-
-#genres-expand {
-  margin-right: 10px;
-  font-family: "Gotham-Thin";
-  font-size: 12px;
+#select {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 #genres-submit {
