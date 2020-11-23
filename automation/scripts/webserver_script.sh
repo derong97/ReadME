@@ -9,8 +9,6 @@ sudo apt-get -y install npm
 curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
-# sudo apt install software-properties-common 
-# sudo add-apt-repository ppa:deadsnakes/ppa 
 sudo apt update
 sudo apt install python3 -y
 sudo apt-get install python3-venv
@@ -25,9 +23,9 @@ sudo apt-get install libmysqlclient-dev -y
 sudo apt install python3-pip -y
 sudo apt-get update
 
-# wget -c https://www.dropbox.com/s/5dyewe9mipo7k2r/ReadMe-main.zip?dl=0 -O ReadMe-main.zip
-# sudo apt install unzip
-# unzip ReadMe-main.zip
+wget -c https://www.dropbox.com/s/5dyewe9mipo7k2r/ReadMe-main.zip?dl=0 -O ReadMe-main.zip
+sudo apt install unzip
+unzip ReadMe-main.zip
 
 cd ReadMe-main/server
 python3 -m venv venv
