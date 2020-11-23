@@ -37,7 +37,7 @@ pip3 install -r requirements.txt
 
 
 sudo tee .env << EOF
-MONGO_IP=$MongoDBIP
+MONGO_IP=204.236.223.217 
 MONGO_USER=historicriptide
 MONGO_PW=futuresparkles
 MONGO_DB=readme_mongo
@@ -45,7 +45,7 @@ MONGO_USERS_COL=userbase
 MONGO_METADATA_COL=kindle_metadata
 MONGO_LOG_COL=log
 
-SQL_IP=$MySQLIP
+SQL_IP=52.73.249.157
 SQL_USER=historicriptide
 SQL_PW=futuresparkles
 SQL_DB=readme_sql
@@ -54,11 +54,11 @@ SQL_KINDLE=Kindle
 SECRET_KEY=706c656173652067656e657261746520612072616e646f6d206e756d626572
 EOF
 
-cd ../frontend
+cd ../frontend/static
 npm install
-npm run build
+# npm run build
 
-cd ../server
+cd ../../server
 WebServerIP=$(curl ifconfig.co)
 export WebServerIP
 echo "Webserver SetUp complete"
