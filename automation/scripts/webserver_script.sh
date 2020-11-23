@@ -9,11 +9,13 @@ sudo apt-get -y install npm
 curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
-sudo apt install software-properties-common 
-sudo add-apt-repository ppa:deadsnakes/ppa 
+# sudo apt install software-properties-common 
+# sudo add-apt-repository ppa:deadsnakes/ppa 
 sudo apt update
-sudo apt install python3.7 -y
-sudo apt-get install python3.7-venv
+sudo apt install python3 -y
+sudo apt-get install python3-venv
+python3 --version
+
 
 echo "mysql-server mysql-server/root_password password password" | sudo debconf-set-selections
 echo "mysql-server mysql-server/root_password_again password password" | sudo debconf-set-selections
@@ -22,20 +24,19 @@ sudo apt-get install mysql-server -y
 sudo apt-get install libmysqlclient-dev -y
 sudo apt install python3-pip -y
 sudo apt-get update
-sudo apt-get install python3.7-dev -y
 
-wget -c https://www.dropbox.com/s/hk804tfk5qvtb5g/ReadMe-main.zip?dl=0 -O ReadMe-main.zip
-sudo apt install unzip
-unzip ReadMe-main.zip
+# wget -c https://www.dropbox.com/s/5dyewe9mipo7k2r/ReadMe-main.zip?dl=0 -O ReadMe-main.zip
+# sudo apt install unzip
+# unzip ReadMe-main.zip
 
 cd ReadMe-main/server
-python3.7 -m venv venv
+python3 -m venv venv
 source venv/bin/activate
 pip3 install wheel
 pip3 install -r requirements.txt
 
 sudo tee .env << EOF
-MONGO_IP=$MongoDBIP
+MONGO_IP=204.236.223.217
 MONGO_USER=historicriptide
 MONGO_PW=futuresparkles
 MONGO_DB=readme_mongo
@@ -43,7 +44,7 @@ MONGO_USERS_COL=userbase
 MONGO_METADATA_COL=kindle_metadata
 MONGO_LOG_COL=log
 
-SQL_IP=$MySQLIP
+SQL_IP=52.73.249.157
 SQL_USER=historicriptide
 SQL_PW=futuresparkles
 SQL_DB=readme_sql
