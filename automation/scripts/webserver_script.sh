@@ -1,4 +1,4 @@
-echo "Setting up WebServer"
+#!/bin/bash
 
 sudo apt-get update
 
@@ -8,44 +8,36 @@ export LANGUAGE="en_US.UTF-8"
 sudo apt-get -y install npm
 curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt-get install -y nodejs
-echo "installed nodejs"
 
 sudo apt update
 sudo apt install python3 -y
 sudo apt-get install python3-venv -y
 python3 --version
 
-
 echo "mysql-server mysql-server/root_password password password" | sudo debconf-set-selections
 echo "mysql-server mysql-server/root_password_again password password" | sudo debconf-set-selections
-
 sudo apt-get install mysql-server -y
 sudo apt-get install libmysqlclient-dev -y
-echo "installed mysql stuff"
 
 sudo apt install python3-pip -y
 sudo apt-get update
-echo "installed pip"
 
 
 wget -c https://www.dropbox.com/s/5dyewe9mipo7k2r/ReadMe-main.zip?dl=0 -O ReadMe-main.zip
 sudo apt install unzip
 unzip ReadMe-main.zip
-echo "downloaded readme"
 
 
 cd ReadMe-main/server
 python3 -m venv venv
 source venv/bin/activate
-echo "activated vm"
 
 pip3 install wheel
 pip3 install -r requirements.txt
-echo "installed requirements"
 
 
 sudo tee .env << EOF
-MONGO_IP=204.236.223.217
+MONGO_IP=$MongoDBIP
 MONGO_USER=historicriptide
 MONGO_PW=futuresparkles
 MONGO_DB=readme_mongo
@@ -53,7 +45,7 @@ MONGO_USERS_COL=userbase
 MONGO_METADATA_COL=kindle_metadata
 MONGO_LOG_COL=log
 
-SQL_IP=52.73.249.157
+SQL_IP=$MySQLIP
 SQL_USER=historicriptide
 SQL_PW=futuresparkles
 SQL_DB=readme_sql
