@@ -21,15 +21,15 @@ class Review:
         con, cur = connect()
 
         try:
-            cur.execute(f"SELECT * FROM {SQL_KINDLE} WHERE asin='{asin}';")
+            cur.execute("SELECT * FROM {} WHERE asin='{}';".format(SQL_KINDLE, asin))
             r = fetch_dicts(cur)
             if r == []:
-                return {"message": f"No reviews found for asin {asin}"}, 200
+                return {"message": "No reviews found for asin {}".format(asin)}, 200
 
-            return {"reviews": r, "message": f"Successfully retrieved reviews for asin {asin}"}, 200
+            return {"reviews": r, "message": "Successfully retrieved reviews for asin {}".format(asin)}, 200
 
         except Exception as e:
-            return {"message": f"Retrieval of reviews failed for asin {asin}"}, 400
+            return {"message": "Retrieval of reviews failed for asin {}".format(asin)}, 400
 
         finally:
             con.close()
@@ -46,23 +46,23 @@ class Review:
             reviewText = request.json.get('reviewText')
             summary = request.json.get('summary')
 
-            values = f"('{asin}', {overall}, '{reviewText}', curdate(), '{reviewerID}', '{reviewerName}', '{summary}', UNIX_TIMESTAMP())"
+            values = "('{}', {}, '{}', curdate(), '{}', '{}', '{}', UNIX_TIMESTAMP())".format(asin, overall, reviewText, reviewerID, reviewerName, summary)
 
             con, cur = connect()
             
             try:
-                cur.execute(f"INSERT INTO {SQL_KINDLE} (asin, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime) VALUES {values}")
+                cur.execute("INSERT INTO {} (asin, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime) VALUES {}".format(SQL_KINDLE, values))
                 con.commit()
-                return {"message": f"Successfully inserted review for asin {asin}"}, 200
+                return {"message": "Successfully inserted review for asin {}".format(asin)}, 200
             
             except Exception as e:
-                return {"message": f"Insertion of review failed for asin {asin}"}, 400
+                return {"message": "Insertion of review failed for asin {}".format(asin)}, 400
             
             finally:
                 con.close()
 
         else:
-            return {"message": f"User id {reviewerID} does not exist"}, 401
+            return {"message": "User id {} does not exist".format(reviewerID)}, 401
 
     def edit_review(self, reviewerID, asin):
         reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
@@ -72,23 +72,23 @@ class Review:
             reviewText = request.json.get('reviewText')
             summary = request.json.get('summary')
 
-            values = f"overall = {overall}, reviewText = '{reviewText}', reviewTime = curdate(), summary = '{summary}', unixReviewTime = UNIX_TIMESTAMP()"
+            values = "overall = {}, reviewText = '{}', reviewTime = curdate(), summary = '{}', unixReviewTime = UNIX_TIMESTAMP()".format(overall, reviewText, summary)
 
             con, cur = connect()
             try:
                 cur.execute(
-                    f"UPDATE {SQL_KINDLE} SET {values} WHERE asin='{asin}' and reviewerID='{reviewerID}';")
+                    "UPDATE {} SET {} WHERE asin='{}' and reviewerID='{}';".format(SQL_KINDLE, values, asin, reviewerID))
                 con.commit()
-                return {"message": f"Successfully edited review for asin {asin}"}, 200
+                return {"message": "Successfully edited review for asin {}".format(asin)}, 200
 
             except Exception as e:
-                return {"message": f"Failed to edit review for asin {asin}"}, 400
+                return {"message": "Failed to edit review for asin {}".format(asin)}, 400
 
             finally:
                 con.close()
 
         else:
-            return {"message": f"User id {reviewerID} does not exist"}, 401
+            return {"message": "User id {} does not exist".format(reviewerID)}, 401
 
     def delete_review(self, reviewerID, asin):
         reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})
@@ -96,29 +96,29 @@ class Review:
         if reviewer_info != None:
             con, cur = connect()
             try:
-                cur.execute(f"DELETE FROM {SQL_KINDLE} WHERE asin='{asin}' and reviewerID='{reviewerID}';")
+                cur.execute("DELETE FROM {} WHERE asin='{}' and reviewerID='{}';".format(SQL_KINDLE, asin, reviewerID))
                 con.commit()
-                return {"message": f"Successfully deleted review for asin {asin}"}, 200
+                return {"message": "Successfully deleted review for asin {}".format(asin)}, 200
 
             except Exception as e:
-                return {"message": f"Deletion of review failed for asin {asin}"}, 400
+                return {"message": "Deletion of review failed for asin {}".format(asin)}, 400
 
             finally:
                 con.close()
         else:
-            return {"message": f"User id {reviewerID} does not exist"}, 401
+            return {"message": "User id {} does not exist".format(reviewerID)}, 401
     
     # get average rating of one book
     def get_rating(self, asin):
         con, cur = connect()
 
         try:
-            cur.execute(f"SELECT AVG(overall) as 'Average Rating' FROM {SQL_KINDLE} WHERE asin = '{asin}';")
+            cur.execute("SELECT AVG(overall) as 'Average Rating' FROM {} WHERE asin = '{}';".format(SQL_KINDLE, asin))
             r = cur.fetchone()[0]
-            return {"rating": r, "message": f"Successfully retrieved rating for asin {asin}"}, 200
+            return {"rating": r, "message": "Successfully retrieved rating for asin {}".format(asin)}, 200
 
         except Exception as e:
-            return {"message": f"Retrieval of rating failed for asin {asin}"}, 400
+            return {"message": "Retrieval of rating failed for asin {}".format(asin)}, 400
         
         finally:
             con.close()
@@ -129,9 +129,9 @@ class Review:
         
         try:
             if(desc):
-                cur.execute(f"SELECT asin, AVG(overall) as 'Average Rating' FROM {SQL_KINDLE} GROUP BY asin ORDER BY AVG(overall) DESC LIMIT 10;")
+                cur.execute("SELECT asin, AVG(overall) as 'Average Rating' FROM {} GROUP BY asin ORDER BY AVG(overall) DESC LIMIT 10;".format(SQL_KINDLE))
             else:
-                cur.execute(f"SELECT asin, AVG(overall) as 'Average Rating' FROM {SQL_KINDLE} GROUP BY asin ORDER BY AVG(overall) ASC LIMIT 10;")
+                cur.execute("SELECT asin, AVG(overall) as 'Average Rating' FROM {} GROUP BY asin ORDER BY AVG(overall) ASC LIMIT 10;".format(SQL_KINDLE))
             
             r = fetch_dicts(cur)
             return {"rating": r, "message": "Successfully sorted books"}, 200
@@ -149,18 +149,18 @@ class Review:
         if reviewer_info != None:
             con, cur = connect()
             try:
-                cur.execute(f"SELECT * FROM {SQL_KINDLE} WHERE reviewerID = '{reviewerID}';")
+                cur.execute("SELECT * FROM {} WHERE reviewerID = '{}';".format(SQL_KINDLE, reviewerID))
                 r = fetch_dicts(cur)
                 if r == []:
-                    return {"message": f"No reviews found for user id {reviewerID}"}, 200
+                    return {"message": "No reviews found for user id {}".format(reviewerID)}, 200
 
-                return {"reviews": r, "message": f"Successfully retrieved reviews for user id {reviewerID}"}, 200
+                return {"reviews": r, "message": "Successfully retrieved reviews for user id {}".format(reviewerID)}, 200
 
             except Exception as e:
-                return {"message": f"Retrieval of reviews failed for user id {reviewerID}"}, 400
+                return {"message": "Retrieval of reviews failed for user id {}".format(reviewerID)}, 400
 
             finally:
                 con.close()
 
         else:
-            return {"message": f"User id {reviewerID} does not exist"}, 401
+            return {"message": "User id {} does not exist".format(reviewerID)}, 401

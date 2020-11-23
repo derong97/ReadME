@@ -30,18 +30,12 @@ fi
 /usr/local/bin/aws configure
 
 # Session token is needed to prevent AuthFailure
-while :
-do
-  read -p "Enter AWS Session Token:" aws_session_token
+read -p "Enter AWS Session Token:" aws_session_token
 
-  # If there is user input, set token. Otherwise prompt the user again.
-  if [[ ! -z "$aws_session_token" ]]; then
-    gawk -i inplace '!/aws_session_token/' ~/.aws/credentials
-    echo "aws_session_token = $aws_session_token" >> ~/.aws/credentials
-    break
-  fi
-done
-
+if [[ ! -z "$aws_session_token" ]]; then
+  gawk -i inplace '!/aws_session_token/' ~/.aws/credentials
+  echo "aws_session_token = $aws_session_token" >> ~/.aws/credentials
+fi
 
 ### CREATE KEY PAIR ###
 {

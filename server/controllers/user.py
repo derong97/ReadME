@@ -22,13 +22,13 @@ class User:
 
         # Check for existing email address
         if mongo_users.find_one({"email" : user['email']}):
-            return {"message": f"Email address '{user['email']}' already in use"}, 400
+            return {"message": "Email address '{}' already in use".format(user['email'])}, 400
 
         # Insert user record into db
         elif mongo_users.insert_one(user):
             # token expires after 30 min
-            token = jwt.encode({"reviewerID": f"{user['_id']}", 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, SECRET_KEY)
-            return {"token": token.decode('UTF-8'), "message" : f"{user['name']} successfully signed up"}, 200
+            token = jwt.encode({"reviewerID": str(user['_id']), 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, SECRET_KEY)
+            return {"token": token.decode('UTF-8'), "message" : "{} successfully signed up".format(user['name'])}, 200
 
         return {"message": "Signup failed"}, 400
 
@@ -43,7 +43,7 @@ class User:
         # Checks if the user exists and whether the hashed unencrypted password matches the stored encrypted password
         if user and pbkdf2_sha256.verify(request.json.get('password'), user['password']):
             # token expires after 30 min
-            token = jwt.encode({"reviewerID": f"{user['_id']}", 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, SECRET_KEY)
-            return {"token": token.decode('UTF-8'), "message" : f"{user['name']} successfully logged in"}, 200
+            token = jwt.encode({"reviewerID": str(user['_id']), 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, SECRET_KEY)
+            return {"token": token.decode('UTF-8'), "message" : "{} successfully logged in".format(user['name'])}, 200
         
         return {"message": "Invalid login credentials"}, 401

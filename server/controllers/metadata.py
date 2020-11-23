@@ -14,13 +14,13 @@ class Metadata:
             book_metadata = mongo_metadata.find_one({"asin": asin})
 
             if book_metadata == None:
-                return {"message": f"No metadata found for asin {asin}"}, 200
+                return {"message": "No metadata found for asin {}".format(asin)}, 200
 
             book_metadata = json.loads(json_util.dumps(book_metadata))
-            return {"metadata": book_metadata, "message": f"Successfully retrieved metadata for asin {asin}"}, 200
+            return {"metadata": book_metadata, "message": "Successfully retrieved metadata for asin {}".format(asin)}, 200
 
         except Exception as e:
-            return {"message": f"Retrieval of metadata failed for asin {asin}"}, 400
+            return {"message": "Retrieval of metadata failed for asin {}".format(asin)}, 400
 
     def add_new_book(self):
         book_metadata = {
@@ -36,15 +36,15 @@ class Metadata:
 
         # Check if asin field is supplied; this field should be made compulsory on frontend
         if book_metadata["asin"] == None: 
-            return {"message": f"asin not provided"}, 400
+            return {"message": "asin not provided"}, 400
         
          # Check for existing asin
         elif mongo_metadata.find_one({"asin" : book_metadata['asin']}):
-            return {"message": f"asin {book_metadata['asin']} already taken up"}, 400
+            return {"message": "asin {} already taken up".format(book_metadata['asin'])}, 400
 
         # Insert book metadata record into db
         elif mongo_metadata.insert_one(book_metadata):
-            return {"message": f"Successfully inserted book for asin {book_metadata['asin']}"}, 200
+            return {"message": "Successfully inserted book for asin {}".format(book_metadata['asin'])}, 200
 
         return {"message": "Failed to add new book"}, 400
 
@@ -65,17 +65,17 @@ class Metadata:
             all_metadata = mongo_metadata.find(filter_dict)
 
             if all_metadata.count() == 0:
-                return {"message": f"No metadata found with title as {title} and categories as {categories}"}, 200
+                return {"message": "No metadata found with title as {} and categories as {categories}".format(title, categories)}, 200
             
             return {"metadata": self.get_page_metadata(all_metadata, pageNum), # returns max 10 records only
                     "total counts": all_metadata.count(), # so the frontend knows how many pages to expect
-                    "message": f"Successfully retrieved metadata with title as {title} and categories as {categories}"
+                    "message": "Successfully retrieved metadata with title as {title} and categories as {categories}"
                     }, 200
 
         except Exception as e:
-            return {"message": f"Retrieval of metadata failed when searching"}, 400
+            return {"message": "Retrieval of metadata failed when searching"}, 400
         
-        return {"message": f"Retrieval of metadata failed when searching"}, 400
+        return {"message": "Retrieval of metadata failed when searching"}, 400
     
     # returns only the relevant page metadata
     def get_page_metadata(self, all_metadata, pageNum=1):
