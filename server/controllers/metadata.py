@@ -61,7 +61,7 @@ class Metadata:
                 pattern = re.compile(title, re.I) # not case sensitive
                 filter_dict.update({"title": {'$regex': pattern}})
             
-            # all_metadata = self.sort_by_avg_rating(filter_dict) # TODO: not all records have average rating now
+            #all_metadata = self.sort_by_avg_rating(filter_dict) <-- ting yew check this
             all_metadata = mongo_metadata.find(filter_dict)
 
             if all_metadata.count() == 0:
@@ -91,6 +91,6 @@ class Metadata:
 
         return json.loads(json_util.dumps(page_metadata))
 
-    # filtered result is sorted by averageRating in descending order
+    # filtered result is sorted by average rating in descending order
     def sort_by_avg_rating(self, filter_dict={}):
-        return mongo_metadata.find(filter_dict).sort( {"averageRating": -1})
+        return mongo_metadata.find(filter_dict).sort( {"avg_rating": -1})

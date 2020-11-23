@@ -11,13 +11,14 @@ sudo apt-get install -y nodejs
 
 sudo apt update
 sudo apt install python3 -y
-sudo apt-get install python3-venv
+sudo apt-get install python3-venv -y
+python3 --version
 
 echo "mysql-server mysql-server/root_password password password" | sudo debconf-set-selections
 echo "mysql-server mysql-server/root_password_again password password" | sudo debconf-set-selections
-
 sudo apt-get install mysql-server -y
 sudo apt-get install libmysqlclient-dev -y
+
 sudo apt install python3-pip -y
 sudo apt-get update
 

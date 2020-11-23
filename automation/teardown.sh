@@ -21,7 +21,7 @@ echo "Removing public key from AWS..."
 aws ec2 delete-key-pair --key-name $keyname
 
 # Delete cloud formation stack
-echo "Removing cloud formation stack on AWS..."
+echo "Removing cloud formation stack from AWS..."
 aws cloudformation delete-stack --stack-name $stackname
 
 # Remove logs
