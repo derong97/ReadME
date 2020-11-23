@@ -14,6 +14,7 @@ class SearchAuthor extends React.Component {
     super(props);
     this.state = {
       token: props.location.state.token,
+      id: props.location.state.id,
       username: props.location.state.username,
       searching: false,
       title: props.location.state.title,
@@ -92,6 +93,7 @@ class SearchAuthor extends React.Component {
         <body id="body">
           <NavBar
             event={this}
+            id={this.state.id}
             token={this.state.token}
             username={this.state.username}
             home="nav-main"
@@ -107,6 +109,7 @@ class SearchAuthor extends React.Component {
                 {this.state.books.map((book) => (
                   <Book
                     event={this}
+                    id={this.state.id}
                     token={this.state.token}
                     username={this.state.username}
                     book={book}

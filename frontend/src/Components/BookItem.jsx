@@ -33,6 +33,7 @@ class Book extends React.Component {
             pathname: "/book",
             state: {
               token: this.props.token,
+              id: this.props.id,
               username: this.props.username,
               book: book,
               reviews: reviews == null ? [] : reviews,

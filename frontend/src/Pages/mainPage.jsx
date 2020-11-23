@@ -2,13 +2,12 @@ import React from "react";
 import axios from "axios";
 import "../Styles/main.css";
 import "font-awesome/css/font-awesome.min.css";
-import { Form, Dropdown, DropdownButton } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import GridList from "@material-ui/core/GridList";
 import NavBar from "../Components/NavBar.jsx";
 import Book from "../Components/BookItem.jsx";
 import Footer from "../Components/Footer.jsx";
 import Pagination from "react-js-pagination";
-import BookImg from "../Image/login_bg.png";
 import Logo from "../Image/logo_black.png";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
@@ -63,9 +62,6 @@ class MainPage extends React.Component {
         activePage: this.props.location.state.activePage,
       });
     }
-    console.log(this.state.category);
-    console.log(this.state.books);
-    console.log(this.state.count);
   }
 
   componentDidMount() {
@@ -74,11 +70,16 @@ class MainPage extends React.Component {
 
   getBooks = () => {
     console.log(this.state.category);
+    var params = new URLSearchParams();
+    for (var cat of this.state.category) {
+      params.append("category", cat);
+    }
+    params.append("pageNum", this.state.activePage);
 
     const url = "http://localhost:5000/books";
     const body = {
       headers: { "x-access-tokens": this.state.token },
-      params: { category: this.state.category, pageNum: this.state.activePage },
+      params: params,
     };
     axios
       .get(url, body)
@@ -119,14 +120,18 @@ class MainPage extends React.Component {
   };
 
   categoryOnSubmit = (evt) => {
-    console.log(this.state.category);
-
     this.setState({ searching: true });
-    // # Ex 1: /books?category=Public Health&category=Vascular
+    console.log(this.state.category);
+    var params = new URLSearchParams();
+    for (var cat of this.state.category) {
+      params.append("category", cat);
+    }
+    params.append("pageNum", 1);
+
     const url = "http://localhost:5000/books";
     const body = {
       headers: { "x-access-tokens": this.state.token },
-      params: { category: this.state.category, pageNum: 1 },
+      params: params,
     };
     console.log(body);
     evt.preventDefault();
@@ -161,17 +166,22 @@ class MainPage extends React.Component {
   };
 
   handlePageChange(pageNum) {
-    console.log(this.state.category);
-
     this.setState({ searching: true });
     console.log("active page is " + pageNum);
     this.setState({ activePage: pageNum });
     console.log(this.state.activePage);
 
+    console.log(this.state.category);
+    var params = new URLSearchParams();
+    for (var cat of this.state.category) {
+      params.append("category", cat);
+    }
+    params.append("pageNum", pageNum);
+
     const url = "http://localhost:5000/books";
     const body = {
       headers: { "x-access-tokens": this.state.token },
-      params: { category: this.state.category, pageNum: pageNum },
+      params: params,
     };
     console.log(body);
     axios
@@ -234,6 +244,7 @@ class MainPage extends React.Component {
             <body id="body">
               <NavBar
                 event={this}
+                id={this.state.id}
                 token={this.state.token}
                 username={this.state.username}
                 searching={this.state.searching}
@@ -248,32 +259,6 @@ class MainPage extends React.Component {
                       <h4 id="header" class="col">
                         EXPLORE
                       </h4>
-                      {/* <div id="sortby" class="col">
-                        <text>SORT BY</text>
-                        <DropdownButton
-                          id="sortby-dropdown"
-                          title={this.state.dropDownValue}
-                        >
-                          <Dropdown.Item
-                            id="sortby-item"
-                            as="button"
-                            onClick={(e) =>
-                              this.changeValue(e.target.textContent)
-                            }
-                          >
-                            Popularity
-                          </Dropdown.Item>
-                          <Dropdown.Item
-                            id="sortby-item"
-                            as="button"
-                            onClick={(e) =>
-                              this.changeValue(e.target.textContent)
-                            }
-                          >
-                            Latest Arrival
-                          </Dropdown.Item>
-                        </DropdownButton>
-                      </div> */}
                     </div>
                     <div id="body-content" class="row">
                       <div id="book-container" class="col">
@@ -281,6 +266,7 @@ class MainPage extends React.Component {
                           {this.state.books.map((book) => (
                             <Book
                               event={this}
+                              id={this.state.id}
                               token={this.state.token}
                               username={this.state.username}
                               book={book}

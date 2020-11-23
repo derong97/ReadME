@@ -16,6 +16,7 @@ class BookPage extends React.Component {
     super(props);
     this.state = {
       token: props.location.state.token,
+      id: props.location.state.id,
       username: props.location.state.username,
       searching: true,
       book: props.location.state.book,
@@ -75,6 +76,11 @@ class BookPage extends React.Component {
     this.setState((prevState) => ({ open: !prevState.open }));
   };
 
+  checkNull = () => {
+    if (this.state.book.avg_rating === null) return true;
+    return false;
+  };
+
   render() {
     return (
       <LoadingOverlay
@@ -85,6 +91,8 @@ class BookPage extends React.Component {
         <body>
           <NavBar
             event={this}
+            id={this.state.id}
+            token={this.state.token}
             username={this.state.username}
             home="nav-main"
             byme="nav-sub"
@@ -101,11 +109,11 @@ class BookPage extends React.Component {
                     height="auto"
                   ></img>
                   <div id="book-info">
-                    <h4 id="book-title">Book Title</h4>
-                    <text>{this.state.book.categories} </text>
+                    <h4 id="book-title">{this.state.book.title}</h4>
+                    <text>{this.state.book.categories}</text>
                     <StarRatings
                       name="rating"
-                      rating={this.state.book.avg_rating}
+                      rating={this.checkNull ? 0 : this.state.book.avg_rating}
                       starRatedColor="orange"
                       starDimension="20px"
                       starSpacing="2.5px"

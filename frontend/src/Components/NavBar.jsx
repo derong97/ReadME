@@ -61,6 +61,7 @@ class NavBar extends Component {
             pathname: "/search",
             state: {
               token: this.props.token,
+              id: this.props.id,
               username: this.props.username,
               title: search,
               books: metadata,
@@ -102,7 +103,12 @@ class NavBar extends Component {
                   pathname: "/main",
                   state: {
                     token: this.props.token,
+                    id: this.props.id,
                     username: this.props.username,
+                    books: [],
+                    count: 0,
+                    category: ["Kindle eBooks"],
+                    activePage: 1,
                   },
                 })
               }
