@@ -1,4 +1,4 @@
-echo "Setting up WebServer"
+#!/bin/bash
 
 sudo apt-get update
 
@@ -12,8 +12,6 @@ sudo apt-get install -y nodejs
 sudo apt update
 sudo apt install python3 -y
 sudo apt-get install python3-venv
-python3 --version
-
 
 echo "mysql-server mysql-server/root_password password password" | sudo debconf-set-selections
 echo "mysql-server mysql-server/root_password_again password password" | sudo debconf-set-selections
@@ -34,7 +32,7 @@ pip3 install wheel
 pip3 install -r requirements.txt
 
 sudo tee .env << EOF
-MONGO_IP=204.236.223.217
+MONGO_IP=$MongoDBIP
 MONGO_USER=historicriptide
 MONGO_PW=futuresparkles
 MONGO_DB=readme_mongo
@@ -42,7 +40,7 @@ MONGO_USERS_COL=userbase
 MONGO_METADATA_COL=kindle_metadata
 MONGO_LOG_COL=log
 
-SQL_IP=52.73.249.157
+SQL_IP=$MySQLIP
 SQL_USER=historicriptide
 SQL_PW=futuresparkles
 SQL_DB=readme_sql
