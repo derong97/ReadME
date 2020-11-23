@@ -29,8 +29,15 @@ wget https://www.dropbox.com/s/bybard0tczemmqn/kindle_metadata_with_title_and_av
 # Load the (project) metadata with titles and average_ratings into our database
 echo "Loading data into MongoDB."
 mongoimport --authenticationDatabase admin -u "historicriptide" -p "futuresparkles" -d readme_mongo -c kindle_metadata --file kindle_metadata_with_title_and_avgrating.json --legacy
-
 sleep 3s
+
+TIMESTAMP=$(TZ='Asia/Singapore' date +"%d-%m-%Y %H-%M-%S")
+x="${TIMESTAMP}"
+y="{\"ini_timestamp\": \"${x}\"}"
+echo $y > first_entry.json
+
+mongoimport --authenticationDatabase admin -u "historicriptide" -p "futuresparkles" -d readme_mongo -c log --file first_entry.json --legacy
+mongoimport --authenticationDatabase admin -u "historicriptide" -p "futuresparkles" -d readme_mongo -c userbase --file first_entry.json --legacy
 
 echo "MongoDB SetUp complete"
 
