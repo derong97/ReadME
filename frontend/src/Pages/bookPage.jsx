@@ -11,6 +11,7 @@ import LoadingOverlay from "react-loading-overlay";
 import Footer from "../Components/Footer.jsx";
 import StarRatings from "react-star-ratings";
 import Expand from "react-expand-animated";
+import AddReviewModal from "../Components/AddModals/AddReviewModal.jsx";
 
 class BookPage extends React.Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class BookPage extends React.Component {
       reviews: props.location.state.reviews,
       relatedBooks: [],
       open: false,
+      addReviewModalShow: false,
     };
   }
 
@@ -128,6 +130,12 @@ class BookPage extends React.Component {
     this.setState((prevState) => ({ open: !prevState.open }));
   };
 
+  addReviewModalClose = () => this.setState({ addReviewModalShow: false });
+  addReviewModalOpen = () => {
+    this.setState({ addReviewModalShow: true });
+    console.log("add book show?", this.state.addReviewModalShow);
+  };
+
   render() {
     return (
       <LoadingOverlay
@@ -191,9 +199,19 @@ class BookPage extends React.Component {
                 <div id="review">
                   <div id="review-header">
                     <h4 id="review-title">REVIEW</h4>
-                    <button id="review-bttn">
+                    {/* <button id="review-bttn">
                       <FontAwesomeIcon icon={faEdit} size="2x" />
                       add review
+                    </button> */}
+                    <button
+                      className="add-review-bttn"
+                      id="add-review-bttn"
+                      onClick={this.addReviewModalOpen}
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                    >
+                      <FontAwesomeIcon icon={faEdit} size="2x" />
+                      <div className="add-book-bttn-text">add review</div>
                     </button>
                   </div>
                   <div id="review-info">
@@ -222,6 +240,16 @@ class BookPage extends React.Component {
                 ))}
               </div>
             </div>
+          </div>
+
+          <div>
+            <AddReviewModal
+              event={this}
+              token={this.state.token}
+              show={this.state.addReviewModalShow}
+              onHide={this.addReviewModalClose}
+              // asin={this.state.asin}
+            />
           </div>
 
           <Footer></Footer>

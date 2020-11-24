@@ -16,8 +16,6 @@ class AddReviewModal extends Component {
       rating: 3.7,
       reviewText: "",
       token: this.props.token,
-      // id: props.location.state.id,
-      // username: props.location.state.username, //dont need this!
     };
   }
 
@@ -51,30 +49,7 @@ class AddReviewModal extends Component {
     const url = `/book/${asin}`;
     const overall = this.state.rating;
     const reviewText = this.state.reviewText;
-    // var reviewTime = this.getCurDate();
-    // var reviewerID = this.props.id; //HELP
-    // var reviewerName = this.props.username;
     const summary = this.state.reviewTitle;
-    // var unixReviewTime = this.getUnixTimestamp();
-    console.log(this.props.token);
-    console.log(this.state.token);
-
-    // SQL post
-    // const body = {
-    //   headers: { "x-access-tokens": this.state.token },
-    //   params: {
-    //     // asin: asin,
-    //     overall: overall,
-    //     reviewText: reviewText,
-    //     summary: summary,
-    //   },
-    //   // overall: overall,
-    //   // reviewText: reviewText,
-    //   // reviewTime: reviewTime,
-    //   // reviewerID: reviewerID,
-    //   // summary: summary,
-    //   // unixReviewTime: unixReviewTime
-    // };
 
     const headers = { headers: { "x-access-tokens": this.state.token } };
     const params = {
@@ -82,8 +57,6 @@ class AddReviewModal extends Component {
       reviewText: reviewText,
       summary: summary,
     };
-
-    // console.log(body);
 
     event.preventDefault();
     axios

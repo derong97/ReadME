@@ -36,8 +36,8 @@ class ReviewsYouAddedPage extends Component {
     // this.setState({ counters });
   };
 
-  addModalClose = () => this.setState({ addReviewModalShow: false });
-  addModalOpen = () => {
+  addReviewModalClose = () => this.setState({ addReviewModalShow: false });
+  addReviewModalOpen = () => {
     this.setState({ addReviewModalShow: true });
     console.log("add book show?", this.state.addReviewModalShow);
   };
@@ -61,7 +61,7 @@ class ReviewsYouAddedPage extends Component {
           <button
             className="add-review-bttn"
             id="add-review-bttn"
-            onClick={this.addModalOpen}
+            onClick={this.addReviewModalOpen}
             data-toggle="modal"
             data-target="#exampleModalCenter"
           >
@@ -72,8 +72,11 @@ class ReviewsYouAddedPage extends Component {
 
         <div>
           <AddReviewModal
+            event={this}
+            token={this.props.token}
             show={this.state.addReviewModalShow}
-            onHide={this.addModalClose}
+            onHide={this.addReviewModalClose}
+            asin=""
           />
         </div>
 
