@@ -64,7 +64,7 @@ class NavBar extends Component {
               id: this.props.id,
               username: this.props.username,
               title: search,
-              books: metadata,
+              books: metadata == null ? [] : metadata,
               count: count,
               activePage: 1,
             },
@@ -124,6 +124,7 @@ class NavBar extends Component {
                   pathname: "/reviews-you-added",
                   state: {
                     token: this.props.token,
+                    id: this.props.id,
                     username: this.props.username,
                   },
                 })
