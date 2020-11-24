@@ -1,7 +1,6 @@
 from flask import Flask, render_template
 from flask_cors import CORS
 import os
-# from apscheduler.schedulers.background import BackgroundScheduler
 from controllers.avgRating import AvgRating
 
 # App
@@ -17,10 +16,6 @@ from routers import api_router
 @app.route('/')
 def index():
     return render_template("index.html", token = "Hello Swee Khim!")
-
-# scheduler = BackgroundScheduler()
-# job = scheduler.add_job(AvgRating.get_avg_rating(), 'interval', minutes=10)
-# scheduler.start()
 
 if __name__ == '__main__':
     app.run()
