@@ -76,7 +76,7 @@ class MainPage extends React.Component {
     }
     params.append("pageNum", this.state.activePage);
 
-    const url = "http://localhost:5000/books";
+    const url = "/books";
     const body = {
       headers: { "x-access-tokens": this.state.token },
       params: params,
@@ -128,7 +128,7 @@ class MainPage extends React.Component {
     }
     params.append("pageNum", 1);
 
-    const url = "http://localhost:5000/books";
+    const url = "/books";
     const body = {
       headers: { "x-access-tokens": this.state.token },
       params: params,
@@ -178,7 +178,7 @@ class MainPage extends React.Component {
     }
     params.append("pageNum", pageNum);
 
-    const url = "http://localhost:5000/books";
+    const url = "/books";
     const body = {
       headers: { "x-access-tokens": this.state.token },
       params: params,

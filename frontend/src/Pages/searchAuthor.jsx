@@ -48,7 +48,7 @@ class SearchAuthor extends React.Component {
     this.setState({ activePage: pageNum });
     console.log(this.state.activePage);
 
-    const url = "http://localhost:5000/books";
+    const url = "/books";
     const search = this.state.title;
     const body = {
       headers: { "x-access-tokens": this.state.token },

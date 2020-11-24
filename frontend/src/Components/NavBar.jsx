@@ -40,7 +40,7 @@ class NavBar extends Component {
 
   handleOnSubmit = (evt) => {
     this.props.event.setState({ searching: true });
-    const url = "http://localhost:5000/books";
+    const url = "/books";
     const search = this.state.search;
     const body = {
       headers: { "x-access-tokens": this.props.token },

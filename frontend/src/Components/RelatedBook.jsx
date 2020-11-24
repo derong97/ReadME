@@ -3,7 +3,6 @@ import StarRatings from "react-star-ratings";
 
 class RelatedBook extends React.Component {
   bookDeets = () => {
-    console.log("clicked");
     this.props.event.props.history.push({
       pathname: "/book",
       state: {

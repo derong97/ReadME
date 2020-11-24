@@ -13,7 +13,7 @@ class Book extends React.Component {
 
   bookDeets = async (evt) => {
     this.setState({ searching: true });
-    const url = "http://localhost:5000/book/" + this.props.book.asin;
+    const url = "/book/" + this.props.book.asin;
     const body = {
       headers: { "x-access-tokens": this.props.token },
     };

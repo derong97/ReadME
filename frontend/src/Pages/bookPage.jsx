@@ -27,8 +27,26 @@ class BookPage extends React.Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidUpdate(prevProps) {
+    if (prevProps.location.key !== this.props.location.key) {
+      this.setState({ searching: true });
+      this.setState({
+        token: this.props.location.state.token,
+        id: this.props.location.state.id,
+        username: this.props.location.state.username,
+        book: this.props.location.state.book,
+        reviews: this.props.location.state.reviews,
+      });
+      this.setRelatedBooks();
+    }
+  }
+
+  componentDidMount() {
     console.log(this.state.relatedBooks);
+    this.setRelatedBooks();
+  }
+
+  setRelatedBooks = async () => {
     var relatedBooks = [];
     if (this.state.book.related !== null) {
       const bought = this.state.book.related.also_bought;
@@ -42,7 +60,7 @@ class BookPage extends React.Component {
     this.setState({ relatedBooks: relatedBooks });
     this.setState({ searching: false });
     console.log(this.state.relatedBooks);
-  }
+  };
 
   getRelatedBooks = async (bought, resolve) => {
     const relatedBooks = [];
@@ -64,7 +82,7 @@ class BookPage extends React.Component {
 
   getBook = (asin, resolve) => {
     console.log(asin);
-    const url = "http://localhost:5000/book/" + asin;
+    const url = "/book/" + asin;
     const body = {
       headers: { "x-access-tokens": this.state.token },
     };
