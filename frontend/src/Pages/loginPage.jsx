@@ -29,7 +29,7 @@ class LoginPage extends React.Component {
 
   checkLogin = async (evt) => {
     this.setState({ loading: true });
-    const url = "http://localhost:5000/user/login";
+    const url = "/user/login";
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
     console.log(email);
@@ -57,6 +57,10 @@ class LoginPage extends React.Component {
               token: token,
               id: id,
               username: username,
+              books: [],
+              count: 0,
+              category: ["Kindle eBooks"],
+              activePage: 1,
             },
           });
         }

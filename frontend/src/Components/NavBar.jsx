@@ -27,7 +27,6 @@ class NavBar extends Component {
     super(props);
     this.state = {
       search: "",
-      // searching: this.props.searching,
       addBookModalShow: false,
       addReviewModalShow: false,
     };
@@ -41,7 +40,7 @@ class NavBar extends Component {
 
   handleOnSubmit = (evt) => {
     this.props.event.setState({ searching: true });
-    const url = "http://localhost:5000/books";
+    const url = "/books";
     const search = this.state.search;
     const body = {
       headers: { "x-access-tokens": this.props.token },
@@ -54,6 +53,7 @@ class NavBar extends Component {
       .then((res) => {
         console.log(res);
         const metadata = res.data.metadata;
+        const count = res.data.total_counts;
         console.log(metadata);
         if (res.status === 200) {
           this.props.event.setState({ searching: false });
@@ -61,9 +61,12 @@ class NavBar extends Component {
             pathname: "/search",
             state: {
               token: this.props.token,
+              id: this.props.id,
               username: this.props.username,
               title: search,
               books: metadata,
+              count: count,
+              activePage: 1,
             },
           });
         }
@@ -100,7 +103,12 @@ class NavBar extends Component {
                   pathname: "/main",
                   state: {
                     token: this.props.token,
+                    id: this.props.id,
                     username: this.props.username,
+                    books: [],
+                    count: 0,
+                    category: ["Kindle eBooks"],
+                    activePage: 1,
                   },
                 })
               }
@@ -116,7 +124,7 @@ class NavBar extends Component {
                   pathname: "/reviews-you-added",
                   state: {
                     token: this.props.token,
-                    username: this.props.username
+                    username: this.props.username,
                   },
                 })
               }
