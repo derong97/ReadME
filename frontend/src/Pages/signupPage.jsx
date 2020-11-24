@@ -43,16 +43,11 @@ class SignupPage extends React.Component {
       var email = document.getElementById("email").value;
       var password = document.getElementById("password").value;
 
-      console.log(username);
-      console.log(password);
-      console.log(email);
-
       const body = {
         name: username,
         email: email,
         password: password,
       };
-      console.log(body);
 
       evt.preventDefault();
       axios

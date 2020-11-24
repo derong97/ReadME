@@ -86,7 +86,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "start-flask": "node scripts/build.js && cd .. && cd server && flask run"
+    "start-flask": "node scripts/build.js && cd .. && cd server && flask run",
+    "gunicorn": "node scripts/build.js && cd .. && cd server && gunicorn -b :5000 app:app"
   },
   "eslintConfig": {
     "extends": "react-app"

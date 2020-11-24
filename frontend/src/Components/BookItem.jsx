@@ -47,11 +47,6 @@ class Book extends React.Component {
       });
   };
 
-  checkNull = () => {
-    if (this.props.book.avg_rating === null) return true;
-    return false;
-  };
-
   render() {
     return (
       <LoadingOverlay
@@ -64,7 +59,11 @@ class Book extends React.Component {
           <text className="book-title">{this.props.book.title}</text>
           <StarRatings
             name="rating"
-            rating={this.checkNull ? 0 : this.props.book.avg_rating}
+            rating={
+              this.props.book.avg_rating == null
+                ? 0
+                : this.props.book.avg_rating
+            }
             starRatedColor="orange"
             starDimension="20px"
             starSpacing="2.5px"

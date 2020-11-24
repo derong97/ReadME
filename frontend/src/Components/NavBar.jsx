@@ -64,7 +64,7 @@ class NavBar extends Component {
               id: this.props.id,
               username: this.props.username,
               title: search,
-              books: metadata,
+              books: metadata == null ? [] : metadata,
               count: count,
               activePage: 1,
             },
@@ -124,6 +124,7 @@ class NavBar extends Component {
                   pathname: "/reviews-you-added",
                   state: {
                     token: this.props.token,
+                    id: this.props.id,
                     username: this.props.username,
                   },
                 })
@@ -199,11 +200,13 @@ class NavBar extends Component {
           <AddBookModal
             show={this.state.addBookModalShow}
             onHide={this.addBookModalClose}
+            token={this.props.token}
           />
         </div>
 
         <div>
           <AddReviewModal
+            event={this}
             token={this.props.token}
             show={this.state.addReviewModalShow}
             onHide={this.addReviewModalClose}

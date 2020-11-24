@@ -37,19 +37,27 @@ class BookPage extends React.Component {
         book: this.props.location.state.book,
         reviews: this.props.location.state.reviews,
       });
-      this.setRelatedBooks();
+      console.log(prevProps.location.state.book.asin);
+      console.log(this.props.location.state.book.asin);
+      if (
+        prevProps.location.state.book.asin !==
+        this.props.location.state.book.asin
+      ) {
+        this.setRelatedBooks(this.props.location.state.book);
+        console.log(this.state.book);
+      }
     }
   }
 
   componentDidMount() {
     console.log(this.state.relatedBooks);
-    this.setRelatedBooks();
+    this.setRelatedBooks(this.state.book);
   }
 
-  setRelatedBooks = async () => {
+  setRelatedBooks = async (book) => {
     var relatedBooks = [];
-    if (this.state.book.related !== null) {
-      const bought = this.state.book.related.also_bought;
+    if (book.related !== null) {
+      const bought = book.related.also_bought;
       console.log(bought);
       if (typeof bought !== "undefined")
         relatedBooks = await new Promise((resolve) =>
@@ -70,11 +78,19 @@ class BookPage extends React.Component {
     if (bought.length < 3) length = bought.length;
     else length = 3;
 
-    for (var i = 0; i < length; i++) {
+    var check = 0;
+    var i = 0;
+    var data;
+    while (check < length) {
       console.log(bought[i]);
-      relatedBooks.push(
-        await new Promise((resolve) => this.getBook(bought[i], resolve))
-      );
+      data = await new Promise((resolve) => this.getBook(bought[i], resolve));
+      console.log(data);
+      console.log(data.book);
+      if (typeof data.book !== "undefined") {
+        relatedBooks.push(data);
+        check++;
+      }
+      i++;
     }
     console.log(relatedBooks);
     return resolve(relatedBooks);
@@ -112,11 +128,6 @@ class BookPage extends React.Component {
     this.setState((prevState) => ({ open: !prevState.open }));
   };
 
-  checkNull = () => {
-    if (this.state.book.avg_rating === null) return true;
-    return false;
-  };
-
   render() {
     return (
       <LoadingOverlay
@@ -138,18 +149,23 @@ class BookPage extends React.Component {
             <div id="book-n-relatedbooks" class="row">
               <div id="book-n-review" class="col">
                 <div id="book-content" class="row">
-                  <img
-                    id="book-img"
-                    alt="book"
-                    src={this.state.book.imUrl}
-                    height="auto"
-                  ></img>
+                  <div>
+                    <img
+                      id="book-img"
+                      alt="book"
+                      src={this.state.book.imUrl}
+                    ></img>
+                  </div>
                   <div id="book-info">
                     <h4 id="book-title">{this.state.book.title}</h4>
                     <text>{this.state.book.categories}</text>
                     <StarRatings
                       name="rating"
-                      rating={this.checkNull ? 0 : this.state.book.avg_rating}
+                      rating={
+                        this.state.book.avg_rating == null
+                          ? 0
+                          : this.state.book.avg_rating
+                      }
                       starRatedColor="orange"
                       starDimension="20px"
                       starSpacing="2.5px"
