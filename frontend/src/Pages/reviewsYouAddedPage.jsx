@@ -92,7 +92,7 @@ class ReviewsYouAddedPage extends React.Component {
         if (res.status === 200) {
           var index;
           for (var i = 0; i < review.length; i++) {
-            if (review[i].asin == asin) {
+            if (review[i].asin === asin) {
               index = i;
             }
           }
@@ -134,8 +134,8 @@ class ReviewsYouAddedPage extends React.Component {
       });
   };
 
-  addModalClose = () => this.setState({ addReviewModalShow: false });
-  addModalOpen = () => {
+  addReviewModalClose = () => this.setState({ addReviewModalShow: false });
+  addReviewModalOpen = () => {
     this.setState({ addReviewModalShow: true });
     console.log("add book show?", this.state.addReviewModalShow);
   };
@@ -147,7 +147,7 @@ class ReviewsYouAddedPage extends React.Component {
         spinner
         text="searching ..."
       >
-        <React.Fragment>
+        {/* <React.Fragment>
           <div className="content-body">
             <NavBar
               event={this}
@@ -182,6 +182,69 @@ class ReviewsYouAddedPage extends React.Component {
                 <AddReviewModal
                   show={this.state.addReviewModalShow}
                   onHide={this.addModalClose}
+                />
+              </div>
+
+              <div className="container">
+                <ReviewsYouAdded
+                  token={this.state.token}
+                  reviewsYouAdded={this.state.reviewsYouAdded}
+                  onDelete={this.handleDelete}
+                />
+              </div>
+
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+
+              <h5>Thank you for your support!</h5>
+
+              <br></br>
+              <br></br>
+            </div>
+          </div>
+
+          <Footer></Footer>
+        </React.Fragment> */}
+        <React.Fragment>
+          <div className="content-body">
+            <NavBar
+              event={this}
+              id={this.state.id}
+              token={this.state.token}
+              username={this.state.username}
+              home="nav-sub"
+              byme="nav-main"
+            ></NavBar>
+            <div className="review-body">
+              <h2>Reviews You Added</h2>
+              <div className="row">
+                <h5>
+                  Here lies the reviews you have contributed to the ReadME
+                  community.
+                </h5>
+                <br></br>
+                <br></br>
+                <button
+                  className="add-review-bttn"
+                  id="add-review-bttn"
+                  onClick={this.addReviewModalOpen}
+                  data-toggle="modal"
+                  data-target="#exampleModalCenter"
+                >
+                  <FontAwesomeIcon icon={faEdit} size="2x" />
+                  <div className="add-book-bttn-text">add review</div>
+                </button>
+              </div>
+
+              <div>
+                <AddReviewModal
+                  event={this}
+                  token={this.props.token}
+                  show={this.state.addReviewModalShow}
+                  onHide={this.addReviewModalClose}
+                  asin=""
                 />
               </div>
 

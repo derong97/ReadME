@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 # IMPORTANT: FOLLOW THESE INSTRUCTIONS FIRST.
@@ -29,3 +30,5 @@ gdown https://drive.google.com/uc?id=1DKvMbHbUNJLE0rak2sQWafPeCtxsmwsp
 gdown https://drive.google.com/uc?id=15yGajHZKapMv3W_lNruOY0TwC4WLWslg
 
 mysql -u root < ini_Kindle.sql
+
+echo "MySQL SetUp complete"

@@ -200,11 +200,13 @@ class NavBar extends Component {
           <AddBookModal
             show={this.state.addBookModalShow}
             onHide={this.addBookModalClose}
+            token={this.props.token}
           />
         </div>
 
         <div>
           <AddReviewModal
+            event={this}
             token={this.props.token}
             show={this.state.addReviewModalShow}
             onHide={this.addReviewModalClose}
