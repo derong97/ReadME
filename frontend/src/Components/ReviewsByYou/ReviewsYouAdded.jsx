@@ -8,8 +8,9 @@ class ReviewsYouAdded extends Component {
       <div>
         {this.props.ReviewsYouAdded.map((reviewYouAdded) => (
           <ReviewYouAdded
-            key={reviewYouAdded.reviewID} //used internally
+            key={reviewYouAdded.reviewerID} //used internally
             onDelete={this.props.onDelete}
+            deleteReviewModalOpen = {this.props.deleteReviewModalOpen}
             ReviewYouAdded={reviewYouAdded}
           ></ReviewYouAdded>
         ))}
