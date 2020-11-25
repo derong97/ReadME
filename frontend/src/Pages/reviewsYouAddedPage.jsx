@@ -9,6 +9,8 @@ import NavBar from "../Components/NavBar.jsx";
 import LoadingOverlay from "react-loading-overlay";
 import AddReviewModal from "../Components/AddModals/AddReviewModal.jsx";
 import DeleteReviewModal from "../Components/AddModals/DeleteReviewModal.jsx";
+import EditReviewModal from "../Components/AddModals/EditReviewModal.jsx";
+
 
 class ReviewsYouAddedPage extends Component {
   constructor(props) {
@@ -25,7 +27,9 @@ class ReviewsYouAddedPage extends Component {
 
       addReviewModalShow: false,
       deleteReviewModalShow: false,
+      editReviewModalShow: false,
       deleteAsin: 0,
+      editAsin: 0
     };
   }
 
@@ -105,6 +109,14 @@ class ReviewsYouAddedPage extends Component {
     this.setState({ addReviewModalShow: true });
   };
 
+  editReviewModalClose = () => this.setState({ editReviewModalShow: false });
+  editReviewModalOpen = (asin) => {
+    this.setState({ editReviewModalShow: true });
+    this.setState({ editAsin: asin });
+    console.log(this.state.editReviewModalShow);
+    console.log(this.state.editAsin);
+  };
+
   componentDidMount() {
     this.getReviews();
   }
@@ -133,71 +145,6 @@ class ReviewsYouAddedPage extends Component {
 
   render() {
     return (
-      // <React.Fragment>
-      //   <NavBar
-      //     event={this}
-      //     username={this.state.username}
-      //     home="nav-sub"
-      //     byme="nav-main"
-      //   ></NavBar>
-      //   <h2>Reviews You Added</h2>
-      //   <div className="row">
-      //     <h5>
-      //       Here lies the reviews you have contributed to the ReadME community.
-      //     </h5>
-      //     <br></br>
-      //     <br></br>
-      //     <button
-      //       className="add-review-bttn"
-      //       id="add-review-bttn"
-      //       onClick={this.addReviewModalOpen}
-      //       data-toggle="modal"
-      //       data-target="#exampleModalCenter"
-      //     >
-      //       <FontAwesomeIcon icon={faEdit} size="2x" />
-      //       <div className="add-book-bttn-text">add review</div>
-      //     </button>
-      //   </div>
-
-      //   <div>
-      //     <AddReviewModal
-      //       event={this}
-      //       token={this.props.token}
-      //       show={this.state.addReviewModalShow}
-      //       onHide={this.addReviewModalClose}
-      //     />
-      //   </div>
-
-      //   <div>
-      //     <DeleteReviewModal
-      //       event={this}
-      //       show={this.state.deleteReviewModalShow}
-      //       onHide={this.deleteReviewModalClose}
-      //       title={this.state.title}
-      //       handleDelete={this.handleDelete}
-      //     />
-      //   </div>
-
-      //   <div className="container">
-      //     <ReviewsYouAdded
-      //       ReviewsYouAdded={this.state.ReviewsYouAdded}
-      //       handleDelete={this.handleDelete}
-      //       deleteReviewModalOpen={this.deleteReviewModalOpen}
-      //     />
-      //   </div>
-
-      //   <br></br>
-      //   <br></br>
-      //   <br></br>
-      //   <br></br>
-
-      //   <h5>Thank you for your support!</h5>
-
-      //   <br></br>
-      //   <br></br>
-
-      //   <Footer></Footer>
-      // </React.Fragment>
       <LoadingOverlay
         active={this.state.searching}
         spinner
@@ -253,6 +200,16 @@ class ReviewsYouAddedPage extends Component {
                 />
               </div>
 
+              <div>
+                <EditReviewModal
+                  event={this}
+                  show={this.state.editReviewModalShow}
+                  onHide={this.editReviewModalClose}
+                  title={this.state.title}
+                  handleEdit={this.handleEdit}
+                />
+              </div>
+
               <div className="container">
                 <ReviewsYouAdded
                   token={this.state.token}
@@ -260,6 +217,8 @@ class ReviewsYouAddedPage extends Component {
                   handleDelete={this.handleDelete}
                   deleteReviewModalOpen = {this.deleteReviewModalOpen}
                   deleteReviewModalClose = {this.deleteReviewModalClose}
+                  editReviewModalOpen = {this.editReviewModalOpen}
+                  editReviewModalClose = {this.editReviewModalClose}
                 />
               </div>
 

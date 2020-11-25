@@ -13,6 +13,8 @@ class ReviewsYouAdded extends Component {
             handleDelete={this.props.handleDelete}
             deleteReviewModalOpen = {this.props.deleteReviewModalOpen}
             deleteReviewModalClose = {this.props.deleteReviewModalClose}
+            editReviewModalOpen = {this.props.editReviewModalOpen}
+            editReviewModalClose = {this.props.editReviewModalClose}
             reviewYouAdded={reviewYouAdded}
           ></ReviewYouAdded>
         ))}

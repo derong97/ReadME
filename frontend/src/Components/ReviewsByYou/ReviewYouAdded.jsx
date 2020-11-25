@@ -128,7 +128,7 @@ class ReviewYouAdded extends Component {
                 </button>
 
                 <button
-                  onClick={() => this.props.deleteReviewModalOpen(this.state.asin)} //raise event to Counters
+                  onClick={() => this.props.editReviewModalOpen(this.state.asin)} //raise event to Counters
                   className="btn btn-primary btn-sm m-2"
                 >
                   <FontAwesomeIcon icon={faPenSquare} size="1x" />
