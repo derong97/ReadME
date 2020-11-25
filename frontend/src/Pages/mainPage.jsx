@@ -65,8 +65,8 @@ class MainPage extends React.Component {
   }
 
   componentDidMount() {
-    this.getBooks(this.state.activePage);
-  }
+    this.getBooks();
+  }z
 
   getBooks = () => {
     console.log(this.state.category);

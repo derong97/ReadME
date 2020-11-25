@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import StarRatings from "react-star-ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faPenSquare } from "@fortawesome/free-solid-svg-icons";
@@ -6,18 +7,35 @@ import ReadMoreReact from "read-more-react";
 import "../../Styles/reviewsyouadded.css";
 
 class ReviewYouAdded extends Component {
-  state = {
-    // to call the data of the book here?
-    imageUrl: "http://ecx.images-amazon.com/images/I/51fAmVkTbyL._SY300_.jpg",
-    title: "Girls Ballet Tutu Zebra Hot Pink",
-    category: "Sports & Outdoors, Other Sports, Dance",
-    author: "Riley Sager",
-    your_rating: 3,
-    review_title: "Amazing Read",
-    review_time: "09 13, 2009",
-    reviewText:
-      "I bought this for my husband who plays the piano. He is having a wonderful time playing these old hymns. The music is at times hard to read because we think the book was published for singing from more than playing from. Great purchase though!",
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      token: this.props.token,
+      book: [],
+      // asin: "B0080H1C0W",
+      // dislikes: 0,
+      // likes: 0,
+      // overall: 2,
+      // reviewText:
+      //   "After Book One, which is mandatory reading to make this book understandable, this read speeds along for about fifty percent of the journey, then preaches the ultimate end of science and personal freedom.  Unfortunately, the &#34;hero&#34; is American and the author isn't aware of just how anti-government at least half the nation is at any given time, so the &#34;conclusion&#34; of Book Two doesn't ring true.  Since the love story is unbelievable, the conclusion is contrived. Read Book Two if your power is out, it's raining or everyone you know is busy.",
+      // reviewTime: "Thu, 19 Jun 2014 00:00:00 GMT",
+      // reviewerID: "A10K0YDFH11D3W",
+      // reviewerName: "PR Diva",
+      // summary:
+      //   "Don't Preach to Me Ian Irvine! (Sing to 'Don't Cry for Me. . .' You get the idea",
+      // unixReviewTime: 1403136000,
+      asin: this.props.reviewYouAdded.asin,
+      dislikes: this.props.reviewYouAdded.dislikes,
+      likes: this.props.reviewYouAdded.likes,
+      overall: this.props.reviewYouAdded.overall,
+      reviewText: this.props.reviewYouAdded.reviewText,
+      reviewTime: this.props.reviewYouAdded.reviewTime,
+      reviewerID: this.props.reviewYouAdded.reviewerID,
+      reviewerName: this.props.reviewYouAdded.reviewerName,
+      summary: this.props.reviewYouAdded.summary,
+      unixReviewTime: this.props.reviewYouAdded.unixReviewTime,
+    };
+  }
 
   styles = {
     //if you wanted to have a standard style to call
@@ -27,12 +45,34 @@ class ReviewYouAdded extends Component {
     },
   };
 
+  componentDidMount() {
+    const url = "/book/" + this.state.asin;
+    const body = {
+      headers: { "x-access-tokens": this.state.token },
+    };
+    console.log(body);
+    axios
+      .get(url, body)
+      .then((res) => {
+        console.log(res);
+        const book = res.data.metadata;
+        console.log(book);
+        if (res.status === 200) {
+          this.setState({ book: book });
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        console.log(err.request);
+      });
+  }
+
   render() {
     return (
       <div className="container">
         <table id="review">
           <tbody>
-            <tr key={this.state.title}>
+            <tr key={this.state.asin}>
               {/* <th>Cover</th>
               <th>Title</th>
               <th>Author</th>
@@ -42,7 +82,7 @@ class ReviewYouAdded extends Component {
               {this.props.children}
               <td className="column-bookImage">
                 <img
-                  src={this.state.imageUrl}
+                  src={this.state.book.imUrl}
                   alt=""
                   style={this.styles.bookCoverImage}
                 />
@@ -51,15 +91,16 @@ class ReviewYouAdded extends Component {
                 <h4> {this.state.title}</h4>
               </td> */}
               <td className="column-review">
-                <h4> {this.state.title}</h4>
-                <p className="review-small">{this.state.category}</p>
-                <p>by {this.state.author}</p>
-                <h6>"{this.state.review_title}"</h6>
+                <h4> {this.state.book.title}</h4>
+                <p className="review-small">{this.state.book.categories}</p>
+                {/* <p>by {this.state.author}</p> */}
+                <h6>"{this.state.summary}"</h6>
                 <p className="review-small">
-                  <i> added {this.state.review_time}</i>
+                  <i> added {this.state.reviewTime}</i>
                 </p>
-                <ReadMoreReact className = "review-rating-heading"
-                  text= {this.state.reviewText}
+                <ReadMoreReact
+                  className="review-rating-heading"
+                  text={this.state.reviewText}
                   min={120}
                   ideal={150}
                   max={200}
@@ -69,7 +110,7 @@ class ReviewYouAdded extends Component {
                 <p className="review-rating-heading">Your Rating: </p>
                 <StarRatings
                   name="rating"
-                  rating={this.state.your_rating}
+                  rating={this.state.overall}
                   starRatedColor="orange"
                   starDimension="20px"
                   starSpacing="2.5px"
@@ -79,18 +120,14 @@ class ReviewYouAdded extends Component {
 
               <td className="column-action">
                 <button
-                  onClick={() =>
-                    this.props.onDelete(this.props.ReviewYouAdded.reviewID)
-                  } //raise event to Counters
+                  onClick={() => this.props.onDelete(this.state.asin)} //raise event to Counters
                   className="btn btn-danger btn-sm m-2"
                 >
                   <FontAwesomeIcon icon={faTrashAlt} size="1x" />
                 </button>
 
                 <button
-                  onClick={() =>
-                    this.props.onDelete(this.props.ReviewYouAdded.asin)
-                  } //raise event to Counters
+                  onClick={() => this.props.onDelete(this.state.asin)} //raise event to Counters
                   className="btn btn-primary btn-sm m-2"
                 >
                   <FontAwesomeIcon icon={faPenSquare} size="1x" />
