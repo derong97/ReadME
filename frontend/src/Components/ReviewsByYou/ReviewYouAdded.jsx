@@ -34,10 +34,12 @@ class ReviewYouAdded extends Component {
       reviewerName: this.props.reviewYouAdded.reviewerName,
       summary: this.props.reviewYouAdded.summary,
       unixReviewTime: this.props.reviewYouAdded.unixReviewTime,
+     
     };
   }
 
   styles = {
+    //if you wanted to have a standard style to call
     bookCoverImage: {
       width: 287,
       height: 419,
@@ -118,21 +120,15 @@ class ReviewYouAdded extends Component {
               </td>
 
               <td className="column-action">
-                 <button
-                  onClick={() =>
-                    // this.props.onDelete(this.props.ReviewYouAdded.reviewID)
-                    this.props.deleteReviewModalOpen(this.state.asin)
-                    // this.deleteReviewModalOpen()
-                  } //raise event to Counters
+                <button
+                  onClick={() => this.props.deleteReviewModalOpen(this.state.asin)} //raise event to Counters
                   className="btn btn-danger btn-sm m-2"
                 >
                   <FontAwesomeIcon icon={faTrashAlt} size="1x" />
                 </button>
 
                 <button
-                  onClick={() =>
-                    this.props.onDelete(this.props.ReviewYouAdded.reviewID)
-                  } //raise event to Counters
+                  onClick={() => this.props.deleteReviewModalOpen(this.state.asin)} //raise event to Counters
                   className="btn btn-primary btn-sm m-2"
                 >
                   <FontAwesomeIcon icon={faPenSquare} size="1x" />
@@ -147,94 +143,3 @@ class ReviewYouAdded extends Component {
 }
 
 export default ReviewYouAdded;
-
-//   render() {
-//     return (
-//       <div className="container">
-//         <table id="review">
-//           <tbody>
-//             <tr key={this.state.title}>
-//               {/* <th>Cover</th>
-//               <th>Title</th>
-//               <th>Author</th>
-//               <th>Review</th>
-//               <th>Rating</th> */}
-
-//               {this.props.children}
-//               <td className="column-bookImage">
-//                 <img
-//                   src={this.state.imageUrl}
-//                   alt=""
-//                   style={this.styles.bookCoverImage}
-//                 />
-//               </td>
-//               {/* <td className="column-title">
-//                 <h4> {this.state.title}</h4>
-//               </td> */}
-//               <td className="column-review">
-//                 <h4> {this.state.title}</h4>
-//                 <p className="review-small">{this.state.category}</p>
-//                 <p>by {this.state.author}</p>
-//                 <h6>"{this.state.review_title}"</h6>
-//                 <p className="review-small">
-//                   <i> added {this.state.review_time}</i>
-//                 </p>
-//                 <ReadMoreReact
-//                   className="review-rating-heading"
-//                   text={this.state.reviewText}
-//                   min={120}
-//                   ideal={150}
-//                   max={200}
-//                   readMoreText=" ...read more"
-//                 />
-//                 <br></br>
-//                 <p className="review-rating-heading">Your Rating: </p>
-//                 <StarRatings
-//                   name="rating"
-//                   rating={this.state.your_rating}
-//                   starRatedColor="orange"
-//                   starDimension="20px"
-//                   starSpacing="2.5px"
-//                   numberOfStars={5}
-//                 />
-//               </td>
-
-//               <td className="column-action">
-//                 <button
-//                   onClick={() =>
-//                     // this.props.onDelete(this.props.ReviewYouAdded.reviewID)
-//                     this.props.deleteReviewModalOpen(this.props.ReviewYouAdded.reviewID)
-//                     // this.deleteReviewModalOpen()
-//                   } //raise event to Counters
-//                   className="btn btn-danger btn-sm m-2"
-//                 >
-//                   <FontAwesomeIcon icon={faTrashAlt} size="1x" />
-//                 </button>
-
-//                 <button
-//                   onClick={() =>
-//                     this.props.onDelete(this.props.ReviewYouAdded.reviewID)
-//                   } //raise event to Counters
-//                   className="btn btn-primary btn-sm m-2"
-//                 >
-//                   <FontAwesomeIcon icon={faPenSquare} size="1x" />
-//                 </button>
-
-//                 {/* <div>
-//                   <DeleteReviewModal
-//                     event={this}
-//                     show={this.state.deleteReviewModalShow}
-//                     onHide={this.deleteReviewModalClose}
-//                     title={this.state.title}
-//                   />
-//                 </div> */}
-//               </td>
-//             </tr>
-//           </tbody>
-//         </table>
-//       </div>
-//     );
-//   }
-// }
-
-// export default ReviewYouAdded;

@@ -10,9 +10,10 @@ class ReviewsYouAdded extends Component {
           <ReviewYouAdded
             token={this.props.token}
             key={reviewYouAdded.reviewerID} //used internally
-            onDelete={this.props.onDelete}
+            handleDelete={this.props.handleDelete}
             deleteReviewModalOpen = {this.props.deleteReviewModalOpen}
-            ReviewYouAdded={reviewYouAdded}
+            deleteReviewModalClose = {this.props.deleteReviewModalClose}
+            reviewYouAdded={reviewYouAdded}
           ></ReviewYouAdded>
         ))}
       </div>

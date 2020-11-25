@@ -153,10 +153,10 @@ class BookPage extends React.Component {
             byme="nav-sub"
           ></NavBar>
 
-          <div id="book-body" class="container">
-            <div id="book-n-relatedbooks" class="row">
-              <div id="book-n-review" class="col">
-                <div id="book-content" class="row">
+          <div id="book-body" className="container">
+            <div id="book-n-relatedbooks" className="row">
+              <div id="book-n-review" className="col">
+                <div id="book-content" className="row">
                   <div>
                     <img
                       id="book-img"
