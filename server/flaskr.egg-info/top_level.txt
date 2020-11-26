@@ -1,4 +1,0 @@
-common
-controllers
-routers
-tests
