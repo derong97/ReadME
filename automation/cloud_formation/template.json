@@ -130,7 +130,7 @@
             "Type": "AWS::EC2::Instance",
             "Properties": {
                 "ImageId": "ami-0f82752aa17ff8f5d",
-                "InstanceType": "t2.micro",
+                "InstanceType": "t2.medium",
                 "KeyName": "default",
                 "SecurityGroupIds": [{
                     "Ref": "WebServerSecurityGroup"
@@ -149,7 +149,7 @@
             "Type": "AWS::EC2::Instance",
             "Properties": {
                 "ImageId": "ami-0f82752aa17ff8f5d",
-                "InstanceType": "t2.micro",
+                "InstanceType": "t2.medium",
                 "KeyName": "default",
                 "SecurityGroupIds": [{
                     "Ref": "MySQLSecurityGroup"
@@ -168,7 +168,7 @@
             "Type": "AWS::EC2::Instance",
             "Properties": {
                 "ImageId": "ami-0f82752aa17ff8f5d",
-                "InstanceType": "t2.micro",
+                "InstanceType": "t2.medium",
                 "KeyName": "default",
                 "SecurityGroupIds": [{
                     "Ref": "MongoDBSecurityGroup"

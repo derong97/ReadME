@@ -22,20 +22,17 @@ sudo apt-get install libmysqlclient-dev -y
 sudo apt install python3-pip -y
 sudo apt-get update
 
-
 wget -c https://www.dropbox.com/s/5dyewe9mipo7k2r/ReadMe-main.zip?dl=0 -O ReadMe-main.zip
 sudo apt install unzip
 unzip ReadMe-main.zip
-
 
 cd ReadMe-main/server
 python3 -m venv venv
 source venv/bin/activate
 
 pip3 install wheel
-pip3 install -r requirements.txt
 pip3 install gunicorn
-
+pip3 install -r requirements.txt
 
 sudo tee .env << EOF
 MONGO_IP=$MongoDBIP
@@ -57,14 +54,10 @@ EOF
 
 cd ../frontend/static
 npm install
-# npm run build
 
 cd ../../server
-# WebServerIP=$(curl ifconfig.co)
-# export WebServerIP
 echo "Webserver SetUp complete"
 echo "You can visit your website now at $WebServerIP:5000"
 
-# flask run --host=0.0.0.0
+#flask run --host=0.0.0.0
 gunicorn -b :5000 app:app
-
