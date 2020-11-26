@@ -46,7 +46,7 @@ fi
 
   # Public key stored on AWS; private key is stored locally
   aws ec2 create-key-pair --key-name $keyname --query 'KeyMaterial' --output text > $keyname.pem
-  chmod 400 $keyname.pem
+  sudo chmod 400 $keyname.pem
   echo "KeyName=$keyname" >> logs.log
 
   # Change the KeyName: default -> KeyName: $keyname
