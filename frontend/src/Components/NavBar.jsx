@@ -126,6 +126,7 @@ class NavBar extends Component {
                     token: this.props.token,
                     id: this.props.id,
                     username: this.props.username,
+                    reviewsYouAdded: [],
                   },
                 })
               }
@@ -206,8 +207,10 @@ class NavBar extends Component {
 
         <div>
           <AddReviewModal
-            event={this}
+            event={this.props.event}
             token={this.props.token}
+            id={this.props.id}
+            username={this.props.username}
             show={this.state.addReviewModalShow}
             onHide={this.addReviewModalClose}
           />

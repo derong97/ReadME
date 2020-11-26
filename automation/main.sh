@@ -8,13 +8,11 @@ if [ "$EUID" -ne 0 ]
 fi
 
 ### INSTALL AWS CLI ###
-{
-  aws --version
-  echo "AWS CLI already installed"
-} || {
-  # Install only if there is an error
+if ! command -v aws configure &> /dev/null
+then
   if [ "$OSTYPE" == "linux-gnu" ]; then
     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" 
+    sudo apt-get install -y unzip
     unzip awscliv2.zip
     sudo ./aws/install
     rm awscliv2.zip
@@ -23,7 +21,7 @@ fi
     echo "Use a linux machine"
     exit
   fi
-}
+fi
 
 ### CONFIGURE AWS CREDENTIALS ###
 # prompts user to enter (1) access key, (2) secret key, (3) region: us-east-1
@@ -83,7 +81,7 @@ fi
   exit
 }
 
-### Get IP addresses of EC2 instances
+### Get IP addresses of EC2 instances ###
 {
   echo "Generating IP addresses..."
   WebServerIP=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='WebServerIP'].OutputValue" --output text)

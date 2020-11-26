@@ -129,7 +129,7 @@ class SearchAuthor extends React.Component {
             onChange={this.handlePageChange.bind(this)}
           />
 
-          <Footer></Footer>
+          {/* <Footer></Footer> */}
         </body>
       </LoadingOverlay>
     );
