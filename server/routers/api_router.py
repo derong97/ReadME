@@ -13,10 +13,9 @@ from log4mongo.handlers import MongoHandler
 
 #######################   LOGGING-   #######################
 mhandler = MongoHandler(
-    host=f'mongodb://{MONGO_USER}:{MONGO_PW}@204.236.223.217:27017',
-    port=27017,
-    database_name="readme_mongo", 
-    collection="log",
+    host=f'mongodb://{MONGO_USER}:{MONGO_PW}@{MONGO_IP}:27017',
+    database_name=MONGO_DB, 
+    collection=MONGO_LOG_COL,
 )
 logging.getLogger('werkzeug').setLevel(logging.DEBUG)
 logging.getLogger('werkzeug').addHandler(mhandler)
@@ -38,7 +37,6 @@ def login():
     return User().login()
 
 ####################### BOOK ROUTES #######################
-
 @app.route('/book/add', methods=['POST'])
 @token_required
 def add_new_book(reviewerID):
