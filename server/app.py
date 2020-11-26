@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_cors import CORS
 import os
-from controllers.avgRating import AvgRating
+# from controllers.avgRating import AvgRating
 
 # App
 app = Flask(__name__,
