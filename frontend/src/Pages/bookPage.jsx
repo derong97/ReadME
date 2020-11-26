@@ -143,7 +143,7 @@ class BookPage extends React.Component {
         spinner
         text="searching ..."
       >
-        <body>
+        <body id="content-body">
           <NavBar
             event={this}
             id={this.state.id}

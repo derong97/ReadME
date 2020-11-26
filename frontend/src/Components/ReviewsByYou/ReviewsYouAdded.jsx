@@ -9,12 +9,12 @@ class ReviewsYouAdded extends Component {
         {this.props.reviewsYouAdded.map((reviewYouAdded) => (
           <ReviewYouAdded
             token={this.props.token}
-            key={reviewYouAdded.reviewerID} //used internally
+            key={reviewYouAdded.asin} //used internally
             handleDelete={this.props.handleDelete}
-            deleteReviewModalOpen = {this.props.deleteReviewModalOpen}
-            deleteReviewModalClose = {this.props.deleteReviewModalClose}
-            editReviewModalOpen = {this.props.editReviewModalOpen}
-            editReviewModalClose = {this.props.editReviewModalClose}
+            deleteReviewModalOpen={this.props.deleteReviewModalOpen}
+            deleteReviewModalClose={this.props.deleteReviewModalClose}
+            editReviewModalOpen={this.props.editReviewModalOpen}
+            editReviewModalClose={this.props.editReviewModalClose}
             reviewYouAdded={reviewYouAdded}
           ></ReviewYouAdded>
         ))}

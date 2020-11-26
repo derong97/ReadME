@@ -98,16 +98,6 @@ class ReviewsYouAddedPage extends Component {
           this.setState({ reviewsYouAdded: review });
           this.setState({ searching: false });
           console.log(this.state.reviewsYouAdded);
-
-          // this.props.history.push({
-          //   pathname: "/reviews-you-added",
-          //   state: {
-          //     token: this.state.token,
-          //     id: this.state.id,
-          //     username: this.state.username,
-          //     reviewsYouAdded: [],
-          //   },
-          // });
         }
       })
       .catch((err) => {
@@ -194,96 +184,97 @@ class ReviewsYouAddedPage extends Component {
 
   render() {
     return (
-      <LoadingOverlay active={this.state.searching} spinner text="loading ...">
-        <body>
-          <div className="content-body">
-            <NavBar
-              event={this}
-              id={this.state.id}
-              token={this.state.token}
-              username={this.state.username}
-              home="nav-sub"
-              byme="nav-main"
-            ></NavBar>
-            <div className="review-body">
-              <h2>Reviews You Added</h2>
-              <div className="row">
-                <h5>
-                  Here lies the reviews you have contributed to the ReadME
-                  community.
-                </h5>
-                <br></br>
-                <br></br>
-                <button
-                  className="add-review-bttn"
-                  id="add-review-bttn"
-                  onClick={this.addReviewModalOpen}
-                  data-toggle="modal"
-                  data-target="#exampleModalCenter"
-                >
-                  <FontAwesomeIcon icon={faEdit} size="2x" />
-                  <div className="add-book-bttn-text">add review</div>
-                </button>
-              </div>
-
-              <div>
-                <AddReviewModal
-                  event={this}
-                  token={this.state.token}
-                  id={this.state.id}
-                  username={this.state.username}
-                  show={this.state.addReviewModalShow}
-                  onHide={this.addReviewModalClose}
-                />
-              </div>
-
-              <div>
-                <DeleteReviewModal
-                  event={this}
-                  show={this.state.deleteReviewModalShow}
-                  onHide={this.deleteReviewModalClose}
-                  title={this.state.title}
-                  handleDelete={this.handleDelete}
-                />
-              </div>
-
-              <div>
-                <EditReviewModal
-                  event={this}
-                  show={this.state.editReviewModalShow}
-                  onHide={this.editReviewModalClose}
-                  handleEdit={this.handleEdit}
-                  editAsin={this.state.editAsin}
-                  editSummary={this.state.editSummary}
-                  editOverall={this.state.editOverall}
-                  editReviewText={this.state.editReviewText}
-                />
-              </div>
-
-              <div className="container">
-                <ReviewsYouAdded
-                  token={this.state.token}
-                  reviewsYouAdded={this.state.reviewsYouAdded}
-                  handleDelete={this.handleDelete}
-                  deleteReviewModalOpen={this.deleteReviewModalOpen}
-                  deleteReviewModalClose={this.deleteReviewModalClose}
-                  editReviewModalOpen={this.editReviewModalOpen}
-                  editReviewModalClose={this.editReviewModalClose}
-                />
-              </div>
-
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-
-              <h5>Thank you for your support!</h5>
-
-              <br></br>
-              <br></br>
-            </div>
+      <LoadingOverlay
+        className="loader"
+        active={this.state.searching}
+        spinner
+        text="loading ..."
+      >
+        <body className="content-body">
+          <NavBar
+            event={this}
+            id={this.state.id}
+            token={this.state.token}
+            username={this.state.username}
+            home="nav-sub"
+            byme="nav-main"
+          ></NavBar>
+          {/* <div className="review-body"> */}
+          <h2>Reviews You Added</h2>
+          <div className="row">
+            <h5>
+              Here lies the reviews you have contributed to the ReadME
+              community.
+            </h5>
+            <br></br>
+            <br></br>
+            <button
+              className="add-review-bttn"
+              id="add-review-bttn"
+              onClick={this.addReviewModalOpen}
+              data-toggle="modal"
+              data-target="#exampleModalCenter"
+            >
+              <FontAwesomeIcon icon={faEdit} size="2x" />
+              <div className="add-book-bttn-text">add review</div>
+            </button>
           </div>
-          {/* <Footer></Footer> */}
+
+          <div>
+            <AddReviewModal
+              event={this}
+              token={this.state.token}
+              id={this.state.id}
+              username={this.state.username}
+              show={this.state.addReviewModalShow}
+              onHide={this.addReviewModalClose}
+            />
+          </div>
+
+          <div>
+            <DeleteReviewModal
+              event={this}
+              show={this.state.deleteReviewModalShow}
+              onHide={this.deleteReviewModalClose}
+              title={this.state.title}
+              handleDelete={this.handleDelete}
+            />
+          </div>
+
+          <div>
+            <EditReviewModal
+              event={this}
+              show={this.state.editReviewModalShow}
+              onHide={this.editReviewModalClose}
+              handleEdit={this.handleEdit}
+              editAsin={this.state.editAsin}
+              editSummary={this.state.editSummary}
+              editOverall={this.state.editOverall}
+              editReviewText={this.state.editReviewText}
+            />
+          </div>
+
+          <div className="container">
+            <ReviewsYouAdded
+              token={this.state.token}
+              reviewsYouAdded={this.state.reviewsYouAdded}
+              handleDelete={this.handleDelete}
+              deleteReviewModalOpen={this.deleteReviewModalOpen}
+              deleteReviewModalClose={this.deleteReviewModalClose}
+              editReviewModalOpen={this.editReviewModalOpen}
+              editReviewModalClose={this.editReviewModalClose}
+            />
+          </div>
+
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+
+          <h5>Thank you for your support!</h5>
+
+          <br></br>
+          <br></br>
         </body>
       </LoadingOverlay>
     );
