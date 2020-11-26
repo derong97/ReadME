@@ -1,130 +1,5 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Metadata": {
-        "AWS::CloudFormation::Designer": {
-            "8a253540-87ef-4567-bde8-297bf42c8e6d": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 750,
-                    "y": 110
-                },
-                "z": 0,
-                "embeds": [],
-                "dependson": [
-                    "7670a79d-2678-4c39-ae20-600e88e21c86"
-                ]
-            },
-            "28a4c660-4b7d-4e65-86e4-b91d160d08bb": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 580,
-                    "y": 110
-                },
-                "z": 0,
-                "embeds": [],
-                "dependson": [
-                    "6fe70ab7-6339-4cf3-af25-643cca4a7135"
-                ]
-            },
-            "73e8e3cf-8ba2-4b5a-b6d3-bd111d07c104": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 410,
-                    "y": 110
-                },
-                "z": 0,
-                "embeds": [],
-                "dependson": [
-                    "f544cb5a-f488-410f-87b0-55a299308a93"
-                ]
-            },
-            "6fe70ab7-6339-4cf3-af25-643cca4a7135": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 580,
-                    "y": 240
-                },
-                "z": 0,
-                "embeds": []
-            },
-            "7670a79d-2678-4c39-ae20-600e88e21c86": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 750,
-                    "y": 240
-                },
-                "z": 0,
-                "embeds": []
-            },
-            "f544cb5a-f488-410f-87b0-55a299308a93": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 410,
-                    "y": 240
-                },
-                "z": 0,
-                "embeds": []
-            },
-            "9cc32a48-f6f8-43b0-87af-47985d17b62d": {
-                "source": {
-                    "id": "73e8e3cf-8ba2-4b5a-b6d3-bd111d07c104",
-                    "selector": "g:nth-child(1) g:nth-child(4) g:nth-child(7) circle:nth-child(1)     ",
-                    "port": "AWS::RefLink-AWS::EC2::SecurityGroup-SecurityGroupIds"
-                },
-                "target": {
-                    "id": "f544cb5a-f488-410f-87b0-55a299308a93"
-                },
-                "z": 12
-            },
-            "9dc454b9-c8ce-41a1-a38f-df6e34bd4fca": {
-                "source": {
-                    "id": "28a4c660-4b7d-4e65-86e4-b91d160d08bb"
-                },
-                "target": {
-                    "id": "6fe70ab7-6339-4cf3-af25-643cca4a7135"
-                },
-                "z": 11
-            },
-            "0702219c-622d-498d-a98c-81b7873fa9f4": {
-                "source": {
-                    "id": "8a253540-87ef-4567-bde8-297bf42c8e6d"
-                },
-                "target": {
-                    "id": "7670a79d-2678-4c39-ae20-600e88e21c86"
-                },
-                "z": 12
-            },
-            "4e9fdc6b-5b52-4d1b-8978-e92474f121a8": {
-                "source": {
-                    "id": "73e8e3cf-8ba2-4b5a-b6d3-bd111d07c104",
-                    "selector": "g:nth-child(1) g:nth-child(4) g:nth-child(11) circle:nth-child(1)     ",
-                    "port": "AWS::DependencyLink-*"
-                },
-                "target": {
-                    "id": "f544cb5a-f488-410f-87b0-55a299308a93"
-                },
-                "z": 12
-            }
-        }
-    },
     "Resources": {
         "WebServerEC2": {
             "Type": "AWS::EC2::Instance",
@@ -135,11 +10,6 @@
                 "SecurityGroupIds": [{
                     "Ref": "WebServerSecurityGroup"
                 }]
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "73e8e3cf-8ba2-4b5a-b6d3-bd111d07c104"
-                }
             },
             "DependsOn": [
                 "WebServerSecurityGroup"
@@ -155,11 +25,6 @@
                     "Ref": "MySQLSecurityGroup"
                 }]
             },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "28a4c660-4b7d-4e65-86e4-b91d160d08bb"
-                }
-            },
             "DependsOn": [
                 "MySQLSecurityGroup"
             ]
@@ -173,11 +38,6 @@
                 "SecurityGroupIds": [{
                     "Ref": "MongoDBSecurityGroup"
                 }]
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "8a253540-87ef-4567-bde8-297bf42c8e6d"
-                }
             },
             "DependsOn": [
                 "MongoDBSecurityGroup"
@@ -200,11 +60,6 @@
                         "CidrIp": "0.0.0.0/0"
                     }
                 ]
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "f544cb5a-f488-410f-87b0-55a299308a93"
-                }
             }
         },
         "MySQLSecurityGroup": {
@@ -224,11 +79,6 @@
                         "CidrIp": "0.0.0.0/0"
                     }
                 ]
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "6fe70ab7-6339-4cf3-af25-643cca4a7135"
-                }
             }
         },
         "MongoDBSecurityGroup": {
@@ -248,11 +98,6 @@
                         "CidrIp": "0.0.0.0/0"
                     }
                 ]
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "7670a79d-2678-4c39-ae20-600e88e21c86"
-                }
             }
         }
     },
