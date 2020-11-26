@@ -11,7 +11,6 @@ import AddReviewModal from "../Components/AddModals/AddReviewModal.jsx";
 import DeleteReviewModal from "../Components/AddModals/DeleteReviewModal.jsx";
 import EditReviewModal from "../Components/AddModals/EditReviewModal.jsx";
 
-
 class ReviewsYouAddedPage extends Component {
   constructor(props) {
     super(props);
@@ -21,17 +20,47 @@ class ReviewsYouAddedPage extends Component {
       id: props.location.state.id,
       username: props.location.state.username,
 
-      reviewsYouAdded: [
-
-      ],
+      reviewsYouAdded: props.location.state.reviewsYouAdded,
 
       addReviewModalShow: false,
       deleteReviewModalShow: false,
       editReviewModalShow: false,
       deleteAsin: 0,
-      editAsin: 0
+      editAsin: 0,
     };
   }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.location.key !== this.props.location.key) {
+      this.getReviews();
+    }
+  }
+
+  componentDidMount() {
+    this.getReviews();
+  }
+
+  getReviews = () => {
+    const url = "/reviews/user";
+    const body = {
+      headers: { "x-access-tokens": this.state.token },
+    };
+    axios
+      .get(url, body)
+      .then((res) => {
+        console.log(res);
+        const review = res.data.reviews;
+        console.log(review);
+        if (res.status === 200) {
+          this.setState({ reviewsYouAdded: review == null ? [] : review });
+          this.setState({ searching: false });
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        console.log(err.request);
+      });
+  };
 
   handleDelete = () => {
     console.log("delete called", this.state.deleteAsin);
@@ -39,7 +68,7 @@ class ReviewsYouAddedPage extends Component {
     var review = this.state.reviewsYouAdded;
     var asin = this.state.deleteAsin;
 
-    this.setState({ searching: true });
+    this.setState({ deleteReviewModalShow: false, searching: true });
     const url = "/book/" + asin;
     const body = {
       headers: { "x-access-tokens": this.state.token },
@@ -56,10 +85,23 @@ class ReviewsYouAddedPage extends Component {
               index = i;
             }
           }
+          console.log(index);
+          console.log(review);
           review.splice(index, 1);
+          console.log(review);
           this.setState({ reviewsYouAdded: review });
           this.setState({ searching: false });
           console.log(this.state.reviewsYouAdded);
+
+          // this.props.history.push({
+          //   pathname: "/reviews-you-added",
+          //   state: {
+          //     token: this.state.token,
+          //     id: this.state.id,
+          //     username: this.state.username,
+          //     reviewsYouAdded: [],
+          //   },
+          // });
         }
       })
       .catch((err) => {
@@ -101,10 +143,12 @@ class ReviewsYouAddedPage extends Component {
     this.setState({ deleteReviewModalShow: true });
     this.setState({ deleteAsin: asin });
     console.log(this.state.deleteReviewModalShow);
-    console.log(this.state.deleteReviewID);
+    console.log(this.state.deleteAsin);
   };
 
-  addReviewModalClose = () => this.setState({ addReviewModalShow: false });
+  addReviewModalClose = () => {
+    this.setState({ addReviewModalShow: false });
+  };
   addReviewModalOpen = () => {
     this.setState({ addReviewModalShow: true });
   };
@@ -117,39 +161,9 @@ class ReviewsYouAddedPage extends Component {
     console.log(this.state.editAsin);
   };
 
-  componentDidMount() {
-    this.getReviews();
-  }
-
-  getReviews = () => {
-    const url = "/reviews/user";
-    const body = {
-      headers: { "x-access-tokens": this.state.token },
-    };
-    axios
-      .get(url, body)
-      .then((res) => {
-        console.log(res);
-        const review = res.data.reviews;
-        console.log(review);
-        if (res.status === 200) {
-          this.setState({ reviewsYouAdded: review == null ? [] : review });
-          this.setState({ searching: false });
-        }
-      })
-      .catch((err) => {
-        console.log(err.response);
-        console.log(err.request);
-      });
-  };
-
   render() {
     return (
-      <LoadingOverlay
-        active={this.state.searching}
-        spinner
-        text="searching ..."
-      >
+      <LoadingOverlay active={this.state.searching} spinner text="loading ...">
         <React.Fragment>
           <div className="content-body">
             <NavBar
@@ -184,7 +198,9 @@ class ReviewsYouAddedPage extends Component {
               <div>
                 <AddReviewModal
                   event={this}
-                  token={this.props.token}
+                  token={this.state.token}
+                  id={this.state.id}
+                  username={this.state.username}
                   show={this.state.addReviewModalShow}
                   onHide={this.addReviewModalClose}
                 />
@@ -215,10 +231,10 @@ class ReviewsYouAddedPage extends Component {
                   token={this.state.token}
                   reviewsYouAdded={this.state.reviewsYouAdded}
                   handleDelete={this.handleDelete}
-                  deleteReviewModalOpen = {this.deleteReviewModalOpen}
-                  deleteReviewModalClose = {this.deleteReviewModalClose}
-                  editReviewModalOpen = {this.editReviewModalOpen}
-                  editReviewModalClose = {this.editReviewModalClose}
+                  deleteReviewModalOpen={this.deleteReviewModalOpen}
+                  deleteReviewModalClose={this.deleteReviewModalClose}
+                  editReviewModalOpen={this.editReviewModalOpen}
+                  editReviewModalClose={this.editReviewModalClose}
                 />
               </div>
 
@@ -242,4 +258,3 @@ class ReviewsYouAddedPage extends Component {
 }
 
 export default ReviewsYouAddedPage;
-

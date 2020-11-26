@@ -1,3 +1,12 @@
+.content-body {
+  font-family: "Gotham-Medium";
+  overflow: hidden;
+}
+
+.review-body {
+  margin-bottom: 95px;
+}
+
 .add-review-bttn {
   background-color: white;
   border: 3px solid rgba(0, 158, 139, 1);
@@ -9,7 +18,7 @@
   font-size: 15px;
   outline: 0 !important;
   position: absolute;
-  margin-left: 90%;
+  margin-left: 85%;
   padding: 10px;
 }
 
@@ -21,7 +30,6 @@
   src: "../Image/addBookIcon_White.png";
 }
 
-
 .add-review-bttn-text {
   font-family: "Gotham-Medium";
   display: table-cell;
@@ -29,70 +37,67 @@
 }
 
 .review-small {
-    font-family: "Gotham-Book";
-    font-size: 14px;
-
+  font-family: "Gotham-Book";
+  font-size: 14px;
 }
 
 .review-rating-heading {
-    font-family: "Gotham-Medium";
-    font-size: 16px;
+  font-family: "Gotham-Medium";
+  font-size: 16px;
 }
 
-
-
 .column-review {
-    width: 500px;
-    text-align:  left;
-    vertical-align: top;
-  }
+  width: 500px;
+  text-align: left;
+  vertical-align: top;
+}
 
-  #review {
-    text-align: left;
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 15px; 
-  
-  }
-  
-  #review tr:nth-child(even){background-color: #f2f2f2;}
-  
-  /* #review tr:hover {background-color: #ddd;} */
+#review {
+  text-align: left;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 15px;
+}
 
-  p {
-    font-family: "Gotham-Book";
-    vertical-align: middle;
-  }
+#review tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 
-  .column-action {
-    width: 200px;
-    text-align:right;
-    vertical-align: top;
-  }
+/* #review tr:hover {background-color: #ddd;} */
 
-  h6 {
-    font-family: "Gotham-Medium";
-    font-size: 20px;
-  }
+p {
+  font-family: "Gotham-Book";
+  vertical-align: middle;
+}
 
-  h4 {
-    font-family: "Gotham-Medium";
-  }
+.column-action {
+  width: 200px;
+  text-align: right;
+  vertical-align: top;
+}
 
-  .read-more-button {
-    display: inline-block;
-    margin-left: 3px;
-    color: #286DA8;
-    cursor: pointer;
-    font-family: "Gotham-Light";
-    font-size: "8px";
-  }
+h6 {
+  font-family: "Gotham-Medium";
+  font-size: 20px;
+}
 
-  .read-more-button:hover {
-    color: #4591d3;
-  }
+h4 {
+  font-family: "Gotham-Medium";
+}
 
-  body {
+.read-more-button {
+  display: inline-block;
+  margin-left: 3px;
+  color: #286da8;
+  cursor: pointer;
+  font-family: "Gotham-Light";
+  font-size: "8px";
+}
 
-    font-family: "Gotham-Book";
-  }
+.read-more-button:hover {
+  color: #4591d3;
+}
+
+body {
+  font-family: "Gotham-Book";
+}

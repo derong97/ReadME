@@ -3,19 +3,19 @@ import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 import Ratings from "react-ratings-declarative";
 import ReactStars from "react-rating-stars-component";
 import axios from "axios";
-import LoadingOverlay from "react-loading-overlay";
 
 class AddReviewModal extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      loading: false,
       asin: 0,
       reviewTitle: "",
       rating: 3.7,
       reviewText: "",
       token: this.props.token,
+      id: this.props.id,
+      username: this.props.username,
     };
   }
 
@@ -44,7 +44,10 @@ class AddReviewModal extends Component {
   };
 
   handleSubmit = (event) => {
-    this.setState({ loading: true });
+    this.props.event.setState({
+      searching: true,
+    });
+
     const asin = this.state.asin;
     const url = `/book/${asin}`;
     const overall = this.state.rating;
@@ -63,27 +66,21 @@ class AddReviewModal extends Component {
       .post(url, params, headers)
       .then((res) => {
         console.log(res);
-        console.log(url);
-        // const token = res.data.token;
-        const username = res.data.username;
-        const id = res.data.reviewerID;
-        if (res.status == 200) {
+        if (res.status === 200) {
           console.log(res.data.message);
-          this.setState({ loading: false });
+          this.props.onHide();
           this.props.event.props.history.push({
             pathname: "/reviews-you-added",
             state: {
               token: this.state.token,
-              id: id,
-              username: username,
+              id: this.state.id,
+              username: this.state.username,
+              reviewsYouAdded: [],
             },
           });
         }
       })
       .catch((err) => {
-        let userError = "";
-        // userError = err.response.data.message;
-        this.setState({ loading: false, userError });
         console.log(err.response);
         console.log(err.request);
       });

@@ -12,7 +12,6 @@ class DeleteReviewModal extends Component {
     };
   }
 
-
   render() {
     return (
       <Modal
@@ -27,7 +26,9 @@ class DeleteReviewModal extends Component {
         <Modal.Header closeButton>
           <Modal.Title>Delete Review for this book?</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to delete your review for this book?</Modal.Body>
+        <Modal.Body>
+          Are you sure you want to delete your review for this book?
+        </Modal.Body>
         <Modal.Footer>
           <Button
             variant="outline-info"
