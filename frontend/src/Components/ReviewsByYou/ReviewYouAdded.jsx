@@ -34,6 +34,10 @@ class ReviewYouAdded extends Component {
   };
 
   componentDidMount() {
+    this.getBook();
+  }
+
+  getBook = () => {
     const url = "/book/" + this.state.asin;
     const body = {
       headers: { "x-access-tokens": this.state.token },
@@ -53,84 +57,83 @@ class ReviewYouAdded extends Component {
         console.log(err.response);
         console.log(err.request);
       });
-  }
+  };
 
   render() {
     return (
       <div className="container">
         <table id="review">
           <tbody>
-            <tr key={this.state.asin}>
-              {/* <th>Cover</th>
+            {/* <tr key={this.state.asin}> */}
+            {/* <th>Cover</th>
               <th>Title</th>
               <th>Author</th>
               <th>Review</th>
               <th>Rating</th> */}
 
-              {this.props.children}
-              <td className="column-bookImage">
-                <img
-                  src={this.state.book.imUrl}
-                  alt=""
-                  style={this.styles.bookCoverImage}
-                />
-              </td>
-              {/* <td className="column-title">
+            {/* {this.props.children} */}
+            <td className="column-bookImage">
+              <img
+                src={this.state.book.imUrl}
+                alt=""
+                style={this.styles.bookCoverImage}
+              />
+            </td>
+            {/* <td className="column-title">
                 <h4> {this.state.title}</h4>
               </td> */}
-              <td className="column-review">
-                <h4> {this.state.book.title}</h4>
-                <p className="review-small">{this.state.book.categories}</p>
-                {/* <p>by {this.state.author}</p> */}
-                <h6>"{this.state.summary}"</h6>
-                <p className="review-small">
-                  <i> added {this.state.reviewTime}</i>
-                </p>
-                <ReadMoreReact
-                  className="review-rating-heading"
-                  text={this.state.reviewText}
-                  min={120}
-                  ideal={150}
-                  max={200}
-                  readMoreText=" ...read more"
-                />
-                <br></br>
-                <p className="review-rating-heading">Your Rating: </p>
-                <StarRatings
-                  name="rating"
-                  rating={this.state.overall}
-                  starRatedColor="orange"
-                  starDimension="20px"
-                  starSpacing="2.5px"
-                  numberOfStars={5}
-                />
-              </td>
+            <td className="column-review">
+              <h4> {this.state.book.title}</h4>
+              <p className="review-small">{this.state.book.categories}</p>
+              {/* <p>by {this.state.author}</p> */}
+              <h6>"{this.state.summary}"</h6>
+              <p className="review-small">
+                <i> added {this.state.reviewTime}</i>
+              </p>
+              <ReadMoreReact
+                className="review-rating-heading"
+                text={this.state.reviewText}
+                min={120}
+                ideal={150}
+                max={200}
+                readMoreText=" ...read more"
+              />
+              <br></br>
+              <p className="review-rating-heading">Your Rating: </p>
+              <StarRatings
+                name="rating"
+                rating={this.state.overall}
+                starRatedColor="orange"
+                starDimension="20px"
+                starSpacing="2.5px"
+                numberOfStars={5}
+              />
+            </td>
 
-              <td className="column-action">
-                <button
-                  onClick={() =>
-                    this.props.deleteReviewModalOpen(this.state.asin)
-                  } //raise event to Counters
-                  className="btn btn-danger btn-sm m-2"
-                >
-                  <FontAwesomeIcon icon={faTrashAlt} size="1x" />
-                </button>
+            <td className="column-action">
+              <button
+                onClick={() =>
+                  this.props.deleteReviewModalOpen(this.state.asin)
+                } //raise event to Counters
+                className="btn btn-danger btn-sm m-2"
+              >
+                <FontAwesomeIcon icon={faTrashAlt} size="1x" />
+              </button>
 
-                <button
-                  onClick={() =>
-                    this.props.editReviewModalOpen(
-                      this.state.asin,
-                      this.state.overall,
-                      this.state.reviewText,
-                      this.state.summary
-                    )
-                  } //raise event to Counters
-                  className="btn btn-primary btn-sm m-2"
-                >
-                  <FontAwesomeIcon icon={faPenSquare} size="1x" />
-                </button>
-              </td>
-            </tr>
+              <button
+                onClick={() =>
+                  this.props.editReviewModalOpen(
+                    this.state.asin,
+                    this.state.overall,
+                    this.state.reviewText,
+                    this.state.summary
+                  )
+                } //raise event to Counters
+                className="btn btn-primary btn-sm m-2"
+              >
+                <FontAwesomeIcon icon={faPenSquare} size="1x" />
+              </button>
+            </td>
           </tbody>
         </table>
       </div>

@@ -20,7 +20,7 @@ class ReviewsYouAddedPage extends Component {
       id: props.location.state.id,
       username: props.location.state.username,
 
-      reviewsYouAdded: [],
+      reviewsYouAdded: props.location.state.reviewsYouAdded,
 
       addReviewModalShow: false,
       deleteReviewModalShow: false,
@@ -35,13 +35,45 @@ class ReviewsYouAddedPage extends Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.location.key !== this.props.location.key) {
+      this.getReviews();
+    }
+  }
+
+  componentDidMount() {
+    this.getReviews();
+  }
+
+  getReviews = () => {
+    const url = "/reviews/user";
+    const body = {
+      headers: { "x-access-tokens": this.state.token },
+    };
+    axios
+      .get(url, body)
+      .then((res) => {
+        console.log(res);
+        const review = res.data.reviews;
+        console.log(review);
+        if (res.status === 200) {
+          this.setState({ reviewsYouAdded: review == null ? [] : review });
+          this.setState({ searching: false });
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        console.log(err.request);
+      });
+  };
+
   handleDelete = () => {
     console.log("delete called", this.state.deleteAsin);
     console.log(this.state.reviewsYouAdded);
     var review = this.state.reviewsYouAdded;
     var asin = this.state.deleteAsin;
 
-    this.setState({ searching: true });
+    this.setState({ deleteReviewModalShow: false, searching: true });
     const url = "/book/" + asin;
     const body = {
       headers: { "x-access-tokens": this.state.token },
@@ -59,10 +91,23 @@ class ReviewsYouAddedPage extends Component {
               index = i;
             }
           }
+          console.log(index);
+          console.log(review);
           review.splice(index, 1);
+          console.log(review);
           this.setState({ reviewsYouAdded: review });
           this.setState({ searching: false });
           console.log(this.state.reviewsYouAdded);
+
+          // this.props.history.push({
+          //   pathname: "/reviews-you-added",
+          //   state: {
+          //     token: this.state.token,
+          //     id: this.state.id,
+          //     username: this.state.username,
+          //     reviewsYouAdded: [],
+          //   },
+          // });
         }
       })
       .catch((err) => {
@@ -71,7 +116,8 @@ class ReviewsYouAddedPage extends Component {
       });
   };
 
-  handleEdit = () => {//(asin, overall, reviewText, summary) => {
+  handleEdit = () => {
+    //(asin, overall, reviewText, summary) => {
     console.log("handleEdit called");
 
     // this.setState({
@@ -87,7 +133,6 @@ class ReviewsYouAddedPage extends Component {
     console.log(this.state.editSummary);
     // console.log(this.state.reviewsYouAdded);
 
-
     // var review = this.state.reviewsYouAdded;
     // console.log(review);
 
@@ -95,7 +140,6 @@ class ReviewsYouAddedPage extends Component {
     // var overall = this.state.editOverall;
     // var reviewText = this.state.editReviewText;
     // var summary = this.state.editSummary;
-    
 
     // this.setState({ searching: true });
     // const url = "/book/" + asin;
@@ -125,10 +169,12 @@ class ReviewsYouAddedPage extends Component {
     this.setState({ deleteReviewModalShow: true });
     this.setState({ deleteAsin: asin });
     console.log(this.state.deleteReviewModalShow);
-    console.log(this.state.deleteReviewID);
+    console.log(this.state.deleteAsin);
   };
 
-  addReviewModalClose = () => this.setState({ addReviewModalShow: false });
+  addReviewModalClose = () => {
+    this.setState({ addReviewModalShow: false });
+  };
   addReviewModalOpen = () => {
     this.setState({ addReviewModalShow: true });
   };
@@ -140,45 +186,15 @@ class ReviewsYouAddedPage extends Component {
       editOverall: overall,
       editReviewText: reviewText,
       editSummary: summary,
-      editReviewModalShow: true
+      editReviewModalShow: true,
     });
 
     // this.setState({ editReviewModalShow: true });
   };
 
-  componentDidMount() {
-    this.getReviews();
-  }
-
-  getReviews = () => {
-    const url = "/reviews/user";
-    const body = {
-      headers: { "x-access-tokens": this.state.token },
-    };
-    axios
-      .get(url, body)
-      .then((res) => {
-        console.log(res);
-        const review = res.data.reviews;
-        console.log(review);
-        if (res.status === 200) {
-          this.setState({ reviewsYouAdded: review == null ? [] : review });
-          this.setState({ searching: false });
-        }
-      })
-      .catch((err) => {
-        console.log(err.response);
-        console.log(err.request);
-      });
-  };
-
   render() {
     return (
-      <LoadingOverlay
-        active={this.state.searching}
-        spinner
-        text="loading ..."
-      >
+      <LoadingOverlay active={this.state.searching} spinner text="loading ...">
         <body>
           <div className="content-body">
             <NavBar
@@ -213,7 +229,9 @@ class ReviewsYouAddedPage extends Component {
               <div>
                 <AddReviewModal
                   event={this}
-                  token={this.props.token}
+                  token={this.state.token}
+                  id={this.state.id}
+                  username={this.state.username}
                   show={this.state.addReviewModalShow}
                   onHide={this.addReviewModalClose}
                 />
@@ -235,8 +253,8 @@ class ReviewsYouAddedPage extends Component {
                   show={this.state.editReviewModalShow}
                   onHide={this.editReviewModalClose}
                   handleEdit={this.handleEdit}
-                  editAsin= {this.state.editAsin}
-                  editSummary= {this.state.editSummary}
+                  editAsin={this.state.editAsin}
+                  editSummary={this.state.editSummary}
                   editOverall={this.state.editOverall}
                   editReviewText={this.state.editReviewText}
                 />
@@ -265,9 +283,8 @@ class ReviewsYouAddedPage extends Component {
               <br></br>
             </div>
           </div>
-          <Footer></Footer>
+          {/* <Footer></Footer> */}
         </body>
-        
       </LoadingOverlay>
     );
   }
