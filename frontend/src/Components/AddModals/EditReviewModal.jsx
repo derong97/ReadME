@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 import axios from "axios";
+import ReactStars from "react-rating-stars-component";
 
 class EditReviewModal extends Component {
   constructor(props) {
@@ -8,10 +9,43 @@ class EditReviewModal extends Component {
 
     this.state = {
       loading: false,
-      title: this.props.title,
+      asin: this.props.editAsin,
+      reviewTitle: this.props.editSummary,
+      reviewText: this.props.editReviewText,
+      rating: this.props.editOverall,
     };
   }
 
+  handleASINChange = (event) => {
+    this.setState({
+      asin: event.target.value,
+    });
+  };
+
+  handleReviewTitleChange = (event) => {
+    this.setState({
+      reviewTitle: event.target.value,
+    });
+  };
+
+  handleRatingChange = (newRating) => {
+    this.setState({
+      rating: newRating,
+    });
+  };
+
+  handleReviewTextChange = (event) => {
+    this.setState({
+      reviewText: event.target.value,
+    });
+  };
+
+  printStates = () => {
+    console.log(this.state.asin);
+    console.log(this.state.reviewTitle);
+    console.log(this.state.reviewText);
+    console.log(this.state.rating);
+  };
 
   render() {
     return (
@@ -25,21 +59,106 @@ class EditReviewModal extends Component {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit REVIEW YALL</Modal.Title>
+          <Modal.Title>Edit Review</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to delete your review for this book?</Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="outline-info"
-            type="submit"
-            onClick={this.props.onHide}
-          >
-            Back
-          </Button>
-          <Button variant="danger" onClick={this.props.handleDelete}>
-            Delete
-          </Button>
-        </Modal.Footer>
+        <Form>
+          <Modal.Body>
+            <Form.Group as={Row} controlId="formASIN">
+              <Form.Label column sm={2}>
+                ASIN
+              </Form.Label>
+              <Col sm={10}>
+                <input
+                  type="text"
+                  readOnly
+                  className="form-control-plaintext"
+                  id="readonly"
+                  value={this.state.asin}
+                />
+                {/* <Form.Control
+                  required
+                  type="input"
+                  placeholder="enter the book's asin number."
+                  // required
+                  onChange={this.handleASINChange}
+                />
+                <Form.Text className="text-muted">
+                  The ASIN number is the Amazon Standardard Identification
+                  Number of your book (i.e. the ISBN).
+                </Form.Text>
+                <Form.Control.Feedback type="invalid">
+                  awh hell no this is wrong dont be stupid
+                </Form.Control.Feedback> */}
+              </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="formReviewTitle">
+              <Form.Label column sm={2}>
+                Review Title
+              </Form.Label>
+              <Col sm={10}>
+                <Form.Control
+                  required
+                  type="input"
+                  placeholder="Enter review title."
+                  onChange={this.handleReviewTitleChange}
+                />
+                <Form.Text className="text-muted">
+                  Feel free to get creative!
+                </Form.Text>
+              </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="formRatings">
+              <Form.Label column sm={2}>
+                Rating
+              </Form.Label>
+              <Col sm={10}>
+                <ReactStars
+                  count={5}
+                  onChange={this.handleRatingChange}
+                  size={24}
+                  isHalf={true}
+                  emptyIcon={<i className="far fa-star"></i>}
+                  halfIcon={<i className="fa fa-star-half-alt"></i>}
+                  fullIcon={<i className="fa fa-star"></i>}
+                  activeColor="orange"
+                />
+              </Col>
+            </Form.Group>
+
+            <Form.Group controlId="formReviewText">
+              <Form.Label>Review</Form.Label>
+              {/* <Form.Control
+                required
+                type="textarea"
+                placeholder="Pen your thoughts here..."
+                onChange={this.handleReviewTextChange}
+              /> */}
+              <textarea
+                className="form-control"
+                id="formReviewTextArea"
+                rows={8}
+                onChange={this.handleReviewTextChange}
+              ></textarea>
+
+              <Form.Text className="text-muted">
+                Tell everyone your opinion about this book!
+              </Form.Text>
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            {/* <Button variant="danger" type="submit" onClick={this.printStates}>
+              PRINT STATES
+            </Button> */}
+            <Button variant="danger" type="submit" onClick={this.props.onHide}>
+              Cancel
+            </Button>
+            <Button variant="outline-success" onClick={this.props.handleEdit}>
+              Update Review
+            </Button>
+          </Modal.Footer>
+        </Form>
       </Modal>
     );
   }

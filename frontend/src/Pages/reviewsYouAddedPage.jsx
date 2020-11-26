@@ -25,8 +25,13 @@ class ReviewsYouAddedPage extends Component {
       addReviewModalShow: false,
       deleteReviewModalShow: false,
       editReviewModalShow: false,
+
       deleteAsin: 0,
+
       editAsin: 0,
+      editOverall: 0,
+      editReviewText: "WHAT IS Upppppp",
+      editSummary: "",
     };
   }
 
@@ -74,6 +79,7 @@ class ReviewsYouAddedPage extends Component {
       headers: { "x-access-tokens": this.state.token },
     };
     console.log(body);
+    this.deleteReviewModalClose();
     axios
       .delete(url, body)
       .then((res) => {
@@ -110,30 +116,50 @@ class ReviewsYouAddedPage extends Component {
       });
   };
 
-  handleEdit = (asin, overall, reviewText, summary) => {
-    console.log(this.state.reviewsYouAdded);
-    var review = this.state.reviewsYouAdded;
-    console.log(review);
+  handleEdit = () => {
+    //(asin, overall, reviewText, summary) => {
+    console.log("handleEdit called");
 
-    this.setState({ searching: true });
-    const url = "/book/" + asin;
-    const headers = {
-      headers: { "x-access-tokens": this.state.token },
-    };
-    const params = {
-      overall: overall,
-      reviewText: reviewText,
-      summary: summary,
-    };
-    axios
-      .put(url, params, headers)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err.response);
-        console.log(err.request);
-      });
+    // this.setState({
+    //   editAsin: asin,
+    //   editOverall: overall,
+    //   editReviewText: reviewText,
+    //   editSummary: summary
+    // })
+
+    console.log(this.state.editAsin);
+    console.log(this.state.editOverall);
+    console.log(this.state.editReviewText);
+    console.log(this.state.editSummary);
+    // console.log(this.state.reviewsYouAdded);
+
+    // var review = this.state.reviewsYouAdded;
+    // console.log(review);
+
+    // var asin = this.state.editAsin;
+    // var overall = this.state.editOverall;
+    // var reviewText = this.state.editReviewText;
+    // var summary = this.state.editSummary;
+
+    // this.setState({ searching: true });
+    // const url = "/book/" + asin;
+    // const headers = {
+    //   headers: { "x-access-tokens": this.state.token },
+    // };
+    // const params = {
+    //   overall: overall,
+    //   reviewText: reviewText,
+    //   summary: summary,
+    // };
+    // axios
+    //   .put(url, params, headers)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.response);
+    //     console.log(err.request);
+    //   });
   };
 
   deleteReviewModalClose = () =>
@@ -154,17 +180,22 @@ class ReviewsYouAddedPage extends Component {
   };
 
   editReviewModalClose = () => this.setState({ editReviewModalShow: false });
-  editReviewModalOpen = (asin) => {
-    this.setState({ editReviewModalShow: true });
-    this.setState({ editAsin: asin });
-    console.log(this.state.editReviewModalShow);
-    console.log(this.state.editAsin);
+  editReviewModalOpen = (asin, overall, reviewText, summary) => {
+    this.setState({
+      editAsin: asin,
+      editOverall: overall,
+      editReviewText: reviewText,
+      editSummary: summary,
+      editReviewModalShow: true,
+    });
+
+    // this.setState({ editReviewModalShow: true });
   };
 
   render() {
     return (
       <LoadingOverlay active={this.state.searching} spinner text="loading ...">
-        <React.Fragment>
+        <body>
           <div className="content-body">
             <NavBar
               event={this}
@@ -221,8 +252,11 @@ class ReviewsYouAddedPage extends Component {
                   event={this}
                   show={this.state.editReviewModalShow}
                   onHide={this.editReviewModalClose}
-                  title={this.state.title}
                   handleEdit={this.handleEdit}
+                  editAsin={this.state.editAsin}
+                  editSummary={this.state.editSummary}
+                  editOverall={this.state.editOverall}
+                  editReviewText={this.state.editReviewText}
                 />
               </div>
 
@@ -249,9 +283,8 @@ class ReviewsYouAddedPage extends Component {
               <br></br>
             </div>
           </div>
-
           <Footer></Footer>
-        </React.Fragment>
+        </body>
       </LoadingOverlay>
     );
   }

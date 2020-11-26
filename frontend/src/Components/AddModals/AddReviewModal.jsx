@@ -44,6 +44,7 @@ class AddReviewModal extends Component {
   };
 
   handleSubmit = (event) => {
+    this.props.onHide();
     this.props.event.setState({
       searching: true,
     });
@@ -68,7 +69,6 @@ class AddReviewModal extends Component {
         console.log(res);
         if (res.status === 200) {
           console.log(res.data.message);
-          this.props.onHide();
           this.props.event.props.history.push({
             pathname: "/reviews-you-added",
             state: {
@@ -181,7 +181,7 @@ class AddReviewModal extends Component {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="danger" onClick={this.props.onHide}>
-              Close
+              Cancel
             </Button>
             <Button
               variant="outline-success"
