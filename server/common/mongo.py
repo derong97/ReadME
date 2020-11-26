@@ -14,7 +14,7 @@ mongo_client = MongoClient(host=MONGO_IP, username=MONGO_USER, password=MONGO_PW
 mongo_db = mongo_client[MONGO_DB]
 mongo_users = mongo_db[MONGO_USERS_COL]
 mongo_metadata = mongo_db[MONGO_METADATA_COL]
-monog_log = mongo_db[MONGO_LOG_COL]
+mongo_log = mongo_db[MONGO_LOG_COL]
 
 def mongolog(request_body, **kwargs):
     data = {
@@ -25,4 +25,4 @@ def mongolog(request_body, **kwargs):
         data["request"] = request_body.args.to_dict()
     for key, val in kwargs.items():
         data[key] = val
-    monog_log.insert_one(data)
+    mongo_log.insert_one(data)

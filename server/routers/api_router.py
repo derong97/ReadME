@@ -1,27 +1,25 @@
 from flask import Flask, request
-import logging
 from app import app
 from controllers.user import User
 from controllers.review import Review
 from controllers.metadata import Metadata
 from common.token import token_required
-from common.mongo import mongolog
+from common.mongo import MONGO_IP, MONGO_USER, MONGO_PW, MONGO_DB, MONGO_LOG_COL, mongolog
+from decouple import config
 
-# formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-# handler_file = logging.FileHandler(filename='demo.log').setFormatter(formatter)
+import logging
+import logging.handlers
+from log4mongo.handlers import MongoHandler
 
-# handler_mongo = MongoHandler(   db='readme_mongo', 
-#                                 collection='log',
-#                                 username='historicriptide',
-#                                 password='futuresparkles',
-#                                 host='204.236.223.217',
-#                                 port=27017
-#                             )
-
-logger = logging.basicConfig()
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-
+#######################   LOGGING-   #######################
+mhandler = MongoHandler(
+    host=f'mongodb://{MONGO_USER}:{MONGO_PW}@204.236.223.217:27017',
+    port=27017,
+    database_name="readme_mongo", 
+    collection="log",
+)
+logging.getLogger('werkzeug').setLevel(logging.DEBUG)
+logging.getLogger('werkzeug').addHandler(mhandler)
 
 ####################### USER ROUTES #######################
 @app.route('/user/signup', methods=['POST'])
