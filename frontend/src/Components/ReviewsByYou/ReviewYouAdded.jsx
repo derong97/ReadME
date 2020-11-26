@@ -12,18 +12,6 @@ class ReviewYouAdded extends Component {
     this.state = {
       token: this.props.token,
       book: [],
-      // asin: "B0080H1C0W",
-      // dislikes: 0,
-      // likes: 0,
-      // overall: 2,
-      // reviewText:
-      //   "After Book One, which is mandatory reading to make this book understandable, this read speeds along for about fifty percent of the journey, then preaches the ultimate end of science and personal freedom.  Unfortunately, the &#34;hero&#34; is American and the author isn't aware of just how anti-government at least half the nation is at any given time, so the &#34;conclusion&#34; of Book Two doesn't ring true.  Since the love story is unbelievable, the conclusion is contrived. Read Book Two if your power is out, it's raining or everyone you know is busy.",
-      // reviewTime: "Thu, 19 Jun 2014 00:00:00 GMT",
-      // reviewerID: "A10K0YDFH11D3W",
-      // reviewerName: "PR Diva",
-      // summary:
-      //   "Don't Preach to Me Ian Irvine! (Sing to 'Don't Cry for Me. . .' You get the idea",
-      // unixReviewTime: 1403136000,
       asin: this.props.reviewYouAdded.asin,
       dislikes: this.props.reviewYouAdded.dislikes,
       likes: this.props.reviewYouAdded.likes,
@@ -34,7 +22,6 @@ class ReviewYouAdded extends Component {
       reviewerName: this.props.reviewYouAdded.reviewerName,
       summary: this.props.reviewYouAdded.summary,
       unixReviewTime: this.props.reviewYouAdded.unixReviewTime,
-     
     };
   }
 
@@ -121,14 +108,23 @@ class ReviewYouAdded extends Component {
 
               <td className="column-action">
                 <button
-                  onClick={() => this.props.deleteReviewModalOpen(this.state.asin)} //raise event to Counters
+                  onClick={() =>
+                    this.props.deleteReviewModalOpen(this.state.asin)
+                  } //raise event to Counters
                   className="btn btn-danger btn-sm m-2"
                 >
                   <FontAwesomeIcon icon={faTrashAlt} size="1x" />
                 </button>
 
                 <button
-                  onClick={() => this.props.editReviewModalOpen(this.state.asin)} //raise event to Counters
+                  onClick={() =>
+                    this.props.editReviewModalOpen(
+                      this.state.asin,
+                      this.state.overall,
+                      this.state.reviewText,
+                      this.state.summary
+                    )
+                  } //raise event to Counters
                   className="btn btn-primary btn-sm m-2"
                 >
                   <FontAwesomeIcon icon={faPenSquare} size="1x" />

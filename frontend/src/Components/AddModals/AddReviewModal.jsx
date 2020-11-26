@@ -84,8 +84,8 @@ class AddReviewModal extends Component {
         let userError = "";
         // userError = err.response.data.message;
         this.setState({ loading: false, userError });
-        console.log(err.response);
-        console.log(err.request);
+        // console.log(err.response);
+        // console.log(err.request);
       });
   };
 
@@ -184,7 +184,7 @@ class AddReviewModal extends Component {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="danger" onClick={this.props.onHide}>
-              Close
+              Cancel
             </Button>
             <Button
               variant="outline-success"
