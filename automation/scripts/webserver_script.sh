@@ -54,17 +54,16 @@ SQL_KINDLE=Kindle
 SECRET_KEY=706c656173652067656e657261746520612072616e646f6d206e756d626572
 EOF
 
-# cd ../frontend/static
-# npm install
-# # npm run build
+cd ../frontend/static
+npm install
+# npm run build
 
-# cd ../../server
-# # WebServerIP=$(curl ifconfig.co)
-# # export WebServerIP
-# echo "Webserver SetUp complete"
-# echo "You can visit your website now at $WebServerIP:5000"
+cd ../../server
+# WebServerIP=$(curl ifconfig.co)
+# export WebServerIP
+echo "Webserver SetUp complete"
+echo "You can visit your website now at $WebServerIP:5000"
 
 # flask run --host=0.0.0.0
+gunicorn -b :5000 app:app
 
-cd ../frontend
-npm run gunicorn
