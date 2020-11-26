@@ -1,0 +1,71 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "KeyName": {
+            "Description": "Amazon EC2 Key Pair",
+            "Type": "AWS::EC2::KeyPair::KeyName"
+        }
+    },
+    "Resources": {
+        "NameNode": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": "ami-0f82752aa17ff8f5d",
+                "InstanceType": "t2.xlarge",
+                "KeyName": { "Ref": "KeyName" },
+                "SecurityGroupIds": [{
+                    "Ref": "HadoopSecurityGroup"
+                }]
+            },
+            "DependsOn": [
+                "HadoopSecurityGroup"
+            ]
+        },
+        "DataNode1": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": "ami-0f82752aa17ff8f5d",
+                "InstanceType": "t2.xlarge",
+                "KeyName": { "Ref": "KeyName" },
+                "SecurityGroupIds": [{
+                    "Ref": "HadoopSecurityGroup"
+                }]
+            },
+            "DependsOn": [
+                "HadoopSecurityGroup"
+            ]
+        },
+        "HadoopSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Allow incoming SSH access",
+                "SecurityGroupIngress": [{
+                    "IpProtocol": "tcp",
+                    "FromPort": "22",
+                    "ToPort": "22",
+                    "CidrIp": "0.0.0.0/0"
+                }]
+            }
+        }
+    },
+    "Outputs": {
+        "NameNodeIP": {
+            "Description": "Public IP of NameNode",
+            "Value": {
+                "Fn::GetAtt": [
+                    "NameNode",
+                    "PublicIp"
+                ]
+            }
+        },
+        "DataNode1IP": {
+            "Description": "Private IP of DataNode1",
+            "Value": {
+                "Fn::GetAtt": [
+                    "DataNode1",
+                    "PrivateIp"
+                ]
+            }
+        }
+    }
+}

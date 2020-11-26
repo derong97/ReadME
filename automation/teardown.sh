@@ -22,10 +22,6 @@ stackname=$(grep StackName logs.log | sed -e 's/.*StackName=\(\S*\).*/\1/g')
   echo "Removing private key from local machine..."
   rm $keyname.pem
 
-  # Remove config.json
-  echo "Removing cloud formation configs from local machine..."
-  rm ./cloud_formation/config.json
-
   # Remove logs
   echo "Removing logs from local machine..."
   rm logs.log

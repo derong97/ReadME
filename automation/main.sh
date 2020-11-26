@@ -49,8 +49,6 @@ fi
   sudo chmod 400 $keyname.pem
   echo "KeyName=$keyname" >> logs.log
 
-  # Change the KeyName: default -> KeyName: $keyname
-  cat ./cloud_formation/template.json | sed '/KeyName/ s/\"default"/\"'$keyname'"/' > ./cloud_formation/config.json
 } || {
   echo "Error generating key pair"
   exit
@@ -62,7 +60,7 @@ fi
   echo "StackName=$stackname" | tee -a logs.log
 
   echo "Deploying Cloud Formation Stack"
-  aws cloudformation create-stack --stack-name $stackname --template-body file://./cloud_formation/config.json
+  aws cloudformation create-stack --stack-name $stackname --template-body file://./cloud_formation/production_template.json --parameters ParameterKey=KeyName,ParameterValue=$keyname
   
   # Ping status
   while :
@@ -122,3 +120,10 @@ fi
   echo "Error setting up webserver"
   exit
 }
+
+### SET UP HADOOP ###
+
+# For-loop using jq command to insert into analytics_template depending on number of nodes specified by user
+# please pipe to a new json or edit in place to preserve original copy
+
+# bash commands to specify number of nodes

@@ -1,12 +1,18 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "KeyName": {
+            "Description": "Amazon EC2 Key Pair",
+            "Type": "AWS::EC2::KeyPair::KeyName"
+        }
+    },
     "Resources": {
         "WebServerEC2": {
             "Type": "AWS::EC2::Instance",
             "Properties": {
                 "ImageId": "ami-0f82752aa17ff8f5d",
                 "InstanceType": "t2.medium",
-                "KeyName": "default",
+                "KeyName": { "Ref": "KeyName" },
                 "SecurityGroupIds": [{
                     "Ref": "WebServerSecurityGroup"
                 }]
@@ -20,7 +26,7 @@
             "Properties": {
                 "ImageId": "ami-0f82752aa17ff8f5d",
                 "InstanceType": "t2.medium",
-                "KeyName": "default",
+                "KeyName": { "Ref": "KeyName" },
                 "SecurityGroupIds": [{
                     "Ref": "MySQLSecurityGroup"
                 }]
@@ -34,7 +40,7 @@
             "Properties": {
                 "ImageId": "ami-0f82752aa17ff8f5d",
                 "InstanceType": "t2.medium",
-                "KeyName": "default",
+                "KeyName": { "Ref": "KeyName" },
                 "SecurityGroupIds": [{
                     "Ref": "MongoDBSecurityGroup"
                 }]
