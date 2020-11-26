@@ -252,7 +252,7 @@ class BookPage extends React.Component {
             />
           </div>
 
-          <Footer></Footer>
+          {/* <Footer></Footer> */}
         </body>
       </LoadingOverlay>
     );

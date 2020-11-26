@@ -283,7 +283,7 @@ class ReviewsYouAddedPage extends Component {
               <br></br>
             </div>
           </div>
-          <Footer></Footer>
+          {/* <Footer></Footer> */}
         </body>
       </LoadingOverlay>
     );

@@ -66,7 +66,8 @@ class MainPage extends React.Component {
 
   componentDidMount() {
     this.getBooks();
-  }z
+  }
+  z;
 
   getBooks = () => {
     console.log(this.state.category);
@@ -217,6 +218,12 @@ class MainPage extends React.Component {
     const categories = [
       { value: "Dance", label: "Dance" },
       { value: "Dark Fantasy", label: "Dark Fantasy" },
+      { value: "Halloween", label: "Halloween" },
+      { value: "Multilevel", label: "Multilevel" },
+      { value: "Preaching", label: "Preaching" },
+      { value: "Racing", label: "Racing" },
+      { value: "Vegetables", label: "Vegetables" },
+      { value: "Warsaw", label: "Warsaw" },
     ];
 
     return (
@@ -312,7 +319,7 @@ class MainPage extends React.Component {
                 </div>
               </div>
 
-              <Footer></Footer>
+              {/* <Footer></Footer> */}
             </body>
           )}
         </div>

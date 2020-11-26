@@ -381,7 +381,7 @@ class AddBookModal extends Component {
                 type="submit"
                 onClick={this.handleSubmit}
               >
-                Add Review
+                Add Book
               </Button>
             </Modal.Footer>
           </Form>
