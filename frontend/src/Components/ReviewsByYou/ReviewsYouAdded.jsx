@@ -6,11 +6,16 @@ class ReviewsYouAdded extends Component {
   render() {
     return (
       <div>
-        {this.props.ReviewsYouAdded.map((reviewYouAdded) => (
+        {this.props.reviewsYouAdded.map((reviewYouAdded) => (
           <ReviewYouAdded
-            key={reviewYouAdded.reviewID} //used internally
-            onDelete={this.props.onDelete}
-            ReviewYouAdded={reviewYouAdded}
+            token={this.props.token}
+            key={reviewYouAdded.reviewerID} //used internally
+            handleDelete={this.props.handleDelete}
+            deleteReviewModalOpen = {this.props.deleteReviewModalOpen}
+            deleteReviewModalClose = {this.props.deleteReviewModalClose}
+            editReviewModalOpen = {this.props.editReviewModalOpen}
+            editReviewModalClose = {this.props.editReviewModalClose}
+            reviewYouAdded={reviewYouAdded}
           ></ReviewYouAdded>
         ))}
       </div>

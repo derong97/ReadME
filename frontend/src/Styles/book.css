@@ -8,13 +8,14 @@
 }
 
 #book-img {
-  width: 180px;
+  width: 220px;
 }
 
 #book-info {
   display: flex;
   flex-direction: column;
   margin-left: 50px;
+  width: 400px;
 }
 
 #book-title {

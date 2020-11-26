@@ -26,11 +26,11 @@ class BooksYouAddedPage extends Component {
     // this.setState({ counters });
   };
 
-  addModalClose = () => this.setState({ addBookModalShow: false });
-  addModalOpen = () => {
+  addBookModalClose = () => this.setState({ addBookModalShow: false });
+  addBookModalOpen = () => {
     this.setState({ addBookModalShow: true });
-    console.log("add book show?", this.state.addBookModalShow);
   };
+
 
   render() {
     return (
@@ -50,7 +50,7 @@ class BooksYouAddedPage extends Component {
           <button
             className="add-book-bttn"
             id="add-book-bttn"
-            onClick={this.addModalOpen}
+            onClick={this.addBookModalOpen}
             data-toggle="modal"
             data-target="#exampleModalCenter"
           >
@@ -65,7 +65,7 @@ class BooksYouAddedPage extends Component {
         <div>
           <AddBookModal
             show={this.state.addBookModalShow}
-            onHide={this.addModalClose}
+            onHide={this.addBookModalClose}
           />
         </div>
 

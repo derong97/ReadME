@@ -7,11 +7,11 @@ const ReviewItem = ({ review }) => {
       <div className="row">
         <img className="user" alt="user" src={UserLogo}></img>
         <div className="review-section">
-          <h6 className="review-section-title">"{review.title}"</h6>
+          <h6 className="review-section-title">"{review.summary}"</h6>
           <text className="review-section-text">
-            <i>by {review.user}</i>
+            <i>by {review.reviewerName}</i>
           </text>
-          <p>{review.review}</p>
+          <p>{review.reviewText}</p>
         </div>
       </div>
       <hr></hr>

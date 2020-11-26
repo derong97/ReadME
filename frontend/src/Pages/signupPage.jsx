@@ -38,36 +38,45 @@ class SignupPage extends React.Component {
     const isValid = this.validate();
     if (isValid) {
       this.setState({ loading: true });
-      const url = "/user/signup"; //"http://localhost:5000/user/signup";
+      const url = "/user/signup";
       var username = document.getElementById("username").value;
       var email = document.getElementById("email").value;
       var password = document.getElementById("password").value;
-
-      console.log(username);
-      console.log(password);
-      console.log(email);
 
       const body = {
         name: username,
         email: email,
         password: password,
       };
-      console.log(body);
 
       evt.preventDefault();
       axios
         .post(url, body)
         .then((res) => {
           console.log(res);
+          const token = res.data.token;
+          const username = res.data.username;
+          const id = res.data.reviewerID;
           if (res.status === 200) {
             this.setState({ loading: false });
             this.props.history.push({
               pathname: "/main",
+              state: {
+                token: token,
+                id: id,
+                username: username,
+                books: [],
+                count: 0,
+                category: ["Kindle eBooks"],
+                activePage: 1,
+              },
             });
           }
         })
         .catch((err) => {
-          this.setState({ loading: false });
+          let userError = "";
+          userError = err.response.data.message;
+          this.setState({ loading: false, userError });
           console.log(err.response);
           console.log(err.request);
         });

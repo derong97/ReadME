@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import LoadingOverlay from "react-loading-overlay";
 
 class LoginPage extends React.Component {
-  constructor(props){
-    super(props);
+  constructor() {
+    super();
     this.state = {
       loading: false,
       email: "",
@@ -27,29 +27,38 @@ class LoginPage extends React.Component {
     });
   };
 
-  checkLogin = (evt) => {
+  checkLogin = async (evt) => {
     this.setState({ loading: true });
-    const url = "/user/login"; // "http://localhost:5000/user/login";
+    const url = "/user/login";
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
-    console.log(email);
-    console.log(password);
 
     const body = {
       email: email,
       password: password,
     };
-    console.log(body);
 
     evt.preventDefault();
     axios
       .post(url, body)
       .then((res) => {
         console.log(res);
+        const token = res.data.token;
+        const username = res.data.username;
+        const id = res.data.reviewerID;
         if (res.status === 200) {
           this.setState({ loading: false });
           this.props.history.push({
             pathname: "/main",
+            state: {
+              token: token,
+              id: id,
+              username: username,
+              books: [],
+              count: 0,
+              category: ["Kindle eBooks"],
+              activePage: 1,
+            },
           });
         }
       })

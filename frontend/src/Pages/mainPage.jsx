@@ -2,16 +2,18 @@ import React from "react";
 import axios from "axios";
 import "../Styles/main.css";
 import "font-awesome/css/font-awesome.min.css";
-import { Form, Dropdown, DropdownButton } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import GridList from "@material-ui/core/GridList";
 import NavBar from "../Components/NavBar.jsx";
 import Book from "../Components/BookItem.jsx";
 import Footer from "../Components/Footer.jsx";
 import Pagination from "react-js-pagination";
-import BookImg from "../Image/login_bg.png";
 import Logo from "../Image/logo_black.png";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 import FadeIn from "react-fade-in";
 import Lottie from "react-lottie";
+import LoadingOverlay from "react-loading-overlay";
 import * as legoData from "../Image/lego_loading";
 import * as doneData from "../Image/done_loading";
 
@@ -35,319 +37,286 @@ const defaultOptions2 = {
 };
 
 class MainPage extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      token: props.location.state.token,
       loading: true,
       done: false,
-      username: "GlendiBear",
-      dropDownValue: "Popularity",
-      books: [
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-        {
-          link: BookImg,
-          book: "Book 1 Title",
-          rating: 2,
-        },
-      ],
-      genres: {
-        fantasy: false,
-        youngadult: false,
-        horror: false,
-        thriller: false,
-        cooking: false,
-        inspo: false,
-        travel: false,
-        crime: false,
-      },
-      activePage: 1,
+      searching: false,
+      id: props.location.state.id,
+      username: props.location.state.username,
+      books: props.location.state.books,
+      category: props.location.state.category,
+      count: props.location.state.count,
+      activePage: props.location.state.activePage,
     };
   }
 
-  componentDidMount() {
-    // time taken to retrieve value from the backend for the top 30 books
-    setTimeout(() => {
-      this.setState({ loading: false });
-      setTimeout(() => {
-        this.setState({ done: true });
-      }, 500);
-    }, 1000);
+  componentDidUpdate(prevProps) {
+    if (prevProps.location.key !== this.props.location.key) {
+      this.setState({
+        books: this.props.location.state.books,
+        count: this.props.location.state.count,
+        category: this.props.location.state.category,
+        activePage: this.props.location.state.activePage,
+      });
+    }
   }
 
-  changeValue = (text) => {
-    this.setState({ dropDownValue: text });
+  componentDidMount() {
+    this.getBooks();
+  }z
 
-    // const url = "";
-    // var sortby = this.state.dropDownValue;
-    // console.log(sortby);
+  getBooks = () => {
+    console.log(this.state.category);
+    var params = new URLSearchParams();
+    for (var cat of this.state.category) {
+      params.append("category", cat);
+    }
+    params.append("pageNum", this.state.activePage);
 
-    // const body = {
-    //   params: { sortby: sortby },
-    // };
-    // console.log(body);
-
-    // evt.preventDefault();
-    // axios
-    //   .get(url, body)
-    //   .then((res) => {
-    //     console.log(res);
-    //     // retrieve top 30 books
-    //     this.setState({ books: res.data });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.response);
-    //     console.log(err.request);
-    //   });
+    const url = "/books";
+    const body = {
+      headers: { "x-access-tokens": this.state.token },
+      params: params,
+    };
+    axios
+      .get(url, body)
+      .then((res) => {
+        console.log(res);
+        const metadata = res.data.metadata;
+        const count = res.data.total_counts;
+        console.log(metadata);
+        console.log(count);
+        if (res.status === 200) {
+          this.setState({ books: metadata, count: count });
+          this.setState({ loading: false });
+          setTimeout(() => {
+            this.setState({ done: true });
+          }, 500);
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        console.log(err.request);
+      });
   };
 
-  handleCheckboxChange = (evt) => {
-    const genres = this.state.genres;
-    genres[evt.target.id] = evt.target.checked;
+  handleCategoryChange = (cat) => {
+    var catList = [];
+    var i;
+    for (i = 0; i < cat.length; i++) {
+      catList.push(cat[i].value);
+    }
     this.setState({
-      genres: genres,
+      category: catList,
     });
+
+    console.log("cat change", cat);
+    console.log(cat.length);
+    console.log(catList);
+    console.log(this.state.category);
   };
 
-  clearAll = (evt) => {
+  categoryOnSubmit = (evt) => {
+    this.setState({ searching: true });
+    console.log(this.state.category);
+    var params = new URLSearchParams();
+    for (var cat of this.state.category) {
+      params.append("category", cat);
+    }
+    params.append("pageNum", 1);
+
+    const url = "/books";
+    const body = {
+      headers: { "x-access-tokens": this.state.token },
+      params: params,
+    };
+    console.log(body);
     evt.preventDefault();
-    this.setState({
-      genres: {
-        fantasy: false,
-        youngadult: false,
-        horror: false,
-        thriller: false,
-        cooking: false,
-        inspo: false,
-        travel: false,
-        crime: false,
-      },
-    });
+    axios
+      .get(url, body)
+      .then((res) => {
+        console.log(res);
+        const metadata = res.data.metadata;
+        const count = res.data.total_counts;
+        console.log(metadata);
+        console.log(count);
+        if (res.status === 200) {
+          this.setState({ searching: false });
+          this.props.history.push({
+            pathname: "/main",
+            state: {
+              token: this.state.token,
+              id: this.state.id,
+              username: this.state.username,
+              books: metadata,
+              count: count,
+              category: this.state.category,
+              activePage: 1,
+            },
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        console.log(err.request);
+      });
   };
 
-  // checkGenres = (evt) => {
-  //   const url = "";
-  //   var genres = this.state.genres;
-  //   var selected = [];
-  //   for (var key in genres) {
-  //     if (genres[key]) {
-  //       selected.push(key);
-  //     }
-  //   }
-  //   console.log(selected);
-  //   const body = {
-  //     params: { genres: selected },
-  //   };
-  //   console.log(body);
-  //   evt.preventDefault();
-  //   axios
-  //     .get(url, body)
-  //     .then((res) => {
-  //       console.log(res);
-  //       // retrieve top 30 books
-  //       this.setState({ books: res.data });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.response);
-  //       console.log(err.request);
-  //     });
-  // };
+  handlePageChange(pageNum) {
+    this.setState({ searching: true });
+    console.log("active page is " + pageNum);
+    this.setState({ activePage: pageNum });
+    console.log(this.state.activePage);
 
-  handlePageChange(pageNumber) {
-    //reload screen with new set of books
-    console.log(`active page is ${pageNumber}`);
-    this.setState({ activePage: pageNumber });
+    console.log(this.state.category);
+    var params = new URLSearchParams();
+    for (var cat of this.state.category) {
+      params.append("category", cat);
+    }
+    params.append("pageNum", pageNum);
+
+    const url = "/books";
+    const body = {
+      headers: { "x-access-tokens": this.state.token },
+      params: params,
+    };
+    console.log(body);
+    axios
+      .get(url, body)
+      .then((res) => {
+        console.log(res);
+        const metadata = res.data.metadata;
+        const count = res.data.total_counts;
+        console.log(metadata);
+        if (res.status === 200) {
+          this.setState({ searching: false });
+          this.props.history.push({
+            pathname: "/main",
+            state: {
+              token: this.state.token,
+              id: this.state.id,
+              username: this.state.username,
+              books: metadata,
+              count: count,
+              category: this.state.category,
+              activePage: pageNum,
+            },
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        console.log(err.request);
+      });
   }
 
   render() {
-    return (
-      <div>
-        {!this.state.done ? (
-          <FadeIn>
-            <div id="load" class="col">
-              {this.state.loading ? (
-                <Lottie options={defaultOptions} height={150} width={150} />
-              ) : (
-                <Lottie options={defaultOptions2} height={150} width={150} />
-              )}
-              <div id="load-header">
-                <img className="navbrand-img" alt="ReadME Logo" src={Logo} />
-                <h1>ReadME</h1>
-              </div>
-            </div>
-          </FadeIn>
-        ) : (
-          <body id="body">
-            <NavBar
-              event={this}
-              username={this.state.username}
-              home="nav-main"
-              byme="nav-sub"
-            ></NavBar>
+    const categories = [
+      { value: "Dance", label: "Dance" },
+      { value: "Dark Fantasy", label: "Dark Fantasy" },
+    ];
 
-            <div class="container">
-              <div id="header-n-filter" class="row">
-                <div id="header-n-books" class="col">
-                  <div id="body-header" class="row">
-                    <h4 id="header" class="col">
-                      EXPLORE
-                    </h4>
-                    <div id="sortby" class="col">
-                      <text>SORT BY</text>
-                      <DropdownButton
-                        id="sortby-dropdown"
-                        title={this.state.dropDownValue}
-                      >
-                        <Dropdown.Item
-                          id="sortby-item"
-                          as="button"
-                          onClick={(e) =>
-                            this.changeValue(e.target.textContent)
-                          }
-                        >
-                          Popularity
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          id="sortby-item"
-                          as="button"
-                          onClick={(e) =>
-                            this.changeValue(e.target.textContent)
-                          }
-                        >
-                          Latest Arrival
-                        </Dropdown.Item>
-                      </DropdownButton>
+    return (
+      <LoadingOverlay
+        active={this.state.searching}
+        spinner
+        text="searching ..."
+      >
+        <div>
+          {!this.state.done ? (
+            <FadeIn>
+              <div id="load" class="col">
+                {this.state.loading ? (
+                  <Lottie options={defaultOptions} height={150} width={150} />
+                ) : (
+                  <Lottie options={defaultOptions2} height={150} width={150} />
+                )}
+                <div id="load-header">
+                  <img className="navbrand-img" alt="ReadME Logo" src={Logo} />
+                  <h1>ReadME</h1>
+                </div>
+              </div>
+            </FadeIn>
+          ) : (
+            <body id="body">
+              <NavBar
+                event={this}
+                id={this.state.id}
+                token={this.state.token}
+                username={this.state.username}
+                searching={this.state.searching}
+                home="nav-main"
+                byme="nav-sub"
+              ></NavBar>
+
+              <div class="container">
+                <div id="header-n-filter" class="row">
+                  <div id="header-n-books" class="col">
+                    <div id="body-header" class="row">
+                      <h4 id="header" class="col">
+                        EXPLORE
+                      </h4>
                     </div>
-                  </div>
-                  <div id="body-content" class="row">
-                    <div id="book-container" class="col">
-                      <GridList cols={4}>
-                        {this.state.books.map((book) => (
-                          <Book event={this} data={book} />
-                        ))}
-                      </GridList>
-                      <Pagination
-                        itemClass="page-item"
-                        linkClass="page-link"
-                        activePage={this.state.activePage}
-                        itemsCountPerPage={1} // helps you to calculate how many pages you need depending on your items
-                        totalItemsCount={3}
-                        pageRangeDisplayed={5}
-                        onChange={this.handlePageChange.bind(this)}
-                      />
-                    </div>
-                    <div id="filter">
-                      <text id="filterby-header">FILTER BY</text>
-                      <div id="genres">
-                        <text>GENRES</text>
-                        <Form
-                        // onSubmit={this.checkGenres}
-                        >
-                          <Form.Group>
-                            <Form.Label id="genres-header">
-                              <i>Fiction</i>
-                            </Form.Label>
-                            <Form.Check
-                              id="fantasy"
-                              className="genres-item"
-                              label="Fantasy"
-                              onChange={this.handleCheckboxChange}
-                              checked={this.state.genres.fantasy}
+                    <div id="body-content" class="row">
+                      <div id="book-container" class="col">
+                        <GridList cols={4}>
+                          {this.state.books.map((book) => (
+                            <Book
+                              event={this}
+                              id={this.state.id}
+                              token={this.state.token}
+                              username={this.state.username}
+                              book={book}
                             />
-                            <Form.Check
-                              id="youngadult"
-                              className="genres-item"
-                              label="Young Adult"
-                              onChange={this.handleCheckboxChange}
-                              checked={this.state.genres.youngadult}
+                          ))}
+                        </GridList>
+                        <Pagination
+                          itemClass="page-item"
+                          linkClass="page-link"
+                          activePage={this.state.activePage}
+                          itemsCountPerPage={10} // helps you to calculate how many pages you need depending on your items
+                          totalItemsCount={this.state.count}
+                          pageRangeDisplayed={5}
+                          onChange={this.handlePageChange.bind(this)}
+                        />
+                      </div>
+                      <div id="filter">
+                        <text id="filterby-header">FILTER BY</text>
+                        <div id="genres">
+                          <text>GENRES</text>
+                          <Form onSubmit={this.categoryOnSubmit}>
+                            <Select
+                              id="select"
+                              closeMenuOnSelect={false}
+                              components={makeAnimated()}
+                              isMulti
+                              name="Category"
+                              options={categories}
+                              className="basic-multi-select"
+                              classNamePrefix="select"
+                              onChange={this.handleCategoryChange}
                             />
-                            <Form.Check
-                              id="horror"
-                              className="genres-item"
-                              label="Horror"
-                              onChange={this.handleCheckboxChange}
-                              checked={this.state.genres.horror}
-                            />
-                            <Form.Check
-                              id="thriller"
-                              className="genres-item"
-                              label="Thriller"
-                              onChange={this.handleCheckboxChange}
-                              checked={this.state.genres.thriller}
-                            />
-                            <Form.Label id="genres-header">
-                              <i>Non-Fiction</i>
-                            </Form.Label>
-                            <Form.Check
-                              id="cooking"
-                              className="genres-item"
-                              label="Cooking"
-                              onChange={this.handleCheckboxChange}
-                              checked={this.state.genres.cooking}
-                            />
-                            <Form.Check
-                              id="inspo"
-                              className="genres-item"
-                              label="Motivational/ Inspirational"
-                              onChange={this.handleCheckboxChange}
-                              checked={this.state.genres.inspo}
-                            />
-                            <Form.Check
-                              id="travel"
-                              className="genres-item"
-                              label="Travel"
-                              onChange={this.handleCheckboxChange}
-                              checked={this.state.genres.travel}
-                            />
-                            <Form.Check
-                              id="crime"
-                              className="genres-item"
-                              label="True Crime"
-                              onChange={this.handleCheckboxChange}
-                              checked={this.state.genres.crime}
-                            />
-                          </Form.Group>
-                          <p id="genres-expand" align="right">
-                            <u>See More</u>
-                          </p>
-                          <div id="genres-submit">
-                            <button id="genres-bttn" onClick={this.clearAll}>
-                              Clear All
-                            </button>
-                            <button type="submit" id="genres-bttn">
-                              Submit
-                            </button>
-                          </div>
-                        </Form>
+                            <div id="genres-submit">
+                              <button type="submit" id="genres-bttn">
+                                Submit
+                              </button>
+                            </div>
+                          </Form>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <Footer></Footer>
-          </body>
-        )}
-      </div>
+              <Footer></Footer>
+            </body>
+          )}
+        </div>
+      </LoadingOverlay>
     );
   }
 }
