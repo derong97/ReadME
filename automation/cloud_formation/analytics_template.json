@@ -49,7 +49,7 @@
         }
     },
     "Outputs": {
-        "NameNodeIP": {
+        "NameNodePublicIP": {
             "Description": "Public IP of NameNode",
             "Value": {
                 "Fn::GetAtt": [
@@ -58,7 +58,16 @@
                 ]
             }
         },
-        "DataNode1IP": {
+        "NameNodePrivateIP": {
+            "Description": "Private IP of NameNode",
+            "Value": {
+                "Fn::GetAtt": [
+                    "NameNode",
+                    "PrivateIp"
+                ]
+            }
+        },
+        "DataNode1PrivateIP": {
             "Description": "Private IP of DataNode1",
             "Value": {
                 "Fn::GetAtt": [
