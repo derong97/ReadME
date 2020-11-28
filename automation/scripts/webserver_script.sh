@@ -56,9 +56,7 @@ cd ../frontend/static
 npm install
 
 cd ../../server
-
-#flask run --host=0.0.0.0
 gunicorn -b :5000 app:app --daemon
 
 echo "Webserver SetUp complete"
-echo "You can visit your website now at $WebServerIP:5000"
+echo -e "\e[32mYou can visit your website now at $WebServerIP:5000"

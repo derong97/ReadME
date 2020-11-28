@@ -1,13 +1,17 @@
 #!/bin/bash
 
-echo "This is for hadoop testing. Will merge with main.sh eventually" 
+echo """
+============================================================================
+                          WELCOME TO HADOOP TRASH
+============================================================================
+"""
 
 if [ "$EUID" -ne 0 ]
   then echo "Please run as root"
   exit
 fi
 
-### INSTALL AWS CLI ###
+# AWS Configuration
 if ! command -v aws configure &> /dev/null
 then
   if [ "$OSTYPE" == "linux-gnu" ]; then
@@ -23,7 +27,7 @@ then
   fi
 fi
 
-### CONFIGURE AWS CREDENTIALS ###
+
 # prompts user to enter (1) access key, (2) secret key, (3) region: us-east-1
 /usr/local/bin/aws configure
 
@@ -35,7 +39,11 @@ if [[ ! -z "$aws_session_token" ]]; then
   echo "aws_session_token = $aws_session_token" >> ~/.aws/credentials
 fi
 
-### CREATE KEY PAIR ###
+echo """
+============================================================================
+                            CREATE AWS KEY PAIR
+============================================================================
+"""
 {
   read -p "Enter desired keyname [default]:" keyname
 
@@ -54,7 +62,11 @@ fi
   exit
 }
 
-### DEPLOY CLOUD FORMATION ###
+echo """
+============================================================================
+            DEPLOYING CLOUD FORMATION STACK (ANALYTICS SYSTEM)
+============================================================================
+"""
 cluster_size=2 # TODO: will change based on user input
 
 {
@@ -81,7 +93,12 @@ cluster_size=2 # TODO: will change based on user input
   exit
 }
 
-### DATANODE IP ADDRESSES ###
+echo """
+============================================================================
+           QUERYING FOR INSTANCES IP ADDRESSES (ANALYTICS SYSTEM)
+============================================================================
+"""
+
 declare -a HadoopPublicIPs=()
 declare -a HadoopPrivateIPs=()
 
@@ -99,8 +116,11 @@ for ((i=0;i<cluster_size;i++)); do
   echo "$temp=${!temp}" | tee -a logs.log
 done
 
-### HADOOP SETUP ###
-
+echo """
+============================================================================
+                              SET UP HADOOP
+============================================================================
+"""
 for ip in ${HadoopPublicIPs[@]}
 do
   echo "Initializing Cluster Setup for $ip"
@@ -114,15 +134,12 @@ do
   if [ $i -eq 0 ]
   then
     # SSH key generation for namenode
-    sudo ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem "sudo apt-get install -y ssh; 
-    sudo ssh-keygen -f /home/hadoop/.ssh/id_rsa -N ''; 
-    cat /home/hadoop/.ssh/id_rsa.pub | sudo tee -a /home/hadoop/.ssh/authorized_keys"
-
+    sudo ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./scripts/key_generation.sh 
     sleep 1
   else
     # Copy the generated keys from namenode to every datanode
-    sudo ssh -o StrictHostKeyChecking=no ubuntu@$Node0PublicIP -i $keyname.pem "sudo cat /home/hadoop/.ssh/id_rsa.pub" \
-    | sudo ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem "sudo cat - | sudo tee -a /home/hadoop/.ssh/authorized_keys"
+    sudo ssh -o StrictHostKeyChecking=no ubuntu@$Node0PublicIP -i $keyname.pem "sudo cat /home/ubuntu/.ssh/id_rsa.pub" \
+    | sudo ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem "sudo cat - | sudo tee -a /home/ubuntu/.ssh/authorized_keys"
   fi
   i=$((i+1))
 done
