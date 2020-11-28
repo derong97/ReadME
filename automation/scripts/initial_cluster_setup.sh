@@ -1,18 +1,16 @@
 #!/bin/bash
-
-# takes in private IP addresses
-# first IP belongs to namenode
+# $1 name node private ip, $2 datanode1 private ip, ...
 
 sudo useradd -m hadoop
 
-i=0;
+i=0
 for ip in "$@"
 do
 	if [ $i -eq 0 ]
 	then 
-		echo "$ip namenode" | sudo tee -a /etc/hosts;
+		echo "$ip namenode" | sudo tee -a /etc/hosts
 	else
-		echo "$ip datanode$i" | sudo tee -a /etc/hosts;
+		echo "$ip datanode$i" | sudo tee -a /etc/hosts
 	fi
 	i=$((i+1));
 done

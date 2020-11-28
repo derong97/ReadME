@@ -7,11 +7,11 @@
         }
     },
     "Resources": {
-        "NameNode": {
+        "Node0": {
             "Type": "AWS::EC2::Instance",
             "Properties": {
                 "ImageId": "ami-0f82752aa17ff8f5d",
-                "InstanceType": "t2.xlarge",
+                "InstanceType": "t2.medium",
                 "KeyName": { "Ref": "KeyName" },
                 "SecurityGroupIds": [{
                     "Ref": "HadoopSecurityGroup"
@@ -21,11 +21,11 @@
                 "HadoopSecurityGroup"
             ]
         },
-        "DataNode1": {
+        "Node1": {
             "Type": "AWS::EC2::Instance",
             "Properties": {
                 "ImageId": "ami-0f82752aa17ff8f5d",
-                "InstanceType": "t2.xlarge",
+                "InstanceType": "t2.medium",
                 "KeyName": { "Ref": "KeyName" },
                 "SecurityGroupIds": [{
                     "Ref": "HadoopSecurityGroup"
@@ -49,29 +49,38 @@
         }
     },
     "Outputs": {
-        "NameNodePublicIP": {
-            "Description": "Public IP of NameNode",
+        "Node0PublicIP": {
+            "Description": "Public IP of Node0",
             "Value": {
                 "Fn::GetAtt": [
-                    "NameNode",
+                    "Node0",
                     "PublicIp"
                 ]
             }
         },
-        "NameNodePrivateIP": {
-            "Description": "Private IP of NameNode",
+        "Node0PrivateIP": {
+            "Description": "Private IP of Node0",
             "Value": {
                 "Fn::GetAtt": [
-                    "NameNode",
+                    "Node0",
                     "PrivateIp"
                 ]
             }
         },
-        "DataNode1PrivateIP": {
-            "Description": "Private IP of DataNode1",
+        "Node1PublicIP": {
+            "Description": "Public IP of Node1",
             "Value": {
                 "Fn::GetAtt": [
-                    "DataNode1",
+                    "Node1",
+                    "PublicIp"
+                ]
+            }
+        },
+        "Node1PrivateIP": {
+            "Description": "Private IP of Node1",
+            "Value": {
+                "Fn::GetAtt": [
+                    "Node1",
                     "PrivateIp"
                 ]
             }

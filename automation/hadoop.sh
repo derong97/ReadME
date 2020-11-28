@@ -55,12 +55,14 @@ fi
 }
 
 ### DEPLOY CLOUD FORMATION ###
+cluster_size=2 # TODO: will change based on user input
+
 {
-  stackname=Hadoop2
+  stackname=Hadoop$cluster_size
   echo "StackName=$stackname" | tee -a logs.log
 
   echo "Deploying Cloud Formation Stack"
-  aws cloudformation create-stack --stack-name $stackname --template-body file://./cloud_formation/analytics_template.json --parameters ParameterKey=KeyName,ParameterValue=$keyname
+  aws cloudformation create-stack --stack-name $stackname --template-body file://./cloud_formation/hadoop2_template.json --parameters ParameterKey=KeyName,ParameterValue=$keyname
   
   # Ping status
   while :
@@ -79,19 +81,50 @@ fi
   exit
 }
 
-### Get IP addresses of EC2 instances ###
-{
-  echo "Generating IP addresses..."
-  NameNodePublicIP=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='NameNodePublicIP'].OutputValue" --output text)
-  NameNodePrivateIP=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='NameNodePrivateIP'].OutputValue" --output text)
-  DataNode1PrivateIP=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='DataNode1PrivateIP'].OutputValue" --output text)
+### DATANODE IP ADDRESSES ###
+declare -a HadoopPublicIPs=()
+declare -a HadoopPrivateIPs=()
 
-  echo "NameNodePublicIP=$NameNodePublicIP" | tee -a logs.log
-  echo "NameNodePrivateIP=$NameNodePrivateIP" | tee -a logs.log
-  echo "DataNode1PrivateIP=$DataNode1PrivateIP" | tee -a logs.log
-} || {
-  echo "Error getting IP addresses"
-  exit
-}
+for ((i=0;i<cluster_size;i++)); do
+  # PUBLIC IP ADDRESSES OF ALL NODES
+  temp=Node${i}PublicIP
+  declare $temp=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='Node${i}PublicIP'].OutputValue" --output text)
+  HadoopPublicIPs+=(${!temp})
+  echo "$temp=${!temp}" | tee -a logs.log
+  
+  # PRIVATE IP ADDRESSES OF ALL NODES
+  temp=Node${i}PrivateIP
+  declare $temp=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='Node${i}PrivateIP'].OutputValue" --output text)
+  HadoopPrivateIPs+=(${!temp})
+  echo "$temp=${!temp}" | tee -a logs.log
+done
+
+### HADOOP SETUP ###
+
+for ip in ${HadoopPublicIPs[@]}
+do
+  echo "Initializing Cluster Setup for $ip"
+  sudo ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./scripts/initial_cluster_setup.sh ${HadoopPrivateIPs[@]}
+done
+
+i=0
+for ip in ${HadoopPublicIPs[@]}
+do
+  echo "Generating ssh keys for $ip"
+  if [ $i -eq 0 ]
+  then
+    # SSH key generation for namenode
+    sudo ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem "sudo apt-get install -y ssh; 
+    sudo ssh-keygen -f /home/hadoop/.ssh/id_rsa -N ''; 
+    cat /home/hadoop/.ssh/id_rsa.pub | sudo tee -a /home/hadoop/.ssh/authorized_keys"
+
+    sleep 1
+  else
+    # Copy the generated keys from namenode to every datanode
+    sudo ssh -o StrictHostKeyChecking=no ubuntu@$Node0PublicIP -i $keyname.pem "sudo cat /home/hadoop/.ssh/id_rsa.pub" \
+    | sudo ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem "sudo cat - | sudo tee -a /home/hadoop/.ssh/authorized_keys"
+  fi
+  i=$((i+1))
+done
 
 echo "done"
