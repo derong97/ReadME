@@ -1,0 +1,126 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "KeyName": {
+            "Description": "Amazon EC2 Key Pair",
+            "Type": "AWS::EC2::KeyPair::KeyName"
+        }
+    },
+    "Resources": {
+        "myVPC": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "10.0.0.0/16",
+                "EnableDnsSupport": "true",
+                "EnableDnsHostnames": "true"
+            }
+        },
+        "mySubnet": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "myVPC"
+                },
+                "CidrBlock": "10.0.0.0/24",
+                "AvailabilityZone": "us-east-1a"
+            }
+        },
+        "Node0": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": "ami-0f82752aa17ff8f5d",
+                "InstanceType": "t2.medium",
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "NetworkInterfaces": [{
+                    "AssociatePublicIpAddress": "true",
+                    "DeviceIndex": "0",
+                    "GroupSet": [{
+                        "Ref": "HadoopSecurityGroup"
+                    }],
+                    "SubnetId": {
+                        "Ref": "mySubnet"
+                    }
+                }]
+            },
+            "DependsOn": [
+                "mySubnet"
+            ]
+        },
+        "Node1": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": "ami-0f82752aa17ff8f5d",
+                "InstanceType": "t2.medium",
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "NetworkInterfaces": [{
+                    "AssociatePublicIpAddress": "true",
+                    "DeviceIndex": "0",
+                    "GroupSet": [{
+                        "Ref": "HadoopSecurityGroup"
+                    }],
+                    "SubnetId": {
+                        "Ref": "mySubnet"
+                    }
+                }]
+            },
+            "DependsOn": [
+                "mySubnet"
+            ]
+        },
+        "HadoopSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "VpcId": { "Ref": "myVPC" },
+                "GroupDescription": "Allow incoming SSH access",
+                "SecurityGroupIngress": [{
+                    "IpProtocol": "tcp",
+                    "FromPort": "22",
+                    "ToPort": "22",
+                    "CidrIp": "0.0.0.0/0"
+                }]
+            }
+        }
+    },
+    "Outputs": {
+        "Node0PublicIP": {
+            "Description": "Public IP of Node0",
+            "Value": {
+                "Fn::GetAtt": [
+                    "Node0",
+                    "PublicIp"
+                ]
+            }
+        },
+        "Node0PrivateIP": {
+            "Description": "Private IP of Node0",
+            "Value": {
+                "Fn::GetAtt": [
+                    "Node0",
+                    "PrivateIp"
+                ]
+            }
+        },
+        "Node1PublicIP": {
+            "Description": "Public IP of Node1",
+            "Value": {
+                "Fn::GetAtt": [
+                    "Node1",
+                    "PublicIp"
+                ]
+            }
+        },
+        "Node1PrivateIP": {
+            "Description": "Private IP of Node1",
+            "Value": {
+                "Fn::GetAtt": [
+                    "Node1",
+                    "PrivateIp"
+                ]
+            }
+        }
+    }
+}

@@ -74,7 +74,7 @@ cluster_size=2 # TODO: will change based on user input
   echo "StackName=$stackname" | tee -a logs.log
 
   echo "Deploying Cloud Formation Stack"
-  aws cloudformation create-stack --stack-name $stackname --template-body file://./cloud_formation/hadoop2_template.json --parameters ParameterKey=KeyName,ParameterValue=$keyname
+  aws cloudformation create-stack --stack-name $stackname --template-body file://./cloud_formation/newhadoop2_template.json --parameters ParameterKey=KeyName,ParameterValue=$keyname
   
   # Ping status
   while :
