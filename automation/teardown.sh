@@ -13,8 +13,8 @@ You can just ENTER all the way if your AWS key credentials have not expired
 ============================================================================
 """
 
-keyname=$(grep KeyName logs.log | sed -e 's/.*KeyName=\(\S*\).*/\1/g')
-stackname=$(grep StackName logs.log | sed -e 's/.*StackName=\(\S*\).*/\1/g')
+keyname=$(grep KeyName test.log | sed -e 's/.*KeyName=\(\S*\).*/\1/g')
+stackname=$(grep StackName test.log | sed -e 's/.*StackName=\(\S*\).*/\1/g')
 
 aws configure
 
