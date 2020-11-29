@@ -7,14 +7,19 @@ sudo apt-get install -y mongodb-org
 
 # Start the MongoDB service
 sudo systemctl start mongod.service
-# Enable the MongoDB service to startup at boot (and reboots)
+# Enable the MongoDB service to startup at boot/reboots
 sudo systemctl enable mongod
 sleep 3s
 
-wget https://www.dropbox.com/s/9q8quw3elgxa8tl/mongo_intermediary.js?dl=0 -O mongo_intermediary.js
-sleep 1s
-
-mongo admin < mongo_intermediary.js
+# Create Collection kindle_metadata (under Database readme_mongo) indexed by asin. 
+# Create password-authenticated user with root Admin properties. 
+sudo cat << EOF > mongo_intermediary.js
+use readme_mongo
+db.kindle_metadata.createIndex( {asin: 1} )
+use admin
+db.createUser({user: "historicriptide", pwd: "futuresparkles", roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ] });
+EOF
+mongo < mongo_intermediary.js
 sleep 3s
 sudo service mongod restart
 
@@ -25,6 +30,7 @@ sudo sed -i "s,\\(^[[:blank:]]*bindIp:\\) .*,\\1 0.0.0.0," /etc/mongod.conf
 sudo service mongod restart
 
 wget https://www.dropbox.com/s/bybard0tczemmqn/kindle_metadata_with_title_and_avgrating.json?dl=0 -O kindle_metadata_with_title_and_avgrating.json
+sleep 3s
 
 # Load the (project) metadata with titles and average_ratings into our database
 echo "Loading data into MongoDB."
