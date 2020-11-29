@@ -1,4 +1,4 @@
-MONGO_IP=204.236.223.217
+MONGO_IP=34.207.119.124
 MONGO_USER=historicriptide
 MONGO_PW=futuresparkles
 MONGO_DB=readme_mongo

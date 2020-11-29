@@ -48,7 +48,7 @@ class Metadata:
 
         return {"message": "Failed to add new book"}, 400
 
-    # search by title and filter by categories if supplied
+    # search by title and filter by categories if supplied. Returns books sorted by avg_rating descending. 
     def search(self, categories, title, pageNum):
         try:
             filter_dict = {}
@@ -61,15 +61,15 @@ class Metadata:
                 pattern = re.compile(title, re.I) # not case sensitive
                 filter_dict.update({"title": {'$regex': pattern}})
             
-            #all_metadata = self.sort_by_avg_rating(filter_dict) <-- ting yew check this
-            all_metadata = mongo_metadata.find(filter_dict)
+            # Sorting by avg_rating descending
+            all_metadata = mongo_metadata.find(filter_dict).sort("avg_rating", -1)
 
             if all_metadata.count() == 0:
-                return {"message": "No metadata found with title as {} and categories as {categories}".format(title, categories)}, 200
+                return {"message": f"No metadata found with title as {title} and categories as {categories}".format(title, categories)}, 200
             
             return {"metadata": self.get_page_metadata(all_metadata, pageNum), # returns max 10 records only
                     "total counts": all_metadata.count(), # so the frontend knows how many pages to expect
-                    "message": "Successfully retrieved metadata with title as {title} and categories as {categories}"
+                    "message": f"Successfully retrieved metadata with title as {title} and categories as {categories}"
                     }, 200
 
         except Exception as e:
@@ -90,7 +90,3 @@ class Metadata:
             page_metadata = all_metadata[max_counts_till_prev_page : max_counts_till_curr_page]
 
         return json.loads(json_util.dumps(page_metadata))
-
-    # filtered result is sorted by average rating in descending order
-    def sort_by_avg_rating(self, filter_dict={}):
-        return mongo_metadata.find(filter_dict).sort( {"avg_rating": -1})

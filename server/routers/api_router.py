@@ -54,7 +54,6 @@ def bookAPI(reviewerID, asin):
         # Query from MongoDB       
         book_metadata = Metadata().get_metadata(asin)
 
-        # TODO: Consider redoing the logging here
         if book_metadata[1] == 200:
             book_reviews = Review().get_reviews(asin)
             message = book_metadata[0]["message"] + " & " + book_reviews[0]["message"]
