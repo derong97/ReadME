@@ -11,6 +11,16 @@ You can just ENTER all the way if your AWS key credentials have not expired
 ============================================================================
 """
 
+aws configure
+
+# Session token is needed to prevent AuthFailure
+read -p "Enter AWS Session Token:" aws_session_token
+
+if [[ ! -z "$aws_session_token" ]]; then
+  gawk -i inplace '!/aws_session_token/' ~/.aws/credentials
+  echo "aws_session_token = $aws_session_token" >> ~/.aws/credentials
+fi
+
 keyname=$(grep KeyName logs.log | sed -e 's/.*KeyName=\(\S*\).*/\1/g')
 stackname=$(grep StackName logs.log | sed -e 's/.*StackName=\(\S*\).*/\1/g')
 

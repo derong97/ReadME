@@ -64,7 +64,7 @@ echo """
 
 echo """
 ============================================================================
-            DEPLOYING CLOUD FORMATION STACK (ANALYTICS SYSTEM)
+              DEPLOY CLOUD FORMATION STACK (ANALYTICS SYSTEM)
 ============================================================================
 """
 cluster_size=2 # TODO: will change based on user input
@@ -72,9 +72,8 @@ cluster_size=2 # TODO: will change based on user input
 {
   stackname=Hadoop$cluster_size
   echo "StackName=$stackname" | tee -a logs.log
-
-  echo "Deploying Cloud Formation Stack"
-  aws cloudformation create-stack --stack-name $stackname --template-body file://./cloud_formation/newhadoop2_template.json --parameters ParameterKey=KeyName,ParameterValue=$keyname
+  
+  aws cloudformation create-stack --stack-name $stackname --template-body file://./cloud_formation/hadoop2_template.json --parameters ParameterKey=KeyName,ParameterValue=$keyname
   
   # Ping status
   while :
@@ -95,7 +94,7 @@ cluster_size=2 # TODO: will change based on user input
 
 echo """
 ============================================================================
-           QUERYING FOR INSTANCES IP ADDRESSES (ANALYTICS SYSTEM)
+              QUERY FOR INSTANCES IP ADDRESSES (ANALYTICS SYSTEM)
 ============================================================================
 """
 
@@ -124,7 +123,7 @@ echo """
 for ip in ${HadoopPublicIPs[@]}
 do
   echo "Initializing Cluster Setup for $ip"
-  sudo ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./scripts/initial_cluster_setup.sh ${HadoopPrivateIPs[@]}
+  ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./scripts/initial_cluster_setup.sh ${HadoopPrivateIPs[@]}
 done
 
 i=0
@@ -134,12 +133,13 @@ do
   if [ $i -eq 0 ]
   then
     # SSH key generation for namenode
-    sudo ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./scripts/key_generation.sh 
+    ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./scripts/key_generation.sh 
     sleep 1
   else
     # Copy the generated keys from namenode to every datanode
-    sudo ssh -o StrictHostKeyChecking=no ubuntu@$Node0PublicIP -i $keyname.pem "sudo cat /home/hadoop/.ssh/id_rsa.pub" \
-    | sudo ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem "sudo cat - | sudo tee -a /home/hadoop/.ssh/authorized_keys"
+    ssh -o StrictHostKeyChecking=no ubuntu@$Node0PublicIP -i $keyname.pem "sudo cat /home/hadoop/.ssh/id_rsa.pub" \
+    | ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem "sudo cat - | sudo tee -a /home/hadoop/.ssh/authorized_keys"
+    sleep 1
   fi
   i=$((i+1))
 done

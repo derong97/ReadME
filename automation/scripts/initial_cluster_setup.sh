@@ -15,16 +15,11 @@ do
 	i=$((i+1));
 done
 
-sleep 1
-
 sudo sh -c 'echo "hadoop ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/90-hadoop'
-
 sleep 1
 
 sudo sysctl vm.swappiness=10
-
 sudo mkdir /home/hadoop/.ssh
-
 sleep 1
 
 echo "Directory /home/hadoop/.ssh created"
