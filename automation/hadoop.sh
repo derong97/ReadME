@@ -138,8 +138,8 @@ do
     sleep 1
   else
     # Copy the generated keys from namenode to every datanode
-    sudo ssh -o StrictHostKeyChecking=no ubuntu@$Node0PublicIP -i $keyname.pem "sudo cat /home/ubuntu/.ssh/id_rsa.pub" \
-    | sudo ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem "sudo cat - | sudo tee -a /home/ubuntu/.ssh/authorized_keys"
+    sudo ssh -o StrictHostKeyChecking=no ubuntu@$Node0PublicIP -i $keyname.pem "sudo cat /home/hadoop/.ssh/id_rsa.pub" \
+    | sudo ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem "sudo cat - | sudo tee -a /home/hadoop/.ssh/authorized_keys"
   fi
   i=$((i+1))
 done

@@ -1,5 +1,7 @@
 #!/bin/bash
-# $1 name node private ip, $2 datanode1 private ip, ...
+
+# takes in private IP addresses
+# first IP belongs to namenode
 
 sudo useradd -m hadoop
 

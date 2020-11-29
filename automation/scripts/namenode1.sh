@@ -1,8 +1,10 @@
 #!/bin/bash
-
 sudo apt-get install -y ssh
 
+sleep 1
+
 echo "Setting up SSH keys"
+
 
 sudo ssh-keygen -f /home/hadoop/.ssh/id_rsa -N ""
 sleep 1
@@ -10,6 +12,3 @@ sudo chown hadoop:hadoop /home/hadoop/.ssh/id_rsa
 sleep 1
 
 sudo cat /home/hadoop/.ssh/id_rsa.pub | sudo tee -a /home/hadoop/.ssh/authorized_keys
-
-# sudo chmod 700 /home/ubuntu/.ssh
-# sudo chmod 600 /home/ubuntu/.ssh/authorized_keys
