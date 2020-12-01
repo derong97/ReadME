@@ -3,7 +3,21 @@
 # takes in private IP addresses
 # first IP belongs to namenode
 
+touch ips.txt
 
+i=0;
+for ip in "$@"
+do
+	if [ $i -eq 0 ]
+	then 
+		echo "$ip namenode" | sudo tee -a ips.txt;
+	else
+		echo "$ip datanode$i" | sudo tee -a ips.txt;
+	fi
+	i=$((i+1));
+done
+
+sleep 1
 
 sudo su - hadoop
 
@@ -42,7 +56,7 @@ sleep 1
 
 i=0;
 WORKERS=""
-for ip in "$@"
+while read line;
 do
 	if [ $i -eq 0 ]
 	then
@@ -56,14 +70,9 @@ do
 		fi
 	fi
 	i=$((i+1));
-done
-echo "Print WORKERS and MASTER"
+done < /home/ubuntu/ips.txt
 
-echo $WORKERS
-echo $MASTER
-echo "Supposedly finished printing"
-
-sleep 10
+sleep 1
 
 echo "Configuring..."
 
@@ -160,11 +169,16 @@ sleep 1
 echo "Configuration done"
 
 tar czvf hadoop-3.3.0.tgz hadoop-3.3.0
+
+sleep 1
+
 for h in $WORKERS ; do
-scp hadoop-3.3.0.tgz $h:.;
+scp -o StrictHostKeyChecking=no hadoop-3.3.0.tgz $h:.;
 done;
 cp hadoop-3.3.0.tgz ~/
 cd
+
+echo "Sent files to datanodes"
 
 sleep 1
 
@@ -175,10 +189,11 @@ sleep 1
 
 sudo mkdir -p /mnt/hadoop/namenode/hadoop-${USER}
 sudo chown -R hadoop:hadoop /mnt/hadoop/namenode
-/opt/hadoop-3.3.0/bin/hdfs namenode -format
+yes | /opt/hadoop-3.3.0/bin/hdfs namenode -format
+
+echo "Installation of Hadoop on namenode done."
 
 sleep 1
-
 
 cd ~/download
 wget https://apachemirror.sg.wuchna.com/sqoop/1.4.7/sqoop-1.4.7.bin__hadoop-2.6.0.tar.gz
@@ -216,4 +231,8 @@ sudo ln -snvf /usr/share/java/mysql-connector-java.jar \
 /opt/sqoop-1.4.7/lib/mysql-connector-java.jar
 
 echo "Setup sqoop complete"
+
+exit
+
+rm ips.txt
 
