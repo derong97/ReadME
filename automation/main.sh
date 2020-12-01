@@ -114,7 +114,7 @@ echo """
 ============================================================================
 """
 {
-  ssh -o StrictHostKeyChecking=no ubuntu@$MySQLIP -i $keyname.pem 'bash -s' < ./scripts/sql_script.sh
+  ssh -o StrictHostKeyChecking=no ubuntu@$MySQLIP -i $keyname.pem 'bash -s' < ./production_scripts/sql_script.sh
 } || {
   echo "Error setting up MySQL server"
   exit
@@ -126,7 +126,7 @@ echo """
 ============================================================================
 """
 {
-  ssh -o StrictHostKeyChecking=no ubuntu@$MongoDBIP -i $keyname.pem 'bash -s' < ./scripts/mongo_script.sh
+  ssh -o StrictHostKeyChecking=no ubuntu@$MongoDBIP -i $keyname.pem 'bash -s' < ./production_scripts/mongo_script.sh
 } || {
   echo "Error setting up MongoDB server"
   exit
@@ -138,7 +138,7 @@ echo """
 ============================================================================
 """
 {
-  ssh -o StrictHostKeyChecking=no ubuntu@$WebServerIP -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' WebServerIP='$WebServerIP' bash -s" < ./scripts/webserver_script.sh
+  ssh -o StrictHostKeyChecking=no ubuntu@$WebServerIP -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' WebServerIP='$WebServerIP' bash -s" < ./production_scripts/webserver_script.sh
 } || {
   echo "Error setting up webserver"
   exit
