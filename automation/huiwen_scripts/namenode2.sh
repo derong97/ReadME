@@ -3,15 +3,13 @@
 # takes in private IP addresses
 # first IP belongs to namenode
 
+
+
 sudo su - hadoop
 
-cat .ssh/id_rsa.pub | sudo tee -a .ssh/authorized_keys
+echo "Entered as hadoop user"
 
 sleep 1
-
-sudo apt-get update
-
-sudo apt-get install -y openjdk-8-jdk
 
 cd
 
@@ -23,11 +21,19 @@ cd download
 
 wget https://apachemirror.sg.wuchna.com/hadoop/common/hadoop-3.3.0/hadoop-3.3.0.tar.gz
 
+sleep 1
+
 cd ./download
 
 tar zxvf hadoop-3.3.0.tar.gz
 
+sleep 1
+
+echo "Updating JAVA_HOME"
+
 export JH="\/usr\/lib\/jvm\/java-8-openjdk-amd64"
+
+sleep 1
 
 sed -i "s/# export JAVA_HOME=.*/export\ JAVA_HOME=${JH}/g" hadoop-3.3.0/etc/hadoop/hadoop-env.sh
 
@@ -42,7 +48,7 @@ do
 	then
 		MASTER=namenode;
 	else
-		if [$i -eq 1]
+		if [ $i -eq 1 ]
 		then
 			WORKERS+="datanode$i"
 		else
@@ -51,6 +57,15 @@ do
 	fi
 	i=$((i+1));
 done
+echo "Print WORKERS and MASTER"
+
+echo $WORKERS
+echo $MASTER
+echo "Supposedly finished printing"
+
+sleep 10
+
+echo "Configuring..."
 
 echo -e "<?xml version=\"1.0\"?>
 <?xml-stylesheet type=\"text/xsl\" href=\"configuration.xsl\"?>
@@ -137,22 +152,22 @@ echo -e "<?xml version=\"1.0\"?>
 
 sleep 1
 
-echo "Configuration done"
-
 rm hadoop-3.3.0/etc/hadoop/workers
 for ip in ${WORKERS}; do echo -e "${ip}" >> hadoop-3.3.0/etc/hadoop/workers ; done
 
 sleep 1
+
+echo "Configuration done"
 
 tar czvf hadoop-3.3.0.tgz hadoop-3.3.0
 for h in $WORKERS ; do
 scp hadoop-3.3.0.tgz $h:.;
 done;
 cp hadoop-3.3.0.tgz ~/
+cd
 
 sleep 1
 
-cd
 tar zxvf hadoop-3.3.0.tgz
 sudo mv hadoop-3.3.0 /opt/
 

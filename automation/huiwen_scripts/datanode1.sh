@@ -2,9 +2,8 @@
 
 sudo su - hadoop
 
-sudo apt-get update
-
-sudo apt-get install -y openjdk-8-jdk
+tar zxvf hadoop-3.3.0.tgz
+sudo mv hadoop-3.3.0 /opt/
 
 sudo mkdir -p /mnt/hadoop/datanode/
 

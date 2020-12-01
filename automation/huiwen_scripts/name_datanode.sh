@@ -30,3 +30,11 @@ sudo mkdir /home/hadoop/.ssh
 sleep 1
 
 echo "Directory /home/hadoop/.ssh created"
+
+sudo apt-get update
+
+sleep 1
+
+sudo apt-get install -y openjdk-8-jdk
+
+echo "Installed Java"
