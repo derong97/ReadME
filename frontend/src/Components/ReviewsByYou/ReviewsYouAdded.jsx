@@ -9,7 +9,7 @@ class ReviewsYouAdded extends Component {
         {this.props.reviewsYouAdded.map((reviewYouAdded) => (
           <ReviewYouAdded
             token={this.props.token}
-            key={reviewYouAdded.asin} //used internally
+            key={reviewYouAdded.unixReviewTime} //used internally
             handleDelete={this.props.handleDelete}
             deleteReviewModalOpen={this.props.deleteReviewModalOpen}
             deleteReviewModalClose={this.props.deleteReviewModalClose}

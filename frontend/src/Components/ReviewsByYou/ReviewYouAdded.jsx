@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import axios from "axios";
 import StarRatings from "react-star-ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faPenSquare, faAirFreshener } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrashAlt,
+  faPenSquare,
+  faAirFreshener,
+} from "@fortawesome/free-solid-svg-icons";
 import ReadMoreReact from "read-more-react";
 import "../../Styles/reviewsyouadded.css";
 
@@ -63,14 +67,13 @@ class ReviewYouAdded extends Component {
     console.log(this.state.asin);
     console.log(this.state.overall);
     console.log(this.state.reviewText);
-  }
+  };
 
   render() {
     return (
       <div className="container">
         <table id="review">
           <tbody>
-            {/* <tr key={this.state.asin}> */}
             {/* <th>Cover</th>
               <th>Title</th>
               <th>Author</th>
@@ -128,13 +131,17 @@ class ReviewYouAdded extends Component {
 
               <button
                 onClick={() =>
-                  this.props.editReviewModalOpen(this.state.asin, this.state.overall, this.state.reviewText, this.state.summary)
+                  this.props.editReviewModalOpen(
+                    this.state.asin,
+                    this.state.overall,
+                    this.state.reviewText,
+                    this.state.summary
+                  )
                 } //raise event to Counters
                 className="btn btn-primary btn-sm m-2"
               >
                 <FontAwesomeIcon icon={faPenSquare} size="1x" />
               </button>
-
             </td>
           </tbody>
         </table>
