@@ -7,11 +7,45 @@
         }
     },
     "Resources": {
+        "myVPC": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "172.31.0.0/16",
+                "EnableDnsSupport": "true",
+                "EnableDnsHostnames": "true"
+            }
+        },
+        "HadoopSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "myVPC"
+                },
+                "SecurityGroupIngress": [{
+                    "IpProtocol": "tcp",
+                    "FromPort": "22",
+                    "ToPort": "22",
+                    "CidrIp": "0.0.0.0/0"
+                }],
+                "GroupDescription": "Allow incoming SSH access"
+            }
+        },
+        "InternalIngress": {
+            "Type": "AWS::EC2::SecurityGroupIngress",
+            "Properties": {
+                "GroupId": { "Ref": "HadoopSecurityGroup" },
+                "IpProtocol": "-1",
+                "ToPort": "65535",
+                "FromPort": "0",
+                "SourceSecurityGroupId": { "Ref": "HadoopSecurityGroup" }
+            },
+            "DependsOn": "HadoopSecurityGroup"
+        },
         "Node0": {
             "Type": "AWS::EC2::Instance",
             "Properties": {
                 "ImageId": "ami-0f82752aa17ff8f5d",
-                "InstanceType": "t2.xlarge",
+                "InstanceType": "t2.medium",
                 "KeyName": { "Ref": "KeyName" },
                 "SecurityGroupIds": [{
                     "Ref": "HadoopSecurityGroup"
@@ -25,7 +59,7 @@
             "Type": "AWS::EC2::Instance",
             "Properties": {
                 "ImageId": "ami-0f82752aa17ff8f5d",
-                "InstanceType": "t2.xlarge",
+                "InstanceType": "t2.medium",
                 "KeyName": { "Ref": "KeyName" },
                 "SecurityGroupIds": [{
                     "Ref": "HadoopSecurityGroup"
@@ -34,18 +68,6 @@
             "DependsOn": [
                 "HadoopSecurityGroup"
             ]
-        },
-        "HadoopSecurityGroup": {
-            "Type": "AWS::EC2::SecurityGroup",
-            "Properties": {
-                "GroupDescription": "Allow incoming SSH access",
-                "SecurityGroupIngress": [{
-                    "IpProtocol": "tcp",
-                    "FromPort": "0",
-                    "ToPort": "65535",
-                    "CidrIp": "0.0.0.0/0"
-                }]
-            }
         }
     },
     "Outputs": {
