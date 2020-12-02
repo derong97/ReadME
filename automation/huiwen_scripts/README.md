@@ -1,4 +1,4 @@
-For the hadoop cluster script, execute in the following order (\*not working yet):
+For the hadoop cluster script, execute in the following order:
 
 ```bash
 ssh -o StrictHostKeyChecking=no ubuntu@<namenode-public-IP> -i <aws-key> 'bash -s' < name_datanode.sh <namenode-private-IP> <datanode-private-IP>
