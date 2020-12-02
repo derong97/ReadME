@@ -41,11 +41,22 @@ class EditReviewModal extends Component {
   };
 
   printStates = () => {
+    this.forceUpdate(); 
     console.log(this.state.asin);
     console.log(this.state.reviewTitle);
     console.log(this.state.reviewText);
     console.log(this.state.rating);
+ 
   };
+
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      asin: nextProps.editAsin,
+      reviewTitle: nextProps.editSummary,
+      reviewText: nextProps.editReviewText,
+      rating: nextProps.editOverall
+    });
+  }
 
   render() {
     return (
@@ -102,6 +113,7 @@ class EditReviewModal extends Component {
                   type="input"
                   placeholder="Enter review title."
                   onChange={this.handleReviewTitleChange}
+                  value={this.state.reviewTitle}
                 />
                 <Form.Text className="text-muted">
                   Feel free to get creative!
@@ -118,11 +130,12 @@ class EditReviewModal extends Component {
                   count={5}
                   onChange={this.handleRatingChange}
                   size={24}
-                  isHalf={true}
+                  // isHalf={true}
                   emptyIcon={<i className="far fa-star"></i>}
                   halfIcon={<i className="fa fa-star-half-alt"></i>}
                   fullIcon={<i className="fa fa-star"></i>}
                   activeColor="orange"
+                  value={this.state.rating}
                 />
               </Col>
             </Form.Group>
@@ -140,6 +153,7 @@ class EditReviewModal extends Component {
                 id="formReviewTextArea"
                 rows={8}
                 onChange={this.handleReviewTextChange}
+                value={this.state.reviewText}
               ></textarea>
 
               <Form.Text className="text-muted">
@@ -148,13 +162,13 @@ class EditReviewModal extends Component {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            {/* <Button variant="danger" type="submit" onClick={this.printStates}>
+            <Button variant="info" onClick={this.printStates}>
               PRINT STATES
-            </Button> */}
+            </Button>
             <Button variant="danger" type="submit" onClick={this.props.onHide}>
               Cancel
             </Button>
-            <Button variant="outline-success" onClick={this.props.handleEdit}>
+            <Button variant="outline-success" onClick={() => this.props.handleEdit(this.state.asin, this.state.rating, this.state.reviewText, this.state.reviewTitle)}>
               Update Review
             </Button>
           </Modal.Footer>

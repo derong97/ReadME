@@ -28,7 +28,7 @@ class ReviewsYouAddedPage extends Component {
 
       deleteAsin: 0,
 
-      editAsin: 0,
+      editAsin: "heeheehee",
       editOverall: 0,
       editReviewText: "WHAT IS Upppppp",
       editSummary: "",
@@ -43,6 +43,8 @@ class ReviewsYouAddedPage extends Component {
 
   componentDidMount() {
     this.getReviews();
+    this.setState({});
+
   }
 
   getReviews = () => {
@@ -106,51 +108,77 @@ class ReviewsYouAddedPage extends Component {
       });
   };
 
-  handleEdit = () => {
+  handleEdit = (asin, overall, reviewText, summary) => {
     //(asin, overall, reviewText, summary) => {
     console.log("handleEdit called");
 
-    // this.setState({
-    //   editAsin: asin,
-    //   editOverall: overall,
-    //   editReviewText: reviewText,
-    //   editSummary: summary
-    // })
+    this.setState({
+      editAsin: asin,
+      editOverall: overall,
+      editReviewText: reviewText,
+      editSummary: summary
+    }, this.handleEditSubmit)
 
+  };
+
+  handleEditSubmit = () => {
     console.log(this.state.editAsin);
     console.log(this.state.editOverall);
     console.log(this.state.editReviewText);
     console.log(this.state.editSummary);
-    // console.log(this.state.reviewsYouAdded);
+     
+    var review = this.state.reviewsYouAdded;
+    console.log(review);
 
-    // var review = this.state.reviewsYouAdded;
-    // console.log(review);
+    var asin = this.state.editAsin;
+    var overall = this.state.editOverall;
+    var reviewText = this.state.editReviewText;
+    var summary = this.state.editSummary;
 
-    // var asin = this.state.editAsin;
-    // var overall = this.state.editOverall;
-    // var reviewText = this.state.editReviewText;
-    // var summary = this.state.editSummary;
+    this.editReviewModalClose();
+    this.setState({ searching: true });
+    const url = "/book/" + asin;
+    const headers = {
+      headers: { "x-access-tokens": this.state.token },
+    };
+    const params = {
+      overall: overall,
+      reviewText: reviewText,
+      summary: summary,
+    };
+    axios
+      .put(url, params, headers)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          console.log(res.data.message);
+          // var index;
+          // for (var i = 0; i < review.length; i++) {
+          //   if (review[i].asin === asin) {
+          //     index = i;
+          //   }
+          // }
+          // console.log(index);
+          // console.log(review);
+          // review.splice(index, 1);
+          // console.log(review);
+          
+          this.setState({ 
+            reviewsYouAdded: review,
+            searching: false
+          }, () => this.getReviews());
+          
+          // this.setState({});
+          // this.setState({ searching: false });
+          // console.log(this.state.reviewsYouAdded);
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        console.log(err.request);
+      });
 
-    // this.setState({ searching: true });
-    // const url = "/book/" + asin;
-    // const headers = {
-    //   headers: { "x-access-tokens": this.state.token },
-    // };
-    // const params = {
-    //   overall: overall,
-    //   reviewText: reviewText,
-    //   summary: summary,
-    // };
-    // axios
-    //   .put(url, params, headers)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.response);
-    //     console.log(err.request);
-    //   });
-  };
+  }
 
   deleteReviewModalClose = () =>
     this.setState({ deleteReviewModalShow: false });
@@ -169,18 +197,31 @@ class ReviewsYouAddedPage extends Component {
     this.setState({ addReviewModalShow: true });
   };
 
+  // this.myFunc = event => (param1, param2) => { ... do stuff };
   editReviewModalClose = () => this.setState({ editReviewModalShow: false });
   editReviewModalOpen = (asin, overall, reviewText, summary) => {
+
     this.setState({
       editAsin: asin,
       editOverall: overall,
       editReviewText: reviewText,
       editSummary: summary,
-      editReviewModalShow: true,
-    });
+    }, this.openModal);
 
-    // this.setState({ editReviewModalShow: true });
+    // console.log(asin, this.state.editAsin)
+    // console.log(overall, this.state.editOverall)
+    // console.log(reviewText, this.state.editReviewText)
+    // console.log(summary, this.state.editSummary)
   };
+
+  openModal = () => {
+    console.log(this.state.editAsin)
+    console.log(this.state.editOverall)
+    console.log(this.state.editReviewText)
+    console.log(this.state.editSummary)
+    this.forceUpdate();
+    this.setState({editReviewModalShow:true})
+  }
 
   render() {
     return (
@@ -211,7 +252,8 @@ class ReviewsYouAddedPage extends Component {
             <button
               className="add-review-bttn"
               id="add-review-bttn"
-              onClick={this.addReviewModalOpen}
+              // onClick={this.addReviewModalOpen}
+              onClick={() => this.editReviewModalOpen(1,3,"hello", "hello")}
               data-toggle="modal"
               data-target="#exampleModalCenter"
             >

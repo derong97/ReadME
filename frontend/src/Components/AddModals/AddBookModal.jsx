@@ -156,9 +156,9 @@ class AddBookModal extends Component {
       .catch((err) => {
         let userError = "";
         // userError = err.response.data.message;
-        this.setState({ loading: false, userError });
-        console.log(err.response);
-        console.log(err.request);
+        // this.setState({ loading: false, userError });
+        // console.log(err.response);
+        // console.log(err.request);
       });
   };
 

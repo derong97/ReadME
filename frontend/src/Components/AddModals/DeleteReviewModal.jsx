@@ -24,11 +24,8 @@ class DeleteReviewModal extends Component {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Delete Review for this book?</Modal.Title>
+          <Modal.Title>Are you sure you want to delete your review for this book?</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          Are you sure you want to delete your review for this book?
-        </Modal.Body>
         <Modal.Footer>
           <Button
             variant="outline-info"

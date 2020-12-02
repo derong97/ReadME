@@ -230,7 +230,7 @@ class MainPage extends React.Component {
       <LoadingOverlay
         active={this.state.searching}
         spinner
-        text="searching ..."
+        text="loading ..."
       >
         <div>
           {!this.state.done ? (

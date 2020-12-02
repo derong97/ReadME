@@ -242,7 +242,7 @@ class BookPage extends React.Component {
             </div>
           </div>
 
-          <div>
+          {/* <div>
             <AddReviewModal
               event={this}
               token={this.state.token}
@@ -250,7 +250,17 @@ class BookPage extends React.Component {
               onHide={this.addReviewModalClose}
               // asin={this.state.asin}
             />
-          </div>
+          </div> */}
+          <div>
+          <AddReviewModal
+            event={this}
+            token={this.state.token}
+            id={this.state.id}
+            username={this.state.username}
+            show={this.state.addReviewModalShow}
+            onHide={this.addReviewModalClose}
+          />
+        </div>
 
           {/* <Footer></Footer> */}
         </body>

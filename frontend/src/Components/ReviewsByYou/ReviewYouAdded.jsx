@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import StarRatings from "react-star-ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faPenSquare } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt, faPenSquare, faAirFreshener } from "@fortawesome/free-solid-svg-icons";
 import ReadMoreReact from "read-more-react";
 import "../../Styles/reviewsyouadded.css";
 
@@ -28,7 +28,7 @@ class ReviewYouAdded extends Component {
   styles = {
     //if you wanted to have a standard style to call
     bookCoverImage: {
-      width: 287,
+      width: 370,
       height: 419,
     },
   };
@@ -58,6 +58,12 @@ class ReviewYouAdded extends Component {
         console.log(err.request);
       });
   };
+
+  printStates = () => {
+    console.log(this.state.asin);
+    console.log(this.state.overall);
+    console.log(this.state.reviewText);
+  }
 
   render() {
     return (
@@ -122,17 +128,21 @@ class ReviewYouAdded extends Component {
 
               <button
                 onClick={() =>
-                  this.props.editReviewModalOpen(
-                    this.state.asin,
-                    this.state.overall,
-                    this.state.reviewText,
-                    this.state.summary
-                  )
+                  this.props.editReviewModalOpen(this.state.asin, this.state.overall, this.state.reviewText, this.state.summary)
                 } //raise event to Counters
                 className="btn btn-primary btn-sm m-2"
               >
                 <FontAwesomeIcon icon={faPenSquare} size="1x" />
               </button>
+
+              <button
+                onClick={this.printStates} 
+                className="btn btn-primary btn-sm m-2"
+              >
+                <FontAwesomeIcon icon={faAirFreshener} size="1x" />
+              </button>
+
+
             </td>
           </tbody>
         </table>
