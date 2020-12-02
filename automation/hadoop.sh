@@ -120,28 +120,53 @@ echo """
                               SET UP HADOOP
 ============================================================================
 """
+
+# Network Set Up
 for ip in ${HadoopPublicIPs[@]}
 do
-  echo "Initializing Cluster Setup for $ip"
-  ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./scripts/initial_cluster_setup.sh ${HadoopPrivateIPs[@]}
+  echo "Network Setup for $ip"
+  ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./analytics_scripts/network_setup.sh ${HadoopPrivateIPs[@]}
 done
 
+# Generating and distributing keys
 i=0
 for ip in ${HadoopPublicIPs[@]}
 do
-  echo "Generating ssh keys for $ip"
   if [ $i -eq 0 ]
   then
     # SSH key generation for namenode
-    ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./scripts/key_generation.sh 
+    echo "Generating ssh key for Node$i"
+    ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./analytics_scripts/key_generation.sh 
     sleep 1
   else
     # Copy the generated keys from namenode to every datanode
+    echo "Distributing ssh key to Node$i"
     ssh -o StrictHostKeyChecking=no ubuntu@$Node0PublicIP -i $keyname.pem "sudo cat /home/hadoop/.ssh/id_rsa.pub" \
     | ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem "sudo cat - | sudo tee -a /home/hadoop/.ssh/authorized_keys"
+    sleep 1
+    echo "Finished copying keys to datanodes"
+  fi
+  i=$((i+1))
+done
+
+# Hadoop Setup
+i=0
+for ip in ${HadoopPublicIPs[@]}
+do
+  echo "Hadoop Setup for Node$i"
+  if [ $i -eq 0 ]
+  then
+    ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./analytics_scripts/hadoop_namenode_setup.sh ${HadoopPrivateIPs[@]} 
+    sleep 1
+  else
+    ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./analytics_scripts/hadoop_datanode_setup.sh
     sleep 1
   fi
   i=$((i+1))
 done
 
-echo "done"
+echo """
+============================================================================
+                                    DONE
+============================================================================
+"""
