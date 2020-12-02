@@ -1,6 +1,3 @@
-# ReadMe
-Read Me Like a Book
-
 # Endpoints
 Refer to this [API documentation](https://bit.ly/37BVC4N)
 
@@ -13,9 +10,9 @@ Read Me Like a Book
     * [Framework](#framework)
     * [Features](#features)
     * [Preview](#preview)
-  * [Production Backend](#production-backend)
+  * [Backend](#backend)
     * [Framework](#framework-1)
-    * [Design](#design)
+    * [API Design Patterns](#api-design-patterns)
     
 ## Frontend
 ### Framework
@@ -26,7 +23,7 @@ ReadME has the following features/ functionalities:
 * Sign up and login to our ReadME website [Extra feature]
   + Token-based authentication
   + Email is unique per user
-  + Form validation - check for repeated email
+  + Form validation - check for repeated email upon sign up and check for invalid email and password upon login
 * Navbar
   + Search for existing book by title
   + Add a new book
@@ -51,4 +48,23 @@ ReadME has the following features/ functionalities:
   + Add a new review
     + Form validation - check if user has reviewed on the book before
     + User can view the review in BY ME page upon upload
+ 
+## Backend 
+### Framework
+To serve our web application, we used Flask as the built-in Flask web server is provided for development convenience. It is a lightweight framework that can be practiced to implement web applications and backend API applications (e.g. mySQL, MongoDB).
+
+### API Design Patterns
+#### MongoDB
+1. Book metadata
+   **Endpoints**
+
+2. Web Logs (activities from users)
+   **Endpoints**
+
+#### MySQL
+1. Reviews
+   **Endpoints**
+
+
+
  
