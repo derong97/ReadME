@@ -22,9 +22,10 @@ sudo apt-get install libmysqlclient-dev -y
 sudo apt install python3-pip -y
 sudo apt-get update
 
-wget -c https://www.dropbox.com/s/afuy6ga0rtvaen7/ReadMe.zip?dl=0 -O ReadMe-main.zip
+# latest link from git 
+wget -c https://www.dropbox.com/s/kpplokq2iiyo701/ReadMe.zip?dl=0 -O ReadMe-main2.zip
 sudo apt install unzip
-unzip ReadMe-main.zip
+unzip ReadMe-main2.zip
 
 cd ReadMe-main/server
 python3 -m venv venv
@@ -56,7 +57,7 @@ cd ../frontend/static
 npm install
 
 cd ../../server
-gunicorn -b :5000 app:app --daemon
+gunicorn -b :5000 app:app 
 
 echo "Webserver SetUp complete"
 echo -e "\e[32mYou can visit your website now at $WebServerIP:5000"

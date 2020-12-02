@@ -13,7 +13,7 @@ from log4mongo.handlers import MongoHandler
 
 #######################   LOGGING-   #######################
 mhandler = MongoHandler(
-    host=f'mongodb://{MONGO_USER}:{MONGO_PW}@{MONGO_IP}:27017',
+    host='mongodb://{}:{}@{}:27017'.format(MONGO_USER, MONGO_PW, MONGO_IP),
     database_name=MONGO_DB, 
     collection=MONGO_LOG_COL,
 )

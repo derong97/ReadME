@@ -145,46 +145,14 @@ class AddBookModal extends Component {
 
   render() {
     const options = [
-      { value: "Fantasy", label: "Fantasy" },
-      { value: "Science Fiction", label: "Science Fiction" },
-      { value: "Dystopian", label: "Dystopian" },
-      { value: "Adventure", label: "Adventure" },
-      { value: "Historical Fiction", label: "Historical Fiction" },
-      { value: "Young Adult", label: "Young Adult" },
-      { value: "Children's Fiction", label: "Children's Fiction" },
-      { value: "Romance", label: "Romance" },
-      { value: "Detective & Mystery", label: "Detective & Mystery" },
-      { value: "Horror", label: "Horror" },
-      { value: "Thriller", label: "Thriller" },
-    ];
-    const optionsNonFiction = [
-      { value: "Memoir & Autobiography", label: "Memoir & Autobiography" },
-      { value: "Biography", label: "Biography" },
-      { value: "Cooking", label: "Cooking" },
-      { value: "Art & Photography", label: "Art & Photography" },
-      {
-        value: "Self-Help/ Personal Development",
-        label: "Self-Help/ Personal Development",
-      },
-      {
-        value: "Motivational/ Inspirational",
-        label: "Motivational/ Inspirational",
-      },
-      { value: "Health & Fitness", label: "Health & Fitness" },
-      { value: "History", label: "History" },
-      { value: "Craft, Hobbies & Home", label: "Craft, Hobbies & Home" },
-      { value: "Families & Relationships", label: "Families & Relationships" },
-      { value: "Humor & Entertainment", label: "Humor & Entertainment" },
-      { value: "Business & Money", label: "Business & Money" },
-      { value: "Law & Crimminology", label: "Law & Crimminology" },
-      {
-        value: "Politics & Social Sciences",
-        label: "Politics & Social Sciences",
-      },
-      { value: "Religion & Spirituality", label: "Religion & Spirituality" },
-      { value: "Education & Teaching", label: "Education & Teaching" },
-      { value: "Travel", label: "Travel" },
-      { value: "True Crime", label: "True Crime" },
+      { value: "Dance", label: "Dance" },
+      { value: "Dark Fantasy", label: "Dark Fantasy" },
+      { value: "Halloween", label: "Halloween" },
+      { value: "Multilevel", label: "Multilevel" },
+      { value: "Preaching", label: "Preaching" },
+      { value: "Racing", label: "Racing" },
+      { value: "Vegetables", label: "Vegetables" },
+      { value: "Warsaw", label: "Warsaw" },
     ];
 
     return (

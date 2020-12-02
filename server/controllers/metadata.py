@@ -65,12 +65,11 @@ class Metadata:
             all_metadata = mongo_metadata.find(filter_dict).sort("avg_rating", -1)
 
             if all_metadata.count() == 0:
-                return {"message": f"No metadata found with title as {title} and categories as {categories}".format(title, categories)}, 200
+                return {"message": "No metadata found with title as {} and categories as {}".format(title, categories)}, 200
             
             return {"metadata": self.get_page_metadata(all_metadata, pageNum), # returns max 10 records only
                     "total_counts": all_metadata.count(), # so the frontend knows how many pages to expect
-                    "message": f"Successfully retrieved metadata with title as {title} and categories as {categories}"
-                    }, 200
+                    "message": "Successfully retrieved metadata with title as {} and categories as {}".format(title, categories)}, 200
 
         except Exception as e:
             return {"message": "Retrieval of metadata failed when searching"}, 400

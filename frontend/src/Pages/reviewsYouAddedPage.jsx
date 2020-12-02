@@ -28,9 +28,9 @@ class ReviewsYouAddedPage extends Component {
 
       deleteAsin: 0,
 
-      editAsin: "heeheehee",
+      editAsin: "",
       editOverall: 0,
-      editReviewText: "WHAT IS Upppppp",
+      editReviewText: "",
       editSummary: "",
     };
   }
@@ -72,8 +72,6 @@ class ReviewsYouAddedPage extends Component {
   };
 
   handleDelete = () => {
-    console.log("delete called", this.state.deleteAsin);
-    console.log(this.state.reviewsYouAdded);
     var review = this.state.reviewsYouAdded;
     var asin = this.state.deleteAsin;
 
@@ -111,7 +109,6 @@ class ReviewsYouAddedPage extends Component {
   };
 
   handleEdit = (asin, overall, reviewText, summary) => {
-    //(asin, overall, reviewText, summary) => {
     console.log("handleEdit called");
 
     this.setState({
