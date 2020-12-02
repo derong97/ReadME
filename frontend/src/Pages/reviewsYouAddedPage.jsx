@@ -38,7 +38,9 @@ class ReviewsYouAddedPage extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.location.key !== this.props.location.key) {
       this.getReviews();
+      this.setState({});
     }
+    
   }
 
   componentDidMount() {
@@ -167,10 +169,7 @@ class ReviewsYouAddedPage extends Component {
             reviewsYouAdded: review,
             searching: false
           }, () => this.getReviews());
-          
-          // this.setState({});
-          // this.setState({ searching: false });
-          // console.log(this.state.reviewsYouAdded);
+        
         }
       })
       .catch((err) => {
