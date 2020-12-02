@@ -40,7 +40,6 @@ class ReviewsYouAddedPage extends Component {
       this.getReviews();
       this.setState({});
     }
-    
   }
 
   componentDidMount() {

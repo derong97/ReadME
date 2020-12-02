@@ -7,42 +7,23 @@ import axios from "axios";
 import LoadingOverlay from "react-loading-overlay";
 
 class AddBookModal extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-
   state = {
     loading: false,
     title: "",
-    // author: "",
     imageURL: "",
     asin: "",
     price: "",
     description: "",
-    // isFiction: false,
     categories: "",
     token: this.props.token,
+    showSuccess: false,
   };
-
-  //VALIDATE THE FORM NEXT TIME
-  // const [validated, setValidated] = useState(false);
-
-  // handleSubmit = (event) => {
-  //   const form = event.currentTarget;
-  //   if (form.checkValidity() === false) {
-  //     event.preventDefault();
-  //     event.stopPropagation();
-  //   }
-
-  //   setValidated(true);
-  // };
 
   handleTitleChange = (event) => {
     this.setState({
       title: event.target.value,
     });
   };
-
 
   handleURLChange = (event) => {
     this.setState({
@@ -81,15 +62,9 @@ class AddBookModal extends Component {
     this.setState({
       categories: categoriesList,
     });
-
-    console.log("categories change", categories);
-    console.log(categories.length);
-    console.log(categoriesList);
-    console.log(this.state.categories);
   };
 
   handleSubmit = (event) => {
-
     this.setState({ loading: true });
 
     const url = "/book/add";
@@ -116,75 +91,62 @@ class AddBookModal extends Component {
     axios
       .post(url, params, headers)
       .then((res) => {
-        console.log(res);
-        console.log(url);
-        // const token = res.data.token;
         const username = res.data.username;
         const id = res.data.reviewerID;
         if (res.status == 200) {
-          console.log("book adding SUCCESS");
+          this.validate("uploaded", asin);
           this.setState({ loading: false });
-          this.props.event.props.history.push({
-            pathname: "/main",
-            state: {
-              token: this.state.token,
-              id: id,
-              username: username,
-            },
-          });
+          // this.props.event.props.history.push({
+          //   pathname: "/main",
+          //   state: {
+          //     token: this.state.token,
+          //     id: id,
+          //     username: username,
+          //   },
+          // });
         }
       })
       .catch((err) => {
-        let userError = "";
-        // userError = err.response.data.message;
-        // this.setState({ loading: false, userError });
-        // console.log(err.response);
-        // console.log(err.request);
+        this.validate("error", asin);
+        console.log(err.response);
+        console.log(err.request);
       });
+  };
+
+  validate = (check, asin) => {
+    if (check == "error") {
+      let error = "* Asin " + asin + " is already taken up";
+      this.setState({ error });
+    } else {
+      this.handleClose();
+      this.handleOpenSuccess();
+    }
+  };
+
+  handleClose = () => {
+    let error = "";
+    this.setState({ error });
+    this.props.onHide();
+  };
+
+  handleOpenSuccess = () => {
+    this.setState({ showSuccess: true });
+  };
+
+  handleCloseSuccess = () => {
+    this.setState({ showSuccess: false });
   };
 
   render() {
     const options = [
-      { value: "Fantasy", label: "Fantasy" },
-      { value: "Science Fiction", label: "Science Fiction" },
-      { value: "Dystopian", label: "Dystopian" },
-      { value: "Adventure", label: "Adventure" },
-      { value: "Historical Fiction", label: "Historical Fiction" },
-      { value: "Young Adult", label: "Young Adult" },
-      { value: "Children's Fiction", label: "Children's Fiction" },
-      { value: "Romance", label: "Romance" },
-      { value: "Detective & Mystery", label: "Detective & Mystery" },
-      { value: "Horror", label: "Horror" },
-      { value: "Thriller", label: "Thriller" },
-    ];
-    const optionsNonFiction = [
-      { value: "Memoir & Autobiography", label: "Memoir & Autobiography" },
-      { value: "Biography", label: "Biography" },
-      { value: "Cooking", label: "Cooking" },
-      { value: "Art & Photography", label: "Art & Photography" },
-      {
-        value: "Self-Help/ Personal Development",
-        label: "Self-Help/ Personal Development",
-      },
-      {
-        value: "Motivational/ Inspirational",
-        label: "Motivational/ Inspirational",
-      },
-      { value: "Health & Fitness", label: "Health & Fitness" },
-      { value: "History", label: "History" },
-      { value: "Craft, Hobbies & Home", label: "Craft, Hobbies & Home" },
-      { value: "Families & Relationships", label: "Families & Relationships" },
-      { value: "Humor & Entertainment", label: "Humor & Entertainment" },
-      { value: "Business & Money", label: "Business & Money" },
-      { value: "Law & Crimminology", label: "Law & Crimminology" },
-      {
-        value: "Politics & Social Sciences",
-        label: "Politics & Social Sciences",
-      },
-      { value: "Religion & Spirituality", label: "Religion & Spirituality" },
-      { value: "Education & Teaching", label: "Education & Teaching" },
-      { value: "Travel", label: "Travel" },
-      { value: "True Crime", label: "True Crime" },
+      { value: "Dance", label: "Dance" },
+      { value: "Dark Fantasy", label: "Dark Fantasy" },
+      { value: "Halloween", label: "Halloween" },
+      { value: "Multilevel", label: "Multilevel" },
+      { value: "Preaching", label: "Preaching" },
+      { value: "Racing", label: "Racing" },
+      { value: "Vegetables", label: "Vegetables" },
+      { value: "Warsaw", label: "Warsaw" },
     ];
 
     return (
@@ -195,7 +157,7 @@ class AddBookModal extends Component {
       >
         <Modal
           show={this.props.show}
-          onHide={this.props.onHide}
+          onHide={this.handleClose}
           backdrop="static"
           keyboard={false}
           size="lg"
@@ -207,6 +169,7 @@ class AddBookModal extends Component {
           </Modal.Header>
           <Form>
             <Modal.Body>
+              <div id="error">{this.state.error}</div>
               <Form.Group as={Row} controlId="formTitle">
                 <Form.Label column sm={2}>
                   Title
@@ -225,25 +188,6 @@ class AddBookModal extends Component {
                   </Form.Text>
                 </Col>
               </Form.Group>
-
-              {/* <Form.Group as={Row} controlId="formAuthor">
-              <Form.Label column sm={2}>
-                Author
-              </Form.Label>
-              <Col sm={10}>
-                <Form.Control
-                  required
-                  type="input"
-                  placeholder="enter author's name"
-                  onChange={this.handleAuthorChange}
-                />
-                <Form.Text className="text-muted">
-                  First name goes first. Only social suffixes are used. This
-                  includes Jr., Sr., and Roman numerals. There is no punctuation
-                  between the name and the suffix.
-                </Form.Text>
-              </Col>
-            </Form.Group> */}
 
               <Form.Group as={Row} controlId="formImageURL">
                 <Form.Label column sm={2}>
@@ -324,18 +268,6 @@ class AddBookModal extends Component {
                   onChange={this.handleCategoriesChange}
                 />
                 <br></br>
-                {/* <Form.Text className="text-muted">Non-Fiction</Form.Text>
-              <Select
-                // value={this.state.Category}
-                closeMenuOnSelect={false}
-                components={makeAnimated()}
-                isMulti
-                name="Category"
-                options={optionsNonFiction}
-                className="basic-multi-select"
-                classNamePrefix="select"
-                onChange={this.handleCategoryChange}
-              /> */}
               </Form.Group>
 
               <Form.Group as={Row} controlId="formAddBookTandC">
@@ -354,7 +286,7 @@ class AddBookModal extends Component {
               </Form.Group>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="danger" onClick={this.props.onHide}>
+              <Button variant="danger" onClick={this.handleClose}>
                 Close
               </Button>
               <Button
@@ -366,6 +298,28 @@ class AddBookModal extends Component {
               </Button>
             </Modal.Footer>
           </Form>
+        </Modal>
+
+        <Modal
+          show={this.state.showSuccess}
+          onHide={this.handleCloseSuccess}
+          backdrop="static"
+          keyboard={false}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Successfully Added Book</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Asin "{this.state.asin}" has been successfully added!</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="danger" onClick={this.handleCloseSuccess}>
+              Close
+            </Button>
+          </Modal.Footer>
         </Modal>
       </LoadingOverlay>
     );

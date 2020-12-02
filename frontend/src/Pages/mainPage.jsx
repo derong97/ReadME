@@ -227,11 +227,7 @@ class MainPage extends React.Component {
     ];
 
     return (
-      <LoadingOverlay
-        active={this.state.searching}
-        spinner
-        text="loading ..."
-      >
+      <LoadingOverlay active={this.state.searching} spinner text="loading ...">
         <div>
           {!this.state.done ? (
             <FadeIn>
