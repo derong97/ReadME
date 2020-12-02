@@ -38,7 +38,9 @@ class ReviewsYouAddedPage extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.location.key !== this.props.location.key) {
       this.getReviews();
+      this.setState({});
     }
+    
   }
 
   componentDidMount() {
