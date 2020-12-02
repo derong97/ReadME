@@ -193,44 +193,67 @@ yes | /opt/hadoop-3.3.0/bin/hdfs namenode -format
 
 echo "Installation of Hadoop on namenode done."
 
-sleep 1
+echo "Setting up Spark"
 
-cd ~/download
-wget https://apachemirror.sg.wuchna.com/sqoop/1.4.7/sqoop-1.4.7.bin__hadoop-2.6.0.tar.gz
+cd download
 
-tar zxvf sqoop-1.4.7.bin__hadoop-2.6.0.tar.gz
-
-cp sqoop-1.4.7.bin__hadoop-2.6.0/conf/sqoop-env-template.sh \
-sqoop-1.4.7.bin__hadoop-2.6.0/conf/sqoop-env.sh
+wget https://apachemirror.sg.wuchna.com/spark/spark-3.0.1/spark-3.0.1-bin-hadoop3.2.tgz
 
 sleep 1
 
-export HD="\/opt\/hadoop-3.3.0"
-
-sed -i "s/#export HADOOP_COMMON_HOME=.*/export HADOOP_COMMON_HOME=${HD}/g" \ sqoop-1.4.7.bin__hadoop-2.6.0/conf/sqoop-env.sh
+tar zxvf spark-3.0.1-bin-hadoop3.2.tgz
 
 sleep 1
 
-sed -i "s/#export HADOOP_MAPRED_HOME=.*/export HADOOP_MAPRED_HOME=${HD}/g" \ sqoop-1.4.7.bin__hadoop-2.6.0/conf/sqoop-env.sh
+cp spark-3.0.1-bin-hadoop3.2/conf/spark-env.sh.template \
+spark-3.0.1-bin-hadoop3.2/conf/spark-env.sh
 
 sleep 1
 
-wget https://repo1.maven.org/maven2/commons-lang/commons-lang/2.6/commons-lang-2.6.jar
+echo -e "
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export HADOOP_HOME=/opt/hadoop-3.3.0
+export SPARK_HOME=/opt/spark-3.0.1-bin-hadoop3.2
+export SPARK_CONF_DIR=\${SPARK_HOME}/conf
+export HADOOP_CONF_DIR=\${HADOOP_HOME}/etc/hadoop
+export YARN_CONF_DIR=\${HADOOP_HOME}/etc/hadoop
+export SPARK_EXECUTOR_CORES=1
+export SPARK_EXECUTOR_MEMORY=2G
+export SPARK_DRIVER_MEMORY=1G
+export PYSPARK_PYTHON=python3
+" >> spark-3.0.1-bin-hadoop3.2/conf/spark-env.sh
 
-cp commons-lang-2.6.jar sqoop-1.4.7.bin__hadoop-2.6.0/lib/
+for ip in ${WORKERS};
+do echo -e "${ip}" >> spark-3.0.1-bin-hadoop3.2/conf/slaves;
+done
+
+sleep 1 
+
+tar czvf spark-3.0.1-bin-hadoop3.2.tgz spark-3.0.1-bin-hadoop3.2/
 
 sleep 1
 
-sudo cp -rf sqoop-1.4.7.bin__hadoop-2.6.0 /opt/sqoop-1.4.7
+for i in ${WORKERS};
+do scp -o StrictHostKeyChecking=no spark-3.0.1-bin-hadoop3.2.tgz $i:./spark-3.0.1-bin-hadoop3.2.tgz;
+done
 
 sleep 1
 
-sudo apt install libmysql-java
+mv spark-3.0.1-bin-hadoop3.2.tgz ~/.
 
-sudo ln -snvf /usr/share/java/mysql-connector-java.jar \
-/opt/sqoop-1.4.7/lib/mysql-connector-java.jar
+sleep 1
 
-echo "Setup sqoop complete"
+cd
+
+tar zxvf spark-3.0.1-bin-hadoop3.2.tgz
+
+sleep 1
+
+sudo mv spark-3.0.1-bin-hadoop3.2 /opt/
+sudo chown -R hadoop:hadoop /opt/spark-3.0.1-bin-hadoop3.2
+
+sleep 1
+echo "Setup of Spark finished."
 
 exit
 
