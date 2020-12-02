@@ -51,10 +51,10 @@ class NavBar extends Component {
     axios
       .get(url, body)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         const metadata = res.data.metadata;
         const count = res.data.total_counts;
-        console.log(metadata);
+        // console.log(metadata);
         if (res.status === 200) {
           this.props.event.setState({ searching: false });
           this.props.event.props.history.push({
@@ -186,7 +186,6 @@ class NavBar extends Component {
               }
             >
               <NavDropdown.Item className="item">Settings</NavDropdown.Item>
-              <NavDropdown.Divider />
               <NavDropdown.Item
                 className="item"
                 onClick={() => this.props.event.props.history.push("/")}

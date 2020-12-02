@@ -253,7 +253,7 @@ class ReviewsYouAddedPage extends Component {
               className="add-review-bttn"
               id="add-review-bttn"
               // onClick={this.addReviewModalOpen}
-              onClick={() => this.editReviewModalOpen(1,3,"hello", "hello")}
+              onClick={() => this.addReviewModalOpen()}
               data-toggle="modal"
               data-target="#exampleModalCenter"
             >
@@ -312,9 +312,6 @@ class ReviewsYouAddedPage extends Component {
           <br></br>
           <br></br>
           <br></br>
-
-          <h5>Thank you for your support!</h5>
-
           <br></br>
           <br></br>
         </body>

@@ -43,11 +43,6 @@ class AddBookModal extends Component {
     });
   };
 
-  // handleAuthorChange = (event) => {
-  //   this.setState({
-  //     author: event.target.value,
-  //   });
-  // };
 
   handleURLChange = (event) => {
     this.setState({
@@ -66,12 +61,6 @@ class AddBookModal extends Component {
       price: event.target.value,
     });
   };
-
-  // handleisFictionChange = (isFiction) => {
-  //   this.setState({
-  //     isFiction: isFiction.value,
-  //   });
-  // };
 
   handleDescriptionChange = (description) => {
     this.setState({
@@ -100,14 +89,6 @@ class AddBookModal extends Component {
   };
 
   handleSubmit = (event) => {
-    // console.log("LATEST STATES for Add Book");
-    // console.log("title change", this.state.title);
-    // // console.log("author: ", this.state.author);
-    // console.log("imageURL: ", this.state.imageURL);
-    // console.log("asin: ", this.state.asin);
-    // console.log("price: ", this.state.price);
-    // console.log("description: ", this.state.description);
-    // console.log("categories: ", this.state.categories);
 
     this.setState({ loading: true });
 

@@ -17,16 +17,16 @@ class Book extends React.Component {
     const body = {
       headers: { "x-access-tokens": this.props.token },
     };
-    console.log(body);
+    // console.log(body);
     evt.preventDefault();
     axios
       .get(url, body)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         const book = res.data.metadata;
         const reviews = res.data.reviews;
-        console.log(book);
-        console.log(reviews);
+        // console.log(book);
+        // console.log(reviews);
         if (res.status === 200) {
           this.setState({ searching: false });
           this.props.event.props.history.push({

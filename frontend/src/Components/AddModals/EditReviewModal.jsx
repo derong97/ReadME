@@ -40,15 +40,6 @@ class EditReviewModal extends Component {
     });
   };
 
-  printStates = () => {
-    this.forceUpdate(); 
-    console.log(this.state.asin);
-    console.log(this.state.reviewTitle);
-    console.log(this.state.reviewText);
-    console.log(this.state.rating);
- 
-  };
-
   componentWillReceiveProps(nextProps){
     this.setState({
       asin: nextProps.editAsin,
@@ -162,9 +153,6 @@ class EditReviewModal extends Component {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="info" onClick={this.printStates}>
-              PRINT STATES
-            </Button>
             <Button variant="danger" type="submit" onClick={this.props.onHide}>
               Cancel
             </Button>

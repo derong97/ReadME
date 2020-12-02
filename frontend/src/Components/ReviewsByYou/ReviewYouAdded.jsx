@@ -135,14 +135,6 @@ class ReviewYouAdded extends Component {
                 <FontAwesomeIcon icon={faPenSquare} size="1x" />
               </button>
 
-              <button
-                onClick={this.printStates} 
-                className="btn btn-primary btn-sm m-2"
-              >
-                <FontAwesomeIcon icon={faAirFreshener} size="1x" />
-              </button>
-
-
             </td>
           </tbody>
         </table>
