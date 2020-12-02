@@ -58,7 +58,7 @@ class BookPage extends React.Component {
 
   setRelatedBooks = async (book) => {
     var relatedBooks = [];
-    if (typeof book.related !== "undefined" || book.related !== null) {
+    if (typeof book.related !== "undefined") {
       const bought = book.related.also_bought;
       console.log(bought);
       if (typeof bought !== "undefined")
