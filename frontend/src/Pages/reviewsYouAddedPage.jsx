@@ -46,7 +46,6 @@ class ReviewsYouAddedPage extends Component {
   componentDidMount() {
     this.getReviews();
     this.setState({});
-
   }
 
   getReviews = () => {
@@ -111,13 +110,15 @@ class ReviewsYouAddedPage extends Component {
   handleEdit = (asin, overall, reviewText, summary) => {
     console.log("handleEdit called");
 
-    this.setState({
-      editAsin: asin,
-      editOverall: overall,
-      editReviewText: reviewText,
-      editSummary: summary
-    }, this.handleEditSubmit)
-
+    this.setState(
+      {
+        editAsin: asin,
+        editOverall: overall,
+        editReviewText: reviewText,
+        editSummary: summary,
+      },
+      this.handleEditSubmit
+    );
   };
 
   handleEditSubmit = () => {
@@ -125,7 +126,7 @@ class ReviewsYouAddedPage extends Component {
     console.log(this.state.editOverall);
     console.log(this.state.editReviewText);
     console.log(this.state.editSummary);
-     
+
     var review = this.state.reviewsYouAdded;
     console.log(review);
 
@@ -151,30 +152,14 @@ class ReviewsYouAddedPage extends Component {
         console.log(res);
         if (res.status === 200) {
           console.log(res.data.message);
-          // var index;
-          // for (var i = 0; i < review.length; i++) {
-          //   if (review[i].asin === asin) {
-          //     index = i;
-          //   }
-          // }
-          // console.log(index);
-          // console.log(review);
-          // review.splice(index, 1);
-          // console.log(review);
-          
-          this.setState({ 
-            reviewsYouAdded: review,
-            searching: false
-          }, () => this.getReviews());
-        
+          this.getReviews();
         }
       })
       .catch((err) => {
         console.log(err.response);
         console.log(err.request);
       });
-
-  }
+  };
 
   deleteReviewModalClose = () =>
     this.setState({ deleteReviewModalShow: false });
@@ -196,13 +181,15 @@ class ReviewsYouAddedPage extends Component {
   // this.myFunc = event => (param1, param2) => { ... do stuff };
   editReviewModalClose = () => this.setState({ editReviewModalShow: false });
   editReviewModalOpen = (asin, overall, reviewText, summary) => {
-
-    this.setState({
-      editAsin: asin,
-      editOverall: overall,
-      editReviewText: reviewText,
-      editSummary: summary,
-    }, this.openModal);
+    this.setState(
+      {
+        editAsin: asin,
+        editOverall: overall,
+        editReviewText: reviewText,
+        editSummary: summary,
+      },
+      this.openModal
+    );
 
     // console.log(asin, this.state.editAsin)
     // console.log(overall, this.state.editOverall)
@@ -211,13 +198,13 @@ class ReviewsYouAddedPage extends Component {
   };
 
   openModal = () => {
-    console.log(this.state.editAsin)
-    console.log(this.state.editOverall)
-    console.log(this.state.editReviewText)
-    console.log(this.state.editSummary)
+    console.log(this.state.editAsin);
+    console.log(this.state.editOverall);
+    console.log(this.state.editReviewText);
+    console.log(this.state.editSummary);
     this.forceUpdate();
-    this.setState({editReviewModalShow:true})
-  }
+    this.setState({ editReviewModalShow: true });
+  };
 
   render() {
     return (
