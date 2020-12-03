@@ -15,11 +15,8 @@ do
 	i=$((i+1));
 done
 
-sudo MongoDBIP=$MongoDBIP MySQLIP=$MySQLIP su -p - hadoop
+sudo su - hadoop
 echo "Entered as hadoop user"
-
-echo "MongoDBIP is: ${MongoDBIP}"
-echo "MySQLIP is ${MySQLIP}"
 
 sudo apt-get update
 sudo apt-get install -y openjdk-8-jdk
@@ -242,21 +239,6 @@ export DEBIAN_FRONTEND=noninteractive
 sudo -E apt-get -q -y install mysql-server
 
 echo "Installed MySQL."
-
-# Ingest data from MongoDB and MySQL
-until mongoexport --host=$MongoDBIP:27017 --username=historicriptide --password=futuresparkles --authenticationDatabase=admin --db=readme_mongo --collection=kindle_metadata --out=/home/hadoop/kindle_meta.json; do
-  echo "Mongo download failed, retrying in 2 seconds..."
-  echo "MongoDBIP is: ${MongoDBIP}"
-  echo "MySQLIP is ${MySQLIP}"
-  sleep 2
-done
-
-until mysql -u historicriptide -pfuturesparkles -h $MySQLIP --port=3306 --batch --raw -e 'select asin, reviewText FROM readme_sql.Kindle' > /home/hadoop/kindle_reviews.csv; do
-  echo "SQL download failed, retrying in 2 seconds..."
-  echo "MongoDBIP is: ${MongoDBIP}"
-  echo "MySQLIP is ${MySQLIP}"
-  sleep 2
-done
 
 exit
 

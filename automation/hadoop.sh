@@ -155,10 +155,7 @@ do
   echo "Hadoop Setup for Node$i"
   if [ $i -eq 0 ]
   then
-    # Hardcoded for now
-    MongoDBIP=34.207.119.124
-    MySQLIP=52.73.249.157
-    ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' bash -s" < ./analytics_scripts/hadoop_namenode_setup.sh ${HadoopPrivateIPs[@]} 
+    ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./analytics_scripts/hadoop_namenode_setup.sh ${HadoopPrivateIPs[@]} 
     sleep 1
   else
     ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./analytics_scripts/hadoop_datanode_setup.sh
@@ -167,7 +164,10 @@ do
   i=$((i+1))
 done
 
-ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem 'bash -s' < ./analytics_scripts/init_hadoop_and_spark.sh
+# Hardcoded for now
+MongoDBIP=34.207.119.124
+MySQLIP=52.73.249.157
+ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' bash -s" < ./analytics_scripts/init_hadoop_and_spark.sh
 
 echo """
 ============================================================================
