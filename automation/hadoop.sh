@@ -46,10 +46,15 @@ echo """
 """
 
 {
-  read -p "Enter desired cluster size (choose 2, 4, 6 or 8): " cluster_size
-  if [[ -z "$cluster_size" ]]; then
-    cluster_size=2
-  fi
+  while :
+  do
+      read -p "Enter desired cluster size (choose 2, 4, 6 or 8): " cluster_size
+      if [[ "$cluster_size" =~ ^(2|4|6|8)$ ]]; then
+          break
+      else
+          echo "You can only choose one of these numbers: 2, 4, 6, 8"
+      fi
+  done
 
   stackname=hadoop$cluster_size
   keyname=${stackname}-key
@@ -62,7 +67,7 @@ echo """
   echo "StackName=$stackname" | tee -a logs.log
   echo "KeyName=$keyname" | tee -a  logs.log
 } || {
-  echo "Error generating key pair"
+  echo "Error creating configuring application"
   exit
 }
 
@@ -167,7 +172,8 @@ done
 # Hardcoded for now
 MongoDBIP=34.207.119.124
 MySQLIP=52.73.249.157
-ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' bash -s" < ./analytics_scripts/init_hadoop_and_spark.sh
+ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem 'bash -s' < ./analytics_scripts/init_hadoop_and_spark.sh
+ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' bash -s" < ./analytics_scripts/data_ingestion.sh
 
 echo """
 ============================================================================

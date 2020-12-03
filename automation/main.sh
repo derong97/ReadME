@@ -40,24 +40,37 @@ fi
 
 echo """
 ============================================================================
-                            CREATE AWS KEY PAIR
+                            APPLICATION CONFIGURATIONS
 ============================================================================
 """
-{
-  read -p "Enter desired keyname [default]:" keyname
 
-  # If there is no user input, set keyname as default 
-  if [[ -z "$keyname" ]]; then
-    keyname=default
+{
+  read -p "Enter desired stack name [ReadMe]: " stackname
+  if [[ -z "$stackname" ]]; then
+    stackname=ReadMe
   fi
+
+  keyname=${stackname}-key
+  
+  while :
+  do
+      read -p "Enter desired cluster size (choose 2, 4, 6 or 8): " cluster_size
+      if [[ "$cluster_size" =~ ^(2|4|6|8)$ ]]; then
+          break
+      else
+          echo "You can only choose one of these numbers: 2, 4, 6, 8"
+      fi
+  done
 
   # Public key stored on AWS; private key is stored locally
   aws ec2 create-key-pair --key-name $keyname --query 'KeyMaterial' --output text > $keyname.pem
   sudo chmod 400 $keyname.pem
-  echo "KeyName=$keyname" >> logs.log
 
+  # Store local copies of variable names
+  echo "StackName=$stackname" | tee -a logs.log
+  echo "KeyName=$keyname" | tee -a  logs.log
 } || {
-  echo "Error generating key pair"
+  echo "Error creating configuring application"
   exit
 }
 
@@ -67,9 +80,6 @@ echo """
 ============================================================================
 """
 {
-  stackname=ReadMeStack
-  echo "StackName=$stackname" | tee -a logs.log
-
   echo "Deploying Cloud Formation Stack"
   aws cloudformation create-stack --stack-name $stackname --template-body file://./cloud_formation/production_template.json --parameters ParameterKey=KeyName,ParameterValue=$keyname
   
