@@ -8,10 +8,10 @@ const ReviewItem = ({ review }) => {
         <img className="user" alt="user" src={UserLogo}></img>
         <div className="review-section">
           <h6 className="review-section-title">"{review.summary}"</h6>
-          <text className="review-section-text">
+          <text className="review-section-user">
             <i>by {review.reviewerName}</i>
           </text>
-          <p>{review.reviewText}</p>
+          <p className="review-section-text">{review.reviewText}</p>
         </div>
       </div>
       <hr></hr>

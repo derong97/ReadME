@@ -126,6 +126,17 @@ class BookPage extends React.Component {
       });
   };
 
+  getCategories = (cats) => {
+    var categories = "";
+    if (typeof cats !== "undefined") {
+      for (var i = 0; i < cats.length; i++) {
+        if (i === cats.length) categories += cats[i];
+        else categories += cats[i] + ", ";
+      }
+    }
+    return categories;
+  };
+
   toggle = () => {
     this.setState((prevState) => ({ open: !prevState.open }));
   };
@@ -166,7 +177,9 @@ class BookPage extends React.Component {
                   </div>
                   <div id="book-info">
                     <h4 id="book-title">{this.state.book.title}</h4>
-                    <text>{this.state.book.categories}</text>
+                    <text>
+                      {this.getCategories(this.state.book.categories)}
+                    </text>
                     <StarRatings
                       name="rating"
                       rating={
@@ -204,8 +217,7 @@ class BookPage extends React.Component {
                       add review
                     </button> */}
                     <button
-                      className="add-review-bttn"
-                      id="add-review-bttn"
+                      id="review-bttn"
                       onClick={this.addReviewModalOpen}
                       data-toggle="modal"
                       data-target="#exampleModalCenter"
@@ -252,15 +264,15 @@ class BookPage extends React.Component {
             />
           </div> */}
           <div>
-          <AddReviewModal
-            event={this}
-            token={this.state.token}
-            id={this.state.id}
-            username={this.state.username}
-            show={this.state.addReviewModalShow}
-            onHide={this.addReviewModalClose}
-          />
-        </div>
+            <AddReviewModal
+              event={this}
+              token={this.state.token}
+              id={this.state.id}
+              username={this.state.username}
+              show={this.state.addReviewModalShow}
+              onHide={this.addReviewModalClose}
+            />
+          </div>
 
           {/* <Footer></Footer> */}
         </body>

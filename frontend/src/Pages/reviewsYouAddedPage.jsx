@@ -208,12 +208,12 @@ class ReviewsYouAddedPage extends Component {
   render() {
     return (
       <LoadingOverlay
-        className="loader"
+        // className="loader"
         active={this.state.searching}
         spinner
         text="loading ..."
       >
-        <body className="content-body">
+        <body id="review-body">
           <NavBar
             event={this}
             id={this.state.id}
@@ -223,9 +223,9 @@ class ReviewsYouAddedPage extends Component {
             byme="nav-main"
           ></NavBar>
           {/* <div className="review-body"> */}
-          <h2>Reviews You Added</h2>
+          <h2 id="review-body-title">Reviews You Added</h2>
           <div className="row">
-            <h5>
+            <h5 id="review-body-text">
               Here lies the reviews you have contributed to the ReadME
               community.
             </h5>
@@ -234,7 +234,6 @@ class ReviewsYouAddedPage extends Component {
             <button
               className="add-review-bttn"
               id="add-review-bttn"
-              // onClick={this.addReviewModalOpen}
               onClick={() => this.addReviewModalOpen()}
               data-toggle="modal"
               data-target="#exampleModalCenter"
@@ -278,7 +277,7 @@ class ReviewsYouAddedPage extends Component {
             />
           </div>
 
-          <div className="container">
+          <div id="reviews">
             <ReviewsYouAdded
               token={this.state.token}
               reviewsYouAdded={this.state.reviewsYouAdded}
@@ -289,13 +288,6 @@ class ReviewsYouAddedPage extends Component {
               editReviewModalClose={this.editReviewModalClose}
             />
           </div>
-
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
         </body>
       </LoadingOverlay>
     );

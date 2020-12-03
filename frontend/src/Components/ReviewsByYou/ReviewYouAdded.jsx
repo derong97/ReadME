@@ -63,6 +63,17 @@ class ReviewYouAdded extends Component {
       });
   };
 
+  getCategories = (cats) => {
+    var categories = "";
+    if (typeof cats !== "undefined") {
+      for (var i = 0; i < cats.length; i++) {
+        if (i === cats.length) categories += cats[i];
+        else categories += cats[i] + ", ";
+      }
+    }
+    return categories;
+  };
+
   printStates = () => {
     console.log(this.state.asin);
     console.log(this.state.overall);
@@ -93,7 +104,9 @@ class ReviewYouAdded extends Component {
               </td> */}
             <td className="column-review">
               <h4> {this.state.book.title}</h4>
-              <p className="review-small">{this.state.book.categories}</p>
+              <p className="review-small">
+                {this.getCategories(this.state.book.categories)}
+              </p>
               {/* <p>by {this.state.author}</p> */}
               <h6>"{this.state.summary}"</h6>
               <p className="review-small">

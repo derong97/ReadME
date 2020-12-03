@@ -143,8 +143,14 @@
   font-family: "Gotham-Black";
 }
 
+.review-section-user {
+  font-size: 12px;
+  font-family: "Gotham-Thin";
+}
+
 .review-section-text {
   font-size: 12px;
+  font-family: "Gotham-Medium";
 }
 
 /* Footer */
