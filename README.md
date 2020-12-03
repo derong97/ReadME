@@ -74,28 +74,12 @@ To serve our web application, we used Flask as the built-in Flask web server is 
 1. Reviews
    
    **Endpoints**
-   let MarkdownIt = require('markdown-it'),
-       MarkdownItMergeCells = require('markdown-it-merge-cells'),
-       md = new MarkdownIt();
-   md.use(MarkdownItMergeCells);
-
-   let md = new window.markdownit();
-   md.use(window.markdownitMergeCells);
-
-   let result = md.render(`
-   | Endpoint                    | Method   | Description                                                  |
-   |-----------------------------|-------  -|--------------------------------------------------------------|
-   | /reviews/user               | GET      | Gets all the reviews by the reviewerID.<br/>Returns a 200 response if review is successfully retrieved from the database. Otherwise, returns a 400 response.|
-   | /book/<asin>                | POST     | Inserts the book review record.<br/>JSON Body<ul><li>overall: integer</li><li>reviewText: string</li><li>summary: string</li></ul>Returns a 200 response if review is successfully inserted into the database. Otherwise, returns a 400 response.|
-   | /book/<asin>                | PUT      | Edits the book review record. Returns a 200 response if the record is successfully edited on the database. Otherwise, returns a 400 response.|
-   | /book/<asin>                | DELETE   | Deletes the book review record. Returns a 200 response if review is successfully deleted from the database. Otherwise, returns a 400 response.|
-   `)
    
    | Endpoint                    | Method   | Description                                                  |
    |-----------------------------|-------  -|--------------------------------------------------------------|
    | /reviews/user               | GET      | Gets all the reviews by the reviewerID.<br/>Returns a 200 response if review is successfully retrieved from the database. Otherwise, returns a 400 response.|
    | /book/<asin>                | POST     | Inserts the book review record.<br/>JSON Body<ul><li>overall: integer</li><li>reviewText: string</li><li>summary: string</li></ul>Returns a 200 response if review is successfully inserted into the database. Otherwise, returns a 400 response.|
-   | /book/<asin>                | PUT      | Edits the book review record. Returns a 200 response if the record is successfully edited on the database. Otherwise, returns a 400 response.|
+   | /book/<asin>                | PUT      | Edits the book review record.<br/>JSON Body<ul><li>overall: integer</li><li>reviewText: string</li><li>summary: string</li></ul>Returns a 200 response if the record is successfully edited on the database. Otherwise, returns a 400 response.|
    | /book/<asin>                | DELETE   | Deletes the book review record. Returns a 200 response if review is successfully deleted from the database. Otherwise, returns a 400 response.|
 
    
