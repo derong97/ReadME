@@ -1,17 +1,17 @@
 # ReadME preview
     
-## Main Page
+## Main Page [Extra feature]
 * Simple UI interface with a catchphrase to attract users to signup for ReadME
 
 ![Main Page](/frontend/images/start_page.png)  
 
-## Sign Up Page
+## Sign Up Page [Extra feature]
 * Form validation to prevent duplicated emails in the database
 * Email is unique per user
 
 ![Sign Up Page](/frontend/images/signup_page.png)  
 
-## Sign In Page
+## Sign In Page [Extra feature]
 * Token based authentication
 
 ![Sign In Page](/frontend/images/signin_page.png)
@@ -29,14 +29,14 @@
 
 ## By Me Page
 * Allows users to view all the reviews they added
-* Delete a review
-* Edit a review
+* Delete a review [Extra feature]
+* Edit a review [Extra feature]
   * User can view the updated changes of the review in BY ME page after submitting
 * Add a new review
 
 ![By Me Page](/frontend/images/byme_page.png)  
 
-## Book Page
+## Book Page [Extra feature]
 * Display the book details after selecting a book
   * Book title, categories, average rating from all the reviews, price, asin, brand, sales rank
   * All the reviews of the book
