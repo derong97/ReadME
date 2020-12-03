@@ -34,7 +34,7 @@ ReadME has the following features/ functionalities:
     + Form validation - check if user has reviewed on the book before
     + User can view the review in BY ME page upon upload
   + Logout of our ReadME website
-* HOME page displays a list of 10 books that are sorted by rating from the reviews
+* HOME page displays a list of 10 books that are sorted by rating from the reviews with pagination
   + Filter books by categories
   + Gets the metadata of the corresponding batch of 10 books, depending on the indicated categories as well as page number
 * Display the following book details upon selection of a book **[Extra feature]**
@@ -51,7 +51,7 @@ ReadME has the following features/ functionalities:
  
 ## Backend 
 ### Framework
-To serve our web application, we used Flask as the built-in Flask web server is provided for development convenience. It is a lightweight framework that can be practiced to implement web applications(e.g. ReactJS) and backend API applications(e.g. mySQL, MongoDB). However, Flask's built-in server is not suitable for production as it doesn't scale well. Hence to run Flask in production, we deployed our your Flask application to a standalone WSGI server(Gunicorn).
+To serve our web application, we used Flask as the built-in Flask web server is provided for development convenience. It is a lightweight framework that can be practiced to implement web applications(e.g. ReactJS) and backend API applications(e.g. MySQL, MongoDB). However, Flask's built-in server is not suitable for production as it doesn't scale well. Hence to run Flask in production, we deployed our your Flask application to a standalone WSGI server(Gunicorn).
 
 ### API Design Patterns
 #### MongoDB
@@ -66,14 +66,39 @@ To serve our web application, we used Flask as the built-in Flask web server is 
    
    | Endpoint                    | Method | Description                                                  |
    |-----------------------------|--------|--------------------------------------------------------------|
-   | /user/signup                | GET    | Signs up an account on the website.<br/><ul>JSON Body<li>name</li><li>email</li><li>password</li></ul>Returns a 200 response together with a JWT token if the user is successfully registered. Otherwise, returns a 400 response (e.g. the email has been used previously for sign up).|
-   | /user/signout               | GET    | Redirects the user back to the homepage. |
-   | /user/login                 | POST   | Authenticates the user with the database.<br/><ul>JSON Body<li>email</li><li>password</li></ul>Returns a 200 response together with a JWT token if the user is successfully authenticated. Otherwise, returns a 400 response (e.g. invalid credentials).|
+   | /user/signup                | GET    | Signs up an account on the website.<br/>JSON Body<ul><li>name</li><li>email</li><li>password</li></ul>Returns a 200 response together with a JWT token and username if the user is successfully registered. Otherwise, returns a 400 response (e.g. the email has been used previously for sign up).|
+   | /user/signout               | GET    | Redirects the user back to the HOME page. |
+   | /user/login                 | POST   | Authenticates the user with the database.<br/>JSON Body<ul><li>email</li><li>password</li></ul>Returns a 200 response together with a JWT token and username if the user is successfully authenticated. Otherwise, returns a 400 response (e.g. invalid credentials).|
 
 #### MySQL
 1. Reviews
    
    **Endpoints**
+   let MarkdownIt = require('markdown-it'),
+       MarkdownItMergeCells = require('markdown-it-merge-cells'),
+       md = new MarkdownIt();
+   md.use(MarkdownItMergeCells);
+
+   let md = new window.markdownit();
+   md.use(window.markdownitMergeCells);
+
+   let result = md.render(`
+   | Endpoint                    | Method   | Description                                                  |
+   |-----------------------------|-------  -|--------------------------------------------------------------|
+   | /reviews/user               | GET      | Gets all the reviews by the reviewerID.<br/>Returns a 200 response if review is successfully retrieved from the database. Otherwise, returns a 400 response.|
+   | /book/<asin>                | POST     | Inserts the book review record.<br/>JSON Body<ul><li>overall: integer</li><li>reviewText: string</li><li>summary: string</li></ul>Returns a 200 response if review is successfully inserted into the database. Otherwise, returns a 400 response.|
+   | /book/<asin>                | PUT      | Edits the book review record. Returns a 200 response if the record is successfully edited on the database. Otherwise, returns a 400 response.|
+   | /book/<asin>                | DELETE   | Deletes the book review record. Returns a 200 response if review is successfully deleted from the database. Otherwise, returns a 400 response.|
+   `)
+   
+   | Endpoint                    | Method   | Description                                                  |
+   |-----------------------------|-------  -|--------------------------------------------------------------|
+   | /reviews/user               | GET      | Gets all the reviews by the reviewerID.<br/>Returns a 200 response if review is successfully retrieved from the database. Otherwise, returns a 400 response.|
+   | /book/<asin>                | POST     | Inserts the book review record.<br/>JSON Body<ul><li>overall: integer</li><li>reviewText: string</li><li>summary: string</li></ul>Returns a 200 response if review is successfully inserted into the database. Otherwise, returns a 400 response.|
+   | /book/<asin>                | PUT      | Edits the book review record. Returns a 200 response if the record is successfully edited on the database. Otherwise, returns a 400 response.|
+   | /book/<asin>                | DELETE   | Deletes the book review record. Returns a 200 response if review is successfully deleted from the database. Otherwise, returns a 400 response.|
+
+   
 
 
 
