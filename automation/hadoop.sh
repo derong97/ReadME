@@ -41,22 +41,26 @@ fi
 
 echo """
 ============================================================================
-                            CREATE AWS KEY PAIR
+                            APPLICATION CONFIGURATIONS
 ============================================================================
 """
-{
-  read -p "Enter desired keyname [default]:" keyname
 
-  # If there is no user input, set keyname as default 
-  if [[ -z "$keyname" ]]; then
-    keyname=default
+{
+  read -p "Enter desired cluster size (choose 2, 4, 6 or 8): " cluster_size
+  if [[ -z "$cluster_size" ]]; then
+    cluster_size=2
   fi
+
+  stackname=hadoop$cluster_size
+  keyname=${stackname}-key
 
   # Public key stored on AWS; private key is stored locally
   aws ec2 create-key-pair --key-name $keyname --query 'KeyMaterial' --output text > $keyname.pem
   sudo chmod 400 $keyname.pem
-  echo "KeyName=$keyname" >> logs.log
 
+  # Store local copies of variable names
+  echo "StackName=$stackname" | tee -a logs.log
+  echo "KeyName=$keyname" | tee -a  logs.log
 } || {
   echo "Error generating key pair"
   exit
@@ -67,13 +71,8 @@ echo """
               DEPLOY CLOUD FORMATION STACK (ANALYTICS SYSTEM)
 ============================================================================
 """
-cluster_size=2 # TODO: will change based on user input
-
 {
-  stackname=Hadoop$cluster_size
-  echo "StackName=$stackname" | tee -a logs.log
-  
-  aws cloudformation create-stack --stack-name $stackname --template-body file://./cloud_formation/hadoop2_template.json --parameters ParameterKey=KeyName,ParameterValue=$keyname
+  aws cloudformation create-stack --stack-name $stackname --template-body file://./cloud_formation/${stackname}_template.json --parameters ParameterKey=KeyName,ParameterValue=$keyname
   
   # Ping status
   while :
@@ -156,7 +155,10 @@ do
   echo "Hadoop Setup for Node$i"
   if [ $i -eq 0 ]
   then
-    ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./analytics_scripts/hadoop_namenode_setup.sh ${HadoopPrivateIPs[@]} 
+    # Hardcoded for now
+    MongoDBIP=34.207.119.124
+    MySQLIP=52.73.249.157
+    ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' bash -s" < ./analytics_scripts/hadoop_namenode_setup.sh ${HadoopPrivateIPs[@]} 
     sleep 1
   else
     ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./analytics_scripts/hadoop_datanode_setup.sh
@@ -164,6 +166,8 @@ do
   fi
   i=$((i+1))
 done
+
+ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem 'bash -s' < ./analytics_scripts/init_hadoop_and_spark.sh
 
 echo """
 ============================================================================
