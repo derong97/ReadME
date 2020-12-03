@@ -21,33 +21,33 @@ To create our web application, we used ReactJS as it allows us to build large-sc
 ### Features
 ReadME has the following features/ functionalities:
 * Sign up and login to our ReadME website **[Extra feature]**
-  + Token-based authentication
-  + Email is unique per user
-  + Form validation - check for duplicate email on sign up and check for invalid email and password on login
+  * Token-based authentication
+  * Email is unique per user
+  * Form validation - check for duplicate email on sign up and check for invalid email and password on login
 * Navbar
-  + Search for existing book by title
-  + Add a new book
-    + Form validation - check for repeated asin
-    + Notification on successful upload
-    + User can search and view the book after uploading
-  + Add a new review
-    + Form validation - check if user has reviewed on the book before
-    + User can view the review in BY ME page after uploading
-  + Logout of our ReadME website
+  * Search for existing book by title
+  * Add a new book
+    * Form validation - check for repeated asin
+    * Notification on successful upload
+    * User can search and view the book after uploading
+  * Add a new review
+    * Form validation - check if user has reviewed on the book before
+    * User can view the review in BY ME page after uploading
+  * Logout of our ReadME website
 * HOME page displays a list of 10 books that are sorted by rating from the reviews with pagination
-  + Filter books by categories
-  + Gets the metadata of the corresponding batch of 10 books, depending on the indicated categories as well as page number
+  * Filter books by categories
+  * Gets the metadata of the corresponding batch of 10 books, depending on the indicated categories as well as page number
 * Display the following book details after selecting a book **[Extra feature]**
-  + Book title, categories, average rating from all the reviews, price, asin, brand, sales rank
-  + All the reviews of the book
-  + 3 related books
+  * Book title, categories, average rating from all the reviews, price, asin, brand, sales rank
+  * All the reviews of the book
+  * 3 related books
 * BY ME page allows users to view all the reviews they added
-  + Delete a review **[Extra feature]**
-  + Edit a review **[Extra feature]**
-    + User can view the updated changes of the review in BY ME page after submitting
-  + Add a new review
-    + Form validation - check if user has reviewed on the book before
-    + User can view the review in BY ME page after uploading
+  * Delete a review **[Extra feature]**
+  * Edit a review **[Extra feature]**
+    * User can view the updated changes of the review in BY ME page after submitting
+  * Add a new review
+    * Form validation - check if user has reviewed on the book before
+    * User can view the review in BY ME page after uploading
  
 ### Preview
 ReadME implementation and preview can be found [here](/frontend)
@@ -61,17 +61,17 @@ To serve our web application, we used Flask as the built-in Flask web server is 
 1. Book metadata collection
    
    **Schema**
-   + id: ObjectId, Primary Key
-   + asin: String
-   + avg_rating: Double
-   + categories: String[]
-   + description: String
-   + imUrl: String
-   + price: Double
-   + related: Object
-     +  also_bought: String[]
-     + also_viewed: String[]
-     +  buy_after_viewing: String[]
+   * id: ObjectId, Primary Key
+   * asin: String
+   * avg_rating: Double
+   * categories: String[]
+   * description: String
+   * imUrl: String
+   * price: Double
+   * related: Object
+     *  also_bought: String[]
+     * also_viewed: String[]
+     *  buy_after_viewing: String[]
    
    **Endpoints**
    
@@ -84,10 +84,10 @@ To serve our web application, we used Flask as the built-in Flask web server is 
 2. Userbase collection
    
    **Schema**
-   + id: ObjectId, Primary Key
-   + name: String
-   + email: String
-   + password: String (hashed)
+   * id: ObjectId, Primary Key
+   * name: String
+   * email: String
+   * password: String (hashed)
    
    **Endpoints**
    
@@ -100,26 +100,26 @@ To serve our web application, we used Flask as the built-in Flask web server is 
 3. Web logs collection (activities from users)
    
    **Schema**
-   + id: ObjectId, Primary Key
-   + timestamp: Date
-   + method: String
-   + action: String
+   * id: ObjectId, Primary Key
+   * timestamp: Date
+   * method: String
+   * action: String
    
 
 #### MySQL
 1. Reviews table
 
    **Schema**
-   + asin: varchar(100), Primary Key
-   + overall: int(1)
-   + reviewText: text
-   + reviewTime: date
-   + reviewerID: varchar(255), Primary Key
-   + reviewerName: tinytext
-   + summary: text
-   + unixReviewTime: int(11)
-   + likes: int(5)
-   + dislikes: int(5)
+   * asin: varchar(100), Primary Key
+   * overall: int(1)
+   * reviewText: text
+   * reviewTime: date
+   * reviewerID: varchar(255), Primary Key
+   * reviewerName: tinytext
+   * summary: text
+   * unixReviewTime: int(11)
+   * likes: int(5)
+   * dislikes: int(5)
    
    **Endpoints**
    
