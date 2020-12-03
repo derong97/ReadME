@@ -48,7 +48,7 @@
 * Notification on successful upload
 * User can search and view the book after uploading
 
-![Add Book Modal](/frontend/images/add_book_modal.png  
+![Add Book Modal](/frontend/images/add_book_modal.png)
 
 ## Add Review Modal
 * Form validation - check if user has reviewed on the book before
