@@ -57,6 +57,8 @@ To serve our web application, we used Flask as the built-in Flask web server is 
 #### MongoDB
 1. Book metadata
    
+   **Schema**
+   
    **Endpoints**
    
    | Endpoint                    | Method | Description                                                  |
@@ -66,6 +68,8 @@ To serve our web application, we used Flask as the built-in Flask web server is 
    | /book/<asin>                                                          | GET   | Gets the book metadata and all its reviews.<br/>Returns a 200 response together with a list of reviews if retrieval from the database is successful. Otherwise, returns a 400 response.|
 
 2. Web Logs (activities from users)
+   
+   **Schema**
    
    **Endpoints**
    
@@ -77,15 +81,17 @@ To serve our web application, we used Flask as the built-in Flask web server is 
 
 #### MySQL
 1. Reviews
+
+   **Schema**
    
    **Endpoints**
    
    | Endpoint                    | Method   | Description                                                  |
    |-----------------------------|----------|--------------------------------------------------------------|
    | /reviews/user               | GET      | Gets all the reviews by the reviewerID.<br/>Returns a 200 response if review is successfully retrieved from the database. Otherwise, returns a 400 response.|
-   | /book/<asin>                | POST     | Inserts the book review record.<br/><br/>JSON Body<ul><li>overall: integer</li><li>reviewText: string</li><li>summary: string</li></ul><br/>Returns a 200 response if review is successfully inserted into the database. Otherwise, returns a 400 response.|
-   | /book/<asin>                | PUT      | Edits the book review record.<br/><br/>JSON Body<ul><li>overall: integer</li><li>reviewText: string</li><li>summary: string</li></ul><br/>Returns a 200 response if the record is successfully edited on the database. Otherwise, returns a 400 response.|
-   | /book/<asin>                | DELETE   | Deletes the book review record.<br/>Returns a 200 response if review is successfully deleted from the database. Otherwise, returns a 400 response.|
+   | /book/\<asin\>              | POST     | Inserts the book review record.<br/><br/>JSON Body<ul><li>overall: integer</li><li>reviewText: string</li><li>summary: string</li></ul><br/>Returns a 200 response if review is successfully inserted into the database. Otherwise, returns a 400 response.|
+   | /book/\<asin\>              | PUT      | Edits the book review record.<br/><br/>JSON Body<ul><li>overall: integer</li><li>reviewText: string</li><li>summary: string</li></ul><br/>Returns a 200 response if the record is successfully edited on the database. Otherwise, returns a 400 response.|
+   | /book/\<asin\>              | DELETE   | Deletes the book review record.<br/>Returns a 200 response if review is successfully deleted from the database. Otherwise, returns a 400 response.|
 
    
 
