@@ -61,17 +61,17 @@ To serve our web application, we used Flask as the built-in Flask web server is 
 1. Book metadata collection
    
    **Schema**
-   id: ObjectId, Primary Key
-  asin: String
-  avg_rating: Double
-  categories: String[]
-  description: String
-  imUrl: String
-  price: Double
-  related: Object
-  - also_bought: String[]
-  - also_viewed: String[]
-  - buy_after_viewing: String[]
+   + id: ObjectId, Primary Key
+   + asin: String
+   + avg_rating: Double
+   + categories: String[]
+   + description: String
+   + imUrl: String
+   + price: Double
+   + related: Object
+     +  also_bought: String[]
+     + also_viewed: String[]
+     +  buy_after_viewing: String[]
    
    **Endpoints**
    
@@ -84,10 +84,10 @@ To serve our web application, we used Flask as the built-in Flask web server is 
 2. Userbase collection
    
    **Schema**
-   id: ObjectId, Primary Key
-   name: String
-   email: String
-   password: String (hashed)
+   + id: ObjectId, Primary Key
+   + name: String
+   + email: String
+   + password: String (hashed)
    
    **Endpoints**
    
@@ -100,26 +100,26 @@ To serve our web application, we used Flask as the built-in Flask web server is 
 3. Web logs collection (activities from users)
    
    **Schema**
-   id: ObjectId, Primary Key
-   timestamp: Date
-   method: String
-   action: String
+   + id: ObjectId, Primary Key
+   + timestamp: Date
+   + method: String
+   + action: String
    
 
 #### MySQL
 1. Reviews table
 
    **Schema**
-   asin: varchar(100), Primary Key
-   overall: int(1)
-   reviewText: text
-   reviewTime: date
-   reviewerID: varchar(255), Primary Key
-   reviewerName: tinytext
-   summary: text
-   unixReviewTime: int(11)
-   likes: int(5)
-   dislikes: int(5)
+   + asin: varchar(100), Primary Key
+   + overall: int(1)
+   + reviewText: text
+   + reviewTime: date
+   + reviewerID: varchar(255), Primary Key
+   + reviewerName: tinytext
+   + summary: text
+   + unixReviewTime: int(11)
+   + likes: int(5)
+   + dislikes: int(5)
    
    **Endpoints**
    
