@@ -61,8 +61,8 @@ To serve our web application, we used Flask as the built-in Flask web server is 
    
    | Endpoint                    | Method | Description                                                  |
    |-----------------------------|--------|--------------------------------------------------------------|
-   | /books?category=<category>&title=<title>&pageNum=<pageNum>            | GET    | Gets the metadata of the corresponding batch of 10 books, depending on the indicated categories and/or title as well as page number.<br/><ul><li>The returned array will be sorted by the book’s average rating in descending order.</li><li>If both categories and title fields are empty, the top 10 books across all categories will be returned.</li></ul><br/>Parameters<ul><li>category: optional, categories will default to empty list</li><li>title: optional, default to None</li><li>page: default to 1</li></ul>Returns a 200 response if the books metadata are successfully retrieved. Otherwise returns a 400 response.|
-   | /book/add                                                             | POST    | Insert new book record.<br/>JSON Body<ul><li>asin: compulsory, integer</li><li>title: string</li><li>description: string</li><li>price: double</li><li>imUrl: string</li><li>categories: array of string</li></ul>Returns a 200 response if the book record is successfully inserted into the database. Otherwise, returns a 400 response (e.g. if the asin already exists in the database).|
+   | /books?category=<category>&title=<title>&pageNum=<pageNum>            | GET    | Gets the metadata of the corresponding batch of 10 books, depending on the indicated categories and/or title as well as page number.<br/><ul><li>The returned array will be sorted by the book’s average rating in descending order.</li><li>If both categories and title fields are empty, the top 10 books across all categories will be returned.</li></ul><br/>Parameters<ul><li>category: optional, categories will default to empty list</li><li>title: optional, default to None</li><li>page: default to 1</li></ul><br/>Returns a 200 response if the books metadata are successfully retrieved. Otherwise returns a 400 response.|
+   | /book/add                                                             | POST    | Insert new book record.<br/><br/>JSON Body<ul><li>asin: compulsory, integer</li><li>title: string</li><li>description: string</li><li>price: double</li><li>imUrl: string</li><li>categories: array of string</li></ul><br/>Returns a 200 response if the book record is successfully inserted into the database. Otherwise, returns a 400 response (e.g. if the asin already exists in the database).|
    | /book/<asin>                                                          | GET   | Gets the book metadata and all its reviews.<br/>Returns a 200 response together with a list of reviews if retrieval from the database is successful. Otherwise, returns a 400 response.|
 
 2. Web Logs (activities from users)
@@ -71,9 +71,9 @@ To serve our web application, we used Flask as the built-in Flask web server is 
    
    | Endpoint                    | Method | Description                                                  |
    |-----------------------------|--------|--------------------------------------------------------------|
-   | /user/signup                | GET    | Signs up an account on the website.<br/>JSON Body<ul><li>name</li><li>email</li><li>password</li></ul>Returns a 200 response together with a JWT token and username if the user is successfully registered. Otherwise, returns a 400 response (e.g. the email has been used previously for sign up).|
+   | /user/signup                | GET    | Signs up an account on the website.<br/><br/>JSON Body<ul><li>name</li><li>email</li><li>password</li></ul><br/>Returns a 200 response together with a JWT token and username if the user is successfully registered. Otherwise, returns a 400 response (e.g. the email has been used previously for sign up).|
    | /user/signout               | GET    | Redirects the user back to the HOME page. |
-   | /user/login                 | POST   | Authenticates the user with the database.<br/>JSON Body<ul><li>email</li><li>password</li></ul>Returns a 200 response together with a JWT token and username if the user is successfully authenticated. Otherwise, returns a 400 response (e.g. invalid credentials).|
+   | /user/login                 | POST   | Authenticates the user with the database.<br/><br/>JSON Body<ul><li>email</li><li>password</li></ul><br/>Returns a 200 response together with a JWT token and username if the user is successfully authenticated. Otherwise, returns a 400 response (e.g. invalid credentials).|
 
 #### MySQL
 1. Reviews
@@ -83,9 +83,9 @@ To serve our web application, we used Flask as the built-in Flask web server is 
    | Endpoint                    | Method   | Description                                                  |
    |-----------------------------|----------|--------------------------------------------------------------|
    | /reviews/user               | GET      | Gets all the reviews by the reviewerID.<br/>Returns a 200 response if review is successfully retrieved from the database. Otherwise, returns a 400 response.|
-   | /book/<asin>                | POST     | Inserts the book review record.<br/>JSON Body<ul><li>overall: integer</li><li>reviewText: string</li><li>summary: string</li></ul>Returns a 200 response if review is successfully inserted into the database. Otherwise, returns a 400 response.|
-   | /book/<asin>                | PUT      | Edits the book review record.<br/>JSON Body<ul><li>overall: integer</li><li>reviewText: string</li><li>summary: string</li></ul>Returns a 200 response if the record is successfully edited on the database. Otherwise, returns a 400 response.|
-   | /book/<asin>                | DELETE   | Deletes the book review record. Returns a 200 response if review is successfully deleted from the database. Otherwise, returns a 400 response.|
+   | /book/<asin>                | POST     | Inserts the book review record.<br/><br/>JSON Body<ul><li>overall: integer</li><li>reviewText: string</li><li>summary: string</li></ul><br/>Returns a 200 response if review is successfully inserted into the database. Otherwise, returns a 400 response.|
+   | /book/<asin>                | PUT      | Edits the book review record.<br/><br/>JSON Body<ul><li>overall: integer</li><li>reviewText: string</li><li>summary: string</li></ul><br/>Returns a 200 response if the record is successfully edited on the database. Otherwise, returns a 400 response.|
+   | /book/<asin>                | DELETE   | Deletes the book review record.<br/>Returns a 200 response if review is successfully deleted from the database. Otherwise, returns a 400 response.|
 
    
 
