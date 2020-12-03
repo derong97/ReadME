@@ -32,6 +32,7 @@ ReadME has the following features/ functionalities:
     * User can search and view the book after uploading
   * Add a new review
     * Form validation - check if user has reviewed on the book before
+    * Notification on successful upload
     * User can view the review in BY ME page after uploading
   * Logout of our ReadME website
 * HOME page displays a list of 10 books that are sorted by rating from the reviews with pagination
