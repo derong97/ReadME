@@ -23,31 +23,31 @@ ReadME has the following features/ functionalities:
 * Sign up and login to our ReadME website **[Extra feature]**
   + Token-based authentication
   + Email is unique per user
-  + Form validation - check for repeated email upon sign up and check for invalid email and password upon login
+  + Form validation - check for duplicate email on sign up and check for invalid email and password on login
 * Navbar
   + Search for existing book by title
   + Add a new book
     + Form validation - check for repeated asin
     + Notification on successful upload
-    + User can search and view the book upon upload
+    + User can search and view the book after uploading
   + Add a new review
     + Form validation - check if user has reviewed on the book before
-    + User can view the review in BY ME page upon upload
+    + User can view the review in BY ME page after uploading
   + Logout of our ReadME website
 * HOME page displays a list of 10 books that are sorted by rating from the reviews with pagination
   + Filter books by categories
   + Gets the metadata of the corresponding batch of 10 books, depending on the indicated categories as well as page number
-* Display the following book details upon selection of a book **[Extra feature]**
+* Display the following book details after selecting a book **[Extra feature]**
   + Book title, categories, average rating from all the reviews, price, asin, brand, sales rank
   + All the reviews of the book
   + 3 related books
 * BY ME page allows users to view all the reviews they added
   + Delete a review **[Extra feature]**
   + Edit a review **[Extra feature]**
-    + User can view the updated changes of the review in BY ME page upon submit
+    + User can view the updated changes of the review in BY ME page after submitting
   + Add a new review
     + Form validation - check if user has reviewed on the book before
-    + User can view the review in BY ME page upon upload
+    + User can view the review in BY ME page after uploading
  
 ## Backend 
 ### Framework
@@ -71,9 +71,9 @@ To serve our web application, we used Flask as the built-in Flask web server is 
    
    | Endpoint                    | Method | Description                                                  |
    |-----------------------------|--------|--------------------------------------------------------------|
-   | /user/signup                | GET    | Signs up an account on the website.<br/><br/>JSON Body<ul><li>name</li><li>email</li><li>password</li></ul><br/>Returns a 200 response together with a JWT token and username if the user is successfully registered. Otherwise, returns a 400 response (e.g. the email has been used previously for sign up).|
+   | /user/signup                | GET    | Signs up an account on the website.<br/><br/>JSON Body<ul><li>name: string</li><li>email: string</li><li>password: string</li></ul><br/>Returns a 200 response together with a JWT token and username if the user is successfully registered. Otherwise, returns a 400 response (e.g. the email has been used previously for sign up).|
    | /user/signout               | GET    | Redirects the user back to the HOME page. |
-   | /user/login                 | POST   | Authenticates the user with the database.<br/><br/>JSON Body<ul><li>email</li><li>password</li></ul><br/>Returns a 200 response together with a JWT token and username if the user is successfully authenticated. Otherwise, returns a 400 response (e.g. invalid credentials).|
+   | /user/login                 | POST   | Authenticates the user with the database.<br/><br/>JSON Body<ul><li>email: string</li><li>password: string</li></ul><br/>Returns a 200 response together with a JWT token and username if the user is successfully authenticated. Otherwise, returns a 400 response (e.g. invalid credentials).|
 
 #### MySQL
 1. Reviews
