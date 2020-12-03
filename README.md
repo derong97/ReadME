@@ -20,7 +20,7 @@ To create our web application, we used ReactJS as it allows us to build large-sc
 
 ### Features
 ReadME has the following features/ functionalities:
-* Sign up and login to our ReadME website [Extra feature]
+* Sign up and login to our ReadME website **[Extra feature]**
   + Token-based authentication
   + Email is unique per user
   + Form validation - check for repeated email upon sign up and check for invalid email and password upon login
@@ -37,13 +37,13 @@ ReadME has the following features/ functionalities:
 * HOME page displays a list of 10 books that are sorted by rating from the reviews
   + Filter books by categories
   + Gets the metadata of the corresponding batch of 10 books, depending on the indicated categories as well as page number
-* Display the following book details upon selection of a book [Extra feature]
+* Display the following book details upon selection of a book **[Extra feature]**
   + Book title, categories, average rating from all the reviews, price, asin, brand, sales rank
   + All the reviews of the book
   + 3 related books
 * BY ME page allows users to view all the reviews they added
-  + Delete a review [Extra feature]
-  + Edit a review [Extra feature]
+  + Delete a review **[Extra feature]**
+  + Edit a review **[Extra feature]**
     + User can view the updated changes of the review in BY ME page upon submit
   + Add a new review
     + Form validation - check if user has reviewed on the book before
@@ -51,18 +51,28 @@ ReadME has the following features/ functionalities:
  
 ## Backend 
 ### Framework
-To serve our web application, we used Flask as the built-in Flask web server is provided for development convenience. It is a lightweight framework that can be practiced to implement web applications and backend API applications (e.g. mySQL, MongoDB).
+To serve our web application, we used Flask as the built-in Flask web server is provided for development convenience. It is a lightweight framework that can be practiced to implement web applications(e.g. ReactJS) and backend API applications(e.g. mySQL, MongoDB). However, Flask's built-in server is not suitable for production as it doesn't scale well. Hence to run Flask in production, we deployed our your Flask application to a standalone WSGI server(Gunicorn).
 
 ### API Design Patterns
 #### MongoDB
 1. Book metadata
+   
    **Endpoints**
+   
 
 2. Web Logs (activities from users)
+   
    **Endpoints**
+   
+   | Endpoint                    | Method | Description                                                  |
+   |-----------------------------|--------|--------------------------------------------------------------|
+   | /user/signup                | GET    | Signs up an account on the website.<br/><ul>JSON Body<li>name</li><li>email</li><li>password</li></ul>Returns a 200 response together with a JWT token if the user is successfully registered. Otherwise, returns a 400 response (e.g. the email has been used previously for sign up).|
+   | /user/signout               | GET    | Redirects the user back to the homepage. |
+   | /user/login                 | POST   | Authenticates the user with the database.<br/><ul>JSON Body<li>email</li><li>password</li></ul>Returns a 200 response together with a JWT token if the user is successfully authenticated. Otherwise, returns a 400 response (e.g. invalid credentials).|
 
 #### MySQL
 1. Reviews
+   
    **Endpoints**
 
 
