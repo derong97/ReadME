@@ -15,8 +15,11 @@ do
 	i=$((i+1));
 done
 
-sudo su - hadoop
+sudo MongoDBIP=$MongoDBIP MySQLIP=$MySQLIP su -p - hadoop
 echo "Entered as hadoop user"
+
+echo "MongoDBIP is: ${MongoDBIP}"
+echo "MySQLIP is ${MySQLIP}"
 
 sudo apt-get update
 sudo apt-get install -y openjdk-8-jdk
@@ -180,40 +183,80 @@ yes | /opt/hadoop-3.3.0/bin/hdfs namenode -format
 
 echo "Installation of Hadoop on namenode completed"
 
-echo "Setting up sqoop..."
+echo "Setting up Spark"
 
-cd ~/download
-wget https://apachemirror.sg.wuchna.com/sqoop/1.4.7/sqoop-1.4.7.bin__hadoop-2.6.0.tar.gz
+cd download
 
-tar zxvf sqoop-1.4.7.bin__hadoop-2.6.0.tar.gz
+wget https://apachemirror.sg.wuchna.com/spark/spark-3.0.1/spark-3.0.1-bin-hadoop3.2.tgz
+tar zxvf spark-3.0.1-bin-hadoop3.2.tgz
 
-cp sqoop-1.4.7.bin__hadoop-2.6.0/conf/sqoop-env-template.sh \
-sqoop-1.4.7.bin__hadoop-2.6.0/conf/sqoop-env.sh
+cp spark-3.0.1-bin-hadoop3.2/conf/spark-env.sh.template \
+spark-3.0.1-bin-hadoop3.2/conf/spark-env.sh
+
+echo -e "
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export HADOOP_HOME=/opt/hadoop-3.3.0
+export SPARK_HOME=/opt/spark-3.0.1-bin-hadoop3.2
+export SPARK_CONF_DIR=\${SPARK_HOME}/conf
+export HADOOP_CONF_DIR=\${HADOOP_HOME}/etc/hadoop
+export YARN_CONF_DIR=\${HADOOP_HOME}/etc/hadoop
+export SPARK_EXECUTOR_CORES=1
+export SPARK_EXECUTOR_MEMORY=2G
+export SPARK_DRIVER_MEMORY=1G
+export PYSPARK_PYTHON=python3
+" >> spark-3.0.1-bin-hadoop3.2/conf/spark-env.sh
+
+for ip in ${WORKERS};
+	do echo -e "${ip}" >> spark-3.0.1-bin-hadoop3.2/conf/slaves;
+done
+
+tar czvf spark-3.0.1-bin-hadoop3.2.tgz spark-3.0.1-bin-hadoop3.2/
+
+for i in ${WORKERS};
+	do scp -o StrictHostKeyChecking=no spark-3.0.1-bin-hadoop3.2.tgz $i:./spark-3.0.1-bin-hadoop3.2.tgz;
+done
 
 sleep 1
+mv spark-3.0.1-bin-hadoop3.2.tgz ~/.
 
-export HD="\/opt\/hadoop-3.3.0"
+cd
+tar zxvf spark-3.0.1-bin-hadoop3.2.tgz
 
-sed -i "s/#export HADOOP_COMMON_HOME=.*/export HADOOP_COMMON_HOME=${HD}/g" \ sqoop-1.4.7.bin__hadoop-2.6.0/conf/sqoop-env.sh
-sleep 1
+sudo mv spark-3.0.1-bin-hadoop3.2 /opt/
+sudo chown -R hadoop:hadoop /opt/spark-3.0.1-bin-hadoop3.2
 
-sed -i "s/#export HADOOP_MAPRED_HOME=.*/export HADOOP_MAPRED_HOME=${HD}/g" \ sqoop-1.4.7.bin__hadoop-2.6.0/conf/sqoop-env.sh
-sleep 1
+echo "Setup of Spark finished."
 
-wget https://repo1.maven.org/maven2/commons-lang/commons-lang/2.6/commons-lang-2.6.jar
+echo "Installing Mongo..."
 
-cp commons-lang-2.6.jar sqoop-1.4.7.bin__hadoop-2.6.0/lib/
-sleep 1
+wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org
 
-sudo cp -rf sqoop-1.4.7.bin__hadoop-2.6.0 /opt/sqoop-1.4.7
-sleep 1
+echo "Installed Mongo."
 
-sudo apt install libmysql-java
+echo "Installing MySQL..."
 
-sudo ln -snvf /usr/share/java/mysql-connector-java.jar \
-/opt/sqoop-1.4.7/lib/mysql-connector-java.jar
+export DEBIAN_FRONTEND=noninteractive
+sudo -E apt-get -q -y install mysql-server
 
-echo "Setup sqoop completed on namenode"
+echo "Installed MySQL."
+
+# Ingest data from MongoDB and MySQL
+until mongoexport --host=$MongoDBIP:27017 --username=historicriptide --password=futuresparkles --authenticationDatabase=admin --db=readme_mongo --collection=kindle_metadata --out=/home/hadoop/kindle_meta.json; do
+  echo "Mongo download failed, retrying in 2 seconds..."
+  echo "MongoDBIP is: ${MongoDBIP}"
+  echo "MySQLIP is ${MySQLIP}"
+  sleep 2
+done
+
+until mysql -u historicriptide -pfuturesparkles -h $MySQLIP --port=3306 --batch --raw -e 'select asin, reviewText FROM readme_sql.Kindle' > /home/hadoop/kindle_reviews.csv; do
+  echo "SQL download failed, retrying in 2 seconds..."
+  echo "MongoDBIP is: ${MongoDBIP}"
+  echo "MySQLIP is ${MySQLIP}"
+  sleep 2
+done
 
 exit
 

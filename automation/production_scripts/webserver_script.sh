@@ -22,10 +22,9 @@ sudo apt-get install libmysqlclient-dev -y
 sudo apt install python3-pip -y
 sudo apt-get update
 
-# latest link from git 
-wget -c https://www.dropbox.com/s/kpplokq2iiyo701/ReadMe.zip?dl=0 -O ReadMe-main2.zip
+wget -c https://www.dropbox.com/s/kpplokq2iiyo701/ReadMe.zip?dl=0 -O ReadMe-main.zip
 sudo apt install unzip
-unzip ReadMe-main2.zip
+unzip ReadMe-main.zip
 
 cd ReadMe-main/server
 python3 -m venv venv
