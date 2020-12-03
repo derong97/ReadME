@@ -1,5 +1,5 @@
 # Endpoints
-Refer to this [API documentation](https://bit.ly/37BVC4N)
+Refer to this [API documentation](https://bit.ly/37BVC4N) ** to be removed **
 
 # 50.043 Project: ReadME
 Read Me Like a Book

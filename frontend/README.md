@@ -31,6 +31,7 @@
 * Allows users to view all the reviews they added
 * Delete a review
 * Edit a review
+  * User can view the updated changes of the review in BY ME page after submitting
 * Add a new review
 
 ![By Me Page](/frontend/images/byme_page.png)  
@@ -53,6 +54,6 @@
 ## Add Review Modal
 * Form validation - check if user has reviewed on the book before
 * Notification on successful upload
-* User can view the review in BY ME page after uploading
+* User can view the review in 'By Me' page after uploading
   
 ![Add Review Modal](/frontend/images/add_review_modal.png)  
