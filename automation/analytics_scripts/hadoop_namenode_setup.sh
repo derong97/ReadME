@@ -240,6 +240,9 @@ sudo -E apt-get -q -y install mysql-server
 
 echo "Installed MySQL."
 
+# Add hadoop to PATH permanently, so we can call 'hdfs' straightaway.
+echo 'export PATH=$PATH:/opt/hadoop-3.3.0/bin' >> ~/.bash_profile
+
 exit
 
 rm ips.txt
