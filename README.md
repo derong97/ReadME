@@ -49,15 +49,29 @@ ReadME has the following features/ functionalities:
     + Form validation - check if user has reviewed on the book before
     + User can view the review in BY ME page after uploading
  
+### Preview
+ReadME implementation and preview can be found [here](/frontend)
+ 
 ## Backend 
 ### Framework
 To serve our web application, we used Flask as the built-in Flask web server is provided for development convenience. It is a lightweight framework that can be practiced to implement web applications(e.g. ReactJS) and backend API applications(e.g. MySQL, MongoDB). However, Flask's built-in server is not suitable for production as it doesn't scale well. Hence to run Flask in production, we deployed our your Flask application to a standalone WSGI server(Gunicorn).
 
 ### API Design Patterns
 #### MongoDB
-1. Book metadata
+1. Book metadata collection
    
    **Schema**
+   id: ObjectId, Primary Key
+  asin: String
+  avg_rating: Double
+  categories: String[]
+  description: String
+  imUrl: String
+  price: Double
+  related: Object
+  - also_bought: String[]
+  - also_viewed: String[]
+  - buy_after_viewing: String[]
    
    **Endpoints**
    
@@ -67,9 +81,13 @@ To serve our web application, we used Flask as the built-in Flask web server is 
    | /book/add                                                             | POST    | Insert new book record.<br/><br/>JSON Body<ul><li>asin: compulsory, integer</li><li>title: string</li><li>description: string</li><li>price: double</li><li>imUrl: string</li><li>categories: array of string</li></ul><br/>Returns a 200 response if the book record is successfully inserted into the database. Otherwise, returns a 400 response (e.g. if the asin already exists in the database).|
    | /book/<asin>                                                          | GET   | Gets the book metadata and all its reviews.<br/>Returns a 200 response together with a list of reviews if retrieval from the database is successful. Otherwise, returns a 400 response.|
 
-2. Web Logs (activities from users)
+2. Userbase collection
    
    **Schema**
+   id: ObjectId, Primary Key
+   name: String
+   email: String
+   password: String (hashed)
    
    **Endpoints**
    
@@ -79,10 +97,29 @@ To serve our web application, we used Flask as the built-in Flask web server is 
    | /user/signout               | GET    | Redirects the user back to the HOME page. |
    | /user/login                 | POST   | Authenticates the user with the database.<br/><br/>JSON Body<ul><li>email: string</li><li>password: string</li></ul><br/>Returns a 200 response together with a JWT token and username if the user is successfully authenticated. Otherwise, returns a 400 response (e.g. invalid credentials).|
 
+3. Web logs collection (activities from users)
+   
+   **Schema**
+   id: ObjectId, Primary Key
+   timestamp: Date
+   method: String
+   action: String
+   
+
 #### MySQL
-1. Reviews
+1. Reviews table
 
    **Schema**
+   asin: varchar(100), Primary Key
+   overall: int(1)
+   reviewText: text
+   reviewTime: date
+   reviewerID: varchar(255), Primary Key
+   reviewerName: tinytext
+   summary: text
+   unixReviewTime: int(11)
+   likes: int(5)
+   dislikes: int(5)
    
    **Endpoints**
    
