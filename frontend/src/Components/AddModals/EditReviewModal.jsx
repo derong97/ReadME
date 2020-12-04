@@ -13,6 +13,7 @@ class EditReviewModal extends Component {
       reviewTitle: this.props.editSummary,
       reviewText: this.props.editReviewText,
       rating: this.props.editOverall,
+      showSuccess: false, 
     };
   }
 

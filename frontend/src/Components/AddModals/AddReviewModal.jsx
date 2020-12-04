@@ -3,6 +3,7 @@ import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 import Ratings from "react-ratings-declarative";
 import ReactStars from "react-rating-stars-component";
 import axios from "axios";
+import LoadingOverlay from "react-loading-overlay";
 
 class AddReviewModal extends Component {
   constructor(props) {
@@ -16,6 +17,9 @@ class AddReviewModal extends Component {
       token: this.props.token,
       id: this.props.id,
       username: this.props.username,
+      showSuccess: false,
+      loading: false,
+      responseMessage: "",
     };
   }
 
@@ -67,27 +71,55 @@ class AddReviewModal extends Component {
       .post(url, params, headers)
       .then((res) => {
         console.log(res);
+        this.setState({responseMessage: res.data.message})
         if (res.status === 200) {
-          console.log(res.data.message);
-          this.props.event.props.history.push({
-            pathname: "/reviews-you-added",
-            state: {
-              token: this.state.token,
-              id: this.state.id,
-              username: this.state.username,
-              reviewsYouAdded: [],
-            },
+          this.props.event.setState({
+            searching: false,
           });
+          this.validate("uploaded", asin);
+          console.log(res.data.message);
+          console.log(this.state.loading);
         }
       })
       .catch((err) => {
+        this.validate("error", asin);
         console.log(err.response);
         console.log(err.request);
       });
   };
 
+  validate = (check, asin) => {
+    if (check == "error") {
+      let error = "* Asin " + asin + " is already taken up";
+      this.setState({ error });
+    } else { //if state is uploaded
+      this.handleClose();
+      // this.setState({loading: false});
+      this.handleOpenSuccess();
+    }
+  };
+
+  handleClose = () => {
+    let error = "";
+    this.setState({ error });
+    this.props.onHide();
+  };
+
+  handleOpenSuccess = () => {
+    this.setState({ showSuccess: true });
+  };
+
+  handleCloseSuccess = () => {
+    this.setState({ showSuccess: false });
+  };
+
   render() {
     return (
+      <LoadingOverlay
+        active={this.state.loading}
+        spinner
+        text="adding book ..."
+      >
       <Modal
         show={this.props.show}
         onHide={this.props.onHide}
@@ -102,6 +134,7 @@ class AddReviewModal extends Component {
         </Modal.Header>
         <Form>
           <Modal.Body>
+            <div id="error">{this.state.error}</div>
             <Form.Group as={Row} controlId="formASIN">
               <Form.Label column sm={2}>
                 ASIN
@@ -150,7 +183,7 @@ class AddReviewModal extends Component {
                   count={5}
                   onChange={this.handleRatingChange}
                   size={24}
-                  isHalf={true}
+                  isHalf={false}
                   emptyIcon={<i className="far fa-star"></i>}
                   halfIcon={<i className="fa fa-star-half-alt"></i>}
                   fullIcon={<i className="fa fa-star"></i>}
@@ -196,6 +229,29 @@ class AddReviewModal extends Component {
           </Modal.Footer>
         </Form>
       </Modal>
+
+      <Modal
+          show={this.state.showSuccess}
+          onHide={this.handleCloseSuccess}
+          backdrop="static"
+          keyboard={false}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Successfully Added Review</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Your review for {this.state.asin} has been successfully added!</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="danger" onClick={this.handleCloseSuccess}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        </LoadingOverlay>
     );
   }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 import axios from "axios";
 import "../Styles/reviewsyouadded.css";
 import ReviewsYouAdded from "../Components/ReviewsByYou/ReviewsYouAdded.jsx";
@@ -32,6 +33,9 @@ class ReviewsYouAddedPage extends Component {
       editOverall: 0,
       editReviewText: "",
       editSummary: "",
+
+      showEditSuccess: false,
+      showDeleteSuccess: false, 
     };
   }
 
@@ -98,6 +102,7 @@ class ReviewsYouAddedPage extends Component {
           this.setState({ reviewsYouAdded: review });
           this.setState({ searching: false });
           console.log(this.state.reviewsYouAdded);
+          this.validateDelete("uploaded", asin);
         }
       })
       .catch((err) => {
@@ -106,9 +111,25 @@ class ReviewsYouAddedPage extends Component {
       });
   };
 
-  handleEdit = (asin, overall, reviewText, summary) => {
-    console.log("handleEdit called");
+  validateDelete = (check, asin) => {
+    if (check == "error") {
+      let error = "* Asin " + asin + " is already taken up";
+      this.setState({ error });
+    } else {
+      this.handleDeleteClose();
+      this.handleDeleteOpenSuccess();
+      console.log("i tried to open the DELETE success modal");
+    }
+  };
 
+  handleDeleteClose = () => {
+    let error = "";
+    this.setState({ error });
+    this.deleteReviewModalClose();
+  };
+
+
+  handleEdit = (asin, overall, reviewText, summary) => {
     this.setState(
       {
         editAsin: asin,
@@ -152,12 +173,30 @@ class ReviewsYouAddedPage extends Component {
         if (res.status === 200) {
           console.log(res.data.message);
           this.getReviews();
+          this.validateEdit("uploaded", asin);
         }
       })
       .catch((err) => {
         console.log(err.response);
         console.log(err.request);
       });
+  };
+
+  validateEdit = (check, asin) => {
+    if (check == "error") {
+      let error = "* Asin " + asin + " is already taken up";
+      this.setState({ error });
+    } else {
+      this.handleEditClose();
+      this.handleEditOpenSuccess();
+      console.log("i tried to open the success modal");
+    }
+  };
+
+  handleEditClose = () => {
+    let error = "";
+    this.setState({ error });
+    this.editReviewModalClose();
   };
 
   deleteReviewModalClose = () =>
@@ -189,11 +228,6 @@ class ReviewsYouAddedPage extends Component {
       },
       this.openModal
     );
-
-    // console.log(asin, this.state.editAsin)
-    // console.log(overall, this.state.editOverall)
-    // console.log(reviewText, this.state.editReviewText)
-    // console.log(summary, this.state.editSummary)
   };
 
   openModal = () => {
@@ -203,6 +237,22 @@ class ReviewsYouAddedPage extends Component {
     console.log(this.state.editSummary);
     this.forceUpdate();
     this.setState({ editReviewModalShow: true });
+  };
+
+  handleEditOpenSuccess = () => {
+    this.setState({ showEditSuccess: true });
+  };
+
+  handleEditCloseSuccess = () => {
+    this.setState({ showEditSuccess: false });
+  };
+
+  handleDeleteOpenSuccess = () => {
+    this.setState({ showDeleteSuccess: true });
+  };
+
+  handleDeleteCloseSuccess = () => {
+    this.setState({ showDeleteSuccess: false });
   };
 
   render() {
@@ -288,7 +338,55 @@ class ReviewsYouAddedPage extends Component {
               editReviewModalClose={this.editReviewModalClose}
             />
           </div>
+          
         </body>
+
+        {/* modal to show edit status  */}
+        <Modal
+          show={this.state.showEditSuccess}
+          onHide={this.handleEditCloseSuccess}
+          backdrop="static"
+          keyboard={false}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Successfully Added Book</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>"{this.state.editAsin}" has been successfully edited!</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="danger" onClick={this.handleEditCloseSuccess}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        {/* modal to show delete success  */}
+        <Modal
+          show={this.state.showDeleteSuccess}
+          onHide={this.handleDeleteCloseSuccess}
+          backdrop="static"
+          keyboard={false}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Successfully Deleted Book</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>This book has been successfully deleted!</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="danger" onClick={this.handleDeleteCloseSuccess}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        
       </LoadingOverlay>
     );
   }

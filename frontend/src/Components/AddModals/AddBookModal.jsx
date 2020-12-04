@@ -313,7 +313,7 @@ class AddBookModal extends Component {
             <Modal.Title>Successfully Added Book</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>Asin "{this.state.asin}" has been successfully added!</p>
+            <p>"{this.state.title}" has been successfully added!</p>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="danger" onClick={this.handleCloseSuccess}>
