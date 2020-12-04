@@ -243,6 +243,9 @@ echo "Installed MySQL."
 # Add hadoop to PATH permanently, so we can call 'hdfs' straightaway.
 echo 'export PATH=$PATH:/opt/hadoop-3.3.0/bin' >> ~/.bash_profile
 
+# Download correlation.py from Dropbox
+wget https://www.dropbox.com/s/md5edrovuv8s4n4/correlation.py?dl=0 correlation.py
+
 exit
 
 rm ips.txt

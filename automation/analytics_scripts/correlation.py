@@ -8,12 +8,14 @@ from pyspark import SparkContext
 from pyspark.sql import functions as F
 from pyspark.sql.types import DoubleType
 
-# to run
+########################## HOW TO RUN ############################
 # /opt/spark-3.0.1-bin-hadoop3.2/bin/spark-submit --master spark://<master-ip>:7077 correlation.py <master-private-ip>
 # /opt/spark-3.0.1-bin-hadoop3.2/bin/spark-submit --master spark://ec2-54-169-135-228.ap-southeast-1.compute.amazonaws.com:7077 correlation.py ec2-54-169-135-228.ap-southeast-1.compute.amazonaws.com
 
+########################### VARIABLES ############################
+
 MASTER = sys.argv[1]
-REVIEWS_FILE = "kindle_reviews.csv"
+REVIEWS_FILE = "kindle_reviews.tsv"
 METADATA_FILE = "kindle_meta.json"
 RESULT_OUTPUT_DIR = "corr"
 
@@ -34,7 +36,7 @@ df_reviews = spark.read\
 df_metadata = spark.read\
 	        .option("inferSchema", "true")\
             .json("hdfs://{}:9000/data/{}".format(MASTER, METADATA_FILE))
-df_metadata = df_metadata.withColumn("price", df_metadata["price"].cast(DoubleType()))
+df_metadata = df_metadata.withColumn("price", df_metadata["price"].cast(DoubleType())) # Convert type from string to double
 
 ######################## PREP DATAFRAME ##########################
 
