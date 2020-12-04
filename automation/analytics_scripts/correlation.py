@@ -8,7 +8,12 @@ from pyspark import SparkContext
 from pyspark.sql import functions as F
 from pyspark.sql.types import DoubleType
 
+########################## INFORMATION ###########################
+
+# This file is hosted in Dropbox. If automation script fails to extract this, means it have been taken done. So just retrieve it from here instead.
+
 ########################## HOW TO RUN ############################
+
 # /opt/spark-3.0.1-bin-hadoop3.2/bin/spark-submit --master spark://<master-ip>:7077 correlation.py <master-private-ip>
 # /opt/spark-3.0.1-bin-hadoop3.2/bin/spark-submit --master spark://ec2-54-169-135-228.ap-southeast-1.compute.amazonaws.com:7077 correlation.py ec2-54-169-135-228.ap-southeast-1.compute.amazonaws.com
 
