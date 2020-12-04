@@ -8,7 +8,7 @@ sleep 1
 
 # Ingest data from MySQL
 mysql -u historicriptide -pfuturesparkles -h $MySQLIP --port=3306 --batch --raw -e 'select asin, reviewText FROM readme_sql.Kindle' > /home/hadoop/kindle_reviews.tsv
-tr '\t' ',' < /home/hadoop/kindle_reviews.tsv > /home/hadoop/kindle_reviews.csv
+# tr '\t' ',' < /home/hadoop/kindle_reviews.tsv > /home/hadoop/kindle_reviews.csv
 sleep 1
 
 # Copy data to hdfs

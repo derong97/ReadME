@@ -27,7 +27,7 @@ spark = SparkSession(sc)
 df_reviews = spark.read\
             .option("header", "true")\
             .option("inferScheme", "true")\
-            .csv("hdfs://{}:9000/data/{}".format(MASTER, REVIEWS_FILE), header=True, sep=",")
+            .csv("hdfs://{}:9000/data/{}".format(MASTER, REVIEWS_FILE), header=True, sep="\t")
 
 ##################### LOAD METADATA (MONGO) ######################
 
