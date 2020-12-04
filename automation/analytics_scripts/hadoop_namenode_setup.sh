@@ -245,7 +245,7 @@ echo 'export PATH=$PATH:/opt/hadoop-3.3.0/bin' >> ~/.bash_profile
 
 # Download correlation.py and tfidf.py from Dropbox
 wget https://www.dropbox.com/s/md5edrovuv8s4n4/correlation.py?dl=0 -O correlation.py
-wget https://www.dropbox.com/s/zube51bf7juwo3n/tfidf.py?dl=0 -O tfidy.py
+wget https://www.dropbox.com/s/zube51bf7juwo3n/tfidf.py?dl=0 -O tfidf.py
 
 echo "Deleting Hadoop setup files (.tgz). (UNTESTED)"
 sudo rm hadoop-3.3.0.tgz
