@@ -2,7 +2,7 @@
 
 sudo MongoDBIP=$MongoDBIP MySQLIP=$MySQLIP su -p - hadoop
 
-# Ingest data from MongoDB 
+# Ingest data from MongoDB
 mongoexport --host=$MongoDBIP:27017 --username=historicriptide --password=futuresparkles --authenticationDatabase=admin --db=readme_mongo --collection=kindle_metadata --out=/home/hadoop/kindle_meta.json
 sleep 1
 

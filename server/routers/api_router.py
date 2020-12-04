@@ -11,7 +11,7 @@ import logging
 import logging.handlers
 from log4mongo.handlers import MongoHandler
 
-#######################   LOGGING-   #######################
+#######################   LOGGING   #######################
 mhandler = MongoHandler(
     host='mongodb://{}:{}@{}:27017'.format(MONGO_USER, MONGO_PW, MONGO_IP),
     database_name=MONGO_DB, 
