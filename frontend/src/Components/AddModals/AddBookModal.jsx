@@ -91,19 +91,11 @@ class AddBookModal extends Component {
     axios
       .post(url, params, headers)
       .then((res) => {
-        const username = res.data.username;
-        const id = res.data.reviewerID;
-        if (res.status == 200) {
+ 
+        if (res.status === 200) {
           this.validate("uploaded", asin);
           this.setState({ loading: false });
-          // this.props.event.props.history.push({
-          //   pathname: "/main",
-          //   state: {
-          //     token: this.state.token,
-          //     id: id,
-          //     username: username,
-          //   },
-          // });
+
         }
       })
       .catch((err) => {
@@ -114,7 +106,7 @@ class AddBookModal extends Component {
   };
 
   validate = (check, asin) => {
-    if (check == "error") {
+    if (check === "error") {
       let error = "* Asin " + asin + " is already taken up";
       this.setState({ error });
     } else {

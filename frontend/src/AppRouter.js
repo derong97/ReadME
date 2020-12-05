@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import HomePage from './Pages/homePage'
@@ -7,42 +7,41 @@ import SignupPage from './Pages/signupPage'
 import MainPage from './Pages/mainPage'
 import SearchPage from './Pages/searchAuthor'
 import BookPage from './Pages/bookPage'
-import BooksYouAddedPage from './Pages/booksYouAddedPage'
 import ReviewsYouAddedPage from './Pages/reviewsYouAddedPage'
 import decode from 'jwt-decode'
 
-const checkAuth = () => {
-    const token = localStorage.getItem('token');
-    console.log("checkAuth called with token: " + token)
-    const refreshToken = localStorage.getItem('refreshToken');
-    if (!token || !refreshToken) {
-      return false;
-    }
+// const checkAuth = () => {
+//     const token = localStorage.getItem('token');
+//     console.log("checkAuth called with token: " + token)
+//     const refreshToken = localStorage.getItem('refreshToken');
+//     if (!token || !refreshToken) {
+//       return false;
+//     }
   
-    try {
-      // { exp: 12903819203 }
-      const { exp } = decode(refreshToken);
+//     try {
+//       // { exp: 12903819203 }
+//       const { exp } = decode(refreshToken);
   
-      if (exp < new Date().getTime() / 1000) {
-        return false;
-      }
+//       if (exp < new Date().getTime() / 1000) {
+//         return false;
+//       }
   
-    } catch (e) {
-      return false;
-    }
+//     } catch (e) {
+//       return false;
+//     }
   
-    return true;
-  }
+//     return true;
+//   }
 
-  const AuthRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={props => (
-      checkAuth() ? (
-        <Component {...props} />
-      ) : (
-          <Redirect to={{ pathname: '/login' }} />
-        )
-    )} />
-  )
+//   const AuthRoute = ({ component: Component, ...rest }) => (
+//     <Route {...rest} render={props => (
+//       checkAuth() ? (
+//         <Component {...props} />
+//       ) : (
+//           <Redirect to={{ pathname: '/login' }} />
+//         )
+//     )} />
+//   )
 
 const AppRouter = () => {
     return (

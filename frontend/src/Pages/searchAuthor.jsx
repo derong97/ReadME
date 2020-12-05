@@ -7,7 +7,6 @@ import NavBar from "../Components/NavBar.jsx";
 import Book from "../Components/BookItem.jsx";
 import Pagination from "react-js-pagination";
 import LoadingOverlay from "react-loading-overlay";
-import Footer from "../Components/Footer.jsx";
 
 class SearchAuthor extends React.Component {
   constructor(props) {
@@ -126,7 +125,6 @@ class SearchAuthor extends React.Component {
             onChange={this.handlePageChange.bind(this)}
           />
 
-          {/* <Footer></Footer> */}
         </body>
       </LoadingOverlay>
     );

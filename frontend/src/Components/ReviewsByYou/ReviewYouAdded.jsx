@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrashAlt,
   faPenSquare,
-  faAirFreshener,
 } from "@fortawesome/free-solid-svg-icons";
 import ReadMoreReact from "read-more-react";
 import "../../Styles/reviewsyouadded.css";
@@ -60,7 +59,7 @@ class ReviewYouAdded extends Component {
     } else if (hh === 12) {
       h = 12;
       ampm = 'PM';
-    } else if (hh == 0) {
+    } else if (hh === 0) {
       h = 12;
     }
     

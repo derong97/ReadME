@@ -6,7 +6,6 @@ import { Form } from "react-bootstrap";
 import GridList from "@material-ui/core/GridList";
 import NavBar from "../Components/NavBar.jsx";
 import Book from "../Components/BookItem.jsx";
-import Footer from "../Components/Footer.jsx";
 import Pagination from "react-js-pagination";
 import Logo from "../Image/logo_black.png";
 import Select from "react-select";

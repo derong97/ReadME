@@ -72,6 +72,7 @@ class AddReviewModal extends Component {
       .then((res) => {
         console.log(res);
         this.setState({responseMessage: res.data.message})
+        console.log("res data message assigned")
         if (res.status === 200) {
           this.props.event.setState({
             searching: false,
@@ -82,16 +83,20 @@ class AddReviewModal extends Component {
         
       })
       .catch((err) => {
+        this.setState({responseMessage: err.response.data.message});
+        this.props.event.setState({
+          searching: false,
+        });
         this.validate("error", asin);
+        console.log("error caught");
         console.log(err.response);
         console.log(err.request);
       });
   };
 
   validate = (check, asin) => {
-    if (check == "error") {
-      let error = "* Asin " + asin + " is already taken up";
-      this.setState({ error, loading: false });
+    if (check === "error") {
+      let error = "* ASIN " + asin + " is already taken up";
       this.handleOpenSuccess();
     } else { //if state is uploaded
       this.handleClose();
@@ -144,8 +149,8 @@ class AddReviewModal extends Component {
                 <Form.Control
                   required
                   type="input"
-                  placeholder="enter the book's asin number."
-                  required
+                  placeholder="enter the book's ASIN number."
+                  // required
                   onChange={this.handleASINChange}
                 />
                 <Form.Text className="text-muted">

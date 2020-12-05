@@ -81,7 +81,7 @@ class BookPage extends React.Component {
     else length = 3;
 
     var check = 0;
-    var i = 0;
+    i = 0;
     var data;
     while (check < length) {
       // console.log(bought[i]);
@@ -197,7 +197,7 @@ class BookPage extends React.Component {
                     </text>
                     <Expand open={this.state.open}>
                       <div id="details" className="col">
-                        Asin: {this.state.book.asin}
+                        ASIN: {this.state.book.asin}
                       </div>
                       <div id="details" className="col">
                         Brand: {this.state.book.brand}
@@ -273,7 +273,6 @@ class BookPage extends React.Component {
             />
           </div>
 
-          {/* <Footer></Footer> */}
         </body>
       </LoadingOverlay>
     );

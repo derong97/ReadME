@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Modal, Button, Row, Col, Form } from "react-bootstrap";
-import axios from "axios";
 import ReactStars from "react-rating-stars-component";
 
 class EditReviewModal extends Component {
