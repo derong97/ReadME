@@ -65,52 +65,71 @@ class AddBookModal extends Component {
   };
 
   handleSubmit = (event) => {
-    const url = "/book/add";
-
-    const title = this.state.title;
-    const asin = this.state.asin;
-    const description = this.state.description;
-    const price = this.state.price;
-    const imUrl = this.state.imageURL;
-    const categories = this.state.categories;
-
-    const headers = { headers: { "x-access-tokens": this.state.token } };
-
-    const params = {
-      title: title,
-      asin: asin,
-      description: description,
-      price: price,
-      imUrl: imUrl,
-      categories: categories,
-    };
-
-    if (asin === "") {
-      this.validate("empty", asin);
-    }
-
-    this.setState({ loading: true });
+    console.log(this.state.asin);
+    console.log(this.state.title);
+    console.log(this.state.description);
+    console.log(this.state.price);
+    console.log(this.state.imageURL);
+    console.log(this.state.categories);
+    console.log(this.state.token);
 
     event.preventDefault();
-    axios
-      .post(url, params, headers)
-      .then((res) => {
- 
-        if (res.status === 200) {
-          this.validate("uploaded", asin);
-          this.setState({ loading: false });
-        }
-      })
-      .catch((err) => {
-        this.validate("error", asin);
-        console.log(err.response);
-        console.log(err.request);
-      });
+    if (
+      !this.state.asin ||
+      !this.state.title ||
+      !this.state.description ||
+      !this.state.price ||
+      !this.state.imageURL ||
+      !this.state.categories
+    ) {
+      this.validate("empty", this.state.asin);
+    } else {
+      const url = "/book/add";
+
+      const title = this.state.title;
+      const asin = this.state.asin;
+      const description = this.state.description;
+      const price = this.state.price;
+      const imUrl = this.state.imageURL;
+      const categories = this.state.categories;
+
+      const headers = { headers: { "x-access-tokens": this.state.token } };
+
+      const params = {
+        title: title,
+        asin: asin,
+        description: description,
+        price: price,
+        imUrl: imUrl,
+        categories: categories,
+      };
+
+      this.setState({ loading: true });
+
+      axios
+        .post(url, params, headers)
+        .then((res) => {
+          if (res.status == 200) {
+            this.validate("uploaded", asin);
+            this.setState({
+              loading: false,
+            });
+          }
+        })
+        .catch((err) => {
+          this.validate("error", asin);
+          console.log(err.response);
+          console.log(err.request);
+        });
+    }
   };
 
   validate = (check, asin) => {
-    if (check === "empty") {
-      let error = "Please fill in the book asin";
+    if (check == "error") {
+      let error = "* Asin " + asin + " is already taken up";
+      this.setState({ error });
+    } else if (check == "empty") {
+      let error = "* Please fill in all the empty fields";
       this.setState({ error });
     }
     else if (check === "error") {
@@ -124,7 +143,16 @@ class AddBookModal extends Component {
 
   handleClose = () => {
     let error = "";
-    this.setState({ error });
+    this.setState({
+      title: "",
+      imageURL: "",
+      asin: "",
+      price: "",
+      description: "",
+      categories: "",
+      loading: false,
+      error,
+    });
     this.props.onHide();
   };
 
@@ -133,7 +161,15 @@ class AddBookModal extends Component {
   };
 
   handleCloseSuccess = () => {
-    this.setState({ showSuccess: false });
+    this.setState({
+      title: "",
+      imageURL: "",
+      asin: "",
+      price: "",
+      description: "",
+      categories: "",
+      showSuccess: false,
+    });
   };
 
   render() {
@@ -311,7 +347,7 @@ class AddBookModal extends Component {
             <Modal.Title>Successfully Added Book</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>"{this.state.title}" has been successfully added!</p>
+            <p>"{this.state.asin}" has been successfully added!</p>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="danger" onClick={this.handleCloseSuccess}>
