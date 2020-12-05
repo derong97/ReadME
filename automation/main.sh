@@ -67,7 +67,7 @@
   sudo chmod 400 $keyname.pem
 
   # Store local copies of variable names
-  echo "StackName=$stackname" | tee -a logs.log
+  echo "StackName=$stackname" | tee logs.log
   echo "KeyName=$keyname" | tee -a  logs.log
 }
 
@@ -156,20 +156,10 @@
 
   echo """
   ============================================================================
-                          EAGER DOWNLOADS FOR HADOOP CLUSTER
+                          EAGER DOWNLOAD FOR NAMENODE
   ============================================================================
   """
-  j=0
-  for ip in ${HadoopPublicIPs[@]}
-  do
-    if [ $j -eq 0 ]
-    then
-      ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' bash -s" < ./analytics_scripts/namenode_eager_dl.sh
-    else
-      ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem 'bash -s' < ./analytics_scripts/datanode_eager_dl.sh
-    fi
-    j=$((j+1))
-  done
+  ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' bash -s" < ./analytics_scripts/namenode_eager_dl.sh
 } &
 
 {
