@@ -243,15 +243,17 @@ class ReviewsYouAddedPage extends Component {
             byme="nav-main"
           ></NavBar>
 
-          <div id="review-header">
-            <h2>Reviews You Added</h2>
-            <div className="row">
-              <h5 id="review-text">
-                Here lies the reviews you have contributed to the ReadME
-                community.
-              </h5>
-              <br></br>
-              <br></br>
+          <div id="review-header" class="row">
+            <div class="col">
+              <h2>Reviews You Added</h2>
+              <div class="row">
+                <h5 id="review-text">
+                  Here lies the reviews you have contributed to the ReadME
+                  community.
+                </h5>
+              </div>
+            </div>
+            <div class="col">
               <button
                 className="add-review-bttn"
                 id="add-review-bttn"
