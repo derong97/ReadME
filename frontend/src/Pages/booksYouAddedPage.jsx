@@ -21,7 +21,6 @@ class BooksYouAddedPage extends Component {
 
   handleDelete = (asin) => {
     //create new array without given counter
-    console.log("delete called", asin);
     // const counters = this.state.counters.filter((c) => c.id !== counterId);
     // this.setState({ counters });
   };

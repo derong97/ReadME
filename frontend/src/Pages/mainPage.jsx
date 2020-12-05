@@ -70,7 +70,6 @@ class MainPage extends React.Component {
   z;
 
   getBooks = () => {
-    console.log(this.state.category);
     var params = new URLSearchParams();
     for (var cat of this.state.category) {
       params.append("category", cat);
@@ -88,8 +87,7 @@ class MainPage extends React.Component {
         console.log(res);
         const metadata = res.data.metadata;
         const count = res.data.total_counts;
-        console.log(metadata);
-        console.log(count);
+      
         if (res.status === 200) {
           this.setState({ books: metadata, count: count });
           this.setState({ loading: false });
@@ -113,11 +111,6 @@ class MainPage extends React.Component {
     this.setState({
       category: catList,
     });
-
-    console.log("cat change", cat);
-    console.log(cat.length);
-    console.log(catList);
-    console.log(this.state.category);
   };
 
   categoryOnSubmit = (evt) => {
@@ -142,8 +135,7 @@ class MainPage extends React.Component {
         console.log(res);
         const metadata = res.data.metadata;
         const count = res.data.total_counts;
-        console.log(metadata);
-        console.log(count);
+
         if (res.status === 200) {
           this.setState({ searching: false });
           this.props.history.push({

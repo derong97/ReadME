@@ -119,9 +119,9 @@ class LoginPage extends React.Component {
                 <button type="submit" id="confirm-bttn">
                   Login
                 </button>
-                <text id="forgotpw-bttn">
+                {/* <text id="forgotpw-bttn">
                   <u>forgot password?</u>
-                </text>
+                </text> */}
                 <div id="alt-bg">
                   <text>Don't have an account?</text>
                   <Link exact to="/signup">

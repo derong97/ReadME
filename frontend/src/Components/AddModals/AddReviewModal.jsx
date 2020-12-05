@@ -78,8 +78,8 @@ class AddReviewModal extends Component {
           });
           this.validate("uploaded", asin);
           console.log(res.data.message);
-          console.log(this.state.loading);
         }
+        
       })
       .catch((err) => {
         this.validate("error", asin);
@@ -91,7 +91,8 @@ class AddReviewModal extends Component {
   validate = (check, asin) => {
     if (check == "error") {
       let error = "* Asin " + asin + " is already taken up";
-      this.setState({ error });
+      this.setState({ error, loading: false });
+      this.handleOpenSuccess();
     } else { //if state is uploaded
       this.handleClose();
       // this.setState({loading: false});
@@ -240,10 +241,10 @@ class AddReviewModal extends Component {
           centered
         >
           <Modal.Header closeButton>
-            <Modal.Title>Successfully Added Review</Modal.Title>
+            <Modal.Title>Add Review Status</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>Your review for {this.state.asin} has been successfully added!</p>
+            <p>{this.state.responseMessage}</p>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="danger" onClick={this.handleCloseSuccess}>
