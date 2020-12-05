@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Button, Row, Col, Form } from "react-bootstrap";
-import axios from "axios";
+import { Modal, Button} from "react-bootstrap";
 
 class DeleteReviewModal extends Component {
   constructor(props) {

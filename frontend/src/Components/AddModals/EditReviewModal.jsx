@@ -49,6 +49,26 @@ class EditReviewModal extends Component {
     });
   }
 
+  handleInternalSubmit = () => {
+    if (this.state.reviewText === "" || this.state.reviewTitle === ""){
+      this.internalValidate("empty", this.state.asin);
+    }
+
+    else {
+      this.props.handleEdit(this.state.asin, this.state.rating, this.state.reviewText, this.state.reviewTitle);
+    }
+
+  }
+
+  internalValidate = (check, asin) => {
+    let error = ""
+    if (check === "empty") {
+      console.log("EMPTY IF STATEMENT")
+      error = "* Please fill in all fields before submitting."
+      this.setState({error, loading: false});
+    }
+  }
+
   render() {
     return (
       <Modal
@@ -65,6 +85,7 @@ class EditReviewModal extends Component {
         </Modal.Header>
         <Form>
           <Modal.Body>
+            <div id="error">{this.state.error}</div>
             <Form.Group as={Row} controlId="formASIN">
               <Form.Label column sm={2}>
                 ASIN
@@ -156,7 +177,7 @@ class EditReviewModal extends Component {
             <Button variant="danger" type="submit" onClick={this.props.onHide}>
               Cancel
             </Button>
-            <Button variant="outline-success" onClick={() => this.props.handleEdit(this.state.asin, this.state.rating, this.state.reviewText, this.state.reviewTitle)}>
+            <Button variant="outline-success" onClick={this.handleInternalSubmit}>
               Update Review
             </Button>
           </Modal.Footer>

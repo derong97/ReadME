@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Modal, Button, Row, Col, Form } from "react-bootstrap";
-import Ratings from "react-ratings-declarative";
 import ReactStars from "react-rating-stars-component";
 import axios from "axios";
 import LoadingOverlay from "react-loading-overlay";
@@ -48,7 +47,7 @@ class AddReviewModal extends Component {
   };
 
   handleSubmit = (event) => {
-    this.props.onHide();
+    
     this.props.event.setState({
       searching: true,
     });
@@ -66,10 +65,16 @@ class AddReviewModal extends Component {
       summary: summary,
     };
 
-    event.preventDefault();
-    axios
+    if (asin === 0 || reviewText === "" || summary === ""){
+      this.validate("empty", asin);
+    }
+
+    else {
+      event.preventDefault();
+      axios
       .post(url, params, headers)
       .then((res) => {
+        this.props.onHide();
         console.log(res);
         this.setState({ responseMessage: res.data.message });
         if (res.status === 200) {
@@ -85,17 +90,32 @@ class AddReviewModal extends Component {
         console.log(err.response);
         console.log(err.request);
       });
+
+    }
+
   };
 
   validate = (check, asin) => {
-    if (check == "error") {
-      let error = "* Asin " + asin + " is already taken up";
-      this.setState({ error, loading: false });
-      this.handleOpenSuccess();
+    let error = ""
+    if (check === "empty") {
+      console.log("EMPTY IF STATEMENT")
+      error = "* Please fill in all fields before submitting."
+      this.setState({error});
+      this.props.event.setState({
+        searching: false,
+      });
+    }
+    else if (check === "error") {
+      console.log("ERROR IF STATEMENT")
+      error = "* You have already given a review for the book with ASIN " + asin +". Please edit your existing review instead.";
+      this.setState({ error});
+      this.props.event.setState({
+        searching: false,
+      });
     } else {
+      console.log("review success!");
       //if state is uploaded
       this.handleClose();
-      // this.setState({loading: false});
       this.handleOpenSuccess();
     }
   };
@@ -119,7 +139,7 @@ class AddReviewModal extends Component {
       <LoadingOverlay
         active={this.state.loading}
         spinner
-        text="adding book ..."
+        text="adding review ..."
       >
         <Modal
           show={this.props.show}
@@ -224,9 +244,7 @@ class AddReviewModal extends Component {
               >
                 Add Review
               </Button>
-              {/* <form ref="form" onSubmit={this.handleSubmit}>
-              <button variant="outline-info" type="submit">ADD REVIEW</button>
-            </form> */}
+              
             </Modal.Footer>
           </Form>
         </Modal>

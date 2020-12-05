@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { Modal, Button, Row, Col, Form } from "react-bootstrap";
+import { Modal, Button} from "react-bootstrap";
 import axios from "axios";
 import "../Styles/reviewsyouadded.css";
 import ReviewsYouAdded from "../Components/ReviewsByYou/ReviewsYouAdded.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import Footer from "../Components/Footer.jsx";
 import NavBar from "../Components/NavBar.jsx";
 import LoadingOverlay from "react-loading-overlay";
 import AddReviewModal from "../Components/AddModals/AddReviewModal.jsx";
@@ -112,7 +111,7 @@ class ReviewsYouAddedPage extends Component {
   };
 
   validateDelete = (check, asin) => {
-    if (check == "error") {
+    if (check === "error") {
       let error = "* Asin " + asin + " is already taken up";
       this.setState({ error });
     } else {
@@ -183,13 +182,12 @@ class ReviewsYouAddedPage extends Component {
   };
 
   validateEdit = (check, asin) => {
-    if (check == "error") {
+    if (check === "error") {
       let error = "* Asin " + asin + " is already taken up";
       this.setState({ error });
     } else {
       this.handleEditClose();
       this.handleEditOpenSuccess();
-      console.log("i tried to open the success modal");
     }
   };
 

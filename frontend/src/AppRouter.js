@@ -1,10 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
 } from "react-router-dom";
 import HomePage from "./Pages/homePage";
 import LoginPage from "./Pages/loginPage";
@@ -13,7 +12,6 @@ import MainPage from "./Pages/mainPage";
 import SearchPage from "./Pages/searchAuthor";
 import BookPage from "./Pages/bookPage";
 import ReviewsYouAddedPage from "./Pages/reviewsYouAddedPage";
-import decode from "jwt-decode";
 
 
 

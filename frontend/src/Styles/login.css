@@ -37,14 +37,14 @@
 
 #error {
   margin-bottom: 20px;
-  font-family: "Gotham-Thin";
+  font-family: "Gotham-Book";
   font-size: 15px;
   color: red;
 }
 
 #signup-error {
   margin-bottom: 5px;
-  font-family: "Gotham-Thin";
+  font-family: "Gotham-Book";
   font-size: 15px;
   color: red;
 }

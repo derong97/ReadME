@@ -8,7 +8,6 @@ import NavBar from "../Components/NavBar.jsx";
 import ReviewItem from "../Components/ReviewItem";
 import RelatedBook from "../Components/RelatedBook";
 import LoadingOverlay from "react-loading-overlay";
-import Footer from "../Components/Footer.jsx";
 import StarRatings from "react-star-ratings";
 import Expand from "react-expand-animated";
 import AddReviewModal from "../Components/AddModals/AddReviewModal.jsx";

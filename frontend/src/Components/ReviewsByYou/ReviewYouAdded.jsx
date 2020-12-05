@@ -39,7 +39,9 @@ class ReviewYouAdded extends Component {
   componentDidMount() {
     this.getBook();
     var convertedUnix = this.convertTimestamp(this.state.unixReviewTime);
-    this.setState({unixReviewTime: convertedUnix});
+    this.setState({unixReviewTime: convertedUnix
+    });
+    
   }
 
   convertTimestamp(timestamp) {
@@ -82,7 +84,11 @@ class ReviewYouAdded extends Component {
         const book = res.data.metadata;
         // console.log(book);
         if (res.status === 200) {
-          this.setState({ book: book });
+          // this.setState({ book: book });
+          this.setState({ book: book.imUrl == null ? "[no image]" : book.imUrl });
+          this.setState({ book: book.title == null ? "[no title]" : book.title });
+          this.setState({ book: book.categories == null ? "[no categories]" : book.categories });
+
         }
       })
       .catch((err) => {

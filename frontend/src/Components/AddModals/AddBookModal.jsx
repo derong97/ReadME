@@ -85,7 +85,7 @@ class AddBookModal extends Component {
       categories: categories,
     };
 
-    if (asin == "") {
+    if (asin === "") {
       this.validate("empty", asin);
     }
 
@@ -109,13 +109,14 @@ class AddBookModal extends Component {
   };
 
   validate = (check, asin) => {
-    if (check === "error") {
-      let error = "* Asin " + asin + " is already taken up";
-      this.setState({ error });
-    } else if (check == "empty") {
+    if (check === "empty") {
       let error = "Please fill in the book asin";
       this.setState({ error });
-    } else {
+    }
+    else if (check === "error") {
+      let error = "* Asin " + asin + " is already taken up.";
+      this.setState({ error });
+    }  else {
       this.handleClose();
       this.handleOpenSuccess();
     }
