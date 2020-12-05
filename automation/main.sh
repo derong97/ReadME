@@ -156,7 +156,7 @@
 
   echo """
   ============================================================================
-                          EAGER DOWNLOAD FOR NAMENODE
+                            EAGER DOWNLOAD FOR NAMENODE
   ============================================================================
   """
   ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' bash -s" < ./analytics_scripts/namenode_eager_dl.sh
@@ -165,17 +165,20 @@
 {
   echo """
   ============================================================================
-                                SET UP HADOOP
+                            HADOOP NETWORK SET UP
   ============================================================================
   """
-  # Network Set Up
   for ip in ${HadoopPublicIPs[@]}
   do
     echo "Network Setup for $ip"
     ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./analytics_scripts/network_setup.sh ${HadoopPrivateIPs[@]}
   done
   
-  # Generating and distributing keys
+  echo """
+  ============================================================================
+                          GENERATE AND DISTRIBUTE KEYS
+  ============================================================================
+  """
   i=0
   for ip in ${HadoopPublicIPs[@]}
   do
@@ -194,7 +197,11 @@
     i=$((i+1))
   done
 
-  # Hadoop Setup
+  echo """
+  ============================================================================
+                        HADOOP AND SPARK CONFIGURATIONS
+  ============================================================================
+  """
   i=0
   for ip in ${HadoopPublicIPs[@]}
   do
@@ -208,7 +215,11 @@
     i=$((i+1))
   done
 
-  # Initialize hadoop and spark cluster
+  echo """
+  ============================================================================
+                            INITIALIZE HADOOP AND SPARK
+  ============================================================================
+  """
   ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem 'bash -s' < ./analytics_scripts/init_hadoop_and_spark.sh
 } &
 
@@ -217,7 +228,7 @@ wait
 {
   echo """
   ============================================================================
-                                ANALYTICS
+                                  SPARK ANALYTICS
   ============================================================================
   """
   ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem 'bash -s' < ./analytics_scripts/copy_to_hdfs.sh
