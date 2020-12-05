@@ -44,79 +44,90 @@ echo """
 ============================================================================
 """
 
-{
-  read -p "Enter desired stack name [ReadMe]: " stackname
-  if [[ -z "$stackname" ]]; then
-    stackname=ReadMe
-  fi
+read -p "Enter desired stack name [ReadMe]: " stackname
+if [[ -z "$stackname" ]]; then
+  stackname=ReadMe
+fi
 
-  keyname=${stackname}-key
-  
-  while :
-  do
-      read -p "Enter desired cluster size (choose 2, 4, 6 or 8): " cluster_size
-      if [[ "$cluster_size" =~ ^(2|4|6|8)$ ]]; then
-          break
-      else
-          echo "You can only choose one of these numbers: 2, 4, 6, 8"
-      fi
-  done
+keyname=${stackname}-key
 
-  # Public key stored on AWS; private key is stored locally
-  aws ec2 create-key-pair --key-name $keyname --query 'KeyMaterial' --output text > $keyname.pem
-  sudo chmod 400 $keyname.pem
-
-  # Store local copies of variable names
-  echo "StackName=$stackname" | tee -a logs.log
-  echo "KeyName=$keyname" | tee -a  logs.log
-} || {
-  echo "Error creating configuring application"
-  exit
-}
-
-echo """
-============================================================================
-            DEPLOYING CLOUD FORMATION STACK (PRODUCTION SYSTEM)
-============================================================================
-"""
-{
-  echo "Deploying Cloud Formation Stack"
-  aws cloudformation create-stack --stack-name $stackname --template-body file://./cloud_formation/production_template.json --parameters ParameterKey=KeyName,ParameterValue=$keyname
-  
-  # Ping status
-  while :
-  do 
-    aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[][ [ StackName, StackStatus ] ][]" --output text | grep -q 'CREATE_COMPLETE'
-    if [ $? == 0 ]; then
-      echo "Stack Status is complete!"
-      break
+while :
+do
+    read -p "Enter desired cluster size (choose 2, 4, 6 or 8): " cluster_size
+    if [[ "$cluster_size" =~ ^(2|4|6|8)$ ]]; then
+        break
     else
-      echo "Stack Status still not complete. Pinging status again... "
-      sleep 3s
+        echo "You can only choose one of these numbers: 2, 4, 6, 8"
     fi
-  done
-} || {
-  echo "Error deploying Cloud Formation Stack"
-  exit
-}
+done
+
+# Public key stored on AWS; private key is stored locally
+aws ec2 create-key-pair --key-name $keyname --query 'KeyMaterial' --output text > $keyname.pem
+sudo chmod 400 $keyname.pem
+
+# Store local copies of variable names
+echo "StackName=$stackname" | tee -a logs.log
+echo "KeyName=$keyname" | tee -a  logs.log
 
 echo """
 ============================================================================
-           QUERYING FOR INSTANCES IP ADDRESSES (PRODUCTION SYSTEM)
+                          DEPLOY CLOUD FORMATION STACK
 ============================================================================
 """
-{
-  WebServerIP=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='WebServerIP'].OutputValue" --output text)
-  MySQLIP=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='MySQLIP'].OutputValue" --output text)
-  MongoDBIP=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='MongoDBIP'].OutputValue" --output text)
 
-  echo "WebServerIP=$WebServerIP" | tee -a logs.log
-  echo "MySQLIP=$MySQLIP" | tee -a logs.log
-  echo "MongoDBIP=$MongoDBIP" | tee -a logs.log
-} || {
-  echo "Error getting IP addresses"
-  exit
-}
+# hardcoded now (overrides user input)
+aws cloudformation create-stack --stack-name $stackname --template-body file://./cloud_formation/combined2_template.json --parameters ParameterKey=KeyName,ParameterValue=$keyname
+cluster_size=2
+
+# Ping status
+while :
+do 
+  aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[][ [ StackName, StackStatus ] ][]" --output text | grep -q 'CREATE_COMPLETE'
+  if [ $? == 0 ]; then
+    echo "Stack Status is complete!"
+    break
+  else
+    echo "Stack Status still not complete. Pinging status again... "
+    sleep 3s
+  fi
+done
+
+echo """
+============================================================================
+            QUERY FOR INSTANCES IP ADDRESSES (PRODUCTION SYSTEM)
+============================================================================
+"""
+
+WebServerIP=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='WebServerIP'].OutputValue" --output text)
+MySQLIP=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='MySQLIP'].OutputValue" --output text)
+MongoDBIP=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='MongoDBIP'].OutputValue" --output text)
+
+echo "WebServerIP=$WebServerIP" | tee -a logs.log
+echo "MySQLIP=$MySQLIP" | tee -a logs.log
+echo "MongoDBIP=$MongoDBIP" | tee -a logs.log
+
+echo """
+============================================================================
+              QUERY FOR INSTANCES IP ADDRESSES (ANALYTICS SYSTEM)
+============================================================================
+"""
+
+declare -a HadoopPublicIPs=()
+declare -a HadoopPrivateIPs=()
+
+for ((i=0;i<cluster_size;i++)); do
+  # PUBLIC IP ADDRESSES OF ALL NODES
+  temp=Node${i}PublicIP
+  declare $temp=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='Node${i}PublicIP'].OutputValue" --output text)
+  HadoopPublicIPs+=(${!temp})
+  echo "$temp=${!temp}" | tee -a logs.log
+  
+  # PRIVATE IP ADDRESSES OF ALL NODES
+  temp=Node${i}PrivateIP
+  declare $temp=$(aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[0].Outputs[?OutputKey=='Node${i}PrivateIP'].OutputValue" --output text)
+  HadoopPrivateIPs+=(${!temp})
+  echo "$temp=${!temp}" | tee -a logs.log
+done
 
 echo """
 ============================================================================
@@ -125,10 +136,8 @@ echo """
 """
 {
   ssh -o StrictHostKeyChecking=no ubuntu@$MySQLIP -i $keyname.pem 'bash -s' < ./production_scripts/sql_script.sh
-} || {
-  echo "Error setting up MySQL server"
-  exit
-}
+  SQL=true
+} &
 
 echo """
 ============================================================================
@@ -137,19 +146,92 @@ echo """
 """
 {
   ssh -o StrictHostKeyChecking=no ubuntu@$MongoDBIP -i $keyname.pem 'bash -s' < ./production_scripts/mongo_script.sh
-} || {
-  echo "Error setting up MongoDB server"
-  exit
-}
+  MONGO=true
+} &
 
 echo """
 ============================================================================
                               SET UP WEBSERVER
 ============================================================================
 """
+# THIS STEP MUST WAIT FOR THE MONGO AND SQL IP TO BE GENERATED
 {
+  # until [ "$MONGO" == true ] && [ "$SQL" == true ]; 
+  # do 
+  #   echo "Wait for Mongo and SQL to be done setting up";
+  #   sleep 5 
+  # done
   ssh -o StrictHostKeyChecking=no ubuntu@$WebServerIP -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' WebServerIP='$WebServerIP' bash -s" < ./production_scripts/webserver_script.sh
-} || {
-  echo "Error setting up webserver"
-  exit
+} &
+
+# wait
+
+echo """
+============================================================================
+                              SET UP HADOOP
+============================================================================
+"""
+{
+  # Network Set Up
+  for ip in ${HadoopPublicIPs[@]}
+  do
+    echo "Network Setup for $ip"
+    ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./analytics_scripts/network_setup.sh ${HadoopPrivateIPs[@]}
+  done
+
+  # Generating and distributing keys
+  i=0
+  for ip in ${HadoopPublicIPs[@]}
+  do
+    if [ $i -eq 0 ]
+    then
+      # SSH key generation for namenode
+      echo "Generating ssh key for Node$i"
+      ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./analytics_scripts/key_generation.sh 
+      sleep 1
+    else
+      # Copy the generated keys from namenode to every datanode
+      echo "Distributing ssh key to Node$i"
+      ssh -o StrictHostKeyChecking=no ubuntu@$Node0PublicIP -i $keyname.pem "sudo cat /home/hadoop/.ssh/id_rsa.pub" \
+      | ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem "sudo cat - | sudo tee -a /home/hadoop/.ssh/authorized_keys"
+      sleep 1
+      echo "Finished copying keys to datanodes"
+    fi
+    i=$((i+1))
+  done
+
+  # Hadoop Setup
+  i=0
+  for ip in ${HadoopPublicIPs[@]}
+  do
+    echo "Hadoop Setup for Node$i"
+    if [ $i -eq 0 ]
+    then
+      ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./analytics_scripts/hadoop_namenode_setup.sh ${HadoopPrivateIPs[@]} 
+      sleep 1
+    else
+      ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./analytics_scripts/hadoop_datanode_setup.sh
+      sleep 1
+    fi
+    i=$((i+1))
+  done
+
+  # Initialize hadoop and spark cluster
+  ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem 'bash -s' < ./analytics_scripts/init_hadoop_and_spark.sh
 }
+
+echo """
+============================================================================
+                              RUN ANALYTICS
+============================================================================
+"""
+# THIS STEP MUST WAIT FOR THE MONGO AND SQL IP TO BE GENERATED
+{
+  # until [ "$MONGO" == true ] && [ "$SQL" == true ]; 
+  # do 
+  #   echo "Wait for Mongo and SQL to be done setting up";
+  #   sleep 5 
+  # done
+  ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' bash -s" < ./analytics_scripts/data_ingestion.sh
+  ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem 'bash -s' < ./analytics_scripts/execute_analytics.sh
+} 
