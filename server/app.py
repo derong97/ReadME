@@ -1,8 +1,6 @@
 from flask import Flask, render_template
 from flask_cors import CORS
-
 import os
-from routers import api_router
 
 # App
 app = Flask(__name__,
@@ -10,12 +8,13 @@ app = Flask(__name__,
     template_folder="../frontend/static/templates")
 CORS(app)
 
+# API Routes
+from routers import api_router
 
 @app.route('/')
 def index():
     return render_template("index.html")
 
-# Enables page refresh
 @app.errorhandler(404)
 def not_found(e):
     return render_template("index.html")
