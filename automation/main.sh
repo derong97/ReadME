@@ -92,6 +92,7 @@ do
   fi
 done
 
+
 echo """
 ============================================================================
             QUERY FOR INSTANCES IP ADDRESSES (PRODUCTION SYSTEM)
@@ -129,55 +130,43 @@ for ((i=0;i<cluster_size;i++)); do
   echo "$temp=${!temp}" | tee -a logs.log
 done
 
-echo """
+
+{
+  echo """
 ============================================================================
                               SET UP MYSQL
 ============================================================================
 """
-{
   ssh -o StrictHostKeyChecking=no ubuntu@$MySQLIP -i $keyname.pem 'bash -s' < ./production_scripts/sql_script.sh
   SQL=true
 } &
 
-echo """
+{
+  echo """
 ============================================================================
                               SET UP MONGODB
 ============================================================================
 """
-{
   ssh -o StrictHostKeyChecking=no ubuntu@$MongoDBIP -i $keyname.pem 'bash -s' < ./production_scripts/mongo_script.sh
   MONGO=true
 } &
 
-echo """
-============================================================================
-                              SET UP WEBSERVER
-============================================================================
-"""
-# THIS STEP MUST WAIT FOR THE MONGO AND SQL IP TO BE GENERATED
+
+
 {
-  # until [ "$MONGO" == true ] && [ "$SQL" == true ]; 
-  # do 
-  #   echo "Wait for Mongo and SQL to be done setting up";
-  #   sleep 5 
-  # done
-  ssh -o StrictHostKeyChecking=no ubuntu@$WebServerIP -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' WebServerIP='$WebServerIP' bash -s" < ./production_scripts/webserver_script.sh
-} &
-
-# wait
-
-echo """
+  echo """
 ============================================================================
                               SET UP HADOOP
 ============================================================================
 """
-{
   # Network Set Up
   for ip in ${HadoopPublicIPs[@]}
   do
     echo "Network Setup for $ip"
     ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./analytics_scripts/network_setup.sh ${HadoopPrivateIPs[@]}
+   
   done
+  
 
   # Generating and distributing keys
   i=0
@@ -196,9 +185,11 @@ echo """
       | ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem "sudo cat - | sudo tee -a /home/hadoop/.ssh/authorized_keys"
       sleep 1
       echo "Finished copying keys to datanodes"
+      
     fi
     i=$((i+1))
   done
+
 
   # Hadoop Setup
   i=0
@@ -210,28 +201,41 @@ echo """
       ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./analytics_scripts/hadoop_namenode_setup.sh ${HadoopPrivateIPs[@]} 
       sleep 1
     else
+	    
       ssh -o StrictHostKeyChecking=no ubuntu@$ip -i $keyname.pem 'bash -s' < ./analytics_scripts/hadoop_datanode_setup.sh
       sleep 1
+      
     fi
     i=$((i+1))
   done
 
   # Initialize hadoop and spark cluster
   ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem 'bash -s' < ./analytics_scripts/init_hadoop_and_spark.sh
-}
+} &
 
-echo """
+wait
+
+
+{
+  echo """
+============================================================================
+                              SET UP WEBSERVER
+============================================================================
+"""
+  ssh -o StrictHostKeyChecking=no ubuntu@$WebServerIP -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' WebServerIP='$WebServerIP' bash -s" < ./production_scripts/webserver_script.sh
+} &
+
+
+{
+  echo """
 ============================================================================
                               RUN ANALYTICS
 ============================================================================
 """
-# THIS STEP MUST WAIT FOR THE MONGO AND SQL IP TO BE GENERATED
-{
-  # until [ "$MONGO" == true ] && [ "$SQL" == true ]; 
-  # do 
-  #   echo "Wait for Mongo and SQL to be done setting up";
-  #   sleep 5 
-  # done
   ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' bash -s" < ./analytics_scripts/data_ingestion.sh
   ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem 'bash -s' < ./analytics_scripts/execute_analytics.sh
-} 
+} &
+
+wait
+
+echo "Completed all setup"
