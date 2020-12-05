@@ -71,8 +71,7 @@ class AddReviewModal extends Component {
       .post(url, params, headers)
       .then((res) => {
         console.log(res);
-        this.setState({responseMessage: res.data.message})
-        console.log("res data message assigned")
+        this.setState({ responseMessage: res.data.message });
         if (res.status === 200) {
           this.props.event.setState({
             searching: false,
@@ -80,25 +79,21 @@ class AddReviewModal extends Component {
           this.validate("uploaded", asin);
           console.log(res.data.message);
         }
-        
       })
       .catch((err) => {
-        this.setState({responseMessage: err.response.data.message});
-        this.props.event.setState({
-          searching: false,
-        });
         this.validate("error", asin);
-        console.log("error caught");
         console.log(err.response);
         console.log(err.request);
       });
   };
 
   validate = (check, asin) => {
-    if (check === "error") {
-      let error = "* ASIN " + asin + " is already taken up";
+    if (check == "error") {
+      let error = "* Asin " + asin + " is already taken up";
+      this.setState({ error, loading: false });
       this.handleOpenSuccess();
-    } else { //if state is uploaded
+    } else {
+      //if state is uploaded
       this.handleClose();
       // this.setState({loading: false});
       this.handleOpenSuccess();
@@ -126,117 +121,117 @@ class AddReviewModal extends Component {
         spinner
         text="adding book ..."
       >
-      <Modal
-        show={this.props.show}
-        onHide={this.props.onHide}
-        backdrop="static"
-        keyboard={false}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Add Review</Modal.Title>
-        </Modal.Header>
-        <Form>
-          <Modal.Body>
-            <div id="error">{this.state.error}</div>
-            <Form.Group as={Row} controlId="formASIN">
-              <Form.Label column sm={2}>
-                ASIN
-              </Form.Label>
-              <Col sm={10}>
-                <Form.Control
-                  required
-                  type="input"
-                  placeholder="enter the book's ASIN number."
-                  // required
-                  onChange={this.handleASINChange}
-                />
-                <Form.Text className="text-muted">
-                  The ASIN number is the Amazon Standardard Identification
-                  Number of your book (i.e. the ISBN).
-                </Form.Text>
-                <Form.Control.Feedback type="invalid">
-                  awh hell no this is wrong dont be stupid
-                </Form.Control.Feedback>
-              </Col>
-            </Form.Group>
+        <Modal
+          show={this.props.show}
+          onHide={this.props.onHide}
+          backdrop="static"
+          keyboard={false}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Add Review</Modal.Title>
+          </Modal.Header>
+          <Form>
+            <Modal.Body>
+              <div id="error">{this.state.error}</div>
+              <Form.Group as={Row} controlId="formASIN">
+                <Form.Label column sm={2}>
+                  ASIN
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    required
+                    type="input"
+                    placeholder="enter the book's asin number."
+                    required
+                    onChange={this.handleASINChange}
+                  />
+                  <Form.Text className="text-muted">
+                    The ASIN number is the Amazon Standardard Identification
+                    Number of your book (i.e. the ISBN).
+                  </Form.Text>
+                  <Form.Control.Feedback type="invalid">
+                    awh hell no this is wrong dont be stupid
+                  </Form.Control.Feedback>
+                </Col>
+              </Form.Group>
 
-            <Form.Group as={Row} controlId="formReviewTitle">
-              <Form.Label column sm={2}>
-                Review Title
-              </Form.Label>
-              <Col sm={10}>
-                <Form.Control
-                  required
-                  type="input"
-                  placeholder="Enter review title."
-                  onChange={this.handleReviewTitleChange}
-                />
-                <Form.Text className="text-muted">
-                  Feel free to get creative!
-                </Form.Text>
-              </Col>
-            </Form.Group>
+              <Form.Group as={Row} controlId="formReviewTitle">
+                <Form.Label column sm={2}>
+                  Review Title
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    required
+                    type="input"
+                    placeholder="Enter review title."
+                    onChange={this.handleReviewTitleChange}
+                  />
+                  <Form.Text className="text-muted">
+                    Feel free to get creative!
+                  </Form.Text>
+                </Col>
+              </Form.Group>
 
-            <Form.Group as={Row} controlId="formRatings">
-              <Form.Label column sm={2}>
-                Rating
-              </Form.Label>
-              <Col sm={10}>
-                <ReactStars
-                  count={5}
-                  onChange={this.handleRatingChange}
-                  size={24}
-                  isHalf={false}
-                  emptyIcon={<i className="far fa-star"></i>}
-                  halfIcon={<i className="fa fa-star-half-alt"></i>}
-                  fullIcon={<i className="fa fa-star"></i>}
-                  activeColor="orange"
-                />
-              </Col>
-            </Form.Group>
+              <Form.Group as={Row} controlId="formRatings">
+                <Form.Label column sm={2}>
+                  Rating
+                </Form.Label>
+                <Col sm={10}>
+                  <ReactStars
+                    count={5}
+                    onChange={this.handleRatingChange}
+                    size={24}
+                    isHalf={false}
+                    emptyIcon={<i className="far fa-star"></i>}
+                    halfIcon={<i className="fa fa-star-half-alt"></i>}
+                    fullIcon={<i className="fa fa-star"></i>}
+                    activeColor="orange"
+                  />
+                </Col>
+              </Form.Group>
 
-            <Form.Group controlId="formReviewText">
-              <Form.Label>Review</Form.Label>
-              {/* <Form.Control
+              <Form.Group controlId="formReviewText">
+                <Form.Label>Review</Form.Label>
+                {/* <Form.Control
                 required
                 type="textarea"
                 placeholder="Pen your thoughts here..."
                 onChange={this.handleReviewTextChange}
               /> */}
-              <textarea
-                className="form-control"
-                id="formReviewTextArea"
-                rows={8}
-                onChange={this.handleReviewTextChange}
-              ></textarea>
+                <textarea
+                  className="form-control"
+                  id="formReviewTextArea"
+                  rows={8}
+                  onChange={this.handleReviewTextChange}
+                ></textarea>
 
-              <Form.Text className="text-muted">
-                Tell everyone your opinion about this book!
-              </Form.Text>
-            </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="danger" onClick={this.props.onHide}>
-              Cancel
-            </Button>
-            <Button
-              variant="outline-success"
-              type="submit"
-              onClick={this.handleSubmit}
-            >
-              Add Review
-            </Button>
-            {/* <form ref="form" onSubmit={this.handleSubmit}>
+                <Form.Text className="text-muted">
+                  Tell everyone your opinion about this book!
+                </Form.Text>
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="danger" onClick={this.props.onHide}>
+                Cancel
+              </Button>
+              <Button
+                variant="outline-success"
+                type="submit"
+                onClick={this.handleSubmit}
+              >
+                Add Review
+              </Button>
+              {/* <form ref="form" onSubmit={this.handleSubmit}>
               <button variant="outline-info" type="submit">ADD REVIEW</button>
             </form> */}
-          </Modal.Footer>
-        </Form>
-      </Modal>
+            </Modal.Footer>
+          </Form>
+        </Modal>
 
-      <Modal
+        <Modal
           show={this.state.showSuccess}
           onHide={this.handleCloseSuccess}
           backdrop="static"
@@ -257,7 +252,7 @@ class AddReviewModal extends Component {
             </Button>
           </Modal.Footer>
         </Modal>
-        </LoadingOverlay>
+      </LoadingOverlay>
     );
   }
 }
