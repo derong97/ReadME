@@ -3,10 +3,6 @@
 sudo su - hadoop
 echo "Entered as hadoop user"
 
-sudo apt-get update
-sudo apt-get install -y openjdk-8-jdk
-echo "Installed Java"
-
 tar zxvf hadoop-3.3.0.tgz
 sudo mv hadoop-3.3.0 /opt/
 
@@ -25,7 +21,3 @@ sudo chown -R hadoop:hadoop /opt/spark-3.0.1-bin-hadoop3.2
 sudo rm spark-3.0.1-bin-hadoop3.2.tgz
 
 echo "Setup of Spark finished."
-
-echo "Installing packages for tfidf task"
-sudo apt install python3-pip -y
-pip3 install numpy==1.18.5
