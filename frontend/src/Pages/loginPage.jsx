@@ -1,8 +1,10 @@
 import React from "react";
 import axios from "axios";
 import "../Styles/login.css";
+
 import { Form, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+
 import LoadingOverlay from "react-loading-overlay";
 
 class LoginPage extends React.Component {
@@ -29,6 +31,7 @@ class LoginPage extends React.Component {
 
   checkLogin = async (evt) => {
     this.setState({ loading: true });
+
     const url = "/user/login";
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
@@ -42,7 +45,6 @@ class LoginPage extends React.Component {
     axios
       .post(url, body)
       .then((res) => {
-        console.log(res);
         const token = res.data.token;
         const username = res.data.username;
         const id = res.data.reviewerID;
@@ -119,9 +121,6 @@ class LoginPage extends React.Component {
                 <button type="submit" id="confirm-bttn">
                   Login
                 </button>
-                {/* <text id="forgotpw-bttn">
-                  <u>forgot password?</u>
-                </text> */}
                 <div id="alt-bg">
                   <text>Don't have an account?</text>
                   <Link exact to="/signup">

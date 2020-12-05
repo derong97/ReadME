@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Modal, Button} from "react-bootstrap";
+// import axios from "axios";
+import { Modal, Button } from "react-bootstrap";
 
 class DeleteReviewModal extends Component {
   constructor(props) {
@@ -26,8 +27,8 @@ class DeleteReviewModal extends Component {
           <Modal.Title>Delete Review?</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <p>Are you sure you want to delete your review for this book?</p>
-          </Modal.Body>
+          <p>Are you sure you want to delete your review for this book?</p>
+        </Modal.Body>
         <Modal.Footer>
           <Button
             variant="outline-info"

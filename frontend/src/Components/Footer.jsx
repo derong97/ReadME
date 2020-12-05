@@ -7,8 +7,6 @@ const Footer = () => {
       <Nav className="justify-content-end">
         <br></br>
         <br></br>
-        {/* <Nav.Link className="navlink">Contact Us</Nav.Link>
-        <Nav.Link className="navlink">About Us</Nav.Link> */}
       </Nav>
     </footer>
   );

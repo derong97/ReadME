@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
+import "../../Styles/reviewsyouadded.css";
+
 import StarRatings from "react-star-ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTrashAlt,
-  faPenSquare,
-} from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt, faPenSquare } from "@fortawesome/free-solid-svg-icons";
 import ReadMoreReact from "read-more-react";
-import "../../Styles/reviewsyouadded.css";
 
 class ReviewYouAdded extends Component {
   constructor(props) {
@@ -29,7 +27,6 @@ class ReviewYouAdded extends Component {
   }
 
   styles = {
-    //if you wanted to have a standard style to call
     bookCoverImage: {
       width: 370,
       height: 419,
@@ -39,35 +36,33 @@ class ReviewYouAdded extends Component {
   componentDidMount() {
     this.getBook();
     var convertedUnix = this.convertTimestamp(this.state.unixReviewTime);
-    this.setState({unixReviewTime: convertedUnix
-    });
-    
+    this.setState({ unixReviewTime: convertedUnix });
   }
 
   convertTimestamp(timestamp) {
-    var d = new Date(timestamp * 1000),	// Convert the passed timestamp to milliseconds
+    var d = new Date(timestamp * 1000), // Convert the passed timestamp to milliseconds
       yyyy = d.getFullYear(),
-      mm = ('0' + (d.getMonth() + 1)).slice(-2),	// Months are zero based. Add leading 0.
-      dd = ('0' + d.getDate()).slice(-2),			// Add leading 0.
+      mm = ("0" + (d.getMonth() + 1)).slice(-2), // Months are zero based. Add leading 0.
+      dd = ("0" + d.getDate()).slice(-2), // Add leading 0.
       hh = d.getHours(),
       h = hh,
-      min = ('0' + d.getMinutes()).slice(-2),		// Add leading 0.
-      ampm = 'AM',
+      min = ("0" + d.getMinutes()).slice(-2), // Add leading 0.
+      ampm = "AM",
       time;
-        
+
     if (hh > 12) {
       h = hh - 12;
-      ampm = 'PM';
+      ampm = "PM";
     } else if (hh === 12) {
       h = 12;
-      ampm = 'PM';
-    } else if (hh === 0) {
+      ampm = "PM";
+    } else if (hh == 0) {
       h = 12;
     }
-    
-    // ie: 2013-02-18, 8:35 AM	
-    time = yyyy + '-' + mm + '-' + dd + ', ' + h + ':' + min + ' ' + ampm;
-      
+
+    // ie: 2013-02-18, 8:35 AM
+    time = yyyy + "-" + mm + "-" + dd + ", " + h + ":" + min + " " + ampm;
+
     return time;
   }
 
@@ -76,16 +71,10 @@ class ReviewYouAdded extends Component {
     const body = {
       headers: { "x-access-tokens": this.state.token },
     };
-    // console.log(body);
     axios
       .get(url, body)
       .then((res) => {
-        // console.log(res);
         const book = res.data.metadata;
-        console.log(book);
-        console.log(book.imUrl);
-        console.log(book.title);
-        console.log(book.categories);
 
         if (res.status === 200) {
           this.setState({ book: book });
@@ -117,13 +106,6 @@ class ReviewYouAdded extends Component {
       <div className="container">
         <table id="review">
           <tbody>
-            {/* <th>Cover</th>
-              <th>Title</th>
-              <th>Author</th>
-              <th>Review</th>
-              <th>Rating</th> */}
-
-            {/* {this.props.children} */}
             <td className="column-bookImage">
               <img
                 src={this.state.book.imUrl}
@@ -131,15 +113,11 @@ class ReviewYouAdded extends Component {
                 style={this.styles.bookCoverImage}
               />
             </td>
-            {/* <td className="column-title">
-                <h4> {this.state.title}</h4>
-              </td> */}
             <td className="column-review">
               <h4> {this.state.book.title}</h4>
               <p className="review-small">
                 {this.getCategories(this.state.book.categories)}
               </p>
-              {/* <p>by {this.state.author}</p> */}
               <h6>"{this.state.summary}"</h6>
               <p className="review-small">
                 <i> added {this.state.unixReviewTime}</i>

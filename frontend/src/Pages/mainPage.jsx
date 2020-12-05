@@ -2,19 +2,22 @@ import React from "react";
 import axios from "axios";
 import "../Styles/main.css";
 import "font-awesome/css/font-awesome.min.css";
+
 import { Form } from "react-bootstrap";
 import GridList from "@material-ui/core/GridList";
-import NavBar from "../Components/NavBar.jsx";
-import Book from "../Components/BookItem.jsx";
 import Pagination from "react-js-pagination";
-import Logo from "../Image/logo_black.png";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+
 import FadeIn from "react-fade-in";
 import Lottie from "react-lottie";
 import LoadingOverlay from "react-loading-overlay";
 import * as legoData from "../Image/lego_loading";
 import * as doneData from "../Image/done_loading";
+
+import NavBar from "../Components/NavBar.jsx";
+import Book from "../Components/BookItem.jsx";
+import Logo from "../Image/logo_black.png";
 
 //Loading screen
 const defaultOptions = {
@@ -39,10 +42,10 @@ class MainPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: props.location.state.token,
       loading: true,
       done: false,
       searching: false,
+      token: props.location.state.token,
       id: props.location.state.id,
       username: props.location.state.username,
       books: props.location.state.books,
@@ -80,13 +83,12 @@ class MainPage extends React.Component {
       headers: { "x-access-tokens": this.state.token },
       params: params,
     };
+
     axios
       .get(url, body)
       .then((res) => {
-        console.log(res);
         const metadata = res.data.metadata;
         const count = res.data.total_counts;
-      
         if (res.status === 200) {
           this.setState({ books: metadata, count: count });
           this.setState({ loading: false });
@@ -103,8 +105,7 @@ class MainPage extends React.Component {
 
   handleCategoryChange = (cat) => {
     var catList = [];
-    var i;
-    for (i = 0; i < cat.length; i++) {
+    for (var i = 0; i < cat.length; i++) {
       catList.push(cat[i].value);
     }
     this.setState({
@@ -114,7 +115,6 @@ class MainPage extends React.Component {
 
   categoryOnSubmit = (evt) => {
     this.setState({ searching: true });
-    console.log(this.state.category);
     var params = new URLSearchParams();
     for (var cat of this.state.category) {
       params.append("category", cat);
@@ -126,15 +126,13 @@ class MainPage extends React.Component {
       headers: { "x-access-tokens": this.state.token },
       params: params,
     };
-    console.log(body);
+
     evt.preventDefault();
     axios
       .get(url, body)
       .then((res) => {
-        console.log(res);
         const metadata = res.data.metadata;
         const count = res.data.total_counts;
-
         if (res.status === 200) {
           this.setState({ searching: false });
           this.props.history.push({
@@ -159,11 +157,8 @@ class MainPage extends React.Component {
 
   handlePageChange(pageNum) {
     this.setState({ searching: true });
-    console.log("active page is " + pageNum);
     this.setState({ activePage: pageNum });
-    console.log(this.state.activePage);
 
-    console.log(this.state.category);
     var params = new URLSearchParams();
     for (var cat of this.state.category) {
       params.append("category", cat);
@@ -175,14 +170,12 @@ class MainPage extends React.Component {
       headers: { "x-access-tokens": this.state.token },
       params: params,
     };
-    console.log(body);
+
     axios
       .get(url, body)
       .then((res) => {
-        console.log(res);
         const metadata = res.data.metadata;
         const count = res.data.total_counts;
-        console.log(metadata);
         if (res.status === 200) {
           this.setState({ searching: false });
           this.props.history.push({
@@ -271,7 +264,7 @@ class MainPage extends React.Component {
                           itemClass="page-item"
                           linkClass="page-link"
                           activePage={this.state.activePage}
-                          itemsCountPerPage={10} // helps you to calculate how many pages you need depending on your items
+                          itemsCountPerPage={10}
                           totalItemsCount={this.state.count}
                           pageRangeDisplayed={5}
                           onChange={this.handlePageChange.bind(this)}
@@ -305,8 +298,6 @@ class MainPage extends React.Component {
                   </div>
                 </div>
               </div>
-
-              {/* <Footer></Footer> */}
             </body>
           )}
         </div>

@@ -1,12 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
+import axios from "axios";
+import "../../Styles/modal.css";
+
 import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import "../../Styles/modal.css";
-import axios from "axios";
 import LoadingOverlay from "react-loading-overlay";
 
-class AddBookModal extends Component {
+class AddBookModal extends React.Component {
   state = {
     loading: false,
     title: "",
@@ -65,14 +66,6 @@ class AddBookModal extends Component {
   };
 
   handleSubmit = (event) => {
-    console.log(this.state.asin);
-    console.log(this.state.title);
-    console.log(this.state.description);
-    console.log(this.state.price);
-    console.log(this.state.imageURL);
-    console.log(this.state.categories);
-    console.log(this.state.token);
-
     event.preventDefault();
     if (
       !this.state.asin ||
@@ -131,12 +124,8 @@ class AddBookModal extends Component {
     } else if (check == "empty") {
       let error = "* Please fill in all the empty fields";
       this.setState({ error });
-    }
-    else if (check === "error") {
-      let error = "* Asin " + asin + " is already taken up.";
-      this.setState({ error });
-    }  else {
-      this.handleClose();
+    } else {
+      this.handleCloseTemp();
       this.handleOpenSuccess();
     }
   };
@@ -150,6 +139,15 @@ class AddBookModal extends Component {
       price: "",
       description: "",
       categories: "",
+      loading: false,
+      error,
+    });
+    this.props.onHide();
+  };
+
+  handleCloseTemp = () => {
+    let error = "";
+    this.setState({
       loading: false,
       error,
     });
