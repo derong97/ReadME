@@ -25,8 +25,7 @@ class SearchAuthor extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.state.count);
-    console.log(this.state.activePage);
+   
   }
 
   componentDidUpdate(prevProps) {
@@ -44,9 +43,7 @@ class SearchAuthor extends React.Component {
 
   handlePageChange(pageNum) {
     this.setState({ searching: true });
-    console.log("active page is " + pageNum);
     this.setState({ activePage: pageNum });
-    console.log(this.state.activePage);
 
     const url = "/books";
     const search = this.state.title;
@@ -100,9 +97,9 @@ class SearchAuthor extends React.Component {
             byme="nav-sub"
           ></NavBar>
 
-          <div class="container">
+          <div className="container">
             <div id="body-header">
-              <h4>Search for {this.state.title} ... ...</h4>
+              <h4>Search for "{this.state.title}" ......</h4>
             </div>
             <div id="body-content">
               <GridList cols={5}>

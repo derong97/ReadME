@@ -42,7 +42,7 @@
 }
 
 .review-small {
-  font-family: "Gotham-Thin";
+  font-family: "Gotham-Book";
   font-size: 14px;
 }
 
@@ -96,7 +96,7 @@ h4 {
   margin-left: 3px;
   color: #286da8;
   cursor: pointer;
-  font-family: "Gotham-Light";
+  font-family: "Gotham-Thin";
   font-size: "8px";
 }
 

@@ -75,13 +75,13 @@ class ReviewYouAdded extends Component {
     const body = {
       headers: { "x-access-tokens": this.state.token },
     };
-    console.log(body);
+    // console.log(body);
     axios
       .get(url, body)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         const book = res.data.metadata;
-        console.log(book);
+        // console.log(book);
         if (res.status === 200) {
           this.setState({ book: book });
         }
@@ -101,12 +101,6 @@ class ReviewYouAdded extends Component {
       }
     }
     return categories;
-  };
-
-  printStates = () => {
-    console.log(this.state.asin);
-    console.log(this.state.overall);
-    console.log(this.state.reviewText);
   };
 
   render() {

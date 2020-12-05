@@ -39,20 +39,20 @@ class BookPage extends React.Component {
         book: this.props.location.state.book,
         reviews: this.props.location.state.reviews,
       });
-      console.log(prevProps.location.state.book.asin);
-      console.log(this.props.location.state.book.asin);
+      // console.log(prevProps.location.state.book.asin);
+      // console.log(this.props.location.state.book.asin);
       if (
         prevProps.location.state.book.asin !==
         this.props.location.state.book.asin
       ) {
         this.setRelatedBooks(this.props.location.state.book);
-        console.log(this.state.book);
+        // console.log(this.state.book);
       }
     }
   }
 
   componentDidMount() {
-    console.log(this.state.relatedBooks);
+    // console.log(this.state.relatedBooks);
     this.setRelatedBooks(this.state.book);
   }
 
@@ -60,7 +60,7 @@ class BookPage extends React.Component {
     var relatedBooks = [];
     if (typeof book.related !== "undefined") {
       const bought = book.related.also_bought;
-      console.log(bought);
+      // console.log(bought);
       if (typeof bought !== "undefined")
         relatedBooks = await new Promise((resolve) =>
           this.getRelatedBooks(bought, resolve)
@@ -69,7 +69,7 @@ class BookPage extends React.Component {
     console.log(relatedBooks);
     this.setState({ relatedBooks: relatedBooks });
     this.setState({ searching: false });
-    console.log(this.state.relatedBooks);
+    // console.log(this.state.relatedBooks);
   };
 
   getRelatedBooks = async (bought, resolve) => {
@@ -84,35 +84,35 @@ class BookPage extends React.Component {
     var i = 0;
     var data;
     while (check < length) {
-      console.log(bought[i]);
+      // console.log(bought[i]);
       data = await new Promise((resolve) => this.getBook(bought[i], resolve));
-      console.log(data);
-      console.log(data.book);
+      // console.log(data);
+      // console.log(data.book);
       if (typeof data.book !== "undefined") {
         relatedBooks.push(data);
         check++;
       }
       i++;
     }
-    console.log(relatedBooks);
+    // console.log(relatedBooks);
     return resolve(relatedBooks);
   };
 
   getBook = (asin, resolve) => {
-    console.log(asin);
+    // console.log(asin);
     const url = "/book/" + asin;
     const body = {
       headers: { "x-access-tokens": this.state.token },
     };
-    console.log(body);
+    // console.log(body);
     axios
       .get(url, body)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         const book = res.data.metadata;
         const reviews = res.data.reviews;
-        console.log(book);
-        console.log(reviews);
+        // console.log(book);
+        // console.log(reviews);
         if (res.status === 200) {
           return resolve({
             book: book,
@@ -144,7 +144,6 @@ class BookPage extends React.Component {
   addReviewModalClose = () => this.setState({ addReviewModalShow: false });
   addReviewModalOpen = () => {
     this.setState({ addReviewModalShow: true });
-    console.log("add book show?", this.state.addReviewModalShow);
   };
 
   render() {

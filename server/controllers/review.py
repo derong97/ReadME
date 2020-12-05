@@ -53,10 +53,10 @@ class Review:
             try:
                 cur.execute("INSERT INTO {} (asin, overall, reviewText, reviewTime, reviewerID, reviewerName, summary, unixReviewTime) VALUES {}".format(SQL_KINDLE, values))
                 con.commit()
-                return {"message": "Successfully inserted review for asin {}".format(asin)}, 200
+                return {"message": "Successfully added review for asin {}. Refresh the Reviews You Added page to check it out!".format(asin)}, 200
             
             except Exception as e:
-                return {"message": "Insertion of review failed for asin {}".format(asin)}, 400
+                return {"message": "Adding of your review for asin {} failed. Edit your review instead if you have done a review for this book before".format(asin)}, 400
             
             finally:
                 con.close()
