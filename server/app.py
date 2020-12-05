@@ -1,7 +1,8 @@
 from flask import Flask, render_template
 from flask_cors import CORS
+
 import os
-# from controllers.avgRating import AvgRating
+from routers import api_router
 
 # App
 app = Flask(__name__,
@@ -10,13 +11,14 @@ app = Flask(__name__,
 CORS(app)
 
 
-# API Routes
-from routers import api_router
-
-# Test Routes (will eventually delete)
 @app.route('/')
 def index():
-    return render_template("index.html", token = "Hello Swee Khim!")
+    return render_template("index.html")
+
+# Enables page refresh
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("index.html")
 
 if __name__ == '__main__':
     app.run()
