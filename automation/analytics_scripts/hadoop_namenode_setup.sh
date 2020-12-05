@@ -251,6 +251,7 @@ echo 'export PATH=$PATH:/opt/hadoop-3.3.0/bin' >> ~/.bash_profile
 wget https://www.dropbox.com/s/md5edrovuv8s4n4/correlation.py?dl=0 -O correlation.py
 wget https://www.dropbox.com/s/zube51bf7juwo3n/tfidf.py?dl=0 -O tfidf.py
 
+echo "Installing packages for tfidf task"
 sudo apt install python3-pip -y
 pip3 install numpy==1.18.5
 

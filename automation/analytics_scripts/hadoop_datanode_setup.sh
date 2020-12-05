@@ -25,3 +25,7 @@ sudo chown -R hadoop:hadoop /opt/spark-3.0.1-bin-hadoop3.2
 sudo rm spark-3.0.1-bin-hadoop3.2.tgz
 
 echo "Setup of Spark finished."
+
+echo "Installing packages for tfidf task"
+sudo apt install python3-pip -y
+pip3 install numpy==1.18.5
