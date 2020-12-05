@@ -96,7 +96,7 @@ h4 {
   margin-left: 3px;
   color: #286da8;
   cursor: pointer;
-  font-family: "Gotham-Thin";
+  font-family: "Gotham-Book";
   font-size: "8px";
 }
 
@@ -111,3 +111,7 @@ body {
 #reviews {
   margin-bottom: 300px;
 }
+
+/* #container { 
+  width: 900px;
+} */
