@@ -65,8 +65,6 @@ class AddBookModal extends Component {
   };
 
   handleSubmit = (event) => {
-    this.setState({ loading: true });
-
     const url = "/book/add";
 
     const title = this.state.title;
@@ -87,6 +85,12 @@ class AddBookModal extends Component {
       categories: categories,
     };
 
+    if (asin == "") {
+      this.validate("empty", asin);
+    }
+
+    this.setState({ loading: true });
+
     event.preventDefault();
     axios
       .post(url, params, headers)
@@ -96,14 +100,6 @@ class AddBookModal extends Component {
         if (res.status == 200) {
           this.validate("uploaded", asin);
           this.setState({ loading: false });
-          // this.props.event.props.history.push({
-          //   pathname: "/main",
-          //   state: {
-          //     token: this.state.token,
-          //     id: id,
-          //     username: username,
-          //   },
-          // });
         }
       })
       .catch((err) => {
@@ -116,6 +112,9 @@ class AddBookModal extends Component {
   validate = (check, asin) => {
     if (check == "error") {
       let error = "* Asin " + asin + " is already taken up";
+      this.setState({ error });
+    } else if (check == "empty") {
+      let error = "Please fill in the book asin";
       this.setState({ error });
     } else {
       this.handleClose();
@@ -257,7 +256,6 @@ class AddBookModal extends Component {
               <Form.Group controlId="formCategory">
                 <Form.Label>Category</Form.Label>
                 <Select
-                  // value={this.state.Category}
                   closeMenuOnSelect={false}
                   components={makeAnimated()}
                   isMulti
