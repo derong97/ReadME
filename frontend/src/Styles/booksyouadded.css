@@ -55,10 +55,6 @@ p {
 
 #book tr:hover {background-color: #ddd;}
 
-/* .column-title {
-  width: 100
-} */
-
 tr.border_bottom td {
   border-bottom: 1px solid black;
 }

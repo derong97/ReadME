@@ -2,30 +2,27 @@ import React from "react";
 import axios from "axios";
 import "../Styles/main.css";
 import "font-awesome/css/font-awesome.min.css";
+
 import GridList from "@material-ui/core/GridList";
-import NavBar from "../Components/NavBar.jsx";
-import Book from "../Components/BookItem.jsx";
 import Pagination from "react-js-pagination";
 import LoadingOverlay from "react-loading-overlay";
-import Footer from "../Components/Footer.jsx";
+
+import NavBar from "../Components/NavBar.jsx";
+import Book from "../Components/BookItem.jsx";
 
 class SearchAuthor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      searching: false,
       token: props.location.state.token,
       id: props.location.state.id,
       username: props.location.state.username,
-      searching: false,
       title: props.location.state.title,
       books: props.location.state.books,
       count: props.location.state.count,
       activePage: props.location.state.activePage,
     };
-  }
-
-  componentDidMount() {
-   
   }
 
   componentDidUpdate(prevProps) {
@@ -51,14 +48,12 @@ class SearchAuthor extends React.Component {
       headers: { "x-access-tokens": this.state.token },
       params: { title: search, pageNum: pageNum },
     };
-    console.log(body);
+
     axios
       .get(url, body)
       .then((res) => {
-        console.log(res);
         const metadata = res.data.metadata;
         const count = res.data.total_counts;
-        console.log(metadata);
         if (res.status === 200) {
           this.setState({ searching: false });
           this.props.history.push({
@@ -125,8 +120,6 @@ class SearchAuthor extends React.Component {
             pageRangeDisplayed={5}
             onChange={this.handlePageChange.bind(this)}
           />
-
-          {/* <Footer></Footer> */}
         </body>
       </LoadingOverlay>
     );

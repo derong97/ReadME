@@ -2,7 +2,6 @@ from flask import Flask, render_template
 from flask_cors import CORS
 import os
 
-# App
 app = Flask(__name__,
     static_folder="../frontend/static",
     template_folder="../frontend/static/templates")
@@ -15,6 +14,7 @@ from routers import api_router
 def index():
     return render_template("index.html")
 
+# Enable page refresh
 @app.errorhandler(404)
 def not_found(e):
     return render_template("index.html")

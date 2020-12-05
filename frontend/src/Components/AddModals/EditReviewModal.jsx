@@ -13,7 +13,7 @@ class EditReviewModal extends Component {
       reviewTitle: this.props.editSummary,
       reviewText: this.props.editReviewText,
       rating: this.props.editOverall,
-      showSuccess: false, 
+      showSuccess: false,
     };
   }
 
@@ -41,12 +41,12 @@ class EditReviewModal extends Component {
     });
   };
 
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     this.setState({
       asin: nextProps.editAsin,
       reviewTitle: nextProps.editSummary,
       reviewText: nextProps.editReviewText,
-      rating: nextProps.editOverall
+      rating: nextProps.editOverall,
     });
   }
 
@@ -78,20 +78,6 @@ class EditReviewModal extends Component {
                   id="readonly"
                   value={this.state.asin}
                 />
-                {/* <Form.Control
-                  required
-                  type="input"
-                  placeholder="enter the book's asin number."
-                  // required
-                  onChange={this.handleASINChange}
-                />
-                <Form.Text className="text-muted">
-                  The ASIN number is the Amazon Standardard Identification
-                  Number of your book (i.e. the ISBN).
-                </Form.Text>
-                <Form.Control.Feedback type="invalid">
-                  awh hell no this is wrong dont be stupid
-                </Form.Control.Feedback> */}
               </Col>
             </Form.Group>
 
@@ -122,7 +108,6 @@ class EditReviewModal extends Component {
                   count={5}
                   onChange={this.handleRatingChange}
                   size={24}
-                  // isHalf={true}
                   emptyIcon={<i className="far fa-star"></i>}
                   halfIcon={<i className="fa fa-star-half-alt"></i>}
                   fullIcon={<i className="fa fa-star"></i>}
@@ -134,12 +119,6 @@ class EditReviewModal extends Component {
 
             <Form.Group controlId="formReviewText">
               <Form.Label>Review</Form.Label>
-              {/* <Form.Control
-                required
-                type="textarea"
-                placeholder="Pen your thoughts here..."
-                onChange={this.handleReviewTextChange}
-              /> */}
               <textarea
                 className="form-control"
                 id="formReviewTextArea"
@@ -157,7 +136,17 @@ class EditReviewModal extends Component {
             <Button variant="danger" type="submit" onClick={this.props.onHide}>
               Cancel
             </Button>
-            <Button variant="outline-success" onClick={() => this.props.handleEdit(this.state.asin, this.state.rating, this.state.reviewText, this.state.reviewTitle)}>
+            <Button
+              variant="outline-success"
+              onClick={() =>
+                this.props.handleEdit(
+                  this.state.asin,
+                  this.state.rating,
+                  this.state.reviewText,
+                  this.state.reviewTitle
+                )
+              }
+            >
               Update Review
             </Button>
           </Modal.Footer>

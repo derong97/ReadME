@@ -2,25 +2,26 @@ import React from "react";
 import axios from "axios";
 import "../Styles/book.css";
 import "font-awesome/css/font-awesome.min.css";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import StarRatings from "react-star-ratings";
+import Expand from "react-expand-animated";
+import LoadingOverlay from "react-loading-overlay";
+
 import NavBar from "../Components/NavBar.jsx";
 import ReviewItem from "../Components/ReviewItem";
 import RelatedBook from "../Components/RelatedBook";
-import LoadingOverlay from "react-loading-overlay";
-import Footer from "../Components/Footer.jsx";
-import StarRatings from "react-star-ratings";
-import Expand from "react-expand-animated";
 import AddReviewModal from "../Components/AddModals/AddReviewModal.jsx";
 
 class BookPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      searching: true,
       token: props.location.state.token,
       id: props.location.state.id,
       username: props.location.state.username,
-      searching: true,
       book: props.location.state.book,
       reviews: props.location.state.reviews,
       relatedBooks: [],
@@ -39,20 +40,16 @@ class BookPage extends React.Component {
         book: this.props.location.state.book,
         reviews: this.props.location.state.reviews,
       });
-      // console.log(prevProps.location.state.book.asin);
-      // console.log(this.props.location.state.book.asin);
       if (
         prevProps.location.state.book.asin !==
         this.props.location.state.book.asin
       ) {
         this.setRelatedBooks(this.props.location.state.book);
-        // console.log(this.state.book);
       }
     }
   }
 
   componentDidMount() {
-    // console.log(this.state.relatedBooks);
     this.setRelatedBooks(this.state.book);
   }
 
@@ -60,16 +57,13 @@ class BookPage extends React.Component {
     var relatedBooks = [];
     if (typeof book.related !== "undefined") {
       const bought = book.related.also_bought;
-      // console.log(bought);
       if (typeof bought !== "undefined")
         relatedBooks = await new Promise((resolve) =>
           this.getRelatedBooks(bought, resolve)
         );
     }
-    console.log(relatedBooks);
     this.setState({ relatedBooks: relatedBooks });
     this.setState({ searching: false });
-    // console.log(this.state.relatedBooks);
   };
 
   getRelatedBooks = async (bought, resolve) => {
@@ -84,35 +78,27 @@ class BookPage extends React.Component {
     var i = 0;
     var data;
     while (check < length) {
-      // console.log(bought[i]);
       data = await new Promise((resolve) => this.getBook(bought[i], resolve));
-      // console.log(data);
-      // console.log(data.book);
       if (typeof data.book !== "undefined") {
         relatedBooks.push(data);
         check++;
       }
       i++;
     }
-    // console.log(relatedBooks);
     return resolve(relatedBooks);
   };
 
   getBook = (asin, resolve) => {
-    // console.log(asin);
     const url = "/book/" + asin;
     const body = {
       headers: { "x-access-tokens": this.state.token },
     };
-    // console.log(body);
+
     axios
       .get(url, body)
       .then((res) => {
-        // console.log(res);
         const book = res.data.metadata;
         const reviews = res.data.reviews;
-        // console.log(book);
-        // console.log(reviews);
         if (res.status === 200) {
           return resolve({
             book: book,
@@ -211,10 +197,6 @@ class BookPage extends React.Component {
                 <div id="review">
                   <div id="review-header">
                     <h4 id="review-title">REVIEW</h4>
-                    {/* <button id="review-bttn">
-                      <FontAwesomeIcon icon={faEdit} size="2x" />
-                      add review
-                    </button> */}
                     <button
                       id="review-bttn"
                       onClick={this.addReviewModalOpen}
@@ -253,15 +235,6 @@ class BookPage extends React.Component {
             </div>
           </div>
 
-          {/* <div>
-            <AddReviewModal
-              event={this}
-              token={this.state.token}
-              show={this.state.addReviewModalShow}
-              onHide={this.addReviewModalClose}
-              // asin={this.state.asin}
-            />
-          </div> */}
           <div>
             <AddReviewModal
               event={this}
@@ -272,8 +245,6 @@ class BookPage extends React.Component {
               onHide={this.addReviewModalClose}
             />
           </div>
-
-          {/* <Footer></Footer> */}
         </body>
       </LoadingOverlay>
     );

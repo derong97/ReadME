@@ -1,14 +1,17 @@
-.loader {
-  /* min-height: 100vh; */
-}
-
 #review-body {
   font-family: "Gotham-Black";
   overflow: hidden;
   min-height: 100vh;
 }
 
-#review-body-text {
+#review-header {
+  margin-top: 50px;
+  margin-left: 100px;
+}
+
+#review-text {
+  width: 800px;
+  margin-left: 20px;
   font-family: "Gotham-Medium";
 }
 
@@ -23,7 +26,7 @@
   font-size: 15px;
   outline: 0 !important;
   position: absolute;
-  margin-left: 85%;
+  /* margin-left: 85%; */
   padding: 10px;
 }
 
@@ -68,8 +71,6 @@
 #review tr:nth-child(even) {
   background-color: #f2f2f2;
 }
-
-/* #review tr:hover {background-color: #ddd;} */
 
 p {
   font-family: "Gotham-Book";

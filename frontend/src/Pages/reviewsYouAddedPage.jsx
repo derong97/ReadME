@@ -1,16 +1,17 @@
 import React, { Component } from "react";
-import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 import axios from "axios";
 import "../Styles/reviewsyouadded.css";
-import ReviewsYouAdded from "../Components/ReviewsByYou/ReviewsYouAdded.jsx";
+
+import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import Footer from "../Components/Footer.jsx";
-import NavBar from "../Components/NavBar.jsx";
 import LoadingOverlay from "react-loading-overlay";
+
+import NavBar from "../Components/NavBar.jsx";
 import AddReviewModal from "../Components/AddModals/AddReviewModal.jsx";
 import DeleteReviewModal from "../Components/AddModals/DeleteReviewModal.jsx";
 import EditReviewModal from "../Components/AddModals/EditReviewModal.jsx";
+import ReviewsYouAdded from "../Components/ReviewsByYou/ReviewsYouAdded.jsx";
 
 class ReviewsYouAddedPage extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class ReviewsYouAddedPage extends Component {
       editSummary: "",
 
       showEditSuccess: false,
-      showDeleteSuccess: false, 
+      showDeleteSuccess: false,
     };
   }
 
@@ -59,9 +60,7 @@ class ReviewsYouAddedPage extends Component {
     axios
       .get(url, body)
       .then((res) => {
-        console.log(res);
         const review = res.data.reviews;
-        console.log(review);
         if (res.status === 200) {
           this.setState({ reviewsYouAdded: review == null ? [] : review });
           this.setState({ searching: false });
@@ -82,12 +81,11 @@ class ReviewsYouAddedPage extends Component {
     const body = {
       headers: { "x-access-tokens": this.state.token },
     };
-    console.log(body);
     this.deleteReviewModalClose();
+
     axios
       .delete(url, body)
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           var index;
           for (var i = 0; i < review.length; i++) {
@@ -95,13 +93,9 @@ class ReviewsYouAddedPage extends Component {
               index = i;
             }
           }
-          console.log(index);
-          console.log(review);
           review.splice(index, 1);
-          console.log(review);
           this.setState({ reviewsYouAdded: review });
           this.setState({ searching: false });
-          console.log(this.state.reviewsYouAdded);
           this.validateDelete("uploaded", asin);
         }
       })
@@ -118,7 +112,6 @@ class ReviewsYouAddedPage extends Component {
     } else {
       this.handleDeleteClose();
       this.handleDeleteOpenSuccess();
-      console.log("i tried to open the DELETE success modal");
     }
   };
 
@@ -127,7 +120,6 @@ class ReviewsYouAddedPage extends Component {
     this.setState({ error });
     this.deleteReviewModalClose();
   };
-
 
   handleEdit = (asin, overall, reviewText, summary) => {
     this.setState(
@@ -142,14 +134,7 @@ class ReviewsYouAddedPage extends Component {
   };
 
   handleEditSubmit = () => {
-    console.log(this.state.editAsin);
-    console.log(this.state.editOverall);
-    console.log(this.state.editReviewText);
-    console.log(this.state.editSummary);
-
     var review = this.state.reviewsYouAdded;
-    console.log(review);
-
     var asin = this.state.editAsin;
     var overall = this.state.editOverall;
     var reviewText = this.state.editReviewText;
@@ -169,9 +154,7 @@ class ReviewsYouAddedPage extends Component {
     axios
       .put(url, params, headers)
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
-          console.log(res.data.message);
           this.getReviews();
           this.validateEdit("uploaded", asin);
         }
@@ -189,7 +172,6 @@ class ReviewsYouAddedPage extends Component {
     } else {
       this.handleEditClose();
       this.handleEditOpenSuccess();
-      console.log("i tried to open the success modal");
     }
   };
 
@@ -205,8 +187,6 @@ class ReviewsYouAddedPage extends Component {
   deleteReviewModalOpen = (asin) => {
     this.setState({ deleteReviewModalShow: true });
     this.setState({ deleteAsin: asin });
-    console.log(this.state.deleteReviewModalShow);
-    console.log(this.state.deleteAsin);
   };
 
   addReviewModalClose = () => {
@@ -216,7 +196,6 @@ class ReviewsYouAddedPage extends Component {
     this.setState({ addReviewModalShow: true });
   };
 
-  // this.myFunc = event => (param1, param2) => { ... do stuff };
   editReviewModalClose = () => this.setState({ editReviewModalShow: false });
   editReviewModalOpen = (asin, overall, reviewText, summary) => {
     this.setState(
@@ -231,10 +210,6 @@ class ReviewsYouAddedPage extends Component {
   };
 
   openModal = () => {
-    console.log(this.state.editAsin);
-    console.log(this.state.editOverall);
-    console.log(this.state.editReviewText);
-    console.log(this.state.editSummary);
     this.forceUpdate();
     this.setState({ editReviewModalShow: true });
   };
@@ -257,12 +232,7 @@ class ReviewsYouAddedPage extends Component {
 
   render() {
     return (
-      <LoadingOverlay
-        // className="loader"
-        active={this.state.searching}
-        spinner
-        text="loading ..."
-      >
+      <LoadingOverlay active={this.state.searching} spinner text="loading ...">
         <body id="review-body">
           <NavBar
             event={this}
@@ -272,25 +242,27 @@ class ReviewsYouAddedPage extends Component {
             home="nav-sub"
             byme="nav-main"
           ></NavBar>
-          {/* <div className="review-body"> */}
-          <h2 id="review-body-title">Reviews You Added</h2>
-          <div className="row">
-            <h5 id="review-body-text">
-              Here lies the reviews you have contributed to the ReadME
-              community.
-            </h5>
-            <br></br>
-            <br></br>
-            <button
-              className="add-review-bttn"
-              id="add-review-bttn"
-              onClick={() => this.addReviewModalOpen()}
-              data-toggle="modal"
-              data-target="#exampleModalCenter"
-            >
-              <FontAwesomeIcon icon={faEdit} size="2x" />
-              <div className="add-book-bttn-text">add review</div>
-            </button>
+
+          <div id="review-header">
+            <h2>Reviews You Added</h2>
+            <div className="row">
+              <h5 id="review-text">
+                Here lies the reviews you have contributed to the ReadME
+                community.
+              </h5>
+              <br></br>
+              <br></br>
+              <button
+                className="add-review-bttn"
+                id="add-review-bttn"
+                onClick={() => this.addReviewModalOpen()}
+                data-toggle="modal"
+                data-target="#exampleModalCenter"
+              >
+                <FontAwesomeIcon icon={faEdit} size="2x" />
+                <div className="add-book-bttn-text">add review</div>
+              </button>
+            </div>
           </div>
 
           <div>
@@ -338,7 +310,6 @@ class ReviewsYouAddedPage extends Component {
               editReviewModalClose={this.editReviewModalClose}
             />
           </div>
-          
         </body>
 
         {/* modal to show edit status  */}
@@ -386,7 +357,6 @@ class ReviewsYouAddedPage extends Component {
             </Button>
           </Modal.Footer>
         </Modal>
-        
       </LoadingOverlay>
     );
   }

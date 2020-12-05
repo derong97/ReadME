@@ -1,8 +1,10 @@
 import React from "react";
 import axios from "axios";
 import "../Styles/login.css";
+
 import { Form, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+
 import LoadingOverlay from "react-loading-overlay";
 
 class SignupPage extends React.Component {
@@ -53,7 +55,6 @@ class SignupPage extends React.Component {
       axios
         .post(url, body)
         .then((res) => {
-          console.log(res);
           const token = res.data.token;
           const username = res.data.username;
           const id = res.data.reviewerID;

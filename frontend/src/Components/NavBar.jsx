@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import "../Styles/components.css";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -15,10 +17,10 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap";
+
 import Logo from "../Image/logo_white.png";
 import AddBookModal from "../Components/AddModals/AddBookModal.jsx";
 import AddReviewModal from "../Components/AddModals/AddReviewModal.jsx";
-import "../Styles/components.css";
 
 class NavBar extends Component {
   static filtered = "";
@@ -46,15 +48,12 @@ class NavBar extends Component {
       headers: { "x-access-tokens": this.props.token },
       params: { title: search, pageNum: 1 },
     };
-    console.log(body);
     evt.preventDefault();
     axios
       .get(url, body)
       .then((res) => {
-        // console.log(res);
         const metadata = res.data.metadata;
         const count = res.data.total_counts;
-        // console.log(metadata);
         if (res.status === 200) {
           this.props.event.setState({ searching: false });
           this.props.event.props.history.push({
