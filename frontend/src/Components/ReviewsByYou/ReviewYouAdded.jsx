@@ -82,12 +82,16 @@ class ReviewYouAdded extends Component {
       .then((res) => {
         // console.log(res);
         const book = res.data.metadata;
-        // console.log(book);
+        console.log(book);
+        console.log(book.imUrl);
+        console.log(book.title);
+        console.log(book.categories);
+
         if (res.status === 200) {
-          // this.setState({ book: book });
-          this.setState({ book: book.imUrl == null ? "[no image]" : book.imUrl });
-          this.setState({ book: book.title == null ? "[no title]" : book.title });
-          this.setState({ book: book.categories == null ? "[no categories]" : book.categories });
+          this.setState({ book: book });
+          // this.setState({ book: book.imUrl == null ? "[no image]" : book.imUrl });
+          // this.setState({ book: book.title == null ? "[no title]" : book.title });
+          // this.setState({ book: book.categories == null ? "[no categories]" : book.categories });
 
         }
       })

@@ -75,14 +75,12 @@ class AddReviewModal extends Component {
       .post(url, params, headers)
       .then((res) => {
         this.props.onHide();
-        console.log(res);
         this.setState({ responseMessage: res.data.message });
         if (res.status === 200) {
           this.props.event.setState({
             searching: false,
           });
           this.validate("uploaded", asin);
-          console.log(res.data.message);
         }
       })
       .catch((err) => {
@@ -98,7 +96,6 @@ class AddReviewModal extends Component {
   validate = (check, asin) => {
     let error = ""
     if (check === "empty") {
-      console.log("EMPTY IF STATEMENT")
       error = "* Please fill in all fields before submitting."
       this.setState({error});
       this.props.event.setState({
@@ -106,14 +103,12 @@ class AddReviewModal extends Component {
       });
     }
     else if (check === "error") {
-      console.log("ERROR IF STATEMENT")
       error = "* You have already given a review for the book with ASIN " + asin +". Please edit your existing review instead.";
       this.setState({ error});
       this.props.event.setState({
         searching: false,
       });
     } else {
-      console.log("review success!");
       //if state is uploaded
       this.handleClose();
       this.handleOpenSuccess();
