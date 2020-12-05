@@ -37,6 +37,19 @@ The deployment makes use of the Cloud Formation templates to create a stack.
 
 1. `logs.log` stores important information like the public IP addresses of the servers.
 2. You can now access now the flask server remotely.
+3. To run the analytics task, you can run:
+   ```bash
+   sudo ssh ubuntu@<namenode-public-IP> -i hadoop4-key.pem 'bash -s' < ./analytics_scripts/execute_analytics.sh
+   ```
+4. To scale hadoop cluster, you can choose which datanode to commission/decommision and then run:
+
+   ```bash
+   # Scaling down
+   sudo ssh ubuntu@<namenode-public-IP> -i hadoop4-key.pem 'bash -s' < ./analytics_scripts/scaling_down.sh <datanode-private-IP>
+
+   # Scaling up
+   sudo ssh ubuntu@<namenode-public-IP> -i hadoop4-key.pem 'bash -s' < ./analytics_scripts/scaling_up.sh <datanode-private-IP>
+   ```
 
 # Tear Down Instructions
 

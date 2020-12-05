@@ -92,3 +92,7 @@ output.saveAsTextFile("hdfs://{}:9000/{}".format(MASTER, RESULT_OUTPUT_DIR))
 
 # Printing to console
 print("Pearson correlation = ", r)
+
+############################## STOP ##############################
+
+sc.stop()

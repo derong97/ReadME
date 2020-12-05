@@ -1,9 +1,9 @@
 import sys
 import pyspark
+import numpy
 from pyspark.sql import SparkSession
 from pyspark.ml.feature import CountVectorizer, IDF, Tokenizer
 from pyspark.sql.functions import udf, col
-from pyspark.sql.types import StringType
 
 ########################## INFORMATION ###########################
 # This file is hosted in Dropbox. If automation script fails to extract this, means it have been taken done. So just retrieve it from here instead.
@@ -17,15 +17,21 @@ from pyspark.sql.types import StringType
 MASTER = sys.argv[1]
 REVIEWS_FILE = "kindle_reviews.tsv"
 METADATA_FILE = "kindle_meta.json"
-RESULT_OUTPUT_DIR = "corr"
+RESULT_OUTPUT_DIR = "tfidf"
 
+########################### INIT SPARK ###########################
 
-###
-
-sc = pyspark.SparkContext("spark://{}:7077".format(sys.argv[1]), "tfidf")
+sc = pyspark.SparkContext(master="spark://{}:7077".format(MASTER), appName="tfidf")
 spark = SparkSession(sc)
 
-data = spark.read.csv("hdfs://{}:9000/data/{}".format(sys.argv[1], "kindle.csv"), header=True, sep=",")
+####################### LOAD REVIEWS (SQL) #######################
+
+data = spark.read\
+            .option("header", "true")\
+            .option("inferScheme", "true")\
+            .csv("hdfs://{}:9000/data/{}".format(MASTER, REVIEWS_FILE), header=True, sep="\t")
+
+########################### ANALYTICS ############################
 
 # drop rows with null values in reviews
 data = data.na.drop(subset=["reviewText"])
@@ -33,7 +39,6 @@ data = data.na.drop(subset=["reviewText"])
 # convert to words
 tokenizer = Tokenizer(inputCol="reviewText", outputCol="words")
 wordsData = tokenizer.transform(data)
-
 
 # use CountVectorizer to get term frequency vectors
 cv = CountVectorizer(inputCol="words", outputCol="rawFeatures", vocabSize=20)
@@ -47,7 +52,6 @@ vocab = model.vocabulary
 idf = IDF(inputCol="rawFeatures", outputCol="features")
 idfModel = idf.fit(featurizedData)
 rescaledData = idfModel.transform(featurizedData)
-
 
 # trying to map the index of word -> actual word cause CountVectorizer gives index
 def map_to_word1(row, vocab):
@@ -64,8 +68,14 @@ def map_to_word1(row, vocab):
 def map_to_word(vocab):
     return udf(lambda row: map_to_word1(row, vocab))
 
+############################# OUTPUT #############################
+
 # apply udf to convert index back to word
 df = rescaledData.withColumn("tfidf", map_to_word(vocab)(rescaledData.features))
 
 output = df.select("id", "tfidf")
-output.write.format("csv").save("hdfs://{}:9000/tfidf".format(sys.argv[1]))
+output.write.format("csv").save("hdfs://{}:9000/{}".format(MASTER, RESULT_OUTPUT_DIR))
+
+############################## STOP ##############################
+
+sc.stop()

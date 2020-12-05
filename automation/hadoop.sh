@@ -169,11 +169,23 @@ do
   i=$((i+1))
 done
 
+echo """
+============================================================================
+                      INITIALIZE HADOOP AND SPARK CLUSTERS
+============================================================================
+"""
 # Hardcoded for now
 MongoDBIP=34.207.119.124
 MySQLIP=52.73.249.157
 ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem 'bash -s' < ./analytics_scripts/init_hadoop_and_spark.sh
+
+echo """
+============================================================================
+                              RUN ANALYTICS
+============================================================================
+"""
 ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' bash -s" < ./analytics_scripts/data_ingestion.sh
+ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem 'bash -s' < ./analytics_scripts/execute_analytics.sh
 
 echo """
 ============================================================================
