@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# You have to enable inbound rule for remote connection!
-
 sudo apt-get update
 
 export DEBIAN_FRONTEND=noninteractive
@@ -22,24 +20,24 @@ sudo service mysql restart
 wget https://www.dropbox.com/s/al7t230goqylhsq/kaggle_processed.csv?dl=0 -O kaggle_processed.csv
 sleep 3s
 
-sudo cat << EOF > ini_Kindle.sql
+echo "Loading data into MySQL... This takes roughly a minute!"
+mysql -u root << EOF
 CREATE database IF NOT EXISTS readme_sql;
 USE readme_sql;
+DROP TABLE IF EXISTS Kindle;
 
-DROP TABLE IF EXISTS `Kindle`;
-
-CREATE TABLE `Kindle` (
-  `asin` VARCHAR(100) NOT NULL,
-  `overall` int(1) NOT NULL,
-  `reviewText` text NOT NULL,
-  `reviewTime` date NOT NULL,
-  `reviewerID` VARCHAR(255) NOT NULL,
-  `reviewerName` tinytext NOT NULL,
-  `summary` text NOT NULL,
-  `unixReviewTime` int(11) NOT NULL,
-  `likes` int(5) NOT NULL DEFAULT '0',
-  `dislikes` int(5) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`asin`, `reviewerID`)
+CREATE TABLE Kindle (
+  asin VARCHAR(100) NOT NULL,
+  overall int(1) NOT NULL,
+  reviewText text NOT NULL,
+  reviewTime date NOT NULL,
+  reviewerID VARCHAR(255) NOT NULL,
+  reviewerName tinytext NOT NULL,
+  summary text NOT NULL,
+  unixReviewTime int(11) NOT NULL,
+  likes int(5) NOT NULL DEFAULT '0',
+  dislikes int(5) NOT NULL DEFAULT '0',
+  PRIMARY KEY (asin, reviewerID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOAD DATA LOCAL INFILE 'kaggle_processed.csv' 
@@ -50,8 +48,5 @@ IGNORE 1 ROWS
 (asin, overall, reviewText, @reviewTime, reviewerID, reviewerName, summary, unixReviewTime, likes, dislikes) 
 SET reviewTime = STR_TO_DATE(@reviewTime, '%m %d, %Y');
 EOF
-
-echo "Loading data into MySQL... This takes roughly a minute!"
-mysql -u root < ini_Kindle.sql
 
 echo "MySQL SetUp complete"
