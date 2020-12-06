@@ -123,18 +123,7 @@
                 }],
                 "SecurityGroupIds": [{
                     "Ref": "HadoopSecurityGroup"
-                }],
-                "BlockDeviceMappings": [
-                    {
-                      "DeviceName": "/dev/xvda",
-                      "Ebs": {
-                        "VolumeType": "gp2",
-                        "VolumeSize": "16",
-                        "DeleteOnTermination":"true",
-                        "Encrypted": "true"
-                      }
-                    }
-                ]
+                }]
             },
             "DependsOn": [
                 "HadoopSecurityGroup"
@@ -157,18 +146,7 @@
                 }],
                 "SecurityGroupIds": [{
                     "Ref": "HadoopSecurityGroup"
-                }],
-                "BlockDeviceMappings": [
-                    {
-                      "DeviceName": "/dev/xvda",
-                      "Ebs": {
-                        "VolumeType": "gp2",
-                        "VolumeSize": "16",
-                        "DeleteOnTermination":"true",
-                        "Encrypted": "true"
-                      }
-                    }
-                ]
+                }]
             },
             "DependsOn": [
                 "HadoopSecurityGroup"
