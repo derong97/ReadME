@@ -97,7 +97,7 @@ View the files
    ```
 Results should look like this:
 
-![Analytics](/results/tfidf.jpg)
+![Analytics](results/tfidf.jpg)
 
 # Logging
 
