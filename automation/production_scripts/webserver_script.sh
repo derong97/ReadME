@@ -22,7 +22,7 @@ sudo apt-get install libmysqlclient-dev -y
 sudo apt install python3-pip -y
 sudo apt-get update
 
-wget -c https://www.dropbox.com/s/fd9mzoo5k0xsbgw/ReadMe-main.zip?dl=0 -O ReadMe-main.zip
+wget -c https://storage.googleapis.com/readme-db-proj/ReadMe-main.zip -O ReadMe-main.zip
 sudo apt install unzip
 unzip ReadMe-main.zip
 
