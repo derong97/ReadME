@@ -46,11 +46,34 @@ class AddReviewModal extends Component {
     });
   };
 
-  handleSubmit = (event) => {
+  checkBook = (resolve) => {
+    const url = "/book/" + this.state.asin;
+    const body = { headers: { "x-access-tokens": this.state.token } };
+
+    axios
+      .get(url, body)
+      .then((res) => {
+        const message = res.data.message;
+        if (res.status === 200) {
+          const str =
+            "No metadata found for asin " +
+            this.state.asin +
+            " & No reviews found for asin " +
+            this.state.asin;
+          if (message == str) {
+            return resolve(true);
+          } else return resolve(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        console.log(err.request);
+        return resolve(true);
+      });
+  };
+
+  handleSubmit = async (event) => {
     event.preventDefault();
-    // this.props.event.setState({
-    //   searching: true,
-    // });
     this.setState({ loading: true });
 
     const asin = this.state.asin;
@@ -69,20 +92,25 @@ class AddReviewModal extends Component {
     if (asin === 0 || reviewText === "" || summary === "") {
       this.validate("empty", asin);
     } else {
-      axios
-        .post(url, params, headers)
-        .then((res) => {
-          this.setState({ responseMessage: res.data.message });
-          if (res.status === 200) {
-            this.validate("uploaded", asin);
-            this.setState({ loading: false });
-          }
-        })
-        .catch((err) => {
-          this.validate("error", asin);
-          console.log(err.response);
-          console.log(err.request);
-        });
+      var check = await new Promise((resolve) => this.checkBook(resolve));
+      if (check) {
+        this.validate("wrong", asin);
+      } else {
+        axios
+          .post(url, params, headers)
+          .then((res) => {
+            this.setState({ responseMessage: res.data.message });
+            if (res.status === 200) {
+              this.validate("uploaded", asin);
+              this.setState({ loading: false });
+            }
+          })
+          .catch((err) => {
+            this.validate("error", asin);
+            console.log(err.response);
+            console.log(err.request);
+          });
+      }
     }
   };
 
@@ -96,6 +124,9 @@ class AddReviewModal extends Component {
         "* You have already given a review for the book with ASIN " +
         asin +
         ". Please edit your existing review instead.";
+      this.setState({ error, loading: false });
+    } else if (check === "wrong") {
+      error = "* Invalid asin. Please check your asin.";
       this.setState({ error, loading: false });
     } else {
       //if state is uploaded
