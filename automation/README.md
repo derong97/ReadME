@@ -1,16 +1,14 @@
 # Pre-requisites
 
-1. Please use a Linux machine (64-bit) as the automation script relies on bash commands.
-   - WSL works too.
-2. Access the following information via the Vocareum platform after logging into the AWS Educate website:
-   - Click on "Account Details" button and show the `AWS CLI`:
-     - `aws_access_key`
-     - `aws_secret_access_key`
-     - `aws_session_token`
+1. Please use a Linux machine (64-bit) as the automation script relies on bash commands. WSL works too.
+2. Access the following information via the Vocareum platform after logging into the AWS Educate website. Click on "Account Details" button and show the `AWS CLI`:
+   - `aws_access_key`
+   - `aws_secret_access_key`
+   - `aws_session_token`
 
 # Deployment Instructions
 
-The deployment makes use of the Cloud Formation templates to create a stack.
+The deployment makes use of the Cloud Formation template to create a stack on AWS. The script is optimized to run in parallel.
 
 1. `cd automation`
    - There is no need to start a virtual environment.
@@ -24,7 +22,7 @@ The deployment makes use of the Cloud Formation templates to create a stack.
    - Desired stack name: (up to you)
    - Desired cluster size: (accepts only 2, 4, 6, 8)
 
-3. Deploying takes up at least 5 minutes. Be patient!
+3. The entire deployment takes up about 15 minutes. Be patient!
 
 # Troubleshooting
 
@@ -39,16 +37,16 @@ The deployment makes use of the Cloud Formation templates to create a stack.
 2. You can now access now the flask server remotely.
 3. To run the analytics task, you can run:
    ```bash
-   sudo ssh ubuntu@<namenode-public-IP> -i hadoop4-key.pem 'bash -s' < ./analytics_scripts/execute_analytics.sh
+   sudo ssh ubuntu@<namenode-public-IP> -i <aws-key> 'bash -s' < ./analytics_scripts/execute_analytics.sh
    ```
 4. To scale hadoop cluster, you can choose which datanode to commission/decommision and then run:
 
    ```bash
    # Scaling down
-   sudo ssh ubuntu@<namenode-public-IP> -i hadoop4-key.pem 'bash -s' < ./analytics_scripts/scaling_down.sh <datanode-private-IP>
+   sudo ssh ubuntu@<namenode-public-IP> -i <aws-key> 'bash -s' < ./analytics_scripts/scaling_down.sh <datanode-private-IP>
 
    # Scaling up
-   sudo ssh ubuntu@<namenode-public-IP> -i hadoop4-key.pem 'bash -s' < ./analytics_scripts/scaling_up.sh <datanode-private-IP>
+   sudo ssh ubuntu@<namenode-public-IP> -i <aws-key> 'bash -s' < ./analytics_scripts/scaling_up.sh <datanode-private-IP>
    ```
 
 # Tear Down Instructions

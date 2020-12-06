@@ -105,6 +105,46 @@
                     }
                 ]
             }
+        },
+        "Node0": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": "ami-0f82752aa17ff8f5d",
+                "InstanceType": "t2.xlarge",
+                "KeyName": { "Ref": "KeyName" },
+                "SecurityGroupIds": [{
+                    "Ref": "HadoopSecurityGroup"
+                }]
+            },
+            "DependsOn": [
+                "HadoopSecurityGroup"
+            ]
+        },
+        "Node1": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": "ami-0f82752aa17ff8f5d",
+                "InstanceType": "t2.xlarge",
+                "KeyName": { "Ref": "KeyName" },
+                "SecurityGroupIds": [{
+                    "Ref": "HadoopSecurityGroup"
+                }]
+            },
+            "DependsOn": [
+                "HadoopSecurityGroup"
+            ]
+        },
+        "HadoopSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Allow incoming SSH access",
+                "SecurityGroupIngress": [{
+                    "IpProtocol": "tcp",
+                    "FromPort": "0",
+                    "ToPort": "65535",
+                    "CidrIp": "0.0.0.0/0"
+                }]
+            }
         }
     },
     "Outputs": {
@@ -132,6 +172,42 @@
                 "Fn::GetAtt": [
                     "MongoDBEC2",
                     "PublicIp"
+                ]
+            }
+        },
+        "Node0PublicIP": {
+            "Description": "Public IP of Node0",
+            "Value": {
+                "Fn::GetAtt": [
+                    "Node0",
+                    "PublicIp"
+                ]
+            }
+        },
+        "Node0PrivateIP": {
+            "Description": "Private IP of Node0",
+            "Value": {
+                "Fn::GetAtt": [
+                    "Node0",
+                    "PrivateIp"
+                ]
+            }
+        },
+        "Node1PublicIP": {
+            "Description": "Public IP of Node1",
+            "Value": {
+                "Fn::GetAtt": [
+                    "Node1",
+                    "PublicIp"
+                ]
+            }
+        },
+        "Node1PrivateIP": {
+            "Description": "Private IP of Node1",
+            "Value": {
+                "Fn::GetAtt": [
+                    "Node1",
+                    "PrivateIp"
                 ]
             }
         }

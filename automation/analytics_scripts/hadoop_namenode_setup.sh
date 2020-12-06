@@ -27,17 +27,14 @@ mkdir download
 cd download
 
 wget https://apachemirror.sg.wuchna.com/hadoop/common/hadoop-3.3.0/hadoop-3.3.0.tar.gz
-sleep 1
 
 cd ./download
 tar zxvf hadoop-3.3.0.tar.gz
-sleep 1
 
 echo "Updating JAVA_HOME"
 export JH="\/usr\/lib\/jvm\/java-8-openjdk-amd64"
 
 sed -i "s/# export JAVA_HOME=.*/export\ JAVA_HOME=${JH}/g" hadoop-3.3.0/etc/hadoop/hadoop-env.sh
-sleep 1
 
 i=0;
 WORKERS=""
@@ -147,20 +144,15 @@ echo -e "<?xml version=\"1.0\"?>
 </configuration>
 " > hadoop-3.3.0/etc/hadoop/mapred-site.xml
 
-sleep 1
-
 rm hadoop-3.3.0/etc/hadoop/workers
 for ip in ${WORKERS}; do
     echo -e "${ip}" >> hadoop-3.3.0/etc/hadoop/workers;
 done
 
-sleep 1
-
 echo "Hadoop configuration completed"
 
 echo "Installing Hadoop on namenode..."
 tar czvf hadoop-3.3.0.tgz hadoop-3.3.0
-sleep 1
 
 for h in $WORKERS ; do
     scp -o StrictHostKeyChecking=no hadoop-3.3.0.tgz $h:.;
@@ -172,7 +164,6 @@ cd
 
 tar zxvf hadoop-3.3.0.tgz
 sudo mv hadoop-3.3.0 /opt/
-sleep 1
 
 sudo rm hadoop-3.3.0.tgz
 
@@ -215,7 +206,6 @@ for i in ${WORKERS};
 	do scp -o StrictHostKeyChecking=no spark-3.0.1-bin-hadoop3.2.tgz $i:./spark-3.0.1-bin-hadoop3.2.tgz;
 done
 
-sleep 1
 mv spark-3.0.1-bin-hadoop3.2.tgz ~/.
 
 cd
@@ -227,33 +217,6 @@ sudo chown -R hadoop:hadoop /opt/spark-3.0.1-bin-hadoop3.2
 sudo rm spark-3.0.1-bin-hadoop3.2.tgz
 
 echo "Setup of Spark finished."
-
-echo "Installing Mongo..."
-
-wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
-sudo apt-get update
-sudo apt-get install -y mongodb-org
-
-echo "Installed Mongo."
-
-echo "Installing MySQL..."
-
-export DEBIAN_FRONTEND=noninteractive
-sudo -E apt-get -q -y install mysql-server
-
-echo "Installed MySQL."
-
-# Add hadoop to PATH permanently, so we can call 'hdfs' straightaway.
-echo 'export PATH=$PATH:/opt/hadoop-3.3.0/bin' >> ~/.bash_profile
-
-# Download correlation.py and tfidf.py from Dropbox
-wget https://www.dropbox.com/s/md5edrovuv8s4n4/correlation.py?dl=0 -O correlation.py
-wget https://www.dropbox.com/s/zube51bf7juwo3n/tfidf.py?dl=0 -O tfidf.py
-
-echo "Installing packages for tfidf task"
-sudo apt install python3-pip -y
-pip3 install numpy==1.18.5
 
 exit
 
