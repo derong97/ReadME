@@ -29,7 +29,7 @@ sudo sh -c 'echo "security:\n  authorization : enabled" >> /etc/mongod.conf'
 sudo sed -i "s,\\(^[[:blank:]]*bindIp:\\) .*,\\1 0.0.0.0," /etc/mongod.conf
 sudo service mongod restart
 
-wget https://www.dropbox.com/s/bybard0tczemmqn/kindle_metadata_with_title_and_avgrating.json?dl=0 -O kindle_metadata_with_title_and_avgrating.json
+wget https://www.dropbox.com/s/8h45kcboxaxgx42/kindle_metadata_with_title_and_avgrating.json?dl=0 -O kindle_metadata_with_title_and_avgrating.json
 sleep 3s
 
 # Load the (project) metadata with titles and average_ratings into our database
