@@ -135,7 +135,6 @@ class ReviewsYouAddedPage extends Component {
   };
 
   handleEditSubmit = () => {
-    var review = this.state.reviewsYouAdded;
     var asin = this.state.editAsin;
     var overall = this.state.editOverall;
     var reviewText = this.state.editReviewText;

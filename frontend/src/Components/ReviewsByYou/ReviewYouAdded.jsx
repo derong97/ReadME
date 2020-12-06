@@ -85,7 +85,6 @@ class ReviewYouAdded extends Component {
           // this.setState({ book: book.imUrl == null ? "[no image]" : book.imUrl });
           // this.setState({ book: book.title == null ? "[no title]" : book.title });
           // this.setState({ book: book.categories == null ? "[no categories]" : book.categories });
-
         }
       })
       .catch((err) => {
@@ -98,8 +97,8 @@ class ReviewYouAdded extends Component {
     var categories = "";
     if (typeof cats !== "undefined") {
       for (var i = 0; i < cats.length; i++) {
-        if (i === cats.length) categories += cats[i];
-        else categories += cats[i] + ", ";
+        if (i === cats.length - 1) categories += cats[i];
+        else categories += cats[i] + ",   ";
       }
     }
     return categories;

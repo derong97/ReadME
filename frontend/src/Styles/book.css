@@ -47,14 +47,14 @@
 }
 
 #relatedbooks {
-  margin-left: 50px;
+  margin-left: 20px;
 }
 
 #relatedbooks-title {
   font-family: "Gotham-Black";
 }
 
-#review {
+#review-section {
   margin-top: 50px;
   margin-bottom: 70px;
 }
@@ -99,7 +99,7 @@
   display: flex;
   flex-direction: column;
   height: 250px;
-  width: 650px;
+  width: 550px;
   overflow: auto;
   margin-top: 30px;
 }
