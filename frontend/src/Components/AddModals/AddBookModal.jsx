@@ -360,7 +360,7 @@ class AddBookModal extends React.Component {
             <Modal.Title>Successfully Added Book</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>"{this.state.asin}" has been successfully added!</p>
+            <p>Your book with ASIN "{this.state.asin}" has been successfully added!</p>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="danger" onClick={this.handleCloseSuccess}>
