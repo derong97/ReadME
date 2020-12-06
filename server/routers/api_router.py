@@ -4,21 +4,8 @@ from controllers.user import User
 from controllers.review import Review
 from controllers.metadata import Metadata
 from common.token import token_required
-from common.mongo import MONGO_IP, MONGO_USER, MONGO_PW, MONGO_DB, MONGO_LOG_COL, mongolog
+from common.mongo import mongolog
 from decouple import config
-
-import logging
-import logging.handlers
-from log4mongo.handlers import MongoHandler
-
-#######################   LOGGING   #######################
-mhandler = MongoHandler(
-    host='mongodb://{}:{}@{}:27017'.format(MONGO_USER, MONGO_PW, MONGO_IP),
-    database_name=MONGO_DB, 
-    collection=MONGO_LOG_COL,
-)
-logging.getLogger('werkzeug').setLevel(logging.DEBUG)
-logging.getLogger('werkzeug').addHandler(mhandler)
 
 ####################### USER ROUTES #######################
 @app.route('/user/signup', methods=['POST'])
