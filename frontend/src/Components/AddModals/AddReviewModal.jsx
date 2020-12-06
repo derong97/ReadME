@@ -47,6 +47,7 @@ class AddReviewModal extends Component {
   };
 
   handleSubmit = (event) => {
+    event.preventDefault();
     // this.props.event.setState({
     //   searching: true,
     // });
@@ -68,8 +69,6 @@ class AddReviewModal extends Component {
     if (asin === 0 || reviewText === "" || summary === "") {
       this.validate("empty", asin);
     } else {
-      event.preventDefault();
-
       axios
         .post(url, params, headers)
         .then((res) => {
