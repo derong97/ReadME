@@ -184,7 +184,6 @@ class NavBar extends Component {
                 </button>
               }
             >
-              <NavDropdown.Item className="item">Settings</NavDropdown.Item>
               <NavDropdown.Item
                 className="item"
                 onClick={() => this.props.event.props.history.push("/")}
