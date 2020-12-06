@@ -93,6 +93,10 @@ output.saveAsTextFile("hdfs://{}:9000/{}".format(MASTER, RESULT_OUTPUT_DIR))
 # Printing to console
 print("Pearson correlation = ", r)
 
+# Write to local file system
+f = open("pear.txt", "w")
+f.write("Pearson Correlation: {}\n".format(r))
+
 ############################## STOP ##############################
 
 sc.stop()

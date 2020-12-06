@@ -73,7 +73,9 @@ def map_to_word(vocab):
 # apply udf to convert index back to word
 df = rescaledData.withColumn("tfidf", map_to_word(vocab)(rescaledData.features))
 
-output = df.select("id", "tfidf")
+df.printSchema()
+
+output = df.select("asin", "tfidf")
 output.write.format("csv").save("hdfs://{}:9000/{}".format(MASTER, RESULT_OUTPUT_DIR))
 
 ############################## STOP ##############################

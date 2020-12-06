@@ -7,6 +7,105 @@
         }
     },
     "Resources": {
+        "WebServerEC2": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": "ami-0f82752aa17ff8f5d",
+                "InstanceType": "t2.medium",
+                "KeyName": { "Ref": "KeyName" },
+                "SecurityGroupIds": [{
+                    "Ref": "WebServerSecurityGroup"
+                }]
+            },
+            "DependsOn": [
+                "WebServerSecurityGroup"
+            ]
+        },
+        "MySQLEC2": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": "ami-0f82752aa17ff8f5d",
+                "InstanceType": "t2.medium",
+                "KeyName": { "Ref": "KeyName" },
+                "SecurityGroupIds": [{
+                    "Ref": "MySQLSecurityGroup"
+                }]
+            },
+            "DependsOn": [
+                "MySQLSecurityGroup"
+            ]
+        },
+        "MongoDBEC2": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": "ami-0f82752aa17ff8f5d",
+                "InstanceType": "t2.medium",
+                "KeyName": { "Ref": "KeyName" },
+                "SecurityGroupIds": [{
+                    "Ref": "MongoDBSecurityGroup"
+                }]
+            },
+            "DependsOn": [
+                "MongoDBSecurityGroup"
+            ]
+        },
+        "WebServerSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Allow incoming SSH and HTTP access",
+                "SecurityGroupIngress": [{
+                        "IpProtocol": "tcp",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "5000",
+                        "ToPort": "5000",
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ]
+            }
+        },
+        "MySQLSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Allow incoming SSH and MySQL access",
+                "SecurityGroupIngress": [{
+                        "IpProtocol": "tcp",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "3306",
+                        "ToPort": "3306",
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ]
+            }
+        },
+        "MongoDBSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Allow incoming SSH and MongoDB access",
+                "SecurityGroupIngress": [{
+                        "IpProtocol": "tcp",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "27017",
+                        "ToPort": "27017",
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ]
+            }
+        },
         "Node0": {
             "Type": "AWS::EC2::Instance",
             "Properties": {
@@ -91,34 +190,6 @@
                 "HadoopSecurityGroup"
             ]
         },
-        "Node6": {
-            "Type": "AWS::EC2::Instance",
-            "Properties": {
-                "ImageId": "ami-0f82752aa17ff8f5d",
-                "InstanceType": "t2.xlarge",
-                "KeyName": { "Ref": "KeyName" },
-                "SecurityGroupIds": [{
-                    "Ref": "HadoopSecurityGroup"
-                }]
-            },
-            "DependsOn": [
-                "HadoopSecurityGroup"
-            ]
-        },
-        "Node7": {
-            "Type": "AWS::EC2::Instance",
-            "Properties": {
-                "ImageId": "ami-0f82752aa17ff8f5d",
-                "InstanceType": "t2.xlarge",
-                "KeyName": { "Ref": "KeyName" },
-                "SecurityGroupIds": [{
-                    "Ref": "HadoopSecurityGroup"
-                }]
-            },
-            "DependsOn": [
-                "HadoopSecurityGroup"
-            ]
-        },
         "HadoopSecurityGroup": {
             "Type": "AWS::EC2::SecurityGroup",
             "Properties": {
@@ -133,6 +204,33 @@
         }
     },
     "Outputs": {
+        "WebServerIP": {
+            "Description": "Public IP of WebServer",
+            "Value": {
+                "Fn::GetAtt": [
+                    "WebServerEC2",
+                    "PublicIp"
+                ]
+            }
+        },
+        "MySQLIP": {
+            "Description": "Public IP of MYSQL",
+            "Value": {
+                "Fn::GetAtt": [
+                    "MySQLEC2",
+                    "PublicIp"
+                ]
+            }
+        },
+        "MongoDBIP": {
+            "Description": "Public IP of MongoDB",
+            "Value": {
+                "Fn::GetAtt": [
+                    "MongoDBEC2",
+                    "PublicIp"
+                ]
+            }
+        },
         "Node0PublicIP": {
             "Description": "Public IP of Node0",
             "Value": {
@@ -237,42 +335,6 @@
             "Value": {
                 "Fn::GetAtt": [
                     "Node5",
-                    "PrivateIp"
-                ]
-            }
-        },
-        "Node6PublicIP": {
-            "Description": "Public IP of Node6",
-            "Value": {
-                "Fn::GetAtt": [
-                    "Node6",
-                    "PublicIp"
-                ]
-            }
-        },
-        "Node6PrivateIP": {
-            "Description": "Private IP of Node6",
-            "Value": {
-                "Fn::GetAtt": [
-                    "Node6",
-                    "PrivateIp"
-                ]
-            }
-        },
-        "Node7PublicIP": {
-            "Description": "Public IP of Node7",
-            "Value": {
-                "Fn::GetAtt": [
-                    "Node7",
-                    "PublicIp"
-                ]
-            }
-        },
-        "Node7PrivateIP": {
-            "Description": "Private IP of Node7",
-            "Value": {
-                "Fn::GetAtt": [
-                    "Node7",
                     "PrivateIp"
                 ]
             }

@@ -6,7 +6,6 @@ if [ "$EUID" -ne 0 ]
 fi
 
 ### CONFIGURE AWS CREDENTIALS IN CASE IT EXPIRES ###
-# prompts user to enter (1) access key, (2) secret key, (3) region: us-east-1
 echo """
 ============================================================================
 You can just ENTER all the way if your AWS key credentials have not expired
@@ -37,7 +36,7 @@ do
   aws cloudformation describe-stacks --stack-name $stackname --query "Stacks[][ [ StackName, StackStatus ] ][]" --output text | grep -q 'DELETE_IN_PROGRESS'
   if [ $? == 0 ]; then
     echo "Stack Status still not deleted. Pinging status again... "
-    sleep 3s
+    sleep 2s
   else
     echo "Stack is deleted!"
     break
@@ -57,4 +56,4 @@ echo "Removing logs from local machine..."
 rm logs.log
 
 echo "Teardown completed"
-echo "🕮 Goodbye! By ReadMe 🕮"
+echo "Goodbye! By ReadMe"

@@ -2,6 +2,9 @@
 
 sudo su - hadoop
 
+# Add hadoop to PATH permanently, so we can call 'hdfs' straightaway.
+echo 'export PATH=$PATH:/opt/hadoop-3.3.0/bin' >> ~/.bash_profile
+
 # Start hadoop cluster
 /opt/hadoop-3.3.0/sbin/start-dfs.sh && /opt/hadoop-3.3.0/sbin/start-yarn.sh
 sleep 1
