@@ -31,6 +31,10 @@ class ReviewYouAdded extends Component {
       width: 370,
       height: 419,
     },
+
+    reviewContainer: {
+      width: 1000,
+    },
   };
 
   componentDidMount() {
@@ -100,10 +104,13 @@ class ReviewYouAdded extends Component {
     return categories;
   };
 
+  
+
+
   render() {
     return (
-      <div className="container">
-        <table id="review"> 
+      <div className="container" style={this.styles.reviewContainer}>
+        <table id="review">
           <tbody>
             <td className="column-bookImage">
               <img
