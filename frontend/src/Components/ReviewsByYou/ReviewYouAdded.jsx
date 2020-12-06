@@ -122,11 +122,11 @@ class ReviewYouAdded extends Component {
             </td>
             <td className="column-review">
               <h4> {this.state.book.title}</h4>
-              <p className="review-small">
+              <p id="review-small">
                 {this.getCategories(this.state.book.categories)}
               </p>
               <h6>"{this.state.summary}"</h6>
-              <p className="review-small">
+              <p id="review-small">
                 <i> added {this.state.unixReviewTime}</i>
               </p>
               <ReadMoreReact

@@ -33,3 +33,7 @@ code {
   src: url(./Fonts/Gotham-Ultra.otf) format('opentype');
 }
 
+@font-face {
+  font-family: 'Gotham-Book';
+  src: url(./Fonts/Gotham-Book.otf) format('opentype');
+}

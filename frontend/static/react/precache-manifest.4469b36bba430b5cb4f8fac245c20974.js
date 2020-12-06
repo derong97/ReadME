@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b22bbf57d1d7158ff093f72a3579b939",
+    "revision": "07335ed3b0e7b2e85651bc485c85fed4",
     "url": "/static/react/../templates/index.html"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/react/css/2.7f692ebf.chunk.css"
   },
   {
-    "revision": "8514f9023b9867d33527",
-    "url": "/static/react/css/main.c306a59d.chunk.css"
+    "revision": "306331c63f658aa8f2f2",
+    "url": "/static/react/css/main.8f56d22d.chunk.css"
   },
   {
     "revision": "b2f23a8f8d4ffda6f36e",
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/react/js/2.2ec98398.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "8514f9023b9867d33527",
-    "url": "/static/react/js/main.feca02fb.chunk.js"
+    "revision": "306331c63f658aa8f2f2",
+    "url": "/static/react/js/main.eb3db237.chunk.js"
   },
   {
     "revision": "4bf013c3470600c06d0c",
@@ -30,6 +30,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "13c840dc081e6ab6565e27a467856fbb",
     "url": "/static/react/media/Gotham-Black.13c840dc.otf"
+  },
+  {
+    "revision": "9019ab71e2d2d6cc3c9f4140cb27a618",
+    "url": "/static/react/media/Gotham-Book.9019ab71.otf"
   },
   {
     "revision": "27a90e8757eda1edc9872eebec18ba64",
