@@ -18,7 +18,7 @@ class BookPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searching: true,
+      searching: false,
       token: props.location.state.token,
       id: props.location.state.id,
       username: props.location.state.username,
@@ -32,7 +32,6 @@ class BookPage extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.location.key !== this.props.location.key) {
-      this.setState({ searching: true });
       this.setState({
         token: this.props.location.state.token,
         id: this.props.location.state.id,
@@ -63,7 +62,6 @@ class BookPage extends React.Component {
         );
     }
     this.setState({ relatedBooks: relatedBooks });
-    this.setState({ searching: false });
   };
 
   getRelatedBooks = async (bought, resolve) => {
