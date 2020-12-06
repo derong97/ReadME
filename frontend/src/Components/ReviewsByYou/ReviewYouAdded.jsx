@@ -35,6 +35,7 @@ class ReviewYouAdded extends Component {
     reviewContainer: {
       width: 1000,
     },
+    textWrap:{flex: 1, flexWrap: 'wrap'},
   };
 
   componentDidMount() {
