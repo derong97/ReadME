@@ -67,6 +67,7 @@
 
 #review-title {
   font-family: "Gotham-Black";
+  padding-right: 200px;
 }
 
 #review-bttn {
@@ -99,7 +100,7 @@
   display: flex;
   flex-direction: column;
   height: 250px;
-  width: 550px;
+  width: 650px;
   overflow: auto;
   margin-top: 30px;
 }
