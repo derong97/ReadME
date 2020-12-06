@@ -153,7 +153,7 @@ class NavBar extends Component {
             </Form>
             <NavDropdown
               id="navdropdown"
-              className="ml-auto"
+              className="mr"
               title={
                 <container className="nav-sub">
                   <FontAwesomeIcon icon={faPlusCircle} size="4x" />
@@ -176,7 +176,7 @@ class NavBar extends Component {
             </NavDropdown>
             <NavDropdown
               id="navdropdown"
-              className="mr-auto"
+              className="ml-auto"
               title={
                 <button className="user-bttn">
                   <FontAwesomeIcon icon={faUserCircle} size="2x" />
