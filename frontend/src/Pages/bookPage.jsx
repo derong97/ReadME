@@ -192,8 +192,8 @@ class BookPage extends React.Component {
                     </Expand>
                   </div>
                 </div>
-                <div id="review-section" className="row">
-                  <div id="review-header" className="col">
+                <div id="review-section">
+                  <div id="review-header">
                     <h4 id="review-title">REVIEW</h4>
                     <button
                       id="review-bttn"
@@ -205,7 +205,7 @@ class BookPage extends React.Component {
                       <div className="add-book-bttn-text">add review</div>
                     </button>
                   </div>
-                  <div id="review-info" className="col">
+                  <div id="review-info">
                     {this.state.reviews.map((review) => (
                       <ReviewItem review={review} />
                     ))}
