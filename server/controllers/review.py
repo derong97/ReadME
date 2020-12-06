@@ -107,42 +107,6 @@ class Review:
                 con.close()
         else:
             return {"message": "User id {} does not exist".format(reviewerID)}, 401
-    
-    # get average rating of one book
-    def get_rating(self, asin):
-        con, cur = connect()
-
-        try:
-            cur.execute("SELECT AVG(overall) as 'Average Rating' FROM {} WHERE asin = '{}';".format(SQL_KINDLE, asin))
-            r = cur.fetchone()[0]
-            return {"rating": r, "message": "Successfully retrieved rating for asin {}".format(asin)}, 200
-
-        except Exception as e:
-            return {"message": "Retrieval of rating failed for asin {}".format(asin)}, 400
-        
-        finally:
-            con.close()
-
-    # sorts books according to average rating
-    # TY - INDICATED FOR DELETION. WILL CONFIRM ONE LAST TIME.
-    def sort_on_ratings(self, desc = True):
-        con, cur = connect()
-        
-        try:
-            if(desc):
-                cur.execute("SELECT asin, AVG(overall) as 'Average Rating' FROM {} GROUP BY asin ORDER BY AVG(overall) DESC LIMIT 10;".format(SQL_KINDLE))
-            else:
-                cur.execute("SELECT asin, AVG(overall) as 'Average Rating' FROM {} GROUP BY asin ORDER BY AVG(overall) ASC LIMIT 10;".format(SQL_KINDLE))
-            
-            r = fetch_dicts(cur)
-            return {"rating": r, "message": "Successfully sorted books"}, 200
-
-        except Exception as e:
-            return {"message": "Sorting of books failed"}, 400
-        
-        finally:
-            con.close()
-
 
     def get_user_reviews(self, reviewerID):
         reviewer_info = mongo_users.find_one({"_id": ObjectId(reviewerID)})

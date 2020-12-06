@@ -1,9 +1,8 @@
 import sys
 import pyspark
-import numpy
+import math
 from pyspark.sql import SparkSession
-from pyspark.ml.feature import CountVectorizer, IDF, Tokenizer
-from pyspark.sql.functions import udf, col
+from pyspark.sql import functions as F
 
 ########################## INFORMATION ###########################
 # This file is hosted in Dropbox. If automation script fails to extract this, means it have been taken done. So just retrieve it from here instead.
@@ -34,50 +33,38 @@ data = spark.read\
 ########################### ANALYTICS ############################
 
 # drop rows with null values in reviews
-data = data.na.drop(subset=["reviewText"])
+data = data.filter(F.col("reviewText").isNotNull())
+data = data.select(F.col("asin"),F.col("reviewerID"), F.col("reviewText"))
 
-# convert to words
-tokenizer = Tokenizer(inputCol="reviewText", outputCol="words")
-wordsData = tokenizer.transform(data)
+# number of documents
+n = data.count()
 
-# use CountVectorizer to get term frequency vectors
-cv = CountVectorizer(inputCol="words", outputCol="rawFeatures", vocabSize=20)
-model = cv.fit(wordsData)
-featurizedData = model.transform(wordsData)
+rdd = data.rdd
 
-vocab = model.vocabulary
+## computing tf
+# get key value pair of (asin, reviewerId, word i) and number of word i that appears in the review
+# asin and reviewerId is  the document ID
+data = rdd.flatMap(lambda row: [(((row[0],row[1]),i),1) for i in row[2].split()])
+data = data.reduceByKey(lambda x,y:x+y)
 
-# Applying IDF needs two passes:
-# First to compute the IDF vector and second to scale the term frequencies by IDF.
-idf = IDF(inputCol="rawFeatures", outputCol="features")
-idfModel = idf.fit(featurizedData)
-rescaledData = idfModel.transform(featurizedData)
+# modify key value pairs into (token, (documentID, tf)
+tf = data.map(lambda x: (x[0][1],(x[0][0],x[1])))
 
-# trying to map the index of word -> actual word cause CountVectorizer gives index
-def map_to_word1(row, vocab):
-    d = {}
-    array = row.toArray()
-    for i in range(len(row)):
-        # if it is 0 -> ignore, else change the key to corresponding word
-        if (array[i] != 0):
-            tfidf = array[i]
-            word = vocab[i]
-            d[word] = tfidf
-    return str(d)
+## computing idf
+data = tf.map(lambda x: (x[0], 1))
+data = data.reduceByKey(lambda x,y:x+y)
 
-def map_to_word(vocab):
-    return udf(lambda row: map_to_word1(row, vocab))
+idf = data.map(lambda x: (x[0], math.log10(n/x[1])))
 
-############################# OUTPUT #############################
+# join rdd for tf and idf
+rdd = tf.join(idf)
 
-# apply udf to convert index back to word
-df = rescaledData.withColumn("tfidf", map_to_word(vocab)(rescaledData.features))
+## compute tfidf
+# key value pair is (documentID, (token, tfidf))
+tfidf = rdd.map(lambda x: (x[1][0][0], (x[0], x[1][0][1]*x[1][1])))
 
-df.printSchema()
+print(tfidf.take(5))
 
-output = df.select("asin", "tfidf")
-output.write.format("csv").save("hdfs://{}:9000/{}".format(MASTER, RESULT_OUTPUT_DIR))
-
-############################## STOP ##############################
+tfidf.saveAsTextFile("hdfs://{}:9000/{}".format(MASTER, RESULT_OUTPUT_DIR))
 
 sc.stop()
