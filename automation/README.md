@@ -21,7 +21,7 @@ The deployment makes use of the Cloud Formation template to create a stack on AW
    - Desired stack name: (up to you)
    - Desired cluster size: (choose a number from 2 to 6)
 
-3. The entire deployment takes about 15 minutes. Be patient!
+3. The entire deployment takes about 10 minutes. Be patient!
 
 # Troubleshooting
 
@@ -33,14 +33,19 @@ The deployment makes use of the Cloud Formation template to create a stack on AW
 # Post-Deployment
 
 1. `logs.log` stores important information like the public IP addresses of the servers.
+
 2. You can now access now the flask server remotely.
-3. To run the analytics task, you can run: `./main.sh -a`
+
+3. To run the analytics task, you can run: `./main.sh -a`. 
+
+   1. Time takes approximately 5 minutes. The performance is faster because we have installed Spark Cluster to run the analytics. Performance increases with number of nodes.
+
 4. To scale up/downhadoop cluster, you can choose which datanode to commission/decommision and then run:
 
    ```bash
    # Scaling up
    ./main.sh -u
-
+   
    # Scaling down
    ./main.sh -d
    ```
