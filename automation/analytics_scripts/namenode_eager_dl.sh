@@ -15,8 +15,8 @@ sudo -E apt-get -q -y install mysql-server
 echo "Installed MySQL."
 
 # Download correlation.py and tfidf.py from Dropbox
-wget https://www.dropbox.com/s/md5edrovuv8s4n4/correlation.py?dl=0 -O correlation.py
-wget https://www.dropbox.com/s/zube51bf7juwo3n/tfidf.py?dl=0 -O tfidf.py
+wget https://www.dropbox.com/s/9wc576uge97okwr/correlation.py?dl=0 -O correlation.py
+wget https://www.dropbox.com/s/y7rc4lmvh3u53jj/tfidf.py?dl=0 -O tfidf.py
 
 # Download packages for tf-idf task
 sudo apt install python3-pip -y

@@ -32,6 +32,10 @@ class ReviewYouAdded extends Component {
       height: 419,
     },
 
+    reviewContainer: {
+      width: 1200,
+    },
+    textWrap:{flex: 1, flexWrap: 'wrap'},
   };
 
   componentDidMount() {
@@ -118,15 +122,15 @@ class ReviewYouAdded extends Component {
             </td>
             <td className="column-review">
               <h4> {this.state.book.title}</h4>
-              <p id="review-small">
+              <p className="review-small">
                 {this.getCategories(this.state.book.categories)}
               </p>
               <h6>"{this.state.summary}"</h6>
-              <p id="review-small">
+              <p className="review-small">
                 <i> added {this.state.unixReviewTime}</i>
               </p>
               <ReadMoreReact
-                id="review-rating-heading"
+                className="review-rating-heading"
                 text={this.state.reviewText}
                 min={120}
                 ideal={150}
