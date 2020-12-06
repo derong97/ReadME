@@ -40,7 +40,6 @@ def login():
 @app.route('/book/add', methods=['POST'])
 @token_required
 def add_new_book(reviewerID):
-    # app.logger.info('Testing logging request')
     mongolog(request, reviewerID=reviewerID, action="add_new_book")
     return Metadata().add_new_book()
 
