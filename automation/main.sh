@@ -13,7 +13,7 @@ analytics(){
     MySQLIP=$(grep MySQLIP logs.log | sed -e 's/.*MySQLIP=\(\S*\).*/\1/g')
     Node0PublicIP=$(grep Node0PublicIP logs.log | sed -e 's/.*Node0PublicIP=\(\S*\).*/\1/g')
     KeyName=$(grep KeyName logs.log | sed -e 's/.*KeyName=\(\S*\).*/\1/g')
-    
+
     sudo ssh -o StrictHostKeyChecking=no ubuntu@$Node0PublicIP -i $KeyName.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' bash -s" < ./analytics_scripts/ingest_data.sh
     sudo ssh -o StrictHostKeyChecking=no ubuntu@$Node0PublicIP -i $KeyName.pem 'bash -s' < ./analytics_scripts/execute_analytics.sh
 }
@@ -40,6 +40,8 @@ print_usage(){
     -t : Tearing down production and analytics system
     -a : Ingesting data and running analytics
     -h : Print command usage
+    -u : Scaling up requested node in hadoop cluster
+    -d : Scaling down requested node in hadoop cluster
     """
 }
 
