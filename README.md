@@ -101,10 +101,11 @@ To serve our web application, we used Flask as the built-in Flask web server is 
 3. Web logs collection (activities from users)
    
    **Schema**
-   * id: ObjectId, Primary Key
+   * id: ObjectId, Unique Key
    * timestamp: Date
    * method: String
    * action: String
+   * response_code: Integer
    
 
 #### MySQL
