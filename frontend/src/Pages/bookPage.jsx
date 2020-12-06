@@ -212,8 +212,8 @@ class BookPage extends React.Component {
                   </div>
                 </div>
               </div>
-              <div id="relatedbooks" class="col">
-                <div class="row">
+              <div id="relatedbooks" className="col">
+                <div className="row">
                   <h4 id="relatedbooks-title">RELATED BOOKS</h4>
                 </div>
                 {this.state.relatedBooks.map((book) => (

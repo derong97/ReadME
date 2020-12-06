@@ -242,30 +242,43 @@ class ReviewsYouAddedPage extends Component {
             home="nav-sub"
             byme="nav-main"
           ></NavBar>
-
-          <div id="review-header" class="row">
-            <div class="col">
-              <h2>Reviews You Added</h2>
-              <div class="row">
-                <h5 id="review-text">
-                  Here lies the reviews you have contributed to the ReadME
-                  community.
-                </h5>
+            <div id="review-header" class="row">
+              <div class="col">
+                <h2>Reviews You Added</h2>
+                <div class="row">
+                  <h5 id="review-text">
+                    Here lies the reviews you have contributed to the ReadME
+                    community.
+                  </h5>
+                </div>
               </div>
-            </div>
-            <div class="col">
-              <button
-                className="add-review-bttn"
-                id="add-review-bttn"
-                onClick={() => this.addReviewModalOpen()}
-                data-toggle="modal"
-                data-target="#exampleModalCenter"
-              >
-                <FontAwesomeIcon icon={faEdit} size="2x" />
-                <div className="add-book-bttn-text">add review</div>
-              </button>
-            </div>
+              <div class="col">
+                <button
+                  className="add-review-bttn"
+                  id="add-review-bttn"
+                  onClick={() => this.addReviewModalOpen()}
+                  data-toggle="modal"
+                  data-target="#exampleModalCenter"
+                >
+                  <FontAwesomeIcon icon={faEdit} size="2x" />
+                  <div className="add-book-bttn-text">add review</div>
+                </button>
+              </div>
           </div>
+
+          <div id="reviews" class="row">
+            <ReviewsYouAdded
+              token={this.state.token}
+              reviewsYouAdded={this.state.reviewsYouAdded}
+              handleDelete={this.handleDelete}
+              deleteReviewModalOpen={this.deleteReviewModalOpen}
+              deleteReviewModalClose={this.deleteReviewModalClose}
+              editReviewModalOpen={this.editReviewModalOpen}
+              editReviewModalClose={this.editReviewModalClose}
+            />
+          </div>
+
+          
 
           <div>
             <AddReviewModal
@@ -301,17 +314,7 @@ class ReviewsYouAddedPage extends Component {
             />
           </div>
 
-          <div id="reviews">
-            <ReviewsYouAdded
-              token={this.state.token}
-              reviewsYouAdded={this.state.reviewsYouAdded}
-              handleDelete={this.handleDelete}
-              deleteReviewModalOpen={this.deleteReviewModalOpen}
-              deleteReviewModalClose={this.deleteReviewModalClose}
-              editReviewModalOpen={this.editReviewModalOpen}
-              editReviewModalClose={this.editReviewModalClose}
-            />
-          </div>
+          
         </body>
 
         {/* modal to show edit status  */}
@@ -327,7 +330,7 @@ class ReviewsYouAddedPage extends Component {
           <Modal.Header closeButton>
             <Modal.Title>Successfully Added Book</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body id="review-body">
             <p>"{this.state.editAsin}" has been successfully edited!</p>
           </Modal.Body>
           <Modal.Footer>

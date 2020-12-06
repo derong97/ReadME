@@ -176,7 +176,7 @@ class NavBar extends Component {
             </NavDropdown>
             <NavDropdown
               id="navdropdown"
-              className="ml-auto"
+              className="mr-auto"
               title={
                 <button className="user-bttn">
                   <FontAwesomeIcon icon={faUserCircle} size="2x" />
