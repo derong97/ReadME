@@ -1,41 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-<<<<<<< HEAD:frontend/static/react/precache-manifest.54685379a552dc39c24a823ac9d55cc7.js
-    "revision": "9a2bea5415d3076bd5657b7d7f8f7ca7",
-=======
-    "revision": "ca5d96763f8130549449f3d682ca2d71",
->>>>>>> 6a67b45a65416f2d567ba26f25959715809079ef:frontend/static/react/precache-manifest.44b460b2bf4358bcd456ce0c35a2fe25.js
+    "revision": "b8f8f33a607474561cb129ff7415d8ef",
     "url": "/static/react/../templates/index.html"
   },
   {
-    "revision": "b2f23a8f8d4ffda6f36e",
+    "revision": "140616301e27417cfe0c",
     "url": "/static/react/css/2.7f692ebf.chunk.css"
   },
   {
-<<<<<<< HEAD:frontend/static/react/precache-manifest.54685379a552dc39c24a823ac9d55cc7.js
-    "revision": "ff3c79b28ab72c2949c7",
+    "revision": "7689e0d4aff9f12fbd8c",
     "url": "/static/react/css/main.4c5fe122.chunk.css"
-=======
-    "revision": "2a4179071889a4125032",
-    "url": "/static/react/css/main.678684fb.chunk.css"
->>>>>>> 6a67b45a65416f2d567ba26f25959715809079ef:frontend/static/react/precache-manifest.44b460b2bf4358bcd456ce0c35a2fe25.js
   },
   {
-    "revision": "b2f23a8f8d4ffda6f36e",
-    "url": "/static/react/js/2.2ec98398.chunk.js"
+    "revision": "140616301e27417cfe0c",
+    "url": "/static/react/js/2.54a84ea8.chunk.js"
   },
   {
     "revision": "90fa8487ac534f110b5f09ceb017e754",
-    "url": "/static/react/js/2.2ec98398.chunk.js.LICENSE.txt"
+    "url": "/static/react/js/2.54a84ea8.chunk.js.LICENSE.txt"
   },
   {
-<<<<<<< HEAD:frontend/static/react/precache-manifest.54685379a552dc39c24a823ac9d55cc7.js
-    "revision": "ff3c79b28ab72c2949c7",
-    "url": "/static/react/js/main.265f0501.chunk.js"
-=======
-    "revision": "2a4179071889a4125032",
-    "url": "/static/react/js/main.7d107d44.chunk.js"
->>>>>>> 6a67b45a65416f2d567ba26f25959715809079ef:frontend/static/react/precache-manifest.44b460b2bf4358bcd456ce0c35a2fe25.js
+    "revision": "7689e0d4aff9f12fbd8c",
+    "url": "/static/react/js/main.842bd774.chunk.js"
   },
   {
     "revision": "4bf013c3470600c06d0c",
