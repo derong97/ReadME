@@ -62,4 +62,41 @@ The deployment makes use of the Cloud Formation template to create a stack on AW
 
 # Analytics
 
-![Analytics](/results/correlation.jpg)
+We used the following formulas to calculate the Pearson correlation:
+
+![Analytics](https://www.statisticshowto.com/wp-content/uploads/2009/11/pearsons-300x156.gif)
+
+We used the following formula to calculate the TF-IDF:
+
+![Analytics](https://lh3.googleusercontent.com/proxy/_MXfBwOZLoBgtKAxDgkQaUvt6NYrA6VXvFkvbM-MfykHvJquZYLtuFj0rSugXbllFv04i5jSaQQQN07SC78UvEba6aZHopFfL_puOdEntNfcQfVKeldff7fTLxylrZDiieLgdNHp37s)
+
+To view the results after running analytics tasks:
+1. (For correlation)
+
+List out the output files from the task
+   ```bash
+   hdfs dfs -ls /corr
+   ```
+View the last output file
+   ```bash
+   hdfs dfs -cat /corr/part-00011
+   ```
+Results should look like this:
+
+![Analytics](/automation/results/correlation.jpg)
+
+2. (For tf-idf)
+
+List out the output files from the task
+ ```bash
+   hdfs dfs -ls /tfidf
+   ```
+View the files
+   ```bash
+   hdfs dfs -cat /tfidf/part-00000
+   ```
+Results should look like this:
+
+![Analytics](/automation/results/tfidf.jpg)
+
+
