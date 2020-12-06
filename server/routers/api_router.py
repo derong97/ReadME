@@ -23,61 +23,70 @@ logging.getLogger('werkzeug').addHandler(mhandler)
 ####################### USER ROUTES #######################
 @app.route('/user/signup', methods=['POST'])
 def signup():
-    mongolog(request, action='signup')
-    return User().signup()
+    json_response, res_code = User().signup()
+    mongolog(request, action='signup', json_response=json_response, response_code=res_code)
+    return json_response, res_code
 
 @app.route('/user/signout', methods=['GET'])
 def signout():
-    mongolog(request, action='signout')
+    mongolog(request, action='signout', response_code=400)
     return User().signout()
 
 @app.route('/user/login', methods=['POST'])
 def login():
-    mongolog(request, action='login')
-    return User().login()
+    json_response, res_code = User().login()
+    mongolog(request, action='login', json_response=json_response, response_code=res_code)
+    return json_response, res_code
 
 ####################### BOOK ROUTES #######################
 @app.route('/book/add', methods=['POST'])
 @token_required
 def add_new_book(reviewerID):
-    # app.logger.info('Testing logging request')
-    mongolog(request, reviewerID=reviewerID, action="add_new_book")
-    return Metadata().add_new_book()
+    json_response, res_code = Metadata().add_new_book()
+    mongolog(request, reviewerID=reviewerID, action="add_new_book", json_response=json_response, response_code=res_code)
+    return json_response, res_code
 
 # Ex: /book/B000F83SZQ
 @app.route('/book/<asin>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @token_required
 def bookAPI(reviewerID, asin):
-    mongolog(request, reviewerID=reviewerID, asin=asin, action="bookAPI")
 
     if request.method == 'GET':
-        # Query from MongoDB       
+    # Query from MongoDB       
         book_metadata = Metadata().get_metadata(asin)
 
         if book_metadata[1] == 200:
             book_reviews = Review().get_reviews(asin)
             message = book_metadata[0]["message"] + " & " + book_reviews[0]["message"]
             combined_response = {**book_metadata[0], **book_reviews[0], **{"message": message}} # later keys will override
-
-            return combined_response, book_reviews[1]
+            json_response, res_code = combined_response, book_reviews[1]
         else:
-            return book_metadata
+            json_response, res_code = book_metadata
+        mongolog(request, reviewerID=reviewerID, asin=asin, action="get_reviews_and_metadata", response_code=res_code)
+        return json_response, res_code
 
     elif request.method == 'POST':
-        return Review().insert_review(reviewerID, asin)
+        json_response, res_code = Review().insert_review(reviewerID, asin)
+        mongolog(request, reviewerID=reviewerID, asin=asin, action="insert_review", json_response=json_response, response_code=res_code)
+        return json_response, res_code
     
     elif request.method == 'PUT':
-        return Review().edit_review(reviewerID, asin)
-    
+        json_response, res_code = Review().edit_review(reviewerID, asin)
+        mongolog(request, reviewerID=reviewerID, asin=asin, action="edit_review", json_response=json_response, response_code=res_code)
+        return json_response, res_code
+
     elif request.method == 'DELETE':
-        return Review().delete_review(reviewerID, asin)
+        json_response, res_code = Review().delete_review(reviewerID, asin)
+        mongolog(request, reviewerID=reviewerID, asin=asin, action="delete_review", json_response=json_response, response_code=res_code)
+        return json_response, res_code
 
 # Ex: /reviews/user
 @app.route('/reviews/user', methods=['GET'])
 @token_required
 def get_user_reviews(reviewerID):
-    mongolog(request, reviewerID=reviewerID, action="get_user_reviews")
-    return Review().get_user_reviews(reviewerID)
+    json_response, res_code = Review().get_user_reviews(reviewerID)
+    mongolog(request, reviewerID=reviewerID, action="get_user_reviews", response_code=res_code)
+    return json_response, res_code
 
 # Ex 1: /books?category=Public Health&category=Vascular
 # Ex 2: /books?title=flowers&pageNum=2
@@ -88,6 +97,6 @@ def search(reviewerID):
     categories = request.args.getlist("category")
     title = request.args.get('title', default=None, type=str)
     pageNum = request.args.get('pageNum', default=1, type=int)
-
-    mongolog(request, reviewerID=reviewerID, action="search")
-    return Metadata().search(categories, title, pageNum)
+    json_response, res_code = Metadata().search(categories, title, pageNum)
+    mongolog(request, reviewerID=reviewerID, action="metadata_search", response_code=res_code)
+    return json_response, res_code 
