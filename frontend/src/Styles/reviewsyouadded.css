@@ -109,6 +109,10 @@ body {
 }
 
 #reviews {
-  margin-bottom: 300px;
+  margin-left: 100px;
+  margin-bottom: 100px;
 }
 
+/* #review-container{
+  width: 700px;
+} */
