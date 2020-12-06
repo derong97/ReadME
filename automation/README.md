@@ -20,7 +20,7 @@ The deployment makes use of the Cloud Formation template to create a stack on AW
    - Default output format: (not required)
    - AWS Session Token: `aws_session_token`
    - Desired stack name: (up to you)
-   - Desired cluster size: (accepts only 2, 4, 6, 8)
+   - Desired cluster size: (choose a number from 2 to 6)
 
 3. The entire deployment takes up about 15 minutes. Be patient!
 

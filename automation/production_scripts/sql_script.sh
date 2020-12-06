@@ -19,7 +19,6 @@ sudo mysql -e 'flush privileges'
 sudo sh -c 'echo "[mysqld]\nbind-address = 0.0.0.0" >> /etc/mysql/my.cnf'
 sudo service mysql restart
 
-
 wget https://www.dropbox.com/s/al7t230goqylhsq/kaggle_processed.csv?dl=0 -O kaggle_processed.csv
 sleep 3s
 
