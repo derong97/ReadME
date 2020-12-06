@@ -106,6 +106,8 @@ To serve our web application, we used Flask as the built-in Flask web server is 
    * method: String
    * action: String
    * response_code: Integer
+   * asin: String (if relevant)
+   * reviewerID: String (if relevant)
    
 
 #### MySQL
