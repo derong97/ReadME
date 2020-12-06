@@ -112,6 +112,15 @@
                 "ImageId": "ami-0f82752aa17ff8f5d",
                 "InstanceType": "t2.xlarge",
                 "KeyName": { "Ref": "KeyName" },
+                "BlockDeviceMappings": [{
+                    "DeviceName": "/dev/xvda",
+                    "Ebs": {
+                        "VolumeType": "gp2",
+                        "VolumeSize": "16",
+                        "DeleteOnTermination": "true",
+                        "Encrypted": "true"
+                    }
+                }],
                 "SecurityGroupIds": [{
                     "Ref": "HadoopSecurityGroup"
                 }]
@@ -126,6 +135,15 @@
                 "ImageId": "ami-0f82752aa17ff8f5d",
                 "InstanceType": "t2.xlarge",
                 "KeyName": { "Ref": "KeyName" },
+                "BlockDeviceMappings": [{
+                    "DeviceName": "/dev/xvda",
+                    "Ebs": {
+                        "VolumeType": "gp2",
+                        "VolumeSize": "16",
+                        "DeleteOnTermination": "true",
+                        "Encrypted": "true"
+                    }
+                }],
                 "SecurityGroupIds": [{
                     "Ref": "HadoopSecurityGroup"
                 }]
@@ -140,6 +158,15 @@
                 "ImageId": "ami-0f82752aa17ff8f5d",
                 "InstanceType": "t2.xlarge",
                 "KeyName": { "Ref": "KeyName" },
+                "BlockDeviceMappings": [{
+                    "DeviceName": "/dev/xvda",
+                    "Ebs": {
+                        "VolumeType": "gp2",
+                        "VolumeSize": "16",
+                        "DeleteOnTermination": "true",
+                        "Encrypted": "true"
+                    }
+                }],
                 "SecurityGroupIds": [{
                     "Ref": "HadoopSecurityGroup"
                 }]
@@ -154,6 +181,15 @@
                 "ImageId": "ami-0f82752aa17ff8f5d",
                 "InstanceType": "t2.xlarge",
                 "KeyName": { "Ref": "KeyName" },
+                "BlockDeviceMappings": [{
+                    "DeviceName": "/dev/xvda",
+                    "Ebs": {
+                        "VolumeType": "gp2",
+                        "VolumeSize": "16",
+                        "DeleteOnTermination": "true",
+                        "Encrypted": "true"
+                    }
+                }],
                 "SecurityGroupIds": [{
                     "Ref": "HadoopSecurityGroup"
                 }]

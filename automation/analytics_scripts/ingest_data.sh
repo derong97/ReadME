@@ -3,8 +3,8 @@
 sudo MongoDBIP=$MongoDBIP MySQLIP=$MySQLIP su -p - hadoop
 
 # Download correlation.py and tfidf.py from Dropbox
-wget https://www.dropbox.com/s/9wc576uge97okwr/correlation.py?dl=0 -O /home/hadoop/correlation.py &
-wget https://www.dropbox.com/s/y7rc4lmvh3u53jj/tfidf.py?dl=0 -O /home/hadoop/tfidf.py &
+wget https://storage.googleapis.com/readme-db-proj/correlation.py -O /home/hadoop/correlation.py &
+wget https://storage.googleapis.com/readme-db-proj/tfidf.py -O /home/hadoop/tfidf.py &
 
 # Ingest data from MongoDB
 mongoexport --host=$MongoDBIP:27017 --username=historicriptide --password=futuresparkles --authenticationDatabase=admin --db=readme_mongo --collection=kindle_metadata --out=/home/hadoop/kindle_meta.json &

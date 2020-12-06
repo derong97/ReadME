@@ -68,7 +68,7 @@ We used the following formula to calculate the TF-IDF:
 
 To view the results after running analytics tasks:
 
-1. (For correlation)
+1. Correlation
 
 List out the output files from the task
 
@@ -86,12 +86,14 @@ Results should look like this:
 
 ![Analytics](/automation/results/correlation.jpg)
 
-2. (For tf-idf)
+2. TF-IDF
 
 List out the output files from the task
- ```bash
-   hdfs dfs -ls /tfidf
- ```
+
+```bash
+  hdfs dfs -ls /tfidf
+```
+
 View the files
 
 ```bash
@@ -101,8 +103,3 @@ hdfs dfs -cat /tfidf/part-00000
 Results should look like this:
 
 ![Analytics](results/tfidf.jpg)
-
-
-
-
-
