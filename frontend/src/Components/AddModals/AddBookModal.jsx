@@ -274,7 +274,7 @@ class AddBookModal extends React.Component {
                 <Form.Group as={Col} md="4" controlId="formPrice">
                   <Form.Label>Price</Form.Label>
                   <Form.Control
-                    type="text"
+                    type="number"
                     placeholder="enter price of book"
                     required
                     onChange={this.handlePriceChange}
