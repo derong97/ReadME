@@ -165,8 +165,6 @@ cd download
 	tar zxvf hadoop-3.3.0.tgz
 	sudo mv hadoop-3.3.0 /opt/
 
-	sudo rm hadoop-3.3.0.tgz
-
 	sudo mkdir -p /mnt/hadoop/namenode/hadoop-${USER}
 	sudo chown -R hadoop:hadoop /mnt/hadoop/namenode
 	yes | /opt/hadoop-3.3.0/bin/hdfs namenode -format
@@ -215,12 +213,30 @@ cd download
 	sudo mv spark-3.0.1-bin-hadoop3.2 /opt/
 	sudo chown -R hadoop:hadoop /opt/spark-3.0.1-bin-hadoop3.2
 
-	sudo rm spark-3.0.1-bin-hadoop3.2.tgz
-
 	echo "Setup of Spark finished."
 } &
 
+{
+	wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+	echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+	sudo apt-get update
+	sudo apt-get install -y mongodb-org
+
+	echo "Installed Mongo."
+
+	export DEBIAN_FRONTEND=noninteractive
+	sudo -E apt-get -q -y install mysql-server
+
+	echo "Installed MySQL."
+
+	# Download packages for tf-idf task
+	sudo apt-get install python3-numpy
+} &
+
 wait
+
+sudo rm /home/hadoop/download/spark-3.0.1-bin-hadoop3.2.tgz
+sudo rm /home/hadoop/download/hadoop-3.3.0.tgz
 
 exit
 

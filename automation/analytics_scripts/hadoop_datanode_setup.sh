@@ -13,8 +13,6 @@ echo "Installed Java"
     tar zxvf hadoop-3.3.0.tgz
     sudo mv hadoop-3.3.0 /opt/
 
-    sudo rm hadoop-3.3.0.tgz
-
     sudo mkdir -p /mnt/hadoop/datanode/
     sudo chown -R hadoop:hadoop /mnt/hadoop/datanode/
 } &
@@ -27,7 +25,6 @@ echo "Installed Java"
     sudo mv spark-3.0.1-bin-hadoop3.2 /opt/
     sudo chown -R hadoop:hadoop /opt/spark-3.0.1-bin-hadoop3.2
 
-    sudo rm spark-3.0.1-bin-hadoop3.2.tgz
     echo "Setup of Spark finished."
 
 } &
@@ -38,3 +35,6 @@ echo "Installed Java"
 } &
 
 wait
+
+sudo rm /home/hadoop/download/hadoop-3.3.0.tgz
+sudo rm /home/hadoop/download/spark-3.0.1-bin-hadoop3.2.tgz
