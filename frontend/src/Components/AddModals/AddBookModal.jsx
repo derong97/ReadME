@@ -57,10 +57,9 @@ class AddBookModal extends React.Component {
     for (i = 0; i < categories.length; i++) {
       if (i === 0) {
         categoriesList += categories[i].value;
-      } else if (i == categories.length - 1){
+      } else if (i == categories.length - 1) {
         categoriesList += categories[i].value;
-      }  
-      else {
+      } else {
         categoriesList += ", " + categories[i].value;
       }
     }
@@ -177,14 +176,25 @@ class AddBookModal extends React.Component {
 
   render() {
     const options = [
-      { value: "Dance", label: "Dance" },
-      { value: "Dark Fantasy", label: "Dark Fantasy" },
-      { value: "Halloween", label: "Halloween" },
-      { value: "Multilevel", label: "Multilevel" },
-      { value: "Preaching", label: "Preaching" },
-      { value: "Racing", label: "Racing" },
-      { value: "Vegetables", label: "Vegetables" },
-      { value: "Warsaw", label: "Warsaw" },
+      { value: "Adventure", label: "Adventure" },
+      { value: "Biographies", label: "Biographies" },
+      { value: "Children", label: "Children" },
+      { value: "Crime", label: "Crime" },
+      { value: "Fantasy", label: "Fantasy" },
+      { value: "History", label: "History" },
+      { value: "Horror", label: "Horror" },
+      { value: "Humor", label: "Humor" },
+      { value: "Journalism & Nonfiction", label: "Journalism & Nonfiction" },
+      { value: "Literary", label: "Literary" },
+      {
+        value: "Philosophy & Social Aspects",
+        label: "Philosophy & Social Aspects",
+      },
+      { value: "Romance", label: "Romance" },
+      { value: "Science Fiction", label: "Science Fiction" },
+      { value: "Self-Help", label: "Self-Help" },
+      { value: "Travel & Tourism", label: "Travel & Tourism" },
+      { value: "Teen & Young Adult", label: "Teen & Young Adult" },
     ];
 
     return (
