@@ -90,13 +90,16 @@ Results should look like this:
 List out the output files from the task
  ```bash
    hdfs dfs -ls /tfidf
-   ```
+ ```
 View the files
    ```bash
    hdfs dfs -cat /tfidf/part-00000
    ```
 Results should look like this:
 
-![Analytics](/automation/results/tfidf.jpg)
+![Analytics](results/tfidf.jpg)
+
+
+
 
 

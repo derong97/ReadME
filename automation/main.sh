@@ -153,13 +153,6 @@
   ============================================================================
   """
   ssh -o StrictHostKeyChecking=no ubuntu@$WebServerIP -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' WebServerIP='$WebServerIP' bash -s" < ./production_scripts/webserver_script.sh
-
-  echo """
-  ============================================================================
-                            EAGER DOWNLOAD FOR NAMENODE
-  ============================================================================
-  """
-  ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' bash -s" < ./analytics_scripts/namenode_eager_dl.sh
 } &
 
 {
@@ -228,11 +221,10 @@ wait
 {
   echo """
   ============================================================================
-                                  SPARK ANALYTICS
+                                COPY DATA TO HDFS
   ============================================================================
   """
-  ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem 'bash -s' < ./analytics_scripts/copy_to_hdfs.sh
-  ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem 'bash -s' < ./analytics_scripts/execute_analytics.sh
+  ssh -o StrictHostKeyChecking=no ubuntu@${HadoopPublicIPs[0]} -i $keyname.pem "MongoDBIP='$MongoDBIP' MySQLIP='$MySQLIP' bash -s" < ./analytics_scripts/./analytics_scripts/copy_to_hdfs.sh
 }
 
 echo "Completed all setup"
