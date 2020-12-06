@@ -47,10 +47,10 @@ class AddReviewModal extends Component {
   };
 
   handleSubmit = (event) => {
-    
-    this.props.event.setState({
-      searching: true,
-    });
+    // this.props.event.setState({
+    //   searching: true,
+    // });
+    this.setState({ loading: true });
 
     const asin = this.state.asin;
     const url = `/book/${asin}`;
@@ -65,49 +65,39 @@ class AddReviewModal extends Component {
       summary: summary,
     };
 
-    if (asin === 0 || reviewText === "" || summary === ""){
+    if (asin === 0 || reviewText === "" || summary === "") {
       this.validate("empty", asin);
-    }
-
-    else {
+    } else {
       event.preventDefault();
+
       axios
-      .post(url, params, headers)
-      .then((res) => {
-        this.props.onHide();
-        this.setState({ responseMessage: res.data.message });
-        if (res.status === 200) {
-          this.props.event.setState({
-            searching: false,
-          });
-          this.validate("uploaded", asin);
-        }
-      })
-      .catch((err) => {
-        this.validate("error", asin);
-        console.log(err.response);
-        console.log(err.request);
-      });
-
+        .post(url, params, headers)
+        .then((res) => {
+          this.setState({ responseMessage: res.data.message });
+          if (res.status === 200) {
+            this.validate("uploaded", asin);
+            this.setState({ loading: false });
+          }
+        })
+        .catch((err) => {
+          this.validate("error", asin);
+          console.log(err.response);
+          console.log(err.request);
+        });
     }
-
   };
 
   validate = (check, asin) => {
-    let error = ""
+    let error = "";
     if (check === "empty") {
-      error = "* Please fill in all fields before submitting."
-      this.setState({error});
-      this.props.event.setState({
-        searching: false,
-      });
-    }
-    else if (check === "error") {
-      error = "* You have already given a review for the book with ASIN " + asin +". Please edit your existing review instead.";
-      this.setState({ error});
-      this.props.event.setState({
-        searching: false,
-      });
+      error = "* Please fill in all fields before submitting.";
+      this.setState({ error, loading: false });
+    } else if (check === "error") {
+      error =
+        "* You have already given a review for the book with ASIN " +
+        asin +
+        ". Please edit your existing review instead.";
+      this.setState({ error, loading: false });
     } else {
       //if state is uploaded
       this.handleClose();
@@ -117,7 +107,7 @@ class AddReviewModal extends Component {
 
   handleClose = () => {
     let error = "";
-    this.setState({ error });
+    this.setState({ error, loading: false });
     this.props.onHide();
   };
 
@@ -239,7 +229,6 @@ class AddReviewModal extends Component {
               >
                 Add Review
               </Button>
-              
             </Modal.Footer>
           </Form>
         </Modal>
