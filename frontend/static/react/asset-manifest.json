@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/react/css/main.678684fb.chunk.css",
-    "main.js": "/static/react/js/main.2d1d1ba6.chunk.js",
-    "main.js.map": "/static/react/js/main.2d1d1ba6.chunk.js.map",
+    "main.css": "/static/react/css/main.4c5fe122.chunk.css",
+    "main.js": "/static/react/js/main.b8d3c8fb.chunk.js",
+    "main.js.map": "/static/react/js/main.b8d3c8fb.chunk.js.map",
     "runtime-main.js": "/static/react/js/runtime-main.ec4874d9.js",
     "runtime-main.js.map": "/static/react/js/runtime-main.ec4874d9.js.map",
     "css/2.7f692ebf.chunk.css": "/static/react/css/2.7f692ebf.chunk.css",
-    "js/2.2ec98398.chunk.js": "/static/react/js/2.2ec98398.chunk.js",
-    "js/2.2ec98398.chunk.js.map": "/static/react/js/2.2ec98398.chunk.js.map",
+    "js/2.54a84ea8.chunk.js": "/static/react/js/2.54a84ea8.chunk.js",
+    "js/2.54a84ea8.chunk.js.map": "/static/react/js/2.54a84ea8.chunk.js.map",
     "../templates/index.html": "/static/react/../templates/index.html",
     "css/2.7f692ebf.chunk.css.map": "/static/react/css/2.7f692ebf.chunk.css.map",
-    "css/main.678684fb.chunk.css.map": "/static/react/css/main.678684fb.chunk.css.map",
-    "js/2.2ec98398.chunk.js.LICENSE.txt": "/static/react/js/2.2ec98398.chunk.js.LICENSE.txt",
+    "css/main.4c5fe122.chunk.css.map": "/static/react/css/main.4c5fe122.chunk.css.map",
+    "js/2.54a84ea8.chunk.js.LICENSE.txt": "/static/react/js/2.54a84ea8.chunk.js.LICENSE.txt",
     "media/index.css": "/static/react/media/Gotham-Ultra.f6e21da3.otf",
     "media/font-awesome.min.css": "/static/react/media/fontawesome-webfont.fee66e71.woff",
     "media/home.css": "/static/react/media/home_bg.0b3f65f7.png",
@@ -19,14 +19,14 @@
     "media/logo_black.png": "/static/react/media/logo_black.aae93f9f.png",
     "media/logo_white.png": "/static/react/media/logo_white.55bb7fac.png",
     "media/user.png": "/static/react/media/user.d6342280.png",
-    "precache-manifest.294be4a53614f12fda4f8960e7b9965a.js": "/static/react/precache-manifest.294be4a53614f12fda4f8960e7b9965a.js",
+    "precache-manifest.21502716e799afc76f60fcb225d1b729.js": "/static/react/precache-manifest.21502716e799afc76f60fcb225d1b729.js",
     "service-worker.js": "/static/react/service-worker.js"
   },
   "entrypoints": [
     "js/runtime-main.ec4874d9.js",
     "css/2.7f692ebf.chunk.css",
-    "js/2.2ec98398.chunk.js",
-    "css/main.678684fb.chunk.css",
-    "js/main.2d1d1ba6.chunk.js"
+    "js/2.54a84ea8.chunk.js",
+    "css/main.4c5fe122.chunk.css",
+    "js/main.b8d3c8fb.chunk.js"
   ]
 }
