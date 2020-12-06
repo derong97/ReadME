@@ -124,6 +124,7 @@ class Review:
             con.close()
 
     # sorts books according to average rating
+    # TY - INDICATED FOR DELETION. WILL CONFIRM ONE LAST TIME.
     def sort_on_ratings(self, desc = True):
         con, cur = connect()
         
