@@ -33,7 +33,7 @@ class ReviewYouAdded extends Component {
     },
 
     reviewContainer: {
-      width: 1000,
+      width: 1200,
     },
     textWrap:{flex: 1, flexWrap: 'wrap'},
   };
