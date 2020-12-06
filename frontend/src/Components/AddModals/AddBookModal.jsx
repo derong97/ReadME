@@ -51,6 +51,7 @@ class AddBookModal extends React.Component {
   };
 
   handleCategoriesChange = (categories) => {
+    console.log(categories);
     var categoriesList = "";
     var i;
     for (i = 0; i < categories.length; i++) {
@@ -63,6 +64,7 @@ class AddBookModal extends React.Component {
         categoriesList += ", " + categories[i].value;
       }
     }
+    console.log(categoriesList);
     this.setState({
       categories: categoriesList,
     });

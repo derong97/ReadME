@@ -18,7 +18,7 @@ class BookPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searching: true,
+      searching: false,
       token: props.location.state.token,
       id: props.location.state.id,
       username: props.location.state.username,
@@ -32,7 +32,6 @@ class BookPage extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.location.key !== this.props.location.key) {
-      this.setState({ searching: true });
       this.setState({
         token: this.props.location.state.token,
         id: this.props.location.state.id,
@@ -63,7 +62,6 @@ class BookPage extends React.Component {
         );
     }
     this.setState({ relatedBooks: relatedBooks });
-    this.setState({ searching: false });
   };
 
   getRelatedBooks = async (bought, resolve) => {
@@ -116,8 +114,8 @@ class BookPage extends React.Component {
     var categories = "";
     if (typeof cats !== "undefined") {
       for (var i = 0; i < cats.length; i++) {
-        if (i === cats.length) categories += cats[i];
-        else categories += cats[i] + ", ";
+        if (i === cats.length - 1) categories += cats[i];
+        else categories += cats[i] + ",   ";
       }
     }
     return categories;
@@ -194,8 +192,8 @@ class BookPage extends React.Component {
                     </Expand>
                   </div>
                 </div>
-                <div id="review">
-                  <div id="review-header">
+                <div id="review-section" className="row">
+                  <div id="review-header" className="col">
                     <h4 id="review-title">REVIEW</h4>
                     <button
                       id="review-bttn"
@@ -207,7 +205,7 @@ class BookPage extends React.Component {
                       <div className="add-book-bttn-text">add review</div>
                     </button>
                   </div>
-                  <div id="review-info">
+                  <div id="review-info" className="col">
                     {this.state.reviews.map((review) => (
                       <ReviewItem review={review} />
                     ))}
