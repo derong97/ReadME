@@ -230,7 +230,7 @@ cd download
 	echo "Installed MySQL."
 
 	# Download packages for tf-idf task
-	sudo apt-get install python3-numpy
+	sudo apt-get install python3-numpy -y
 } &
 
 wait

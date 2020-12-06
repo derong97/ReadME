@@ -30,7 +30,7 @@ echo "Installed Java"
 } &
 
 {
-    sudo apt-get install python3-numpy
+    sudo apt-get install python3-numpy -y
     echo "Installed packages for tfidf task"
 } &
 
