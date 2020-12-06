@@ -26,17 +26,17 @@ class ReviewYouAdded extends Component {
     };
   }
 
-  styles = {
-    bookCoverImage: {
-      width: 370,
-      height: 419,
-    },
+  // styles = {
+  //   bookCoverImage: {
+  //     width: 370,
+  //     height: 419,
+  //   },
 
-    reviewContainer: {
-      width: 1200,
-    },
-    textWrap:{flex: 1, flexWrap: 'wrap'},
-  };
+  //   reviewContainer: {
+  //     width: 1200,
+  //   },
+  //   textWrap:{flex: 1, flexWrap: 'wrap'},
+  // };
 
   componentDidMount() {
     this.getBook();
@@ -110,14 +110,14 @@ class ReviewYouAdded extends Component {
 
   render() {
     return (
-      <div className="container" style={this.styles.reviewContainer}>
-        <table id="review">
+      <div className="container">
+        <table id="review" cellPadding={30}>
           <tbody>
             <td className="column-bookImage">
               <img
                 src={this.state.book.imUrl}
                 alt=""
-                style={this.styles.bookCoverImage}
+                className="book-cover-image"
               />
             </td>
             <td className="column-review">
