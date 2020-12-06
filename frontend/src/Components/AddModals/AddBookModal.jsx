@@ -70,6 +70,7 @@ class AddBookModal extends React.Component {
   };
 
   handleSubmit = (event) => {
+    event.preventDefault();
     if (
       !this.state.asin ||
       !this.state.title ||
@@ -101,7 +102,6 @@ class AddBookModal extends React.Component {
       };
 
       this.setState({ loading: true });
-      event.preventDefault();
 
       axios
         .post(url, params, headers)
@@ -274,7 +274,7 @@ class AddBookModal extends React.Component {
                 <Form.Group as={Col} md="4" controlId="formPrice">
                   <Form.Label>Price</Form.Label>
                   <Form.Control
-                    type="text"
+                    type="number"
                     placeholder="enter price of book"
                     required
                     onChange={this.handlePriceChange}
