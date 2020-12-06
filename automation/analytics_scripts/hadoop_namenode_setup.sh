@@ -235,8 +235,9 @@ cd download
 
 wait
 
-sudo rm /home/hadoop/download/spark-3.0.1-bin-hadoop3.2.tgz
-sudo rm /home/hadoop/download/hadoop-3.3.0.tgz
+sudo rm /home/hadoop/download/hadoop-3.3.0.tar.gz
+sudo rm /home/hadoop/spark-3.0.1-bin-hadoop3.2.tgz
+sudo rm /home/hadoop/hadoop-3.3.0.tgz
 
 exit
 
