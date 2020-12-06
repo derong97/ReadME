@@ -59,3 +59,7 @@ The deployment makes use of the Cloud Formation template to create a stack on AW
    - Default region: us-east-1
    - Default output format: (not required)
    - AWS Session Token: `aws_session_token`
+
+# Analytics
+
+![Analytics](/results/correlation.jpg)
