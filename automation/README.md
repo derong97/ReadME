@@ -99,9 +99,7 @@ Results should look like this:
 
 ![Analytics](results/tfidf.jpg)
 
-# Logging
 
-![Logging](results/logging.png)
 
 
 
