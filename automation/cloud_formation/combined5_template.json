@@ -176,48 +176,6 @@
                 "HadoopSecurityGroup"
             ]
         },
-        "Node5": {
-            "Type": "AWS::EC2::Instance",
-            "Properties": {
-                "ImageId": "ami-0f82752aa17ff8f5d",
-                "InstanceType": "t2.xlarge",
-                "KeyName": { "Ref": "KeyName" },
-                "SecurityGroupIds": [{
-                    "Ref": "HadoopSecurityGroup"
-                }]
-            },
-            "DependsOn": [
-                "HadoopSecurityGroup"
-            ]
-        },
-        "Node6": {
-            "Type": "AWS::EC2::Instance",
-            "Properties": {
-                "ImageId": "ami-0f82752aa17ff8f5d",
-                "InstanceType": "t2.xlarge",
-                "KeyName": { "Ref": "KeyName" },
-                "SecurityGroupIds": [{
-                    "Ref": "HadoopSecurityGroup"
-                }]
-            },
-            "DependsOn": [
-                "HadoopSecurityGroup"
-            ]
-        },
-        "Node7": {
-            "Type": "AWS::EC2::Instance",
-            "Properties": {
-                "ImageId": "ami-0f82752aa17ff8f5d",
-                "InstanceType": "t2.xlarge",
-                "KeyName": { "Ref": "KeyName" },
-                "SecurityGroupIds": [{
-                    "Ref": "HadoopSecurityGroup"
-                }]
-            },
-            "DependsOn": [
-                "HadoopSecurityGroup"
-            ]
-        },
         "HadoopSecurityGroup": {
             "Type": "AWS::EC2::SecurityGroup",
             "Properties": {
@@ -345,60 +303,6 @@
             "Value": {
                 "Fn::GetAtt": [
                     "Node4",
-                    "PrivateIp"
-                ]
-            }
-        },
-        "Node5PublicIP": {
-            "Description": "Public IP of Node5",
-            "Value": {
-                "Fn::GetAtt": [
-                    "Node5",
-                    "PublicIp"
-                ]
-            }
-        },
-        "Node5PrivateIP": {
-            "Description": "Private IP of Node5",
-            "Value": {
-                "Fn::GetAtt": [
-                    "Node5",
-                    "PrivateIp"
-                ]
-            }
-        },
-        "Node6PublicIP": {
-            "Description": "Public IP of Node6",
-            "Value": {
-                "Fn::GetAtt": [
-                    "Node6",
-                    "PublicIp"
-                ]
-            }
-        },
-        "Node6PrivateIP": {
-            "Description": "Private IP of Node6",
-            "Value": {
-                "Fn::GetAtt": [
-                    "Node6",
-                    "PrivateIp"
-                ]
-            }
-        },
-        "Node7PublicIP": {
-            "Description": "Public IP of Node7",
-            "Value": {
-                "Fn::GetAtt": [
-                    "Node7",
-                    "PublicIp"
-                ]
-            }
-        },
-        "Node7PrivateIP": {
-            "Description": "Private IP of Node7",
-            "Value": {
-                "Fn::GetAtt": [
-                    "Node7",
                     "PrivateIp"
                 ]
             }

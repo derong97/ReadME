@@ -54,11 +54,11 @@
 
   while :
   do
-      read -p "Enter desired cluster size (choose 2, 4, 6 or 8): " cluster_size
-      if [[ "$cluster_size" =~ ^(2|4|6|8)$ ]]; then
+      read -p "Enter desired cluster size (choose a number from 2 to 6): " cluster_size
+      if [[ "$cluster_size" =~ ^(2|3|4|5|6)$ ]]; then
           break
       else
-          echo "You can only choose one of these numbers: 2, 4, 6, 8"
+          echo "You can only choose one of these numbers: 2, 3, 4, 5, 6"
       fi
   done
 
