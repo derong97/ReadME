@@ -56,7 +56,10 @@ class AddBookModal extends React.Component {
     for (i = 0; i < categories.length; i++) {
       if (i === 0) {
         categoriesList += categories[i].value;
-      } else {
+      } else if (i == categories.length - 1){
+        categoriesList += categories[i].value;
+      }  
+      else {
         categoriesList += ", " + categories[i].value;
       }
     }
@@ -94,7 +97,7 @@ class AddBookModal extends React.Component {
         description: description,
         price: price,
         imUrl: imUrl,
-        categories: categories,
+        categories: [categories],
       };
 
       this.setState({ loading: true });

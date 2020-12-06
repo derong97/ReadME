@@ -145,7 +145,7 @@ class NavBar extends Component {
                 type="text"
                 value={this.state.search}
                 onChange={this.handleChange}
-                placeholder="&#xf002; search by author or title..."
+                placeholder="&#xf002; search for book title..."
               />
               <Button type="submit" variant="outline-info">
                 search
