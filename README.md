@@ -55,7 +55,7 @@ ReadME implementation and preview can be found [here](/frontend)
  
 ## Backend 
 ### Framework
-To serve our web application, we used Flask as the built-in Flask web server is provided for development convenience. It is a lightweight framework that can be practiced to implement web applications(e.g. ReactJS) and backend API applications(e.g. MySQL, MongoDB). However, Flask's built-in server is not suitable for production as it doesn't scale well. Hence to run Flask in production, we deployed our your Flask application to a standalone WSGI server(Gunicorn).
+To serve our web application, we used Flask as the built-in Flask web server is provided for development convenience. It is a lightweight framework that can be practiced to implement web applications (e.g. ReactJS) and backend API applications (e.g. MySQL, MongoDB). However, Flask's built-in server is not suitable for production as it does not scale well. Hence to run our web application in production mode, we deployed our your Flask application to a standalone WSGI server (Gunicorn).
 
 ### API Design Patterns
 #### MongoDB
