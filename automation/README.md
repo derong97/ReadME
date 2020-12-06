@@ -62,7 +62,7 @@ The deployment makes use of the Cloud Formation template to create a stack on AW
 
 # Analytics
 
-We used the following formulas to calculate the Pearson correlation:
+We used the following formula to calculate the Pearson correlation:
 
 ![Analytics](https://www.statisticshowto.com/wp-content/uploads/2009/11/pearsons-300x156.gif)
 
