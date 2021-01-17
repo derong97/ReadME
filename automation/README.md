@@ -36,19 +36,9 @@ The deployment makes use of the Cloud Formation template to create a stack on AW
 
 2. You can now access now the flask server remotely.
 
-3. To run the analytics task, you can run: `./main.sh -a`. 
+3. To run the analytics task, you can run: `./main.sh -a`.
 
    1. Time takes approximately 5 minutes. The performance is faster because we have installed Spark Cluster to run the analytics. Performance increases with number of nodes.
-
-4. To scale up/downhadoop cluster, you can choose which datanode to commission/decommision and then run:
-
-   ```bash
-   # Scaling up
-   ./main.sh -u
-   
-   # Scaling down
-   ./main.sh -d
-   ```
 
 # Tear Down Instructions
 
@@ -62,14 +52,6 @@ The deployment makes use of the Cloud Formation template to create a stack on AW
    - AWS Session Token: `aws_session_token`
 
 # Analytics
-
-We used the following formula to calculate the Pearson correlation:
-
-![Analytics](https://www.statisticshowto.com/wp-content/uploads/2009/11/pearsons-300x156.gif)
-
-We used the following formula to calculate the TF-IDF:
-
-![Analytics](https://lh3.googleusercontent.com/proxy/_MXfBwOZLoBgtKAxDgkQaUvt6NYrA6VXvFkvbM-MfykHvJquZYLtuFj0rSugXbllFv04i5jSaQQQN07SC78UvEba6aZHopFfL_puOdEntNfcQfVKeldff7fTLxylrZDiieLgdNHp37s)
 
 To view the results after running analytics tasks:
 

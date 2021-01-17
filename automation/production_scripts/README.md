@@ -6,7 +6,7 @@ The scripts `sql_script.sh` and `mongo_script.sh` (and presumably `webserver.sh`
 
 If you still want to deploy a standalone server, then read on.
 
-## Instruction for standalone deployment.
+## Instruction for standalone deployment
 
 `sql_script.sh` and `mongo_script.sh` scripts can be executed on a fresh EC2 instance each (one script per instance) with `ami-0f82752aa17ff8f5d` by running the following line:
 
