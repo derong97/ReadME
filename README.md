@@ -1,6 +1,3 @@
-# Endpoints
-Refer to this [API documentation](https://bit.ly/37BVC4N) ** to be removed **
-
 # 50.043 Project: ReadME
 Read Me Like a Book
 
@@ -78,7 +75,7 @@ To serve our web application, we used Flask as the built-in Flask web server is 
    
    | Endpoint                    | Method | Description                                                  |
    |-----------------------------|--------|--------------------------------------------------------------|
-   | /books?category=<category>&title=<title>&pageNum=<pageNum>            | GET    | Gets the metadata of the corresponding batch of 10 books, depending on the indicated categories and/or title as well as page number.<br/><ul><li>The returned array will be sorted by the book’s average rating in descending order.</li><li>If both categories and title fields are empty, the top 10 books across all categories will be returned.</li></ul><br/>Parameters<ul><li>category: optional, categories will default to empty list</li><li>title: optional, default to None</li><li>page: default to 1</li></ul><br/>Returns a 200 response if the books metadata are successfully retrieved. Otherwise returns a 400 response.|
+   | /books?category=\<category>&title=<title>&pageNum=\<pageNum>            | GET    | Gets the metadata of the corresponding batch of 10 books, depending on the indicated categories and/or title as well as page number.<br/><ul><li>The returned array will be sorted by the book’s average rating in descending order.</li><li>If both categories and title fields are empty, the top 10 books across all categories will be returned.</li></ul><br/>Parameters<ul><li>category: optional, categories will default to empty list</li><li>title: optional, default to None</li><li>page: default to 1</li></ul><br/>Returns a 200 response if the books metadata are successfully retrieved. Otherwise returns a 400 response.|
    | /book/add                                                             | POST    | Insert new book record.<br/><br/>JSON Body<ul><li>asin: compulsory, integer</li><li>title: string</li><li>description: string</li><li>price: double</li><li>imUrl: string</li><li>categories: array of string</li></ul><br/>Returns a 200 response if the book record is successfully inserted into the database. Otherwise, returns a 400 response (e.g. if the asin already exists in the database).|
    | /book/<asin>                                                          | GET   | Gets the book metadata and all its reviews.<br/>Returns a 200 response together with a list of reviews if retrieval from the database is successful. Otherwise, returns a 400 response.|
 
